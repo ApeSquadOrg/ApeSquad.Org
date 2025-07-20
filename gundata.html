@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ape Squad Esports - In-depth weapon Time-to-Kill (TTK) and Damage-per-Second (DPS) data for The Finals.">
+    <title>Ape Squad | Gun Data</title>
+
+    <!-- Google Fonts (from your main site) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Link to your main site's stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- CSS specifically for the Gun Data tool, adapted to match your site's theme -->
+    <style>
+      /* Remapping the tool's theme to your site's theme */
+      :root {
+        --bg-color: var(--dark-bg); /* Use main site background */
+        --card-color: rgba(10, 10, 10, 0.6); /* Semi-transparent card */
+        --text-color: var(--light-text); /* Use main site text color */
+        --border-color: var(--jungle-green); /* Use main site green for borders */
+        --highlight-color: var(--accent-orange); /* Use main site orange for highlights */
+        --control-bg: var(--jungle-green); /* Use green for control backgrounds */
+        --legend-bg: rgba(10, 10, 10, 0.85);
+        --legend-border: #444;
+        --grid-color: rgba(255, 255, 255, 0.1);
+        --tooltip-bg: rgba(0, 0, 0, 0.8);
+        --active-color: var(--accent-orange); /* Active buttons are orange */
+      }
+      
+      .graph-tool-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: var(--card-color);
+        border: 2px solid var(--jungle-green);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .graph-section { display: flex; flex-direction: column; gap: 15px; }
+      .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+      .control-group { background-color: transparent; padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); flex-grow: 1; min-width: 120px; }
+      .control-group.hsp-slider-group { min-width: 200px; }
+      .control-group label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 0.9rem; color: var(--accent-orange); font-family: var(--font-headings); letter-spacing: 1px; }
+      .toggle-group { display: flex; gap: 6px; flex-wrap: wrap; }
+      .toggle-btn { padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border-color); background-color: #222; color: var(--text-color); cursor: pointer; font-size: 0.8rem; white-space: nowrap; flex-grow: 1; text-align: center; user-select: none; transition: background-color 0.3s, color 0.3s; }
+      .toggle-btn.active { background-color: var(--active-color); color: #000; font-weight: bold; border-color: var(--active-color); }
+      .hsp-slider-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+      .hsp-slider-container input[type="range"] { flex-grow: 1; cursor: pointer; }
+      .hsp-slider-container .hsp-value { font-size: 0.8rem; min-width: 35px; text-align: right; }
+      .graph-container { position: relative; height: 300px; width: 100%; background-color: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 5px; padding: 8px; margin-bottom: 10px; box-sizing: border-box; }
+      .x-axis, .y-axis, .x-labels, .y-labels, .graph-title { color: var(--text-color); }
+      .plot-area { position: absolute; top: 40px; bottom: 40px; left: 40px; right: 15px; overflow: hidden; }
+      .legend { background-color: var(--legend-bg); padding: 8px; border-radius: 5px; border: 1px solid var(--legend-border); font-size: 0.8rem; max-height: 150px; overflow-y: auto; transition: all 0.3s ease; box-sizing: border-box; }
+      .legend:hover { background-color: rgba(30, 30, 30, 0.95); }
+      .legend-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; cursor: pointer; font-weight: bold; background-color: rgba(0, 0, 0, 0.2); border-radius: 3px; margin-bottom: 5px; border: none; color: var(--text-color); width: 100%; text-align: left; }
+      .legend-header:hover { background-color: rgba(0, 0, 0, 0.3); }
+      .legend-toggle-icon { font-size: 0.9rem; transition: transform 0.3s ease; display: inline-block; }
+      .legend.collapsed .legend-toggle-icon { transform: rotate(-90deg); }
+      .legend.collapsed .legend-content { display: none; }
+      .legend-item { display: flex; align-items: center; margin-bottom: 4px; cursor: pointer; padding: 3px 5px; border-radius: 3px; transition: all 0.2s; }
+      .legend-item.highlighted { background-color: rgba(255, 140, 0, 0.2); font-weight: bold; }
+      .legend-item.selected { outline: 1px solid var(--highlight-color); background-color: rgba(255, 140, 0, 0.1); }
+      .legend-color { width: 16px; height: 8px; margin-right: 8px; border-radius: 2px; display: block; transition: all 0.2s; flex-shrink: 0; }
+      .legend-item:hover .legend-color { transform: scale(1.2); }
+      .legend-text { color: var(--text-color); font-size: 0.8rem; flex-grow: 1; word-break: break-word; }
+      .note { font-size: 0.8rem; color: #aaa; margin-top: 25px; line-height: 1.4; text-align: center; }
+      .weapon-line { transition: opacity 0.2s, stroke-width 0.2s; }
+      .weapon-line.highlighted { stroke-width: 3.5px !important; opacity: 1 !important; }
+      .weapon-line.selected { stroke-width: 2.5px !important; opacity: 1 !important; }
+      .grid-line { stroke: var(--grid-color); stroke-width: 0.5px; stroke-dasharray: 2, 2; }
+      .info-panel { width: 100%; background-color: rgba(0,0,0,0.3); border-radius: 5px; padding: 10px; border: 1px solid var(--border-color); height: auto; max-height: 200px; overflow-y: auto; box-sizing: border-box; }
+      .info-title { font-weight: bold; margin-bottom: 8px; font-size: 0.9rem; color: var(--accent-orange); font-family: var(--font-headings); letter-spacing: 1px; }
+      .info-content { font-size: 0.8rem; }
+      .info-row { margin-bottom: 6px; display: flex; flex-wrap: nowrap; }
+      .info-label { font-weight: bold; color: #ccc; margin-right: 5px; flex-shrink: 0; }
+      .info-value { margin-left: 0; word-break: break-word; }
+      .weapon-line.hidden { opacity: 0.15; }
+      .x-axis { position: absolute; bottom: 40px; left: 40px; right: 15px; height: 1px; background-color: var(--text-color); }
+      .y-axis { position: absolute; left: 40px; top: 40px; bottom: 40px; width: 1px; background-color: var(--text-color); }
+      .x-labels { position: absolute; bottom: 5px; left: 40px; right: 15px; display: flex; justify-content: space-between; font-size: 0.7rem; padding: 0 5px; }
+      .y-labels { position: absolute; left: 5px; top: 40px; bottom: 40px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; font-size: 0.7rem; padding-right: 5px; }
+      .graph-title { position: absolute; top: 5px; left: 40px; right: 15px; text-align: center; font-weight: bold; font-size: 0.8rem; }
+
+      /* Mobile Layout Order */
+      .graph-container { order: 1; }
+      .info-panel { order: 2; }
+      .legend { order: 3; margin-top: 10px; } /* Legend at bottom on mobile */
+
+      @media (min-width: 768px) {
+        .graph-section { flex-direction: row; align-items: flex-start; }
+        
+        /* Desktop Layout Order */
+        .legend { order: 1; }
+        .graph-container { order: 2; }
+        .info-panel { order: 3; }
+
+        .legend {
+          position: relative; /* No longer absolute */
+          width: 220px;
+          flex-shrink: 0;
+          max-height: 400px;
+          margin-top: 0;
+          z-index: auto;
+        }
+
+        .graph-container { 
+            height: 400px; 
+            flex-grow: 1; 
+            margin-bottom: 0;
+        }
+
+        .info-panel { 
+            width: 250px; 
+            flex-shrink: 0;
+            height: auto; 
+            max-height: 400px; 
+            margin-top: 0;
+        }
+
+        .graph-title { font-size: 1rem; }
+        .toggle-btn { padding: 5px 10px; font-size: 0.9rem; }
+        .control-group label { font-size: 1rem; }
+        .control-group.hsp-slider-group { min-width: 250px; }
+      }
+    </style>
+</head>
+<body>
+
+    <header></header>
+
+    <main>
+      <section id="gun-data-tool">
+          <div class="container">
+              <h2>THE FINALS WEAPON DATA</h2>
+              <div class="graph-tool-container">
+                <div class="controls">
+                  <div class="control-group">
+                    <label for="class-toggle-group">Class:</label>
+                    <div class="toggle-group" id="class-toggle-group">
+                      <button type="button" class="toggle-btn active" data-class="ALL">All</button>
+                      <button type="button" class="toggle-btn" data-class="LIGHT">Light</button>
+                      <button type="button" class="toggle-btn" data-class="MEDIUM">Medium</button>
+                      <button type="button" class="toggle-btn" data-class="HEAVY">Heavy</button>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label for="target-toggle-group">Target:</label>
+                    <div class="toggle-group" id="target-toggle-group">
+                      <button type="button" class="toggle-btn active" data-target="Light">Light</button>
+                      <button type="button" class="toggle-btn" data-target="Medium">Medium</button>
+                      <button type="button" class="toggle-btn" data-target="Heavy">Heavy</button>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label for="hitloc-toggle-group">Hit Location:</label>
+                    <div class="toggle-group" id="hitloc-toggle-group">
+                      <button type="button" class="toggle-btn active" data-hitloc="Body">Body</button>
+                      <button type="button" class="toggle-btn" data-hitloc="Head">Head</button>
+                      <button type="button" class="toggle-btn" data-hitloc="Mixed" id="mixed-hit-btn">Mixed</button>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label for="metric-toggle-group">Metric:</label>
+                    <div class="toggle-group" id="metric-toggle-group">
+                      <button type="button" class="toggle-btn active" data-metric="TTK">TTK</button>
+                      <button type="button" class="toggle-btn" data-metric="DPS">DPS</button>
+                    </div>
+                  </div>
+                  <div class="control-group hsp-slider-group" id="hsp-control-group" style="display: none;">
+                    <label for="hsp-slider">Headshot Percentage:</label>
+                    <div class="hsp-slider-container">
+                        <input type="range" id="hsp-slider" min="0" max="100" value="25" step="1">
+                        <span class="hsp-value" id="hsp-value-display">25%</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Layout container: Legend | Graph | Info Panel -->
+                <div class="graph-section">
+                  <div class="legend" id="legend">
+                    <button type="button" class="legend-header" id="legend-toggle-btn" aria-expanded="true" aria-controls="legend-content-area">
+                      <span>Weapons</span>
+                      <span class="legend-toggle-icon" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="legend-content" id="legend-content-area" role="region" aria-labelledby="legend-toggle-btn"></div>
+                  </div>
+                  <div class="graph-container">
+                    <div class="x-axis"></div>
+                    <div class="y-axis"></div>
+                    <div class="x-labels" id="x-labels">
+                      <span>0m</span><span>20m</span><span>40m</span><span>60m</span><span>80m</span><span>100m</span>
+                    </div>
+                    <div class="y-labels" id="y-labels"></div>
+                    <div class="graph-title" id="graph-title">TTK vs Range</div>
+                    <div class="plot-area" id="plot-area"></div>
+                  </div>
+                  <div class="info-panel" id="info-panel">
+                    <div class="info-title">Weapon Info</div>
+                    <div class="info-content" id="info-content-details">
+                      <div class="info-row">Hover over or tap on the graph to see weapon details.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="note">
+                  Note: Calculations are approximations. Assumes perfect accuracy, no projectile travel time. Melee/special cases excluded. Data may vary with game updates. "Mixed" hits assume a consistent headshot percentage over the shots to kill. DPS is sustained (accounts for burst delays), not instantaneous burst damage.
+                </div>
+              </div>
+          </div>
+      </section>
+    </main>
+
+    <footer></footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- CONFIGURATION & CONSTANTS ---
+        const HEALTH_VALUES = { Light: 150, Medium: 250, Heavy: 350 };
+        const MAX_RANGE = 100;
+        const TTK_Y_AXIS_STEP = 0.5;
+        const DEFAULT_MAX_TTK = 4;
+        const DEFAULT_MAX_DPS = 800;
+        const INFO_PANEL_HOVER_THRESHOLD_PX = 30;
+
+        // --- WEAPON DATA ---
+        const weaponData = [
+            // LIGHT
+            { name: "93R", class: "LIGHT", bodyDamage: 26, headDamage: 39, rpm: 1000, burstCount: 3, burstDelay: 0.275, minDropoff: 32, maxDropoff: 40, dropoffModifier: 0.4 },
+            { name: "ARN-220", class: "LIGHT", bodyDamage: 17, headDamage: 25.5, rpm: 725, minDropoff: 37.5, maxDropoff: 45, dropoffModifier: 0.72 },
+            { name: "LH1", class: "LIGHT", bodyDamage: 42, headDamage: 84, rpm: 280, minDropoff: 50, maxDropoff: 55, dropoffModifier: 0.72 },
+            { name: "M11", class: "LIGHT", bodyDamage: 16, headDamage: 24, rpm: 1000, minDropoff: 10, maxDropoff: 17.5, dropoffModifier: 0.52 },
+            { name: "SR-84", class: "LIGHT", bodyDamage: 118, headDamage: 236, rpm: 40, minDropoff: 80, maxDropoff: 100, dropoffModifier: 0.75 },
+            { name: "Throwing Knives", class: "LIGHT", bodyDamage: 60, headDamage: 90, rpm: 545.45, burstCount: 2, burstDelay: 0.59, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0 },
+            { name: "V9S", class: "LIGHT", bodyDamage: 40, headDamage: 60, rpm: 360, minDropoff: 10, maxDropoff: 15, dropoffModifier: 0.67 },
+            { name: "XP-54", class: "LIGHT", bodyDamage: 16, headDamage: 24, rpm: 860, minDropoff: 22.5, maxDropoff: 32.5, dropoffModifier: 0.52 },
+            { name: "M26 Matter", class: "LIGHT", bodyDamage: 121, headDamage: 121, rpm: 85, minDropoff: 15, maxDropoff: 25, dropoffModifier: 0.64 },
+            { name: "SH1900", class: "LIGHT", bodyDamage: 195, headDamage: 195, rpm: 80, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0 },
+            // MEDIUM
+            { name: "AKM", class: "MEDIUM", bodyDamage: 20, headDamage: 30, rpm: 600, minDropoff: 30, maxDropoff: 37.5, dropoffModifier: 0.55 },
+            { name: "CB-01 Repeater", class: "MEDIUM", bodyDamage: 84, headDamage: 126, rpm: 73, minDropoff: 40, maxDropoff: 45, dropoffModifier: 0.69 },
+            { name: "FAMAS", class: "MEDIUM", bodyDamage: 23, headDamage: 34.5, rpm: 1080, burstCount: 3, burstDelay: 0.27, minDropoff: 35, maxDropoff: 42.5, dropoffModifier: 0.50 },
+            { name: "FCAR", class: "MEDIUM", bodyDamage: 22, headDamage: 33, rpm: 540, minDropoff: 35, maxDropoff: 40, dropoffModifier: 0.55 },
+            { name: "Pike .556", class: "MEDIUM", bodyDamage: 50, headDamage: 75, rpm: 200, minDropoff: 45, maxDropoff: 50, dropoffModifier: 0.75 },
+            { name: "R.357", class: "MEDIUM", bodyDamage: 74, headDamage: 148, rpm: 140, minDropoff: 27.5, maxDropoff: 44, dropoffModifier: 0.4 },
+            { name: "Cerberus 12GA", class: "MEDIUM", bodyDamage: 99, headDamage: 99, rpm: 100, minDropoff: 10, maxDropoff: 17.5, dropoffModifier: 0.63 },
+            { name: "CL-40 (Splash)", class: "MEDIUM", bodyDamage: 90, headDamage: 90, rpm: 75, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0 },
+            { name: "Model 1887", class: "MEDIUM", bodyDamage: 108, headDamage: 108, rpm: 77, minDropoff: 20, maxDropoff: 30, dropoffModifier: 0.65 },
+            // HEAVY
+            { name: ".50 Akimbo", class: "HEAVY", bodyDamage: 44, headDamage: 88, rpm: 230, minDropoff: 35, maxDropoff: 42, dropoffModifier: 0.50 },
+            { name: "Flamethrower", class: "HEAVY", bodyDamage: 30, headDamage: 30, rpm: 170, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0 },
+            { name: "Lewis Gun", class: "HEAVY", bodyDamage: 22, headDamage: 33, rpm: 500, minDropoff: 35, maxDropoff: 40, dropoffModifier: 0.67 },
+            { name: "M60", class: "HEAVY", bodyDamage: 20, headDamage: 30, rpm: 580, minDropoff: 25, maxDropoff: 35, dropoffModifier: 0.50 },
+            { name: "M134 Minigun", class: "HEAVY", bodyDamage: 11, headDamage: 14.6, rpm: 1500, minDropoff: 30, maxDropoff: 50, dropoffModifier: 0.53 },
+            { name: "ShAK-50", class: "HEAVY", bodyDamage: 30, headDamage: 45, rpm: 420, minDropoff: 15, maxDropoff: 25, dropoffModifier: 0.67 },
+            { name: "KS-23", class: "HEAVY", bodyDamage: 100, headDamage: 100, rpm: 78, minDropoff: 18, maxDropoff: 23, dropoffModifier: 0.70 },
+            { name: "SA1216", class: "HEAVY", bodyDamage: 72, headDamage: 72, rpm: 190, burstCount: 4, burstDelay: 0.75, minDropoff: 12.5, maxDropoff: 20, dropoffModifier: 0.67 }
+        ];
+
+        const weaponColors = {
+            LIGHT: ["#ff1744", "#ff3d00", "#ff6d00", "#ff9100", "#ffab00", "#ffc400", "#ffd600", "#ffe57f", "#fff59d", "#ffff8d"],
+            MEDIUM: ["#011f4b", "#005b96", "#1e88e5", "#42a5f5", "#80d8ff", "#00acc1", "#00897b", "#4db6ac", "#e1f5fe"],
+            HEAVY: ["#1b5e20", "#388e3c", "#4caf50", "#8bc34a", "#cddc39", "#aed581", "#689f38", "#e8f5e9"]
+        };
+
+        // --- IMPROVEMENT: Assign a permanent color to each weapon on startup for consistency ---
+        const colorCountersInit = { LIGHT: 0, MEDIUM: 0, HEAVY: 0 };
+        weaponData.forEach(weapon => {
+            const classKey = weapon.class;
+            const colorIndex = colorCountersInit[classKey]++;
+            weapon.color = weaponColors[classKey][colorIndex % weaponColors[classKey].length];
+        });
+
+        // --- DOM & STATE ---
+        const plotAreaEl = document.getElementById('plot-area');
+        const legendContainer = document.getElementById('legend');
+        const legendContentArea = document.getElementById('legend-content-area');
+        const legendToggleBtn = document.getElementById('legend-toggle-btn');
+        const graphTitleEl = document.getElementById('graph-title');
+        const yLabelsContainer = document.getElementById('y-labels');
+        const infoContentDetails = document.getElementById('info-content-details');
+        const classToggleGroup = document.getElementById('class-toggle-group');
+        const targetToggleGroup = document.getElementById('target-toggle-group');
+        const hitlocToggleGroup = document.getElementById('hitloc-toggle-group');
+        const metricToggleGroup = document.getElementById('metric-toggle-group');
+        const mixedHitBtn = document.getElementById('mixed-hit-btn');
+        const hspControlGroup = document.getElementById('hsp-control-group');
+        const hspSlider = document.getElementById('hsp-slider');
+        const hspValueDisplay = document.getElementById('hsp-value-display');
+        
+        let weaponLineElements = {};
+        let legendItemElements = {};
+        let currentlyPlottedWeapons = [];
+        let selectedWeaponNames = new Set();
+        let updateGraphRAFId = null;
+
+        // --- INITIALIZATION ---
+        function initializeApp() {
+            classToggleGroup.addEventListener('click', (e) => handleFilterToggle(e, 'class'));
+            targetToggleGroup.addEventListener('click', (e) => handleFilterToggle(e, 'target'));
+            hitlocToggleGroup.addEventListener('click', (e) => handleFilterToggle(e, 'hitloc'));
+            metricToggleGroup.addEventListener('click', (e) => handleFilterToggle(e, 'metric'));
+
+            hspSlider.addEventListener('input', handleHspSliderInput);
+            hspSlider.addEventListener('change', scheduleUpdateGraph);
+
+            legendToggleBtn.addEventListener('click', () => {
+                const isCollapsed = legendContainer.classList.toggle('collapsed');
+                legendToggleBtn.setAttribute('aria-expanded', !isCollapsed);
+            });
+
+            legendContentArea.addEventListener('mouseenter', handleLegendEvent, true);
+            legendContentArea.addEventListener('mouseleave', handleLegendEvent, true);
+            legendContentArea.addEventListener('click', handleLegendEvent);
+            plotAreaEl.addEventListener('mousemove', updateInfoPanelForPointer);
+            plotAreaEl.addEventListener('touchmove', updateInfoPanelForPointer, { passive: true });
+            plotAreaEl.addEventListener('mouseleave', clearInfoPanelToDefault);
+            plotAreaEl.addEventListener('touchend', clearInfoPanelToDefault);
+
+            window.addEventListener('resize', scheduleUpdateGraph);
+            
+            // --- FIX: Correctly use ResizeObserver to handle initial draw ---
+            if (window.ResizeObserver) {
+                new ResizeObserver(scheduleUpdateGraph).observe(plotAreaEl);
+            }
+
+            updateMixedHitButtonText();
+            // Note: scheduleUpdateGraph() is no longer needed here. 
+            // The ResizeObserver will trigger the first draw automatically.
+        }
+
+        // --- CORE LOGIC ---
+        function updateGraph() {
+            updateGraphRAFId = null;
+            const { width: plotWidth, height: plotHeight } = getPlotDimensions();
+            if (plotWidth <= 0 || plotHeight <= 0) {
+                plotAreaEl.innerHTML = '<p style="text-align:center; padding: 20px 10px;">Initializing...</p>';
+                return;
+            }
+
+            plotAreaEl.innerHTML = ''; // Clear previous graph
+            const activeClasses = Array.from(classToggleGroup.querySelectorAll('.toggle-btn.active')).map(btn => btn.dataset.class);
+            const activeTarget = targetToggleGroup.querySelector('.toggle-btn.active').dataset.target;
+            const activeHitLoc = hitlocToggleGroup.querySelector('.toggle-btn.active').dataset.hitloc;
+            const activeMetric = metricToggleGroup.querySelector('.toggle-btn.active').dataset.metric;
+
+            const classText = activeClasses.includes('ALL') ? 'All Classes' : activeClasses.join('/');
+            let hitLocText = activeHitLoc === "Mixed" ? `Mixed (${hspSlider.value}% HS)` : `${activeHitLoc} Hits`;
+            
+            if (activeMetric === 'TTK') {
+                graphTitleEl.textContent = `TTK vs Range: ${classText} vs ${activeTarget} Target (${hitLocText})`;
+                targetToggleGroup.parentElement.style.display = ''; 
+            } else {
+                graphTitleEl.textContent = `DPS vs Range: ${classText} (${hitLocText})`;
+                targetToggleGroup.parentElement.style.display = 'none';
+            }
+            
+            const filteredWeapons = activeClasses.includes('ALL') ? [...weaponData] : weaponData.filter(w => activeClasses.includes(w.class));
+            
+            if (filteredWeapons.length === 0) {
+                plotAreaEl.innerHTML = '<p style="text-align:center; padding: 20px 10px;">No weapons match filters.</p>';
+                legendContentArea.innerHTML = '';
+                yLabelsContainer.innerHTML = '';
+                clearInfoPanelToDefault();
+                currentlyPlottedWeapons = [];
+                return;
+            }
+            
+            let currentMaxY, yAxisStep, yAxisUnit, calculationFn;
+            if (activeMetric === 'TTK') {
+                currentMaxY = determineDynamicMaxTTK(filteredWeapons, activeTarget, activeHitLoc);
+                yAxisStep = TTK_Y_AXIS_STEP;
+                yAxisUnit = 's';
+                calculationFn = calculateTTK;
+            } else { // DPS
+                currentMaxY = determineDynamicMaxDPS(filteredWeapons, activeHitLoc);
+                yAxisStep = Math.max(50, Math.ceil((currentMaxY / 8) / 50) * 50);
+                yAxisUnit = '';
+                calculationFn = calculateDPS;
+            }
+            
+            updateYLabels(currentMaxY, yAxisStep, yAxisUnit);
+
+            const svg = createSVGElement('svg', { width: '100%', height: '100%', style: 'position: absolute; top: 0; left: 0;' });
+            plotAreaEl.appendChild(svg);
+            drawGrid(svg, plotWidth, plotHeight, currentMaxY, yAxisStep);
+
+            renderWeaponLines(svg, filteredWeapons, plotWidth, plotHeight, currentMaxY, calculationFn, activeTarget, activeHitLoc);
+            renderLegendItems();
+            applySelectionStyles();
+        }
+
+        // --- UI & EVENT HANDLERS ---
+        function handleFilterToggle(e, groupType) {
+            const btn = e.target.closest('.toggle-btn');
+            if (!btn) return;
+
+            if (btn.classList.contains('active') && (groupType !== 'class' || classToggleGroup.querySelectorAll('.active').length === 1)) {
+                 // Prevent de-selecting the last active class or other single-select groups
+                if (groupType !== 'class') return;
+            }
+            
+            if (groupType === 'hitloc' || groupType === 'target' || groupType === 'metric') {
+                 if (!btn.classList.contains('active')) {
+                    btn.parentElement.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                }
+                if (groupType === 'hitloc') {
+                   hspControlGroup.style.display = (btn.dataset.hitloc === 'Mixed') ? '' : 'none';
+                }
+            } else if (groupType === 'class') {
+                const isAll = btn.dataset.class === 'ALL';
+                if (isAll) {
+                    classToggleGroup.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.toggle('active');
+                    const anySpecificClassActive = classToggleGroup.querySelector('.toggle-btn:not([data-class="ALL"]).active');
+                    classToggleGroup.querySelector('.toggle-btn[data-class="ALL"]').classList.toggle('active', !anySpecificClassActive);
+                }
+                if (!classToggleGroup.querySelector('.toggle-btn.active')) {
+                    classToggleGroup.querySelector('.toggle-btn[data-class="ALL"]').classList.add('active');
+                }
+                selectedWeaponNames.clear();
+            } 
+            scheduleUpdateGraph();
+        }
+
+        function handleHspSliderInput() {
+            hspValueDisplay.textContent = `${hspSlider.value}%`;
+            updateMixedHitButtonText();
+            // Update graph in real-time while sliding for better feedback
+            scheduleUpdateGraph();
+        }
+
+        function handleLegendEvent(e) {
+            const legendItem = e.target.closest('.legend-item');
+            if (!legendItem) return;
+            const weaponId = legendItem.dataset.weaponId;
+            const line = weaponLineElements[weaponId];
+            if (!line) return;
+
+            if (e.type === 'mouseenter') {
+                if (selectedWeaponNames.size === 0 || selectedWeaponNames.has(weaponId)) {
+                    line.classList.add('highlighted');
+                    legendItem.classList.add('highlighted');
+                }
+            } else if (e.type === 'mouseleave') {
+                line.classList.remove('highlighted');
+                legendItem.classList.remove('highlighted');
+            } else if (e.type === 'click') {
+                selectedWeaponNames.has(weaponId) ? selectedWeaponNames.delete(weaponId) : selectedWeaponNames.add(weaponId);
+                applySelectionStyles();
+            }
+        }
+
+        function updateInfoPanelForPointer(event) {
+            const svg = plotAreaEl.querySelector('svg');
+            if (!svg || currentlyPlottedWeapons.length === 0) return;
+
+            const rect = svg.getBoundingClientRect();
+            const pointerX = (event.type.startsWith('touch') ? event.touches[0].clientX : event.clientX) - rect.left;
+            const pointerY = (event.type.startsWith('touch') ? event.touches[0].clientY : event.clientY) - rect.top;
+
+            if (pointerX < 0 || pointerX > rect.width || pointerY < 0 || pointerY > rect.height) return;
+
+            const currentRange = (pointerX / rect.width) * MAX_RANGE;
+            const activeMetric = metricToggleGroup.querySelector('.toggle-btn.active').dataset.metric;
+            const activeTarget = targetToggleGroup.querySelector('.toggle-btn.active').dataset.target;
+            const activeHitLoc = hitlocToggleGroup.querySelector('.toggle-btn.active').dataset.hitloc;
+            const currentMaxY = parseFloat(yLabelsContainer.firstElementChild?.textContent) || (activeMetric === 'TTK' ? DEFAULT_MAX_TTK : DEFAULT_MAX_DPS);
+            const calculationFn = activeMetric === 'TTK' ? calculateTTK : calculateDPS;
+            
+            let closestWeapon = null;
+            let minVerticalDistance = Infinity;
+
+            const weaponsToConsider = selectedWeaponNames.size > 0 ?
+                currentlyPlottedWeapons.filter(w => selectedWeaponNames.has(w.name)) :
+                currentlyPlottedWeapons;
+
+            weaponsToConsider.forEach(weapon => {
+                const valueAtRange = calculationFn(weapon, currentRange, activeTarget, activeHitLoc);
+                if (!isFinite(valueAtRange)) return;
+
+                const lineY = rect.height * (1 - (Math.min(valueAtRange, currentMaxY) / currentMaxY));
+                const dy = Math.abs(pointerY - lineY);
+                if (dy < minVerticalDistance) {
+                    minVerticalDistance = dy;
+                    closestWeapon = weapon;
+                }
+            });
+
+            if (closestWeapon && minVerticalDistance < INFO_PANEL_HOVER_THRESHOLD_PX) {
+                const valueAtRange = calculationFn(closestWeapon, currentRange, activeTarget, activeHitLoc);
+                let damageToShow, damageLabel = "Damage:";
+
+                if (activeHitLoc === "Mixed") {
+                    damageToShow = calculateAverageDamagePerShot(closestWeapon, currentRange);
+                    damageLabel = `Avg. Dmg (${hspSlider.value}% HS):`;
+                } else {
+                    damageToShow = calculateDamageAtRange(closestWeapon, currentRange, activeHitLoc);
+                }
+
+                const stk = (damageToShow > 0) ? Math.ceil(HEALTH_VALUES[activeTarget] / damageToShow) : 'N/A';
+                const dropoffText = (closestWeapon.minDropoff === 0 && closestWeapon.maxDropoff === 0) ? 'None' : `${closestWeapon.minDropoff}m-${closestWeapon.maxDropoff}m`;
+                
+                const valueUnit = activeMetric === 'TTK' ? 's' : '';
+                const valueDisplay = isFinite(valueAtRange) ? `${valueAtRange.toFixed(activeMetric === 'TTK' ? 3 : 0)}${valueUnit}` : 'N/A';
+
+                infoContentDetails.innerHTML = `
+                    <div class="info-row"><span class="info-label">Weapon:</span> <span class="info-value">${closestWeapon.name} (${closestWeapon.class})</span></div>
+                    <div class="info-row"><span class="info-label">Range:</span> <span class="info-value">${currentRange.toFixed(1)}m</span></div>
+                    <div class="info-row"><span class="info-label">${activeMetric}:</span> <span class="info-value">${valueDisplay}</span></div>
+                    <div class="info-row"><span class="info-label">${damageLabel}</span> <span class="info-value">${damageToShow.toFixed(1)}</span></div>
+                    ${activeMetric === 'TTK' ? `<div class="info-row"><span class="info-label">STK:</span> <span class="info-value">${stk}</span></div>` : ''}
+                    <div class="info-row"><span class="info-label">RPM:</span> <span class="info-value">${closestWeapon.rpm || 'N/A'}</span></div>
+                    <div class="info-row"><span class="info-label">Dropoff:</span> <span class="info-value">${dropoffText}</span></div>`;
+            } else {
+                clearInfoPanelToDefault();
+            }
+        }
+        
+        // --- HELPER & CALCULATION FUNCTIONS ---
+        const scheduleUpdateGraph = () => { if (updateGraphRAFId) cancelAnimationFrame(updateGraphRAFId); updateGraphRAFId = requestAnimationFrame(updateGraph); };
+        const clearInfoPanelToDefault = () => { infoContentDetails.innerHTML = '<div class="info-row">Hover over or tap on the graph to see weapon details.</div>'; };
+        const updateMixedHitButtonText = () => { mixedHitBtn.textContent = `Mixed (${hspSlider.value}% HS)`; };
+        const getPlotDimensions = () => ({ width: plotAreaEl.clientWidth, height: plotAreaEl.clientHeight });
+        const getCurrentHSP = () => parseFloat(hspSlider.value) / 100.0;
+
+        function calculateDamageAtRange(weapon, range, bodyOrHead) {
+            let baseDamage = weapon[`${bodyOrHead.toLowerCase()}Damage`];
+            if (baseDamage <= 0 || (weapon.maxDropoff - weapon.minDropoff <= 0)) return range <= weapon.maxDropoff ? baseDamage : baseDamage * weapon.dropoffModifier;
+            if (range <= weapon.minDropoff) return baseDamage;
+            if (range >= weapon.maxDropoff) return baseDamage * weapon.dropoffModifier;
+            const dropoffRatio = (range - weapon.minDropoff) / (weapon.maxDropoff - weapon.minDropoff);
+            return baseDamage * (1 - dropoffRatio * (1 - weapon.dropoffModifier));
+        }
+
+        function calculateAverageDamagePerShot(weapon, range) {
+            const hsp = getCurrentHSP();
+            const headDmg = calculateDamageAtRange(weapon, range, "Head");
+            const bodyDmg = calculateDamageAtRange(weapon, range, "Body");
+            return (headDmg * hsp) + (bodyDmg * (1 - hsp));
+        }
+        
+        function calculateTTK(weapon, range, targetType, hitLocation) {
+            const targetHealth = HEALTH_VALUES[targetType];
+            if (!targetHealth) return Infinity;
+
+            let damagePerShot;
+            if (hitLocation === "Mixed") damagePerShot = calculateAverageDamagePerShot(weapon, range);
+            else damagePerShot = calculateDamageAtRange(weapon, range, hitLocation);
+
+            if (damagePerShot <= 0) return Infinity;
+            
+            const shotsToKill = Math.ceil(targetHealth / damagePerShot);
+            if (shotsToKill === 1) return 0.0;
+            if (!weapon.rpm || weapon.rpm <= 0) return Infinity;
+            
+            const timeBetweenShots = 60 / weapon.rpm;
+            let ttk = (shotsToKill - 1) * timeBetweenShots;
+
+            if (weapon.burstCount && weapon.burstDelay && weapon.burstCount > 1) {
+                const burstsToFire = Math.floor((shotsToKill - 1) / weapon.burstCount);
+                ttk += burstsToFire * weapon.burstDelay;
+            }
+            return ttk;
+        }
+
+        // --- FIX: Corrected DPS calculation ---
+        function calculateDPS(weapon, range, targetType, hitLocation) {
+            if (!weapon.rpm || weapon.rpm <= 0) return 0;
+            let damagePerShot;
+            if (hitLocation === "Mixed") damagePerShot = calculateAverageDamagePerShot(weapon, range);
+            else damagePerShot = calculateDamageAtRange(weapon, range, hitLocation);
+
+            if (damagePerShot <= 0) return 0;
+
+            // If it's a burst weapon, calculate sustained DPS including the burst delay
+            if (weapon.burstCount && weapon.burstDelay && weapon.burstCount > 1) {
+                const timeBetweenShotsInBurst = 60 / weapon.rpm;
+                // Time from the start of the first shot to the start of the last shot in the burst
+                const burstFireDuration = (weapon.burstCount - 1) * timeBetweenShotsInBurst; 
+                // Total time for one full cycle (fire burst + wait for next burst)
+                const totalCycleTime = burstFireDuration + weapon.burstDelay; 
+                const totalDamageInCycle = weapon.burstCount * damagePerShot;
+
+                // Sustained DPS = Total Damage / Total Time
+                return totalCycleTime > 0 ? totalDamageInCycle / totalCycleTime : 0;
+            } else {
+                // Standard calculation for full-auto or semi-auto weapons
+                return damagePerShot * (weapon.rpm / 60);
+            }
+        }
+
+        function determineDynamicMaxTTK(weapons, targetType, hitLocation) {
+            let allTTKs = [];
+            weapons.forEach(w => {
+                allTTKs.push(calculateTTK(w, 0, targetType, hitLocation));
+                allTTKs.push(calculateTTK(w, w.maxDropoff, targetType, hitLocation));
+            });
+            const validTTKs = allTTKs.filter(t => isFinite(t) && t > 0);
+            return validTTKs.length ? Math.min(10, Math.max(Math.ceil(Math.max(...validTTKs) / TTK_Y_AXIS_STEP) * TTK_Y_AXIS_STEP, TTK_Y_AXIS_STEP * 2)) : DEFAULT_MAX_TTK;
+        }
+
+        function determineDynamicMaxDPS(weapons, hitLocation) {
+            let allDPS = weapons.map(w => calculateDPS(w, 0, null, hitLocation)).filter(d => isFinite(d) && d > 0);
+            if (!allDPS.length) return DEFAULT_MAX_DPS;
+            const maxVal = Math.max(...allDPS);
+            return Math.ceil(maxVal / 100) * 100; // Round up to nearest 100
+        }
+        
+        // --- RENDERING FUNCTIONS ---
+        function createSVGElement(tag, attributes) {
+            const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+            for (const key in attributes) el.setAttribute(key, attributes[key]);
+            return el;
+        }
+        function getPointCoordinates(range, value, plotWidth, plotHeight, yMax) {
+            const x = (range / MAX_RANGE) * plotWidth;
+            const y = plotHeight * (1 - (Math.min(value, yMax) / yMax));
+            return `${x},${y}`;
+        }
+        function updateYLabels(yMax, yStep, unit = '') {
+            yLabelsContainer.innerHTML = '';
+            if (yMax <= 0 || yStep <= 0) return;
+            const numSteps = Math.floor(yMax / yStep);
+            for (let i = 0; i <= numSteps; i++) {
+                const value = yMax - (i * yStep);
+                if (value < 0) continue;
+                const label = yStep < 1 ? value.toFixed(1) : Math.round(value);
+                yLabelsContainer.insertAdjacentHTML('beforeend', `<span>${label}${unit}</span>`);
+            }
+        }
+        function drawGrid(svg, plotWidth, plotHeight, yMax, yStep) {
+            if (yMax <= 0 || yStep <= 0) return;
+            const numYSteps = Math.floor(yMax / yStep);
+            for (let i = 0; i <= numYSteps; i++) {
+                const y = plotHeight * (1 - ((i * yStep) / yMax));
+                svg.appendChild(createSVGElement('line', { x1: 0, y1: y, x2: plotWidth, y2: y, class: 'grid-line' }));
+            }
+            for (let i = 0; i <= 5; i++) {
+                const x = (i / 5) * plotWidth;
+                svg.appendChild(createSVGElement('line', { x1: x, y1: 0, x2: x, y2: plotHeight, class: 'grid-line' }));
+            }
+        }
+        function renderWeaponLines(svg, weapons, plotWidth, plotHeight, yMax, calculationFn, targetType, hitLocation) {
+            weaponLineElements = {};
+            currentlyPlottedWeapons = []; // Reset this list for the current render
+
+            weapons.forEach(weapon => {
+                const valueAtZero = calculationFn(weapon, 0, targetType, hitLocation);
+                if (!isFinite(valueAtZero) || valueAtZero === 0) return;
+
+                currentlyPlottedWeapons.push(weapon); // Add to list of weapons being drawn
+                
+                let points = [getPointCoordinates(0, valueAtZero, plotWidth, plotHeight, yMax)];
+                if (weapon.minDropoff > 0) {
+                    points.push(getPointCoordinates(weapon.minDropoff, valueAtZero, plotWidth, plotHeight, yMax));
+                }
+                const valueAtMaxDrop = calculationFn(weapon, weapon.maxDropoff, targetType, hitLocation);
+                points.push(getPointCoordinates(weapon.maxDropoff, valueAtMaxDrop, plotWidth, plotHeight, yMax));
+                points.push(getPointCoordinates(MAX_RANGE, valueAtMaxDrop, plotWidth, plotHeight, yMax));
+                
+                // Use the pre-assigned color
+                const polyline = createSVGElement('polyline', { points: points.join(' '), stroke: weapon.color, 'stroke-width': '2', fill: 'none', 'data-weapon-id': weapon.name, class: 'weapon-line' });
+                svg.appendChild(polyline);
+                weaponLineElements[weapon.name] = polyline;
+            });
+        }
+        function renderLegendItems() {
+            legendContentArea.innerHTML = '';
+            legendItemElements = {};
+            
+            // Sort the currently plotted weapons alphabetically before rendering the legend
+            const sortedWeapons = [...currentlyPlottedWeapons].sort((a,b) => a.name.localeCompare(b.name));
+
+            sortedWeapons.forEach(weapon => {
+                const item = document.createElement('div');
+                item.className = 'legend-item';
+                item.dataset.weaponId = weapon.name;
+                // Use the pre-assigned color
+                item.innerHTML = `<div class="legend-color" style="background-color: ${weapon.color};"></div><span class="legend-text">${weapon.name} (${weapon.class})</span>`;
+                legendContentArea.appendChild(item);
+                legendItemElements[weapon.name] = item;
+            });
+        }
+        function applySelectionStyles() {
+            const anySelected = selectedWeaponNames.size > 0;
+            Object.keys(weaponLineElements).forEach(id => {
+                const line = weaponLineElements[id];
+                const item = legendItemElements[id];
+                const isSelected = selectedWeaponNames.has(id);
+                if (line) {
+                    line.classList.toggle('selected', isSelected);
+                    line.classList.toggle('hidden', anySelected && !isSelected);
+                }
+                if (item) {
+                    item.classList.toggle('selected', isSelected);
+                    item.style.opacity = (anySelected && !isSelected) ? '0.4' : '1';
+                }
+            });
+        }
+
+        // --- Start the App ---
+        initializeApp();
+    });
+    </script>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

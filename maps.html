@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore detailed top-down maps of The Finals with interactive points of interest. Plan your strategy with Ape Squad.">
+    <title>Strategic Maps | Ape Squad Esports</title>
+
+    <!-- Main Stylesheet (for header/footer) -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts (with Orbitron added for the tech feel) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (for header/footer icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Page-Specific CSS -->
+    <style>
+        :root {
+            --primary-purple: #9c46c8;
+            --secondary-purple: #7346d9;
+            --accent-orange: #f29045;
+            --standout-blue: #03b7fa;
+            --jungle-green: #1a4314;
+            --dark-bg: #0a0a0a;
+            --light-text: #f4f4f4;
+            --font-headings: 'Bebas Neue', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+            --font-tech: 'Orbitron', monospace;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font-body); line-height: 1.6; background: var(--dark-bg); color: var(--light-text); overflow-x: hidden; position: relative; }
+        body::before { content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 20% 80%, rgba(156, 70, 200, 0.08) 0%, transparent 40%), radial-gradient(circle at 80% 20%, rgba(3, 183, 250, 0.08) 0%, transparent 40%), radial-gradient(circle at 40% 40%, rgba(242, 144, 69, 0.04) 0%, transparent 40%); animation: particleFloat 25s ease-in-out infinite; z-index: -1; }
+        @keyframes particleFloat { 0%, 100% { transform: translateY(0px) rotate(0deg); } 33% { transform: translateY(-30px) rotate(120deg); } 66% { transform: translateY(15px) rotate(240deg); } }
+        
+        /* ADJUSTED: Gave the container a wider fixed width to accommodate the new layout */
+        .container { max-width: 1400px; margin: auto; padding: 0 20px; }
+        
+        main { padding-top: 20px; padding-bottom: 50px; position: relative; z-index: 2; }
+        h2 { font-family: var(--font-headings); font-size: 2.8rem; text-align: center; margin-bottom: 15px; text-transform: uppercase; background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple), var(--accent-orange), var(--standout-blue)); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradientShift 4s ease-in-out infinite; text-shadow: none; }
+        @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .section-intro { text-align: center; font-size: 1rem; max-width: 800px; margin: 0 auto 30px auto; color: #ccc; opacity: 0.9; font-family: var(--font-body); }
+
+        /* --- NEW LAYOUT STYLES --- */
+        .map-layout-wrapper {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start; /* Aligns columns to the top */
+        }
+
+        /* --- RESTYLED: Map Controls (Now a sidebar) --- */
+        .map-controls-container {
+            display: flex;
+            flex-direction: column; /* Stack controls vertically */
+            align-items: flex-start; /* Align controls to the left */
+            gap: 25px; /* Vertical gap between control groups */
+            
+            flex: 0 0 280px; /* Give it a fixed width: Don't grow, don't shrink, 280px wide */
+            
+            background: linear-gradient(145deg, rgba(26, 67, 20, 0.5), rgba(15, 42, 10, 0.5));
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid var(--primary-purple);
+            box-shadow: 0 0 25px rgba(156, 70, 200, 0.3);
+        }
+        .map-selector-wrapper { 
+            display: flex; 
+            flex-direction: column; /* Stack label above dropdown */
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+        }
+        #map-selector-dropdown {
+            width: 100%; /* Make dropdown fill its container */
+            padding: 10px 15px; font-family: var(--font-tech); font-size: 1rem; background-color: var(--dark-bg); color: var(--light-text); border: 1px solid var(--primary-purple); border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+        }
+        #map-selector-dropdown:hover { border-color: var(--standout-blue); box-shadow: 0 0 10px var(--standout-blue); }
+        
+        .map-toggles { 
+            display: flex; 
+            flex-direction: column; /* Stack toggles vertically */
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .toggle-switch { display: flex; align-items: center; gap: 10px; }
+        .toggle-switch label { font-family: var(--font-headings); font-size: 1.2rem; letter-spacing: 1px; color: var(--light-text); cursor: pointer; user-select: none; transition: color 0.3s ease; }
+        .toggle-switch:hover label { color: var(--accent-orange); }
+        .toggle-switch input[type="checkbox"] { cursor: pointer; width: 20px; height: 20px; accent-color: var(--primary-purple); transition: all 0.3s ease; }
+        .toggle-switch input[type="checkbox"]:hover { box-shadow: 0 0 10px var(--primary-purple); }
+        
+        #map-display-area {
+            flex: 1; /* Allow the map area to grow and fill the remaining space */
+            margin-bottom: 0;
+            transition: opacity 0.3s ease-in-out;
+            min-height: 800px; /* Adjust this to your map's new height */
+        }
+        #map-display-area.is-fading {
+            opacity: 0;
+        }
+
+        /* --- RESPONSIVE STYLES --- */
+        @media (max-width: 992px) {
+            .map-layout-wrapper {
+                flex-direction: column; /* Stack controls on top of map */
+            }
+            .map-controls-container {
+                flex-direction: row; /* Go back to horizontal for controls */
+                flex-wrap: wrap;
+                justify-content: space-between;
+                width: 100%;
+                margin-bottom: 30px;
+                flex: 1; /* Reset fixed width */
+            }
+            .map-selector-wrapper { 
+                flex-direction: row; /* Stack label and dropdown side-by-side again */
+                width: auto;
+            }
+        }
+
+        #map-display-area h3 { font-family: var(--font-tech); font-size: 2rem; text-align: left; margin-bottom: 15px; color: var(--accent-orange); text-shadow: 0 0 10px var(--accent-orange); border-left: 5px solid var(--accent-orange); padding-left: 15px; }
+        .map-image-wrapper { position: relative; border-radius: 15px; overflow: hidden; padding: 3px; background: linear-gradient(135deg, var(--primary-purple), var(--standout-blue)); animation: borderPulse 4s ease-in-out infinite; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        @keyframes borderPulse { 50% { background: linear-gradient(135deg, var(--standout-blue), var(--accent-orange)); } }
+        .map-image-wrapper:hover { transform: scale(1.01); box-shadow: 0 0 30px var(--primary-purple); }
+        .map-image-wrapper img { width: 100%; display: block; border-radius: 12px; }
+        .poi-dot { position: absolute; width: 22px; height: 22px; background-color: var(--primary-purple); border-radius: 50%; border: 2px solid white; cursor: pointer; transform: translate(-50%, -50%); transition: all 0.2s ease; box-shadow: 0 0 15px var(--primary-purple), 0 0 5px var(--primary-purple) inset; }
+        .poi-dot:hover { transform: translate(-50%, -50%) scale(1.4); box-shadow: 0 0 25px white, 0 0 10px var(--primary-purple) inset; }
+        .objective-marker { position: absolute; width: 15px; height: 15px; background-color: var(--accent-orange); border: 1px solid black; transform: translate(-50%, -50%); cursor: help; box-shadow: 0 0 10px var(--accent-orange); transition: all 0.2s ease; }
+        .objective-marker:hover { transform: translate(-50%, -50%) rotate(45deg) scale(1.2); }
+        .spawn-marker { position: absolute; width: 28px; height: 28px; background-color: transparent; border: 4px solid var(--standout-blue); border-radius: 50%; transform: translate(-50%, -50%); cursor: help; box-shadow: 0 0 15px var(--standout-blue); }
+        #map-display-area.pois-hidden .poi-dot, #map-display-area.objectives-hidden .objective-marker, #map-display-area.spawns-hidden .spawn-marker { display: none; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10, 10, 10, 0.8); backdrop-filter: blur(8px); justify-content: center; align-items: center; }
+        .modal.active { display: flex; }
+        .modal-content { display: block; max-width: 80%; max-height: 80vh; border-radius: 10px; animation: zoomIn 0.3s ease; border: 3px solid; border-image: linear-gradient(135deg, var(--primary-purple), var(--standout-blue)) 1; box-shadow: 0 10px 40px rgba(156, 70, 200, 0.3); }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .close-button { position: absolute; top: 15px; right: 35px; color: #fff; font-size: 45px; font-weight: bold; transition: all 0.3s; cursor: pointer; text-shadow: 0 0 10px black; }
+        .close-button:hover { color: var(--accent-orange); transform: scale(1.1) rotate(90deg); }
+    </style>
+</head>
+<body>
+
+    <header></header>
+
+    <main>
+        <section id="maps-section">
+            <div class="container">
+                <h2>Strategic Maps</h2>
+                <p class="section-intro">Select a map from the dropdown, then use the toggles to show or hide points of interest, objectives, and spawn points for tactical planning.</p>
+                
+                <!-- NEW: Wrapper for the 2-column layout -->
+                <div class="map-layout-wrapper">
+                    
+                    <!-- Column 1: The Controls -->
+                    <div class="map-controls-container">
+                        <div class="map-selector-wrapper">
+                            <label for="map-selector-dropdown">Select Target:</label>
+                            <select id="map-selector-dropdown"></select>
+                        </div>
+                  <div class="map-toggles">
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggle-pois">
+                                <label for="toggle-pois">POIs</label>
+                            </div>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggle-objectives">
+                                <label for="toggle-objectives">Objectives</label>
+                            </div>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="toggle-spawns">
+                                <label for="toggle-spawns">Spawns</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: The Map Display -->
+                    <div id="map-display-area">
+                        <!-- Map content will be injected here by JavaScript -->
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div id="poi-modal" class="modal">
+        <span class="close-button">×</span>
+        <img class="modal-content" id="modal-image">
+    </div>
+
+    <footer></footer>
+
+    <!-- Main Application JavaScript (No changes needed here) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const mapsData = [
+                { name: "Monacco", imageSrc: "/images/maps/Monacco.png", pois: [ { top: 48, left: 54, imageSrc: "images/poi-monaco-1.jpg", title: "Cathedral" }, { top: 57, left: 21, imageSrc: "images/poi-monaco-2.jpg", title: "Grandma's" }, { top: 49, left: 70, imageSrc: "images/poi-monaco-3.jpg", title: "Construction" } ], objectives: [ { top: 50, left: 40, title: "Cashout A" }, { top: 55, left: 60, title: "Cashout B" } ], spawns: [ { top: 19, left: 17, title: "Grandmas Death Spawn" }, { top: 15, left: 85, title: "Spawn 2" }, { top: 85, left: 50, title: "Spawn 3" } ] },
+                { name: "Seoul", imageSrc: "/images/maps/Seoul.png", pois: [ { top: 50, left: 65, imageSrc: "images/poi-seoul-1.jpg", title: "Construction" }, { top: 50, left: 85, imageSrc: "images/poi-seoul-2.jpg", title: "Old Town" }, { top: 80, left: 75, imageSrc: "images/poi-seoul-3.jpg", title: "Media Tower" } ], objectives: [ { top: 60, left: 75, title: "Vault Location" } ], spawns: [ { top: 20, left: 80, title: "Team 1 Spawn" }, { top: 80, left: 20, title: "Team 2 Spawn" } ] },
+                { name: "Las Vegas", imageSrc: "/images/maps/Vegas.png", pois: [ { top: 40, left: 45, imageSrc: "images/poi-vegas-1.jpg", title: "Main Casino" }, { top: 70, left: 60, imageSrc: "images/poi-vegas-2.jpg", title: "Hotel Rooftop" } ], objectives: [ { top: 55, left: 50, title: "Cashout" } ], spawns: [] },
+                { name: "Skyway Stadium", imageSrc: "/images/maps/Skyway.png", pois: [ { top: 50, left: 50, imageSrc: "images/poi-skyway-1.jpg", title: "Center Platform" } ], objectives: [], spawns: [] },
+                { name: "SYS$HORIZON", imageSrc: "/images/maps/SysHorizon.png", pois: [ { top: 50, left: 50, imageSrc: "images/poi-sys-1.jpg", title: "Floating Blocks" } ], objectives: [], spawns: [] },
+                { name: "Fortune Stadium", imageSrc: "/images/maps/Fortune.png", pois: [ { top: 40, left: 45, imageSrc: "images/poi-vegas-1.jpg", title: "Main Casino" }, { top: 70, left: 60, imageSrc: "images/poi-vegas-2.jpg", title: "Hotel Rooftop" } ], objectives: [ { top: 55, left: 50, title: "Cashout" } ], spawns: [] },
+                { name: "Nazomi/Citadel", imageSrc: "/images/maps/Citadel.png", pois: [ { top: 40, left: 45, imageSrc: "images/poi-vegas-1.jpg", title: "Main Casino" }, { top: 70, left: 60, imageSrc: "images/poi-vegas-2.jpg", title: "Hotel Rooftop" } ], objectives: [ { top: 55, left: 50, title: "Cashout" } ], spawns: [] },
+                { name: "Bernal", imageSrc: "/images/maps/Bernal.png", pois: [ { top: 40, left: 45, imageSrc: "images/poi-vegas-1.jpg", title: "Main Casino" }, { top: 70, left: 60, imageSrc: "images/poi-vegas-2.jpg", title: "Hotel Rooftop" } ], objectives: [ { top: 55, left: 50, title: "Cashout" } ], spawns: [] },
+                { name: "Kyoto", imageSrc: "/images/maps/Kyoto1.png", pois: [ { top: 40, left: 45, imageSrc: "images/poi-vegas-1.jpg", title: "Main Casino" }, { top: 70, left: 60, imageSrc: "images/poi-vegas-2.jpg", title: "Hotel Rooftop" } ], objectives: [ { top: 55, left: 50, title: "Cashout" } ], spawns: [] }
+            ];
+
+            const selectorDropdown = document.getElementById("map-selector-dropdown");
+            const displayArea = document.getElementById("map-display-area");
+            const modal = document.getElementById("poi-modal");
+            const modalImg = document.getElementById("modal-image");
+            const closeBtn = document.querySelector(".close-button");
+            const togglePois = document.getElementById("toggle-pois");
+            const toggleObjectives = document.getElementById("toggle-objectives");
+            const toggleSpawns = document.getElementById("toggle-spawns");
+
+            function renderMap(mapName) {
+                const map = mapsData.find(m => m.name === mapName);
+                if (!map) { displayArea.innerHTML = `<p>Error: Map not found.</p>`; return; }
+                const poiDotsHTML = (map.pois || []).map(poi => `<div class="poi-dot" style="top: ${poi.top}%; left: ${poi.left}%;" data-image="${poi.imageSrc}" title="${poi.title}"></div>`).join('');
+                const objectiveMarkersHTML = (map.objectives || []).map(obj => `<div class="objective-marker" style="top: ${obj.top}%; left: ${obj.left}%;" title="${obj.title}"></div>`).join('');
+                const spawnMarkersHTML = (map.spawns || []).map(spawn => `<div class="spawn-marker" style="top: ${spawn.top}%; left: ${spawn.left}%;" title="${spawn.title}"></div>`).join('');
+                displayArea.innerHTML = `<h3>${map.name}</h3><div class="map-image-wrapper"><img src="${map.imageSrc}" alt="Top-down map of ${map.name}" loading="lazy">${poiDotsHTML}${objectiveMarkersHTML}${spawnMarkersHTML}</div>`;
+                updateToggleVisibility();
+            }
+            
+            function transitionToMap(mapName) {
+                displayArea.classList.add('is-fading');
+                displayArea.addEventListener('transitionend', function handler() {
+                    displayArea.removeEventListener('transitionend', handler);
+                    renderMap(mapName);
+                    window.location.hash = encodeURIComponent(mapName);
+                    displayArea.classList.remove('is-fading');
+                });
+            }
+
+            function populateSelector() {
+                mapsData.forEach(map => {
+                    const option = document.createElement("option");
+                    option.value = map.name;
+                    option.textContent = map.name;
+                    selectorDropdown.appendChild(option);
+                });
+            }
+
+            function updateToggleVisibility() {
+                displayArea.classList.toggle('pois-hidden', !togglePois.checked);
+                displayArea.classList.toggle('objectives-hidden', !toggleObjectives.checked);
+                displayArea.classList.toggle('spawns-hidden', !toggleSpawns.checked);
+            }
+
+            function setupEventListeners() {
+                selectorDropdown.addEventListener('change', (event) => {
+                    transitionToMap(event.target.value);
+                });
+
+                const handleToggle = () => updateToggleVisibility();
+                togglePois.addEventListener('change', handleToggle);
+                toggleObjectives.addEventListener('change', handleToggle);
+                toggleSpawns.addEventListener('change', handleToggle);
+
+                const closeModal = () => modal.classList.remove("active");
+                displayArea.addEventListener('click', function(event) {
+                    if (event.target.classList.contains('poi-dot')) {
+                        modal.classList.add("active");
+                        modalImg.src = event.target.dataset.image;
+                    }
+                });
+                closeBtn.addEventListener("click", closeModal);
+                modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
+                document.addEventListener('keydown', (event) => { if (event.key === "Escape") closeModal(); });
+            }
+
+            function initializeApp() {
+                populateSelector();
+                
+                const currentHash = window.location.hash.substring(1);
+                const decodedHash = decodeURIComponent(currentHash);
+                
+                const startingMap = mapsData.find(m => m.name === decodedHash);
+                const startingMapName = startingMap ? startingMap.name : (mapsData.length > 0 ? mapsData[0].name : null);
+                
+                if (startingMapName) {
+                    selectorDropdown.value = startingMapName;
+                    renderMap(startingMapName);
+                }
+                
+                setupEventListeners();
+            }
+
+            initializeApp();
+        });
+    </script>
+    
+    <!-- SCRIPT TO LOAD HEADER AND FOOTER -->
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

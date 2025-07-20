@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Bracket</title>
+<style>
+    /* NOTE: This is the CSS from your example, with your site's font variables for consistency. */
+    :root {
+        --font-headings: 'Bebas Neue', sans-serif;
+        --font-body: 'Roboto', sans-serif;
+        --font-tech: 'Orbitron', monospace;
+    }
+    body {
+        background: #1a1a1a; /* A neutral dark background */
+    }
+
+    /* Styles for the tournament bracket instance */
+    .tournament-bracket-instance {
+        font-family: var(--font-body, 'Arial', sans-serif);
+        background: linear-gradient(135deg, #1a0000 0%, #2d1b00 30%, #4a1a00 70%, #331100 100%);
+        color: #fff;
+        padding: 20px 0;
+    }
+
+    .tournament-bracket-instance,
+    .tournament-bracket-instance *,
+    .tournament-bracket-instance *::before,
+    .tournament-bracket-instance *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .tournament-bracket-instance .container {
+        padding: 0 10px;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+    .tournament-bracket-instance .bracket-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .tournament-bracket-instance .winners-section,
+    .tournament-bracket-instance .losers-section,
+    .tournament-bracket-instance .finals-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: fit-content; /* Key for centering */
+        max-width: 100%;
+        overflow-x: auto; /* Scroll only if absolutely necessary */
+        padding: 10px;
+    }
+    
+    .tournament-bracket-instance .section-header {
+        font-family: var(--font-headings, 'Bebas Neue', sans-serif);
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        padding: 8px 25px;
+        background: linear-gradient(45deg, #ff4500, #ff8c00);
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .tournament-bracket-instance .bracket {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .tournament-bracket-instance .round {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        min-height: 100%;
+        gap: 20px;
+    }
+    
+    .tournament-bracket-instance .round-title {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #ffb366;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-family: var(--font-tech, 'Orbitron', monospace);
+    }
+
+    .tournament-bracket-instance .match {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid;
+        border-image: linear-gradient(45deg, #ff4500, #ff8c00) 1;
+        border-radius: 5px;
+        padding: 5px;
+        width: 200px;
+        position: relative;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        align-self: center;
+    }
+    
+    .tournament-bracket-instance .match:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+    }
+
+    .tournament-bracket-instance .team {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4px 6px;
+        margin: 2px 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        transition: all 0.2s ease;
+        font-size: 0.8rem;
+        min-height: 1.8em;
+    }
+
+    .tournament-bracket-instance .team.winner {
+        background: linear-gradient(90deg, rgba(255, 69, 0, 0.5), rgba(255, 140, 0, 0.5));
+        font-weight: bold;
+        box-shadow: 0 0 8px rgba(255, 69, 0, 0.6);
+    }
+
+    .tournament-bracket-instance .team-name {
+        flex: 1;
+        font-size: 0.8rem;
+        word-break: break-word;
+        line-height: 1.2;
+    }
+
+    .tournament-bracket-instance .score {
+        font-weight: bold;
+        color: #ffa500;
+        min-width: 20px;
+        text-align: right;
+    }
+
+    .tournament-bracket-instance .connector {
+        width: 20px;
+        min-height: 100%;
+        background-image:
+            repeating-linear-gradient(90deg, transparent, transparent 4px, #ff8c00 4px, #ff8c00 5px);
+        align-self: center;
+        opacity: 0.5;
+    }
+
+    .tournament-bracket-instance .finals-header {
+        font-family: var(--font-headings, 'Bebas Neue', sans-serif);
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+        padding: 10px 30px;
+        background: linear-gradient(45deg, #ff4500, #ffd700, #ff8c00);
+        border-radius: 30px;
+        text-align: center;
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+    }
+    
+    .tournament-bracket-instance .finals-match {
+        background: linear-gradient(135deg, rgba(255, 69, 0, 0.3), rgba(255, 215, 0, 0.3));
+        border: 2px solid;
+        border-image: linear-gradient(45deg, #ff4500, #ffd700, #ff8c00) 1;
+        border-radius: 10px;
+        padding: 10px;
+        width: 250px;
+    }
+
+    .tournament-bracket-instance .finals-team {
+        padding: 8px 12px;
+        margin: 4px 0;
+        font-size: 1rem;
+    }
+    
+    .tournament-bracket-instance .map-title-card {
+        padding: 8px 12px;
+        border-radius: 5px;
+        background-color: rgba(0,0,0,0.5);
+        border-left: 3px solid #ff8c00;
+        margin-bottom: 10px;
+    }
+    .tournament-bracket-instance .map-title-card-text {
+        color: #ffcc80;
+        font-weight: bold;
+        font-size: 0.9rem;
+        text-shadow: 1px 1px 2px #000;
+        text-transform: uppercase;
+        font-family: var(--font-tech, 'Orbitron', monospace);
+    }
+    
+    @media (max-width: 768px) {
+        .tournament-bracket-instance .bracket {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .tournament-bracket-instance .connector {
+            display: none;
+        }
+        .tournament-bracket-instance .round {
+            gap: 10px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="tournament-bracket-instance">
+    <div class="container">
+        <div class="bracket-wrapper">
+            <!-- Winner's Bracket -->
+            <div class="winners-section">
+                <div class="section-header">Winner's Bracket</div>
+                <div class="bracket">
+                    <div class="round">
+                        <div class="round-title">Round 1</div>
+                        <div class="match"><div class="team winner"><span class="team-name">Cathedral</span><span class="score">2</span></div><div class="team"><span class="team-name">SPACESHOOBS</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team"><span class="team-name">Kyoto Haters 3</span><span class="score">0</span></div><div class="team winner"><span class="team-name">Aura LLC</span><span class="score">2</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">THE SMALL SPLASH</span><span class="score">2</span></div><div class="team"><span class="team-name">4th Party Cashbox</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Ape Squad</span><span class="score">2</span></div><div class="team"><span class="team-name">DIFF</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Holtows finest</span><span class="score">2</span></div><div class="team"><span class="team-name">WARRIORS OF CHAAC</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Disaster Stack</span><span class="score">2</span></div><div class="team"><span class="team-name">RAH</span><span class="score">1</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Bricked</span><span class="score">2</span></div><div class="team"><span class="team-name">Aped On</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Noods</span><span class="score">2</span></div><div class="team"><span class="team-name">The Oatmeals</span><span class="score">0</span></div></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="round">
+                        <div class="round-title">Round 2</div>
+                        <div class="match"><div class="team winner"><span class="team-name">Cathedral</span><span class="score">2</span></div><div class="team"><span class="team-name">Aura LLC</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">THE SMALL SPLASH</span><span class="score">2</span></div><div class="team"><span class="team-name">Ape Squad</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Holtows finest</span><span class="score">2</span></div><div class="team"><span class="team-name">Disaster Stack</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team"><span class="team-name">Bricked</span><span class="score">0</span></div><div class="team winner"><span class="team-name">Noods</span><span class="score">2</span></div></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="round">
+                        <div class="round-title">Quarterfinals</div>
+                        <div class="match"><div class="team winner"><span class="team-name">Cathedral</span><span class="score">2</span></div><div class="team"><span class="team-name">THE SMALL SPLASH</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team"><span class="team-name">Holtows finest</span><span class="score">0</span></div><div class="team winner"><span class="team-name">Noods</span><span class="score">2</span></div></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="round">
+                        <div class="round-title">Semifinals</div>
+                        <div class="match"><div class="team"><span class="team-name">Cathedral</span><span class="score">0</span></div><div class="team winner"><span class="team-name">Noods</span><span class="score">2</span></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="finals-section">
+                <div class="finals-header">Grand Finals</div>
+                <div class="finals-match">
+                    <div class="team finals-team winner"><span class="team-name">Noods</span><span class="score">3</span></div>
+                    <div class="team finals-team"><span class="team-name">Holtows finest</span><span class="score">2</span></div>
+                </div>
+            </div>
+
+            <div class="losers-section">
+                <div class="section-header">Loser's Bracket</div>
+                <div class="bracket">
+                    <div class="round">
+                        <div class="round-title">Losers R1</div>
+                        <div class="map-title-card"><span class="map-title-card-text">MONACO</span></div>
+                        <div class="match"><div class="team"><span class="team-name">SPACESHOOBS</span><span class="score">0</span></div><div class="team winner"><span class="team-name">Kyoto Haters 3</span><span class="score">1</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">4th Party Cashbox</span><span class="score">1</span></div><div class="team"><span class="team-name">DIFF</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">WARRIORS OF CHAAC</span><span class="score">1</span></div><div class="team"><span class="team-name">RAH</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Aped On</span><span class="score">1</span></div><div class="team"><span class="team-name">The Oatmeals</span><span class="score">0</span></div></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="round">
+                        <div class="round-title">Losers R2</div>
+                        <div class="map-title-card"><span class="map-title-card-text">SKYWAY STADIUM</span></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Bricked</span><span class="score">1</span></div><div class="team"><span class="team-name">Kyoto Haters 3</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Disaster Stack</span><span class="score">1</span></div><div class="team"><span class="team-name">4th Party Cashbox</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team"><span class="team-name">Ape Squad</span><span class="score">0</span></div><div class="team winner"><span class="team-name">WARRIORS OF CHAAC</span><span class="score">1</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Aura LLC</span><span class="score">1</span></div><div class="team"><span class="team-name">Aped On</span><span class="score">0</span></div></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="round">
+                        <div class="round-title">Losers R3</div>
+                        <div class="map-title-card"><span class="map-title-card-text">LAS VEGAS</span></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Bricked</span><span class="score">1</span></div><div class="team"><span class="team-name">Disaster Stack</span><span class="score">0</span></div></div>
+                        <div class="match"><div class="team"><span class="team-name">WARRIORS OF CHAAC</span><span class="score">0</span></div><div class="team winner"><span class="team-name">Aura LLC</span><span class="score">1</span></div></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="round">
+                        <div class="round-title">Losers Quarters</div>
+                        <div class="map-title-card"><span class="map-title-card-text">FORTUNE STADIUM</span></div>
+                        <div class="match"><div class="team"><span class="team-name">THE SMALL SPLASH</span><span class="score">0</span></div><div class="team winner"><span class="team-name">Bricked</span><span class="score">1</span></div></div>
+                        <div class="match"><div class="team winner"><span class="team-name">Holtows finest</span><span class="score">1</span></div><div class="team"><span class="team-name">Aura LLC</span><span class="score">0</span></div></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="round">
+                        <div class="round-title">Losers Semis</div>
+                        <div class="map-title-card"><span class="map-title-card-text">SY$ HORIZON</span></div>
+                        <div class="match"><div class="team"><span class="team-name">Bricked</span><span class="score">0</span></div><div class="team winner"><span class="team-name">Holtows finest</span><span class="score">1</span></div></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="round">
+                        <div class="round-title">Losers Final</div>
+                        <div class="match"><div class="team"><span class="team-name">Cathedral</span><span class="score">1</span></div><div class="team winner"><span class="team-name">Holtows finest</span><span class="score">2</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merch Drop - Ape Squad Esports</title>
+
+    <!-- Your existing CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- ==================== -->
+    <!--   Header Starts Here   -->
+    <!-- ==================== -->
+    <!-- The content of header.html will be loaded here -->
+    <header></header>
+
+    <main>
+        <!-- ====================== -->
+        <!--   Merch Gallery Section  -->
+        <!-- ====================== -->
+        <section id="merch-gallery">
+            <div class="container">
+                <h2 class="glitch" data-text="MERCH DROP">MERCH DROP</h2>
+                <p class="merch-intro">Gear up and represent the squad. High-quality apparel designed for champions.</p>
+
+                <div class="merch-grid">
+                    
+                    <!-- Item 1: Sticker -->
+                    <a href="merch/sticker.html" class="merch-card">
+                        <img src="merch/images/sticker/sticker.png" alt="Ape Squad Sticker pack" class="merch-card-image">
+                        <div class="merch-card-info">
+                            <h3 class="merch-card-title">Sticker Pack</h3>
+                            <span class="merch-card-cta">View Details</span>
+                        </div>
+                    </a>
+
+                    <!-- Item 2: Hat -->
+                    <a href="merch/hat.html" class="merch-card">
+                        <img src="merch/images/comingsoon.png" alt="Monkey Plushie Hat" class="merch-card-image">
+                        <div class="merch-card-info">
+                            <h3 class="merch-card-title">Monkey Plushie Hat</h3>
+                            <span class="merch-card-cta">View Details</span>
+                        </div>
+                    </a>
+
+                    <!-- item 3: keychain-->
+                    <a href="merch/keychain.html" class="merch-card">
+                        <img src="merch/images/keychain.png" alt="Ape Squad Key Chain" class="merch-card-image">
+                        <div class="merch-card-info">
+                            <h3 class="merch-card-title">Key Chain</h3>
+                            <span class="merch-card-cta">View Details</span>
+                        </div>
+                    </a>
+                    
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== -->
+    <!--   Footer Starts Here   -->
+    <!-- ==================== -->
+    <!-- The content of footer.html will be loaded here -->
+    <footer></footer>
+
+    <!-- SCRIPT TO LOAD HEADER AND FOOTER -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch and inject the header
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.querySelector('header').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading header.html:', error));
+
+            // Fetch and inject the footer
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.querySelector('footer').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading footer.html:', error));
+        });
+    </script>
+<script src="js/main.js"></script>
+</body>
+</html>

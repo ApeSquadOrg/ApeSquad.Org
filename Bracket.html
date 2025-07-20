@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volcanic Panic - Tournament Bracket - Ape Squad</title>
+
+ <!-- Link to your existing CSS file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts from your new stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+/* ================================================== */
+/*       APE SQUAD ESPORTS - ENHANCED STYLE SHEET     */
+/* ================================================== */
+/* This section contains your full, new stylesheet for context */
+
+/* --- CSS Custom Properties (Enhanced Theme) --- */
+:root {
+    --primary-purple: #9c46c8;
+    --secondary-purple: #7346d9;
+    --accent-orange: #f29045;
+    --standout-blue: #03b7fa;
+    --jungle-green: #1a4314;
+    --jungle-dark: #0f2a0a;
+    --jungle-light: #2d5a24;
+    --dark-bg: #0a0a0a;
+    --darker-bg: #050505;
+    --light-text: #f4f4f4;
+    --font-headings: 'Bebas Neue', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --font-tech: 'Orbitron', monospace;
+    --glow-shadow: 0 0 20px;
+    --pulse-duration: 2s;
+}
+
+/* --- Global Styles & Reset --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    line-height: 1.6;
+    background: var(--dark-bg);
+    color: var(--light-text);
+    overflow-x: hidden;
+    position: relative;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+
+/* --- Animated Background Particles --- */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(156, 70, 200, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(3, 183, 250, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 40% 40%, rgba(242, 144, 69, 0.04) 0%, transparent 40%);
+    animation: particleFloat 25s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes particleFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-30px) rotate(120deg); }
+    66% { transform: translateY(15px) rotate(240deg); }
+}
+
+/* --- Core Layout & Typography --- */
+.container {
+    max-width: 95%; /* Make container wider for bracket */
+    margin: auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-headings);
+    letter-spacing: 2px;
+}
+
+h2.page-title {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple), var(--accent-orange), var(--standout-blue));
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease-in-out infinite;
+    text-shadow: none;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+section#bracket-page {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+    background: 
+        linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
+        radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
+}
+
+/* --- Header & Footer (Placeholder) --- */
+header, footer {
+    padding: 20px 0;
+    background: var(--darker-bg);
+    text-align: center;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--primary-purple), var(--secondary-purple), var(--accent-orange), var(--standout-blue)) 1;
+}
+footer {
+    border-bottom: none;
+    border-top: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--primary-purple), var(--secondary-purple), var(--accent-orange), var(--standout-blue)) 1;
+}
+.placeholder-text {
+    font-family: var(--font-tech);
+    color: var(--light-text);
+    opacity: 0.7;
+}
+
+/* ================================================== */
+/*        REVAMPED TOURNAMENT BRACKET STYLES          */
+/* ================================================== */
+
+/* --- Main Bracket Container --- */
+.tournament-bracket-instance {
+    font-family: var(--font-body);
+    color: var(--light-text);
+    overflow-x: auto; /* Keep horizontal scroll for large brackets */
+    padding: 10px 0;
+    /* Remove old background, let section background show */
+}
+
+/* --- Universal Box Sizing --- */
+.tournament-bracket-instance,
+.tournament-bracket-instance *,
+.tournament-bracket-instance *::before,
+.tournament-bracket-instance *::after {
+    box-sizing: border-box;
+}
+
+/* --- Main Header (Replaced by section h2) & Subtitle --- */
+.page-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--light-text);
+    opacity: 0.8;
+    margin: -10px 0 40px 0;
+    font-family: var(--font-tech);
+}
+
+/* --- Bracket Layout --- */
+.bracket-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px; /* Increased gap */
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.winners-section,
+.losers-section,
+.finals-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-header {
+    font-family: var(--font-headings);
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    padding: 10px 25px;
+    background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(156, 70, 200, 0.3);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.bracket {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Make rounds same height */
+    gap: 15px;
+}
+
+/* --- Round Styling --- */
+.round {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 100%;
+}
+
+.round-title {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--standout-blue);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: var(--font-tech);
+}
+
+/* --- Match Box Styling --- */
+.match {
+    background: linear-gradient(145deg, rgba(15, 42, 10, 0.4), rgba(10, 10, 10, 0.5));
+    border: 2px solid;
+    border-image: linear-gradient(135deg, var(--jungle-green), var(--jungle-light)) 1;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 8px 0;
+    width: 200px;
+    position: relative;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    align-self: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.match:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(3, 183, 250, 0.3);
+    border-image: linear-gradient(135deg, var(--primary-purple), var(--standout-blue)) 1;
+}
+
+/* --- Team & Score Styling --- */
+.team {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 8px;
+    margin: 2px 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    min-height: 2em;
+}
+
+.team:hover { 
+    background: rgba(255, 255, 255, 0.1); 
+}
+
+.team.winner {
+    background: linear-gradient(90deg, rgba(242, 144, 69, 0.4), rgba(156, 70, 200, 0.2));
+    font-weight: bold;
+    box-shadow: inset 0 0 10px rgba(242, 144, 69, 0.4);
+}
+
+.team-name {
+    flex: 1;
+    font-size: 0.85rem;
+    word-break: break-word;
+    line-height: 1.2;
+}
+
+.score {
+    font-weight: bold;
+    font-family: var(--font-tech);
+    color: var(--accent-orange);
+    min-width: 20px;
+    text-align: right;
+    font-size: 1rem;
+}
+
+.vs {
+    text-align: center;
+    color: var(--accent-orange);
+    font-weight: bold;
+    font-size: 0.7rem;
+    margin: 2px 0;
+    opacity: 0.7;
+}
+
+.empty-slot { color: #888; font-style: italic; }
+
+/* --- Connector Lines --- */
+.connector {
+    width: 25px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-purple), var(--standout-blue));
+    align-self: center;
+    position: relative;
+    opacity: 0.5;
+}
+
+/* --- Finals Section --- */
+.finals-header {
+    font-family: var(--font-headings);
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    padding: 12px 30px;
+    background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple), var(--accent-orange), var(--standout-blue));
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 0 6px 25px rgba(242, 144, 69, 0.3);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+    
+.small-finals-header {
+    font-size: 1rem;
+    font-family: var(--font-tech);
+    color: var(--light-text);
+    opacity: 0.8;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.finals-match {
+    background: linear-gradient(135deg, rgba(156, 70, 200, 0.2), rgba(3, 183, 250, 0.1));
+    border: 3px solid;
+    border-image: linear-gradient(45deg, var(--accent-orange), var(--primary-purple), var(--standout-blue)) 1;
+    border-radius: 12px;
+    padding: 12px;
+    width: 250px;
+    box-shadow: 0 8px 30px rgba(156, 70, 200, 0.3);
+    margin-bottom: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.finals-team {
+    padding: 8px 12px;
+    margin: 4px 0;
+    font-size: 1rem;
+    min-height: 2.5em;
+}
+    
+/* --- Info & Map Cards --- */
+.map-info-card {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid var(--jungle-green);
+    border-radius: 10px;
+    padding: 20px 25px;
+    margin: 20px 0;
+    width: 350px;
+    max-width: 90%;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(26, 67, 20, 0.3);
+}
+
+.map-info-card h3 {
+    color: var(--accent-orange);
+    text-shadow: none;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    letter-spacing: 1px;
+}
+
+.map-info-card p {
+    color: var(--light-text);
+    opacity: 0.9;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+    
+.map-title-card {
+    width: 100%;
+    height: 50px;
+    margin: 5px 0 12px 0;
+    border-radius: 5px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(3, 183, 250, 0.5);
+    align-self: center;
+}
+
+.map-title-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.map-title-card-text {
+    position: relative;
+    z-index: 2;
+    color: var(--light-text);
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: var(--font-tech);
+}
+
+/* --- Loser's Bracket Specifics --- */
+.losers-bracket .match { 
+    border-image: linear-gradient(135deg, var(--jungle-dark), var(--jungle-green)) 1;
+}
+.losers-bracket .team.winner { 
+    background: linear-gradient(90deg, rgba(242, 144, 69, 0.3), rgba(26, 67, 20, 0.3));
+}
+    
+/* --- Status & Loading Indicators --- */
+.loading { 
+    text-align: center; 
+    color: var(--accent-orange); 
+    font-size: 1.2rem; 
+    margin: 20px 0; 
+    display: none; 
+    font-family: var(--font-tech);
+}
+.loading::after { content: '...'; animation: dots 1.5s infinite; }
+.status-message-container { text-align: center; margin: 15px 0; min-height: 1.2em; }
+.status-message { font-size: 1rem; color: var(--light-text); opacity: 0.8; font-family: var(--font-tech); }
+@keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
+
+.status-success { color: #4ade80 !important; }
+.status-error { color: #ef4444 !important; }
+
+/* --- Responsive Design --- */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+    }
+}
+@media (max-width: 768px) { 
+    h2.page-title { font-size: 2.5rem; } 
+    .page-subtitle { font-size: 1rem; } 
+    .section-header { font-size: 1.5rem; padding: 10px 20px; } 
+    .finals-header { font-size: 1.8rem; padding: 12px 25px; } 
+    .small-finals-header { font-size: 0.9rem; } 
+    .bracket { flex-direction: column; align-items: center; gap: 20px; } 
+    .connector { display: none; } 
+    .round { min-height: auto; } 
+    .match { width: 220px; padding: 10px; } 
+    .finals-match { width: 260px; } 
+}
+</style>
+</head>
+
+<body>
+    <header>
+        <div class="placeholder-text">YOUR SITE HEADER WOULD GO HERE</div>
+    </header>
+
+    <main>
+        <section id="bracket-page">
+            <div class="container">
+                
+                <h2 class="page-title">🌋 VOLCANIC PANIC 🌋</h2>
+                <p class="page-subtitle">16-Team Double Elimination Championship</p>
+                
+                <div id="loadingIndicator" class="loading">Loading tournament data</div>
+                <div id="statusMessageContainer" class="status-message-container">
+                    <span id="statusMessage" class="status-message"></span>
+                </div>
+
+                <div class="tournament-bracket-instance">
+                    <div class="bracket-wrapper">
+                        <!-- Winner's Bracket -->
+                        <div class="winners-section">
+                            <div class="section-header">🏆 Winner's Bracket</div>
+                            <div class="bracket">
+                                <div class="round w-r1">
+                                    <div class="round-title">Round 1</div>
+                                    <!-- Matches will be populated by JS -->
+                                    <div class="match" data-match="w1-1"><div class="team"><span class="team-name empty-slot">Team 1</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">Team 16</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w1-2"><div class="team"><span class="team-name empty-slot">Team 8</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">Team 9</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w1-3"><div class="team"><span class="team-name empty-slot">Team 5</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">Team 12</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w1-4"><div class="team"><span class="team-name empty-slot">Team 4</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">Team 13</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w1-5"><div class="team"><span class="team-name empty-slot">Team 2</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">Team 15</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w1-6"><div class="team"><span class="team-name empty-slot">Team 7</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">Team 10</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w1-7"><div class="team"><span class="team-name empty-slot">Team 6</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">Team 11</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w1-8"><div class="team"><span class="team-name empty-slot">Team 3</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">Team 14</span><span class="score">-</span></div></div>
+                                </div>
+                                <div class="connector"></div>
+                                <div class="round">
+                                    <div class="round-title">Quarterfinals</div>
+                                    <div class="match" data-match="w2-1"><div class="team"><span class="team-name empty-slot">W1-1 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W1-2 W</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w2-2"><div class="team"><span class="team-name empty-slot">W1-3 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W1-4 W</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w2-3"><div class="team"><span class="team-name empty-slot">W1-5 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W1-6 W</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w2-4"><div class="team"><span class="team-name empty-slot">W1-7 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W1-8 W</span><span class="score">-</span></div></div>
+                                </div>
+                                <div class="connector"></div>
+                                <div class="round">
+                                    <div class="round-title">Semifinals</div>
+                                    <div class="match" data-match="w3-1"><div class="team"><span class="team-name empty-slot">W2-1 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W2-2 W</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="w3-2"><div class="team"><span class="team-name empty-slot">W2-3 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W2-4 W</span><span class="score">-</span></div></div>
+                                </div>
+                                <div class="connector"></div>
+                                <div class="round">
+                                    <div class="round-title">Winner's Final</div>
+                                    <div class="match" data-match="w4-1"><div class="team"><span class="team-name empty-slot">W3-1 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W3-2 W</span><span class="score">-</span></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grand Finals -->
+                        <div class="finals-section">
+                            <div class="finals-header">🏆 Grand Finals</div>
+                            <div class="finals-match" data-match="gf-1">
+                                <div class="team finals-team"><span class="team-name empty-slot">W4-1 W</span><span class="score">-</span></div>
+                                <div class="vs">VS</div>
+                                <div class="team finals-team"><span class="team-name empty-slot">L6-1 W</span><span class="score">-</span></div>
+                            </div>
+                            <div class="small-finals-header">If Bracket Reset Needed</div>
+                            <div class="finals-match" data-match="gf-2">
+                                <div class="team finals-team"><span class="team-name empty-slot">GF1 W</span><span class="score">-</span></div>
+                                <div class="vs">VS</div>
+                                <div class="team finals-team"><span class="team-name empty-slot">GF1 L</span><span class="score">-</span></div>
+                            </div>
+                        </div>
+
+                        <div class="map-info-card">
+                            <h3>🗺️ Loser's Bracket Maps</h3>
+                            <p>All maps in the following rounds are pre-selected before the tournament begins.</p>
+                        </div>
+                        
+                        <!-- Loser's Bracket -->
+                        <div class="losers-section">
+                            <div class="section-header">🔥 Loser's Bracket</div>
+                            <div class="bracket losers-bracket">
+                                <div class="round l-r1">
+                                    <div class="round-title">LR1</div>
+                                    <div class="map-title-card" style="background-image: url('https://cdn.shopify.com/s/files/1/0938/1140/9190/files/Las_Vegas_Default_Sunset.jpg?v=1749860024');"><span class="map-title-card-text">Las Vegas</span></div>
+                                    <div class="match" data-match="l1-1"><div class="team"><span class="team-name empty-slot">W1-1 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W1-2 L</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="l1-2"><div class="team"><span class="team-name empty-slot">W1-3 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W1-4 L</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="l1-3"><div class="team"><span class="team-name empty-slot">W1-5 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W1-6 L</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="l1-4"><div class="team"><span class="team-name empty-slot">W1-7 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">W1-8 L</span><span class="score">-</span></div></div>
+                                </div>
+                                <div class="connector"></div>
+                                <div class="round l-r2">
+                                    <div class="round-title">LR2</div>
+                                    <div class="map-title-card" style="background-image: url('https://cdn.shopify.com/s/files/1/0938/1140/9190/files/Skyway_Default_Afternnoon.jpg?v=1749860025');"><span class="map-title-card-text">Skyway Stadium</span></div>
+                                    <div class="match" data-match="l2-1"><div class="team"><span class="team-name empty-slot">W2-1 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L1-1 W</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="l2-2"><div class="team"><span class="team-name empty-slot">W2-2 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L1-2 W</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="l2-3"><div class="team"><span class="team-name empty-slot">W2-3 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L1-3 W</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="l2-4"><div class="team"><span class="team-name empty-slot">W2-4 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L1-4 W</span><span class="score">-</span></div></div>
+                                </div>
+                                <div class="connector"></div>
+                                <div class="round l-r3">
+                                    <div class="round-title">LR3</div>
+                                    <div class="map-title-card" style="background-image: url('https://cdn.shopify.com/s/files/1/0938/1140/9190/files/Fortune_Stadium_temp.png?v=1749860024');"><span class="map-title-card-text">Fortune Stadium</span></div>
+                                    <div class="match" data-match="l3-1"><div class="team"><span class="team-name empty-slot">L2-1 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L2-2 W</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="l3-2"><div class="team"><span class="team-name empty-slot">L2-3 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L2-4 W</span><span class="score">-</span></div></div>
+                                </div>
+                                <div class="connector"></div>
+                                <div class="round l-r4">
+                                    <div class="round-title">LR4</div>
+                                    <div class="map-title-card" style="background-image: url('https://cdn.shopify.com/s/files/1/0938/1140/9190/files/Horizon_default_sunset.jpg?v=1749860025');"><span class="map-title-card-text">Sys $ Horizon</span></div>
+                                    <div class="match" data-match="l4-1"><div class="team"><span class="team-name empty-slot">W3-1 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L3-1 W</span><span class="score">-</span></div></div>
+                                    <div class="match" data-match="l4-2"><div class="team"><span class="team-name empty-slot">W3-2 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L3-2 W</span><span class="score">-</span></div></div>
+                                </div>
+                                <div class="connector"></div>
+                                <div class="round l-r5">
+                                    <div class="round-title">LR5</div>
+                                    <div class="map-title-card" style="background-image: url('https://cdn.shopify.com/s/files/1/0938/1140/9190/files/Annotation_2025-06-13_201719.png?v=1749860550');"><span class="map-title-card-text">Nozomi/Citadel</span></div>
+                                    <div class="match" data-match="l5-1"><div class="team"><span class="team-name empty-slot">L4-1 W</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L4-2 W</span><span class="score">-</span></div></div>
+                                </div>
+                                <div class="connector"></div>
+                                <div class="round l-r6">
+                                    <div class="round-title">LB Final</div>
+                                    <div class="map-title-card" style="background-image: url('https://cdn.shopify.com/s/files/1/0938/1140/9190/files/website_sign_up.png?v=1749607434');"><span class="map-title-card-text">MAP PICK</span></div>
+                                    <div class="match" data-match="l6-1"><div class="team"><span class="team-name empty-slot">W4-1 L</span><span class="score">-</span></div><div class="vs">VS</div><div class="team"><span class="team-name empty-slot">L5-1 W</span><span class="score">-</span></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="placeholder-text">YOUR SITE FOOTER WOULD GO HERE</div>
+    </footer>
+
+
+<script>
+    // The original JavaScript is preserved exactly as it was, as it is well-written
+    // and depends on the specific data-match attributes and class names which we have kept.
+    
+    const GOOGLE_SHEET_ID = "1gv5Jv0PngA4EeOzQpUTsS_A57n3D9zuZgSu6z86Kbcg";
+    const SHEET_NAME = 'Sheet1'; 
+    const WINNER_COLUMN_HEADER = "Winner (Team Name)";
+
+    const bracketLogic = {
+        "w2-1": { team1: { from: "w1-1", type: "winner" }, team2: { from: "w1-2", type: "winner" } },
+        "w2-2": { team1: { from: "w1-3", type: "winner" }, team2: { from: "w1-4", type: "winner" } },
+        "w2-3": { team1: { from: "w1-5", type: "winner" }, team2: { from: "w1-6", type: "winner" } },
+        "w2-4": { team1: { from: "w1-7", type: "winner" }, team2: { from: "w1-8", type: "winner" } },
+        "w3-1": { team1: { from: "w2-1", type: "winner" }, team2: { from: "w2-2", type: "winner" } },
+        "w3-2": { team1: { from: "w2-3", type: "winner" }, team2: { from: "w2-4", type: "winner" } },
+        "w4-1": { team1: { from: "w3-1", type: "winner" }, team2: { from: "w3-2", type: "winner" } },
+        "l1-1": { team1: { from: "w1-1", type: "loser" }, team2: { from: "w1-2", type: "loser" } },
+        "l1-2": { team1: { from: "w1-3", type: "loser" }, team2: { from: "w1-4", type: "loser" } },
+        "l1-3": { team1: { from: "w1-5", type: "loser" }, team2: { from: "w1-6", type: "loser" } },
+        "l1-4": { team1: { from: "w1-7", type: "loser" }, team2: { from: "w1-8", type: "loser" } },
+        "l2-1": { team1: { from: "w2-1", type: "loser" }, team2: { from: "l1-1", type: "winner" } },
+        "l2-2": { team1: { from: "w2-2", type: "loser" }, team2: { from: "l1-2", type: "winner" } },
+        "l2-3": { team1: { from: "w2-3", type: "loser" }, team2: { from: "l1-3", type: "winner" } },
+        "l2-4": { team1: { from: "w2-4", type: "loser" }, team2: { from: "l1-4", type: "winner" } },
+        "l3-1": { team1: { from: "l2-1", type: "winner" }, team2: { from: "l2-2", type: "winner" } },
+        "l3-2": { team1: { from: "l2-3", type: "winner" }, team2: { from: "l2-4", type: "winner" } },
+        "l4-1": { team1: { from: "w3-1", type: "loser" }, team2: { from: "l3-1", type: "winner" } },
+        "l4-2": { team1: { from: "w3-2", type: "loser" }, team2: { from: "l3-2", type: "winner" } },
+        "l5-1": { team1: { from: "l4-1", type: "winner" }, team2: { from: "l4-2", type: "winner" } },
+        "l6-1": { team1: { from: "w4-1", type: "loser" }, team2: { from: "l5-1", type: "winner" } },
+        "gf-1": { team1: { from: "w4-1", type: "winner" }, team2: { from: "l6-1", type: "winner" } },
+        "gf-2": { team1: { from: "gf-1", type: "winner" }, team2: { from: "gf-1", type: "loser" } },
+    };
+
+    let allSheetDataMap = {}; 
+
+    function parseCSVToJSON(csvText) {
+        const lines = csvText.trim().split('\n');
+        if (lines.length < 1) return [];
+        const headers = lines[0].split(',').map(header => header.trim().replace(/^"|"$/g, ''));
+        const jsonData = [];
+        for (let i = 1; i < lines.length; i++) {
+            if (lines[i].trim() === "") continue; 
+            const values = lines[i].split(',').map(value => value.trim().replace(/^"|"$/g, ''));
+            if (values.length === headers.length) { 
+                const entry = {};
+                headers.forEach((header, index) => {
+                    entry[header] = values[index];
+                });
+                jsonData.push(entry);
+            } else {
+                console.warn(`Skipping CSV line ${i+1} due to mismatched column count. Expected ${headers.length}, got ${values.length}. Line: "${lines[i]}"`);
+            }
+        }
+        return jsonData;
+    }
+
+    function resolveParticipantName(matchId, teamSlotKey, sheetDataMap, logicMap, visited) {
+        const cacheKey = `${matchId}-${teamSlotKey}`;
+        if (visited.has(cacheKey)) return `[Circular ${matchId}]`; 
+        visited.add(cacheKey);
+
+        const logicForCurrentMatch = logicMap[matchId];
+        
+        if (!logicForCurrentMatch || !logicForCurrentMatch[teamSlotKey]) {
+            const currentMatchSheetData = sheetDataMap[matchId];
+            visited.delete(cacheKey); 
+            return currentMatchSheetData ? (teamSlotKey === 'team1' ? currentMatchSheetData.Team1Name : currentMatchSheetData.Team2Name) || null : null;
+        }
+
+        const feederRule = logicForCurrentMatch[teamSlotKey]; 
+        const feederMatchId = feederRule.from;
+        const feederType = feederRule.type; 
+        
+        const feederMatchSheetData = sheetDataMap[feederMatchId];
+
+        if (!feederMatchSheetData || !feederMatchSheetData[WINNER_COLUMN_HEADER]) {
+            visited.delete(cacheKey);
+            return null; 
+        }
+
+        const feederTeam1Name = resolveParticipantName(feederMatchId, 'team1', sheetDataMap, logicMap, new Set(visited));
+        const feederTeam2Name = resolveParticipantName(feederMatchId, 'team2', sheetDataMap, logicMap, new Set(visited));
+
+        const finalFeederP1 = feederTeam1Name || (feederMatchSheetData ? feederMatchSheetData.Team1Name : null);
+        const finalFeederP2 = feederTeam2Name || (feederMatchSheetData ? feederMatchSheetData.Team2Name : null);
+
+        if (!finalFeederP1 && !finalFeederP2) {
+             visited.delete(cacheKey);
+             return null;
+        }
+        
+        const declaredWinnerNameInFeeder = feederMatchSheetData[WINNER_COLUMN_HEADER];
+        if (!declaredWinnerNameInFeeder) {
+            visited.delete(cacheKey);
+            return null;
+        }
+
+        let resolvedName = null;
+        if (feederType === 'winner') {
+            resolvedName = declaredWinnerNameInFeeder;
+        } else { // type is 'loser'
+            if (declaredWinnerNameInFeeder.trim() === finalFeederP1?.trim()) {
+                resolvedName = finalFeederP2;
+            } else if (declaredWinnerNameInFeeder.trim() === finalFeederP2?.trim()) {
+                resolvedName = finalFeederP1;
+            } else {
+                console.warn(`Winner name "${declaredWinnerNameInFeeder}" in feeder match ${feederMatchId} does not match its participants: "${finalFeederP1}" or "${finalFeederP2}". Check sheet data for ${feederMatchId}.`);
+                resolvedName = null; 
+            }
+        }
+        
+        visited.delete(cacheKey); 
+        return resolvedName;
+    }
+
+    function populateBracket(sheetDataMap) {
+        const allMatchElements = document.querySelectorAll('.tournament-bracket-instance .match, .tournament-bracket-instance .finals-match');
+
+        allMatchElements.forEach(matchElement => {
+            const currentMatchId = matchElement.dataset.match;
+            if (!currentMatchId) return;
+
+            let team1NameToDisplay = resolveParticipantName(currentMatchId, 'team1', sheetDataMap, bracketLogic, new Set());
+            let team2NameToDisplay = resolveParticipantName(currentMatchId, 'team2', sheetDataMap, bracketLogic, new Set());
+
+            const currentMatchSheetData = sheetDataMap[currentMatchId];
+            const team1Score = currentMatchSheetData ? (currentMatchSheetData.Team1Score || "-") : "-";
+            const team2Score = currentMatchSheetData ? (currentMatchSheetData.Team2Score || "-") : "-";
+            const actualWinnerNameFromSheet = currentMatchSheetData ? currentMatchSheetData[WINNER_COLUMN_HEADER] : null;
+
+            const teams = matchElement.querySelectorAll('.team'); 
+            const finalTeams = matchElement.querySelectorAll('.finals-team'); 
+            const targetTeams = teams.length > 0 ? teams : finalTeams;
+
+            if (targetTeams.length >= 2) {
+                if (targetTeams[0]) {
+                    const nameSpan = targetTeams[0].querySelector('.team-name');
+                    const scoreSpan = targetTeams[0].querySelector('.score');
+                    if (nameSpan) {
+                        nameSpan.textContent = team1NameToDisplay || nameSpan.textContent; 
+                        if(team1NameToDisplay) nameSpan.classList.remove('empty-slot'); else nameSpan.classList.add('empty-slot');
+                    }
+                    if (scoreSpan) scoreSpan.textContent = team1Score;
+                    
+                    targetTeams[0].classList.remove('winner');
+                    if (actualWinnerNameFromSheet && team1NameToDisplay && actualWinnerNameFromSheet.trim() === team1NameToDisplay.trim()) {
+                        targetTeams[0].classList.add('winner');
+                    }
+                }
+                if (targetTeams[1]) {
+                    const nameSpan = targetTeams[1].querySelector('.team-name');
+                    const scoreSpan = targetTeams[1].querySelector('.score');
+                    if (nameSpan) {
+                        nameSpan.textContent = team2NameToDisplay || nameSpan.textContent;
+                        if(team2NameToDisplay) nameSpan.classList.remove('empty-slot'); else nameSpan.classList.add('empty-slot');
+                    }
+                    if (scoreSpan) scoreSpan.textContent = team2Score;
+
+                    targetTeams[1].classList.remove('winner');
+                    if (actualWinnerNameFromSheet && team2NameToDisplay && actualWinnerNameFromSheet.trim() === team2NameToDisplay.trim()) {
+                        targetTeams[1].classList.add('winner');
+                    }
+                }
+            }
+        });
+    }
+
+    async function loadFromGoogleSheets() {
+        const statusElement = document.getElementById('statusMessage');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const SPREADSHEET_ID = GOOGLE_SHEET_ID;
+        const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}&nocache=${new Date().getTime()}`;
+
+        if (loadingIndicator) loadingIndicator.style.display = 'block';
+        if (statusElement) {
+            statusElement.textContent = "Loading data from Google Sheet...";
+            statusElement.className = 'status-message'; 
+        }
+        allSheetDataMap = {}; 
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}. Check sheet ID, name, and sharing settings.`);
+            }
+            const csvData = await response.text();
+            if (!csvData.trim()){
+                throw new Error("Fetched data is empty. Sheet might be empty or inaccessible.");
+            }
+            const jsonDataArray = parseCSVToJSON(csvData);
+            
+            jsonDataArray.forEach(row => {
+                if(row.MatchID) {
+                    allSheetDataMap[row.MatchID.trim()] = row;
+                }
+            });
+
+            populateBracket(allSheetDataMap); 
+
+            if (statusElement) {
+                statusElement.textContent = "Data loaded successfully!";
+                statusElement.classList.add('status-success');
+            }
+        } catch (error) {
+            console.error('Error loading Google Sheet data:', error);
+            if (statusElement) {
+                statusElement.textContent = `Error: ${error.message}`;
+                statusElement.classList.add('status-error');
+            }
+        } finally {
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        loadFromGoogleSheets();
+    });
+</script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

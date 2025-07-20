@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ape Squad Esports - The dominant team in The Finals. Follow our journey to the top.">
+    <meta name="keywords" content="Ape Squad, esports, The Finals, gaming, pro team, competitive gaming">
+    <title>Ape Squad Esports | Dominating The Finals</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- The <style> block was removed and replaced with this line -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <!-- ==================== -->
+    <!--   Header Starts Here   -->
+    <!-- ==================== -->
+    <!-- The content of header.html will be loaded here -->
+    <header></header>
+
+    <main>
+        <!-- ==================== -->
+        <!--    Hero Section      -->
+        <!-- ==================== -->
+        
+        <!-- This style is still needed to remove the CSS background that would cover the video -->
+        <section id="hero" style="background: none;"> 
+
+            <!-- THE ONLY CHANGE IS HERE: "position: absolute" is now "position: fixed" -->
+            <video autoplay loop muted playsinline id="hero-video" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+                <source src="/images/LOOP.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="hero-content">
+                <h2>Welcome to the Jungle</h2>
+                <p>We're Ape Squad, a professional e-sports org making tournaments and supporting the comp scene in THE FINALS.
+                    <br>This is our arena.</p>
+                <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">Watch Us Live</a>
+            </div>
+        </section>
+
+        <!-- ==================== -->
+        <!--  Meet the Team Section -->
+        <!-- ==================== -->
+        <section id="team">
+            <div class="container" style="text-align: center;">
+<h2>Support the Squad</h2>
+    <p>Love what we're building? Help fuel Ape Squad by tipping, subbing, or grabbing some gear. Every dollar keeps the arena alive.</p>
+    <br>
+    <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">Subscribe on Twitch</a>
+    <a href="https://youtube.com/@apesquadorg" target="_blank" class="btn">Check out our Youtube</a>
+    <a href="https://yourmerchstore.com" target="_blank" class="btn">Shop Our Merch</a>
+  </div>
+</section>
+
+       <!-- ==================== -->
+       <!--   Schedule Section   -->
+       <!-- ==================== -->
+       <section id="schedule">
+            <div class="container">
+                <h2 class="glitch" data-text="MATCH SCHEDULE">MATCH SCHEDULE</h2>
+                
+                <div class="schedule-container">
+                    <!-- Match Card 1 -->
+                    <div class="match-card">
+                        <div class="match-info">
+                            <h4>TNT Pro-Scrims</h4>
+                            <p>Thursday Night Throwdown</p>
+                        </div>
+                        <div class="match-time">8:00 PM EST</div>
+                        <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">WATCH LIVE</a>
+                    </div>
+
+                    <!-- Match Card 2 -->
+                    <div class="match-card">
+                        <div class="match-info">
+                            <h4>VOLCANIC PANIC</h4>
+                            <p>June 14th 2025</p>
+                        </div>
+                        <div class="match-time">WINNERS:BRICKED</div>
+                        <div class="match-status upcoming">FINISHED</div>
+                    </div>
+
+                    <!-- Match Card 3 -->
+                    <div class="match-card">
+                        <div class="match-info">
+                            <h4>JUNGLE RUMBLE</h4>
+                            <p>...</p>
+                        </div>
+                        <div class="match-time">WINNERS: NOODS</div>
+                        <div class="match-status upcoming">FINISHED</div>
+                    </div>
+                </div>
+            </div>
+       </section>
+
+       
+
+    <!-- ==================== -->
+    <!--   Footer Starts Here   -->
+    <!-- ==================== -->
+    <!-- The content of footer.html will be loaded here -->
+    <footer></footer>
+
+    <!-- SCRIPT TO LOAD HEADER AND FOOTER -->
+    <script src="/js/main.js"></script>
+</body>
+</html>

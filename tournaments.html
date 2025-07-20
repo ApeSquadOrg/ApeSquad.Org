@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ape Squad Esports - Tournament history, results, and upcoming events.">
+    <title>Ape Squad | Tournaments</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Link to your external stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <header></header>
+
+    <main>
+      <section id="tournaments-page">
+          <div class="container">
+              <h2>Tournament Showcase</h2>
+
+              <!-- UPCOMING TOURNAMENTS SECTION -->
+              <h3 class="section-title">Upcoming Events</h3>
+              <div class="tournaments-grid">
+                <div class="tournament-card upcoming">
+                  <div class="tournament-graphic"><img src="images/tournament/upcoming.png" alt="Ape Squad"></div>
+                  <div class="tournament-info">
+                    <h3>To Be Announced</h3><p class="date">TBD</p>
+                    <div class="status-info"><h4>Status</h4><p>TBD</p></div>
+                  </div>
+                  <div class="tournament-links">
+                    <a href="#" class="btn">Register Your Team</a>
+                    <a href="#" class="btn btn-secondary">View Rules</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PAST TOURNAMENTS SECTION -->
+              <h3 class="section-title">Past Events</h3>
+              <div class="tournaments-grid">
+
+                <!-- VOLCANIC PANIC CARD -->
+                <div class="tournament-card">
+                  <div class="tournament-graphic"><img src="/images/tournament/volcanicpanic.png" alt="Volcanic Panic Graphic"></div>
+                  <div class="tournament-info">
+                    <h3>Volcanic Panic</h3><p class="date">June 14th, 2025</p>
+                    <div class="winners-podium">
+                      <h4>Winners</h4><ol><li>BRICKED</li><li>Make a Wish Foundation</li><li>Scallywags</li></ol>
+                    </div>
+                  </div>
+                  <div class="tournament-links">
+                    <button class="btn" id="volcanic-placements-btn">View Placements & Teams</button>
+                  </div>
+                </div>
+
+                <!-- JUNGLE RUMBLE CARD -->
+                <div class="tournament-card">
+                    <div class="tournament-graphic"><img src="images/tournament/junglerumble.png" alt="Jungle Rumble Graphic"></div>
+                    <div class="tournament-info">
+                      <h3>Jungle Rumble</h3><p class="date">February 22nd, 2025</p>
+                      <div class="winners-podium">
+                        <h4>Winners</h4><ol><li>Noods</li><li>Holtows Finest</li><li>Cathedral</li></ol>
+                      </div>
+                    </div>
+                    <div class="tournament-links">
+                       <button class="btn" id="jungle-rumble-placements-btn">View Placements & Teams</button>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+    </main>
+
+    <footer></footer>
+
+    <!-- MODAL HTML STRUCTURE -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal-content" class="modal-content">
+            <button id="modal-close-btn" class="modal-close-btn">×</button>
+            <div id="modal-body">
+                <!-- Content will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- SCRIPT FOR ALL MODAL LOGIC -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalBody = document.getElementById('modal-body');
+        const closeBtn = document.getElementById('modal-close-btn');
+
+        const volcanicPanicData = [
+            { placement: '1st Place', rankClass: 'gold', team: 'BRICKED', players: ['stn2k', 'bizzyow', 'stewj1', 'NA'] },
+            { placement: '2nd Place', rankClass: 'silver', team: 'Make A Wish Foundation', players: ['Viper', 'Varien', 'Derp', 'Kafeneio'] },
+            { placement: '3rd Place', rankClass: 'bronze', team: 'Scallywags', players: ['Wallyo', 'Balise', 'Gremlin', 'Zuki'] },
+            { placement: '4th Place', team: 'tuffologists', players: ['n0rmalize', 'aerroc', 'purestrafez'] },
+            { placement: '5th-6th Place', team: '4th Party Cashbox', players: ['Brutal Logic', 'Tmills', 'Appoh'] },
+            { placement: '5th-6th Place', team: 'AHS', players: ['Lasagna', 'UNI', 'Sloth'] },
+            { placement: '7th-8th Place', team: 'DIH Reincarnated', players: ['hdsponz', 'brendyz', 'ethano1', 'none'] },
+            { placement: '7th-8th Place', team: 'SupportLight.OL', players: ['calcifer.io', 'kaelwhale', 'Troop', 'jussangell'] },
+            { placement: '9th-12th Place', team: '200ms', players: ['wolfx.exe', 'bransyah_', '6rooty'] },
+            { placement: '9th-12th Place', team: 'Aura corp', players: ['elspuzeman', 'Demo', 'Ink', 'Udrakoni'] },
+            { placement: '9th-12th Place', team: 'Big Bewdie Warriors', players: ['ekazo', 'zenworldo', 'sloth'] },
+            { placement: '9th-12th Place', team: 'SlaHMH', players: ['.lqtus', 'Rottxnx', 'Evsitn', 'Theretardo'] },
+            { placement: '13th-16th Place', team: 'Cool Kidz With a Z', players: ['fairwhisper11', 'p4yd1rt', 'ghost_bulb', 'texaspride1'] },
+            { placement: '13th-16th Place', team: 'Day One Crashouts', players: ['mrboomnzoom', 'wittyprop', 'bootyconnoisseur8777', 'simplisss'] },
+            { placement: '13th-16th Place', team: 'Freaks', players: ['Crimson', 'r0ck5l1d3', 'fana3436'] },
+            { placement: '13th-16th Place', team: 'MUNTLINGS', players: ['epi9798', 'honor_the_pure', 'tiger5016', 'oreyos'] }
+        ];
+
+        const jungleRumbleData = [
+            { placement: '1st Place', rankClass: 'gold', team: 'Noods', players: ['Lasanga12', 'A1r-forrce', 'Uni'] },
+            { placement: '2nd Place', rankClass: 'silver', team: 'Holtows finest', players: ['Brendy', 'Lamp', 'Lycommit', 'Springhour'] },
+            { placement: '3rd Place', rankClass: 'bronze', team: 'Cathedral', players: ['MrDerp', 'FiestPackMule91', 'Mvches', 'Zee', 'Villa'] },
+            { placement: '4th Place', team: 'Bricked', players: ['stn2k', 'bizzyow', 'slxth.', 'balise'] },
+            { placement: '5th-6th Place', team: 'THE SMALL SPLASH', players: ['n0rmalize', 'stewj', 'ethano7417', 'zuki0238'] },
+            { placement: '5th-6th Place', team: 'Aura LLC', players: ['Udrakoni', 'F1reRise', 'Joffery', 'Ink'] },
+            { placement: '7th-8th Place', team: 'Disaster Stack', players: ['impieux.', 'peppajakzo', 'fatzive'] },
+            { placement: '7th-8th Place', team: 'Warriors of Chaac (WOC)', players: ['lettherebecarnxge', 'Carnxge', 'Ket', 'B0oboo', 'Asixcy'] },
+            { placement: '9th-12th Place', team: 'Ape Squad', players: ['Rippie', 'Beam0', 'Hashi'] },
+            { placement: '9th-12th Place', team: '4th Party Cashbox', players: ['brutallogic', 'Kazi', 'Sirgnal', 'Kafeneio (Maybe)'] },
+            { placement: '9th-12th Place', team: 'Kyoto Haters 3', players: ['ekazo', 'slvth_', 'clarifyyy', 'pullkia'] },
+            { placement: '9th-12th Place', team: 'Aped On', players: ['TTK_Controlla', 'baliselikesdudes', 'torio0325'] },
+            { placement: '13th-16th Place', team: 'SPACESHООВS', players: ['bongo', 'Contestant Beetz', 'Pinhead'] },
+            { placement: '13th-16th Place', team: 'DIFF', players: ['bucketshoe', 'sterling', 'Pouff', 'Realcornguy'] },
+            { placement: '13th-16th Place', team: 'RAH', players: ['tbovvy', 'chunkmaster8734', 'numb', '!', 'Pearl'] },
+            { placement: '13th-16th Place', team: 'The Oatreals', players: ['calcifer.io', 'denyalol', 'kaelwhale'] }
+        ];
+
+        function openModal() {
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            setTimeout(() => { modalBody.innerHTML = ''; }, 300);
+        }
+
+        // --- UPDATED FUNCTION TO BUILD MODAL CONTENT ---
+        function buildModalContent(title, data) {
+            // Create the HTML string, including the new button container
+            let content = `
+                <h1>${title}</h1>
+                <div class="modal-controls">
+                    <button id="expand-all-btn" class="btn" data-state="collapsed">Expand All</button>
+                </div>
+            `;
+            
+            // Add the accordion HTML from the data
+            data.forEach(teamData => {
+                const playerListItems = teamData.players.map(player => `<li>${player}</li>`).join('');
+                content += `
+                    <details class="placement-accordion">
+                        <summary>
+                            <span class="placement-rank ${teamData.rankClass || ''}">${teamData.placement}</span>
+                            <span class="team-name">${teamData.team}</span>
+                        </summary>
+                        <ul class="player-list">${playerListItems}</ul>
+                    </details>
+                `;
+            });
+            
+            // Set the complete HTML in the modal body
+            modalBody.innerHTML = content;
+
+            // NOW that the button exists in the DOM, find it and add the listener
+            const expandBtn = document.getElementById('expand-all-btn');
+            if (expandBtn) {
+                expandBtn.addEventListener('click', function() {
+                    const accordions = modalBody.querySelectorAll('.placement-accordion');
+                    const isCollapsed = this.dataset.state === 'collapsed';
+
+                    accordions.forEach(acc => { acc.open = isCollapsed; });
+                    
+                    this.dataset.state = isCollapsed ? 'expanded' : 'collapsed';
+                    this.textContent = isCollapsed ? 'Collapse All' : 'Expand All';
+                });
+            }
+            
+            // Finally, open the modal
+            openModal();
+        }
+
+        const volcanicBtn = document.getElementById('volcanic-placements-btn');
+        if (volcanicBtn) {
+            volcanicBtn.addEventListener('click', () => {
+                buildModalContent('Volcanic Panic Placements', volcanicPanicData);
+            });
+        }
+
+        const jungleRumbleBtn = document.getElementById('jungle-rumble-placements-btn');
+        if (jungleRumbleBtn) {
+            jungleRumbleBtn.addEventListener('click', () => {
+                buildModalContent('Jungle Rumble Placements', jungleRumbleData);
+            });
+        }
+        
+        closeBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (event) => {
+            if (event.target === modalOverlay) closeModal();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
+        });
+    });
+    </script>
+    
+    <script src="js/main.js"></script>
+
+</body>
+</html>

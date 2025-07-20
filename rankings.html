@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ape Squad - Season Rankings</title>
+
+    <!-- Link to your existing CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts from your stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (for header/footer icons and our chevron) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Styles for the page -->
+    <style>
+        /* --- FIX: STICKY FOOTER & FULL-HEIGHT MAIN BACKGROUND --- */
+        html {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- NEW: Prevent body scroll when modal is open --- */
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        main {
+            /* KEY CHANGE: The background from #rankings is now here */
+            background: 
+                linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
+                radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
+            
+            /* This is the sticky footer part - it makes main grow */
+            flex: 1 0 auto;
+        }
+
+        #rankings {
+            /* KEY CHANGE: The background property has been removed from here. */
+            /* We KEEP the padding to push the content down from the header. */
+            padding: 120px 0;
+        }
+        
+        .site-footer {
+            flex-shrink: 0; 
+        }
+        /* --- END OF FIX --- */
+
+
+        /* Your existing styles for the collapsible elements */
+        .rankings-subtitle {
+            text-align: center;
+            color: #fff;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .collapsible-trigger {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            transition: background-color 0.3s ease;
+        }
+        
+        .collapsible-trigger:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .collapsible-trigger .glitch {
+            margin: 0; 
+        }
+        
+        .collapsible-trigger .trigger-icon {
+            font-size: 1.8rem;
+            color: #fff;
+            transition: transform 0.3s ease-out;
+        }
+
+        .collapsible-trigger.active .trigger-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding: 0 15px; 
+        }
+
+        .collapsible-content.open {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .collapsible-trigger + .collapsible-content + .collapsible-trigger {
+            margin-top: 20px;
+        }
+
+        /* --- NEW STYLES FOR THE RANKING EXPLANATION MODAL --- */
+        .rankings-intro .btn {
+            margin-top: 25px;
+        }
+        .ranking-modal-body h2 {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .ranking-modal-body h3 {
+            font-family: var(--font-tech);
+            font-size: 1.8rem;
+            color: var(--accent-orange);
+            text-shadow: none;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--jungle-green);
+        }
+        .ranking-modal-body p {
+            line-height: 1.7;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        .ranking-modal-body p strong {
+            color: var(--standout-blue);
+            font-weight: 700;
+        }
+        .ranking-modal-body ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .ranking-modal-body li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+        }
+        .ranking-modal-body li::before {
+            content: '›';
+            font-size: 1.5rem;
+            color: var(--accent-orange);
+            position: absolute;
+            left: 0;
+            top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header></header>
+
+    <main>
+        <section id="rankings">
+            <div class="container">
+                
+                <!-- DROPDOWN 1: Season 0 Rankings (Open by Default) -->
+                <div class="collapsible-trigger active">
+                    <h2 class="glitch" data-text="SEASON 0 RANKINGS">SEASON 0 RANKINGS</h2>
+                    <i class="fas fa-chevron-down trigger-icon"></i>
+                </div>
+                <div class="collapsible-content open">
+                    <div class="rankings-intro">
+                        <p>Our NEW ranking system uses 3v3 and Cashout tournament results, weighted by difficulty.<br>
+<br>
+<strong>Note:</strong><br> - Most tournaments are region-locked, so NA and EU players usually compete separately, this is one of the scene’s current limitations.</p>
+                        <p class="season-info">Season 0 Rankings Includes competitive 3v3 and Cashout tournaments from PHL Qualifiers to Volcanic Panic.</p>
+                        
+                        <!-- NEW: Trigger button for the modal -->
+                        <button class="btn" id="open-ranking-modal">How Our Rankings Work</button>
+
+                    </div>
+                    
+                    <h3 class="rankings-subtitle">Season 0 Rankings</h3> 
+                    <div class="rankings-image-container">
+                        <img class="rankings-image" src="/images/APESPRORANKS0.jpg" alt="Ape Squad Season 0 Rankings">
+                    </div>
+                </div>
+
+                <!-- DROPDOWN 2: Legacy Rankings -->
+                <div class="collapsible-trigger">
+                    <h2 class="glitch" data-text="LEGACY SEASON RANKINGS">LEGACY RANKINGS</h2>
+                    <i class="fas fa-chevron-down trigger-icon"></i>
+                </div>
+                <div class="collapsible-content">
+                    <div class="rankings-intro">
+                        <p>Our ranking system evaluates player performance by using 3v3 tournament results as the core metric, with each tournament weighted according to its difficulty. Tournaments with higher competition levels receive more weight, ensuring that performance in more challenging events has a greater impact on a player's overall ranking.</p>
+                        <p class="season-info">Legacy Rankings Includes competitive 3v3 tournaments from Breakout to Jungle Rumble.</p>
+                    </div>
+
+                    <h3 class="rankings-subtitle">Legacy Rankings</h3>
+                    <div class="rankings-image-container">
+                        <img class="rankings-image" src="https://cdn.shopify.com/s/files/1/0938/1140/9190/files/APES_Pro_Rank_test_png_35843332-f252-4733-85d8-3b59edf5546f.jpg?v=1742352427" alt="Ape Squad Legacy Pro Rankings">
+                    </div>
+                </div>
+            </div>
+        </section> 
+    </main>
+
+    <footer></footer>
+
+    <!-- NEW: MODAL (POP-OUT) HTML STRUCTURE -->
+    <!-- This uses the .modal-overlay and .modal-content classes from your existing style.css -->
+    <div class="modal-overlay" id="ranking-explanation-modal">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="close-ranking-modal">×</button>
+            <div class="ranking-modal-body">
+                <h2>How Our Player Rankings Work</h2>
+                <p>Our goal is to create a ranking system that is fair, balanced, and rewards the players who perform well and consistently show up to compete. It’s designed to find the best overall players in our circuit.</p>
+                
+                <h3>1. Performance: Earn Points for Placement</h3>
+                <p>The better you finish in a tournament, the more points you get. First place gets the most, second place gets a little less, and so on down the line.</p>
+                
+                <h3>2. Prestige: Bigger Tournaments are Worth More</h3>
+                <p>Not all tournaments are created equal. We give each tournament a "weighting" or "prestige level." Your placement points are multiplied by this weight, so a win at a major event gives your ranking a huge boost.</p>
+
+                <h3>3. Consistency: Rewarding Commitment and Fairness</h3>
+                <p>This is the most important part of our system. It ensures that the rankings are fair and can't be "gamed" by someone just showing up once. This is done in two ways:</p>
+                <ul>
+                    <li><strong>The "Forgiving" Average:</strong> We average your scores to see how you perform overall. However, we do it in a special way that is less punishing the more you play. This means one bad tournament won't ruin your entire ranking if you're a regular competitor. It recognizes that everyone has an off day.</li>
+                    <li><strong>The Qualification Bonus/Penalty:</strong> This is our rule to prevent "one-hit wonders." Your final score is adjusted based on how many tournaments you've played. If you've only played in one or two events, your score gets a small penalty. This prevents a substitute player who wins a single big event from unfairly jumping ahead of dedicated players.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SCRIPT TO LOAD HEADER/FOOTER & HANDLE COLLAPSIBLE MENU -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch and inject header/footer
+            fetch('header.html').then(r => r.text()).then(d => document.querySelector('header').innerHTML = d);
+            fetch('footer.html').then(r => r.text()).then(d => document.querySelector('footer').innerHTML = d);
+            
+            // --- UPDATED JavaScript for Collapsible Menus ---
+            
+            const triggers = document.querySelectorAll(".collapsible-trigger");
+            
+            triggers.forEach(trigger => {
+                trigger.addEventListener("click", function() {
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle("active");
+
+                    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        requestAnimationFrame(() => {
+                            content.style.maxHeight = '0px';
+                        });
+                        content.classList.remove("open");
+
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        content.classList.add("open");
+
+                        const onTransitionEnd = () => {
+                            if (content.classList.contains('open')) {
+                                content.style.maxHeight = 'none';
+                            }
+                            content.removeEventListener('transitionend', onTransitionEnd);
+                        };
+                        
+                        content.addEventListener('transitionend', onTransitionEnd);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.collapsible-content.open').forEach(openContent => {
+                openContent.style.maxHeight = 'none'; 
+            });
+
+            // --- NEW: JAVASCRIPT FOR THE RANKING EXPLANATION MODAL ---
+
+            const openModalBtn = document.getElementById('open-ranking-modal');
+            const closeModalBtn = document.getElementById('close-ranking-modal');
+            const modalOverlay = document.getElementById('ranking-explanation-modal');
+
+            // Function to open the modal
+            const openModal = () => {
+                modalOverlay.classList.add('active');
+                document.body.classList.add('modal-open'); // Prevent background scroll
+            };
+
+            // Function to close the modal
+            const closeModal = () => {
+                modalOverlay.classList.remove('active');
+                document.body.classList.remove('modal-open'); // Allow background scroll
+            };
+
+            // Event Listeners
+            if (openModalBtn && modalOverlay) {
+                openModalBtn.addEventListener('click', openModal);
+            }
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+            if (modalOverlay) {
+                // Close modal if user clicks on the dark overlay background
+                modalOverlay.addEventListener('click', (event) => {
+                    if (event.target === modalOverlay) {
+                        closeModal();
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

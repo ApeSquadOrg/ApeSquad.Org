@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Club - Ape Squad Esports</title>
+    
+    <!-- Link to your main stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Google Fonts & Font Awesome from your theme -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+    <!-- NEW STYLES for this page -->
+    <style>
+        /* This CSS uses the variables from your main style.css file */
+        #club-page {
+            padding: 120px 0;
+            background: 
+                linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
+                radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
+        }
+
+        .club-intro {
+            text-align: center;
+            max-width: 600px;
+            margin: -30px auto 60px auto;
+            font-family: var(--font-tech);
+            font-size: 1.2rem;
+            color: var(--standout-blue);
+            opacity: 0.8;
+        }
+
+        #club-lists-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* This styles the container your script creates */
+        .clubContainer {
+            background: linear-gradient(145deg, rgba(15, 42, 10, 0.5), rgba(26, 67, 20, 0.4));
+            border: 2px solid var(--primary-purple);
+            border-radius: 15px;
+            padding: 30px 40px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* This styles the h2 your script creates */
+        .clubContainer h2 {
+            font-family: var(--font-headings);
+            font-size: 2.5rem;
+            color: var(--accent-orange);
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px var(--accent-orange);
+        }
+
+        /* This styles the ul your script creates */
+        .clubList {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            column-count: 4;
+            column-gap: 30px;
+        }
+
+        /* This styles the li your script creates */
+        .clubList li {
+            font-family: var(--font-tech);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--light-text);
+            margin-bottom: 15px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            break-inside: avoid;
+        }
+
+        .clubList li:hover {
+            background: rgba(3, 183, 250, 0.1);
+            color: var(--standout-blue);
+            transform: translateX(5px);
+        }
+
+        /* --- Loader and Error States --- */
+        .loader-container {
+            text-align: center;
+            padding: 50px 0;
+        }
+        .loader-container p {
+            font-family: var(--font-tech);
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: var(--light-text);
+            opacity: 0.7;
+        }
+        .error-message {
+            font-family: var(--font-tech);
+            color: #ff5555;
+            text-align: center;
+            font-size: 1.2rem;
+            padding: 20px;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 1200px) { .club-list { column-count: 3; } }
+        @media (max-width: 768px) { .club-list { column-count: 2; } }
+        @media (max-width: 480px) {
+            .club-list { column-count: 1; }
+            .clubContainer h2 { font-size: 2rem; }
+            .clubList li { font-size: 1.1rem; }
+        }
+    </style>
+
+   <!-- ==================== -->
+    <!--   Header Starts Here   -->
+    <!-- ==================== -->
+    <!-- The content of header.html will be loaded here -->
+
+</head>
+<body>
+
+    <!-- Header will be loaded by main.js -->
+    <header></header>
+
+    <main>
+        <section id="club-page">
+            <div class="container">
+                <!-- Use the themed h2 from your site -->
+                <h2 class="glitch" data-text="THE CLUB">THE CLUB</h2>
+                <p class="club-intro">Live leaderboard data for all official Ape Squad clubs.</p>
+
+                <!-- This is the container your script will populate -->
+                <div id="appContainer">
+                    <!-- Themed loading state -->
+                    <div class="loader-container">
+                        <div class="loading-spinner"></div>
+                        <p>Fetching Leaderboard Data...</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer will be loaded by main.js -->
+    <footer></footer>
+
+    <!-- Link to your main JS file for loading header/footer -->
+    <script src="/js/main.js"></script>
+    
+    <!-- YOUR WORKING SCRIPT - now on the same page -->
+    <script>
+        const platform = 'crossplay';
+        const apiUrl = `https://api.the-finals-leaderboard.com/v1/leaderboard/s6/${platform}`;
+        const targetClubTags = ['APEZ'];
+
+        async function fetchAndDisplayMembers(clubTag, appContainer) {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                const clubContainer = document.createElement('div');
+                // This class gets styled by the new CSS
+                clubContainer.classList.add('clubContainer');
+
+                const heading = document.createElement('h2');
+                heading.textContent = `${clubTag} Members`;
+                clubContainer.appendChild(heading);
+
+                const memberList = document.createElement('ul');
+                // This class gets styled by the new CSS
+                memberList.classList.add('clubList');
+                clubContainer.appendChild(memberList);
+
+                if (data && data.data && Array.isArray(data.data)) {
+                    const clubMembers = data.data.filter(user => user.clubTag === clubTag);
+
+                    if (clubMembers.length > 0) {
+                        clubMembers.forEach(member => {
+                            const username = member.name.split('#')[0];
+                            const listItem = document.createElement('li');
+                            listItem.textContent = username;
+                            memberList.appendChild(listItem);
+                        });
+                    } else {
+                        const noMembersMessage = document.createElement('li');
+                        noMembersMessage.textContent = `No members found in club ${clubTag} on the leaderboard.`;
+                        memberList.appendChild(noMembersMessage);
+                    }
+                } else {
+                    const noDataMessage = document.createElement('li');
+                    noDataMessage.textContent = 'No leaderboard data found.';
+                    memberList.appendChild(noDataMessage);
+                }
+
+                appContainer.appendChild(clubContainer);
+            } catch (error) {
+                console.error(`Error fetching leaderboard data for ${clubTag}:`, error);
+                const errorElement = document.createElement('p');
+                errorElement.classList.add('error-message');
+                errorElement.textContent = `Error loading ${clubTag} member list.`;
+                appContainer.appendChild(errorElement);
+            }
+        }
+
+        async function displayAllClubs() {
+            const appContainer = document.getElementById('appContainer');
+            // This will clear the themed loading spinner
+            appContainer.innerHTML = ''; 
+
+            for (const clubTag of targetClubTags) {
+                await fetchAndDisplayMembers(clubTag, appContainer);
+            }
+        }
+
+        // We wrap this in a DOMContentLoaded to be safe
+        document.addEventListener("DOMContentLoaded", function() {
+            displayAllClubs();
+        });
+    </script>
+   <!-- ==================== -->
+    <!--   Footer Starts Here   -->
+    <!-- ==================== -->
+    <!-- The content of footer.html will be loaded here -->
+    <footer></footer>
+
+    <!-- SCRIPT TO LOAD HEADER AND FOOTER -->
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

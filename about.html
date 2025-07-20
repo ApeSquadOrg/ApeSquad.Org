@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Ape Squad Esports</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- All CSS for this page is embedded here -->
+    <style>
+        /* --- BASE STYLES (Copy-pasted for every page) --- */
+        :root {
+            --jungle-green: #1a4314;
+            --earthy-tan: #a98c58;
+            --accent-orange: #ff8c00;
+            --dark-bg: #111111;
+            --light-text: #f4f4f4;
+            --font-headings: 'Bebas Neue', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); line-height: 1.6; background-color: var(--dark-bg); color: var(--light-text); }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+        h1, h2, h3, h4 { font-family: var(--font-headings); letter-spacing: 1.5px; }
+        header { background-color: rgba(10, 10, 10, 0.8); backdrop-filter: blur(5px); padding: 1rem 0; position: fixed; width: 100%; z-index: 100; border-bottom: 2px solid var(--jungle-green); }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        #header-logo { height: 50px; width: auto; vertical-align: middle; }
+        header nav ul { list-style: none; }
+        header nav li { display: inline; margin-left: 25px; }
+        header nav a { color: var(--light-text); text-decoration: none; font-family: var(--font-headings); font-size: 1.2rem; transition: color 0.3s ease; }
+        header nav a:hover { color: var(--accent-orange); }
+        footer { background: #0a0a0a; text-align: center; padding: 30px 0; border-top: 2px solid var(--jungle-green); }
+        .footer-container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        #footer-logo { height: 40px; margin-bottom: 10px; opacity: 0.8; }
+        .social-links { list-style: none; text-align: right; }
+        .social-links li { display: inline-block; margin-left: 15px; }
+        .social-links a { color: var(--earthy-tan); text-decoration: none; }
+        .social-links a:hover { color: var(--accent-orange); }
+
+        /* --- ABOUT-PAGE-SPECIFIC STYLES (Add unique styles for this page here) --- */
+        #about-us {
+            padding-top: 150px; /* Add padding to clear the fixed header */
+            padding-bottom: 80px;
+        }
+        #about-us h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            color: var(--accent-orange);
+        }
+        #about-us p {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section id="about-us">
+            <div class="container">
+                <h2>About The Squad</h2>
+                <p>Ape Squad was formed in 2024 with one goal: to dominate the competitive scene in The Finals. Our philosophy is built on aggressive plays, flawless teamwork, and a relentless drive to win every cashout.</p>
+                <p>We are more than a team; we are a troop. Join our community to follow our journey to the top!</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
