@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keychain - Ape Squad Merch</title>
+
+
+<!-- Note the path change to ../style.css since we are in a subfolder -->
+<link rel="stylesheet" href="../style.css">
+
+<!-- Google Fonts & Font Awesome -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+<!-- ==================== -->
+<!--   Header Starts Here   -->
+<!-- ==================== -->
+<!-- The content of header.html will be loaded here -->
+<header></header>
+
+<main>
+    <!-- =========================== -->
+    <!--   Product Details Section   -->
+    <!-- =========================== -->
+    <section id="product-page">
+        <div class="container">
+            <div class="product-details-grid">
+                <!-- Product Image -->
+                <div class="product-image-container">
+                    <!-- Product Image Carousel -->
+<div class="carousel-viewport">
+    <div class="carousel-track">
+        <!-- Add a slide for each product image -->
+        <div class="carousel-slide">
+            <img src="/merch/images/keychain.png" alt="Ape Squad Keychain Front">
+        </div>
+        <div class="carousel-slide">
+            <!-- Add a second image of your product here -->
+            <img src="/merch/images/keychain-back.png" alt="Ape Squad Keychain Angle View">
+        </div>
+        <div class="carousel-slide">
+            <!-- Add a third image of your product here -->
+            <img src="/merch/images/keychain-battlepass.png" alt="Ape Squad Keychain Clasp Detail">
+        </div>
+    </div>
+</div>
+
+<!-- Carousel Navigation Buttons -->
+<button class="carousel-button prev"><i class="fa-solid fa-chevron-left"></i></button>
+<button class="carousel-button next"><i class="fa-solid fa-chevron-right"></i></button>
+
+<!-- Carousel Indicator Dots -->
+<div class="carousel-indicators"></div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-info-container">
+                    <h1 class="product-title">Ape Squad Keychain</h1>
+                    <p class="product-price">$9.99 USD +shipping</p>
+                    <div class="product-description">
+                        <p>Go bananas with premium style!
+
+Crafted from double-sided acrylic and sealed with a smooth epoxy finish, this weapon charm brings the jungle vibes with a high-quality feel you can actually swing with.
+Topped off with a D-Hook clasp for maximum versatility—clip it on your bag, keys, or even your tail 🐒.
+
+When the jungle gets wild and you're under attack, Ape Squad’s got your back!</p>
+<ul>
+<li>Double Sided</li>
+<li>D-Hook Clasp</li>
+<li>Smooth Epoxy Finish</li>
+</ul>
+</div>
+<a href="https://www.paypal.com/ncp/payment/48Q4XWHB75CDA" class="btn" target="_blank">Buy Now via Paypal</a>
+<a href="../merch.html" class="back-link">← Back to All Merch</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<!-- ==================== -->
+<!--   Footer Starts Here   -->
+<!-- ==================== -->
+<!-- The content of footer.html will be loaded here -->
+<footer></footer>
+
+<!-- SCRIPT TO LOAD HEADER AND FOOTER -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Fetch and inject the header
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('header').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header.html:', error));
+
+        // Fetch and inject the footer
+        fetch('/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('footer').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer.html:', error));
+    });
+</script>
+
+<!-- ========================================================= -->
+<!--   LINK TO YOUR MAIN JAVASCRIPT FILE (THIS IS THE FIX)   -->
+<!-- ========================================================= -->
+<script src="/js/main.js" defer></script>
+
+</body>
+</html>  

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stickers - Ape Squad Merch</title>
+
+
+<!-- Note the path change to ../style.css since we are in a subfolder -->
+<link rel="stylesheet" href="../style.css">
+
+<!-- Google Fonts & Font Awesome -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+<!-- ==================== -->
+<!--   Header Starts Here   -->
+<!-- ==================== -->
+<!-- The content of header.html will be loaded here -->
+<header></header>
+
+<main>
+    <!-- =========================== -->
+    <!--   Product Details Section   -->
+    <!-- =========================== -->
+    <section id="product-page">
+        <div class="container">
+            <div class="product-details-grid">
+                <!-- Product Image -->
+                <div class="product-image-container">
+                    <!-- Product Image Carousel -->
+                    <div class="carousel-viewport">
+                        <div class="carousel-track">
+                            <!-- Add a slide for each product image -->
+                            <div class="carousel-slide">
+                                <img src="/merch/images/sticker/sticker.png" alt="Ape Squad Sticker">
+                            </div>
+                            <div class="carousel-slide">
+                                <!-- Add a second image of your product here -->
+                                <img src="/merch/images/sticker/Plushie_Monki.png" alt="Ape Squad Sticker">
+                            </div>
+                            <div class="carousel-slide">
+                                <!-- Add a third image of your product here -->
+                                <img src="/merch/images/sticker/Banana.png" alt="Ape Squad Sticker">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Navigation Buttons -->
+                    <button class="carousel-button prev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="carousel-button next"><i class="fa-solid fa-chevron-right"></i></button>
+
+                    <!-- Carousel Indicator Dots -->
+                    <div class="carousel-indicators"></div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-info-container">
+                    <h1 class="product-title">Ape Squad Stickerpack</h1>
+                    <p class="product-price">COMING SOON</p>
+                    <div class="product-description">
+                        <p>From your laptop to your locker, these Ape Squad stickers bring the energy. Designed to turn heads and rep the jungle, they’re bold, battle-ready, and made to go wherever you go.
+
+Peel, slap, and conquer.
+Show your loyalty — one sticker at a time 🐒🍌</p>
+<ul>
+<li>Hand Designed by WIRT</li>
+<li>Durable</li>
+<li>Collect them ALL!</li>
+</ul>
+</div>
+<a href="#" class="btn" target="_blank">Releasing Soon</a>
+<a href="../merch.html" class="back-link">← Back to All Merch</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========================= -->
+<!--  About the Artist Section -->
+<!-- ========================= -->
+<section id="about-artist">
+    <div class="container">
+        <!-- This will automatically get your awesome gradient H2 style -->
+        <h2>About the Artist</h2>
+        <div class="artist-grid">
+            <div class="artist-image">
+                <!-- IMPORTANT: Replace with a real photo of the artist -->
+                <img src="/merch/images/wirtcartoon.png" alt="Portrait of the artist">
+            </div>
+            <div class="artist-bio">
+                <!-- Replace with artist's name/handle -->
+                <h3>W I R T</h3>
+                <!-- Replace with the artist's real bio -->
+                <p>Meet Wirt Sangeo, a small but passionate artist dedicated to bringing cute and adorable creations to life for the creatures of the Jungle! Though they’ve only been pursuing art seriously for a year, Wirt is already making waves with a unique style full of charm and warmth. With a deep love for creativity and expression, Wirt hopes to keep growing and sharing their vision with the world. Interested in a custom piece? Click below to explore their art services and commission something special!</p>
+                <div class="artist-socials">
+                    <!-- Replace '#' with actual social media links -->
+                    <a href="https://x.com/MusicNoteWirt" target="_blank" aria-label="Artist's Twitter Profile"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" target="_blank" aria-label="Artist's Instagram Profile"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://vgen.co/musicnotewirt" target="_blank" aria-label="Artist's Portfolio"><i class="fa-solid fa-palette"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ==================== -->
+<!--   Footer Starts Here   -->
+<!-- ==================== -->
+<!-- The content of footer.html will be loaded here -->
+<footer></footer>
+
+<!-- SCRIPT TO LOAD HEADER AND FOOTER -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Fetch and inject the header
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('header').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header.html:', error));
+
+        // Fetch and inject the footer
+        fetch('/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('footer').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer.html:', error));
+    });
+</script>
+
+<!-- ========================================================= -->
+<!--   LINK TO YOUR MAIN JAVASCRIPT FILE (THIS IS THE FIX)   -->
+<!-- ========================================================= -->
+<script src="/js/main.js" defer></script>
+
+</body>
+</html>
