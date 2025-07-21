@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Use Promise.all to wait for both components to load
     Promise.all([
-        loadComponent('header', '/header.html'),
-        loadComponent('footer', '/footer.html')
+        loadComponent('header', 'header.html'),
+        loadComponent('footer', 'footer.html')
     ]).then(() => {
         // This code runs only AFTER the header and footer are loaded
         console.log("Header and Footer loaded. Initializing transitions...");
