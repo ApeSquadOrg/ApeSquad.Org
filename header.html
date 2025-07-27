@@ -1,12 +1,17 @@
-<!-- The content of header.html -->
 <div class="container">
     <div class="logo">
-        <!-- The logo is a link to the homepage -->
         <a href="https://apesquad.org">
-            <img src="/images/logo.png" alt="Ape Squad Logo" style="height: 50px;">
+            <img src="/images/logo.png" alt="Ape Squad Logo" class="logo-image">
         </a>
     </div>
-    <nav>
+
+    <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <div class="nav-links">
         <ul>
             <li><a href="https://apesquad.org">Home</a></li>
             <li><a href="/merch">Merch</a></li>
@@ -15,15 +20,118 @@
             <li><a href="/tournaments">Tournaments</a></li>
             <li><a href="/rankings">Rankings</a></li>
 
-
-            <!-- Dropdown for Resources -->
             <li class="dropdown">
-                <a  class="dropbtn">WIKI</a>
+                <a class="dropbtn">WIKI</a>
                 <div class="dropdown-content">
                     <a href="/gundata">Gun Data</a>
                     <a href="/maps">Maps</a>
                 </div>
             </li>
         </ul>
-    </nav>
+    </div>
 </div>
+
+<style>
+    /*
+        The CSS you had for desktop will still work.
+        This new CSS is for the mobile menu and to make it responsive.
+    */
+    .logo-image {
+        height: 50px;
+    }
+
+    /* Mobile Styles */
+    /* Hide hamburger menu by default */
+    .hamburger {
+        display: none;
+        cursor: pointer;
+    }
+
+    .hamburger .bar {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        background-color: #fff;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Media query for mobile devices */
+    @media (max-width: 768px) {
+        .container {
+            flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+            justify-content: space-between;
+        }
+
+        .nav-links {
+            display: none;
+            width: 100%;
+            position: absolute;
+            top: 70px; /* Adjust based on header height */
+            left: 0;
+            background-color: #2c2c2c;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .nav-links.active {
+            display: block;
+        }
+        
+        .nav-links ul {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .nav-links li {
+            margin: 0;
+            padding: 1rem 0;
+            border-bottom: 1px solid #444;
+        }
+        
+        .nav-links li:last-child {
+            border-bottom: none;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 1rem;
+        }
+
+        .hamburger {
+            display: block;
+        }
+
+        /* Adjust dropdown for mobile */
+        .dropdown .dropdown-content {
+            position: static;
+            display: none;
+            width: 100%;
+            box-shadow: none;
+        }
+
+        /* Use JavaScript to toggle dropdown on mobile */
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Toggle dropdown on click for mobile
+        dropdowns.forEach(dropdown => {
+            const dropbtn = dropdown.querySelector('.dropbtn');
+            dropbtn.addEventListener('click', (e) => {
+                // Prevent navigating to a new page
+                e.preventDefault(); 
+                dropdown.querySelector('.dropdown-content').classList.toggle('active-mobile');
+            });
+        });
+    });
+</script>
