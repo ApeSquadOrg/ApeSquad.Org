@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // =====================================================
     // SECTION 1: DYNAMICALLY LOAD HEADER AND FOOTER
     // =====================================================
-    // This function fetches HTML content and injects it into a specified element.
     const loadComponent = (selector, filePath) => {
         const element = document.querySelector(selector);
         if (element) {
@@ -19,32 +18,26 @@ document.addEventListener("DOMContentLoaded", function() {
                 })
                 .catch(error => { console.error(`Error loading component into ${selector}:`, error); });
         }
-        // Return a resolved promise if the element doesn't exist to prevent errors
         return Promise.resolve();
     };
     
-    // Use Promise.all to wait for both components to load before running other scripts
     Promise.all([
         loadComponent('header', 'header.html'),
         loadComponent('footer', 'footer.html')
     ]).then(() => {
-        // This code runs only AFTER the header and footer are loaded
         console.log("Header and Footer loaded. Initializing site modules...");
-        
-        // Initialize all scripts that depend on the header/footer HTML
         initializePageTransitions();
         initializeMobileNav();
     });
 
 
     // =========================================================
-    // SECTION 2: MOBILE NAVIGATION & DROPDOWN LOGIC
+    // SECTION 2: MOBILE NAVIGATION & DROPDOWN LOGIC (UPDATED)
     // =========================================================
     function initializeMobileNav() {
         const navToggle = document.querySelector('.mobile-nav-toggle');
         const primaryNav = document.querySelector('header nav');
 
-        // Safety check in case the elements aren't found
         if (!navToggle || !primaryNav) {
             console.warn("Mobile navigation elements not found, skipping initialization.");
             return;
@@ -58,10 +51,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 // If menu is open, close it
                 primaryNav.setAttribute('data-visible', 'false');
                 navToggle.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('nav-open'); // <-- NEW LINE: Remove overlay class
             } else {
                 // If menu is closed, open it
                 primaryNav.setAttribute('data-visible', 'true');
                 navToggle.setAttribute('aria-expanded', 'true');
+                document.body.classList.add('nav-open'); // <-- NEW LINE: Add overlay class
             }
         });
 
@@ -71,10 +66,8 @@ document.addEventListener("DOMContentLoaded", function() {
             const dropBtn = dropdown.querySelector('.dropbtn');
             if (dropBtn) {
                 dropBtn.addEventListener('click', (e) => {
-                    // Check if we are in mobile view (the toggle is visible)
-                    // This makes it work like an accordion on mobile but not on desktop
                     if (window.getComputedStyle(navToggle).display !== 'none') {
-                        e.preventDefault(); // Prevent link navigation on mobile
+                        e.preventDefault(); 
                         dropdown.classList.toggle('active');
                     }
                 });
@@ -87,31 +80,25 @@ document.addEventListener("DOMContentLoaded", function() {
     // SECTION 3: SMOOTH PAGE TRANSITIONS
     // =========================================================
     function initializePageTransitions() {
-        // Select all links that don't open in a new tab or point to an anchor
         const allLinks = document.querySelectorAll(
             'a[href]:not([href^="#"]):not([href^="mailto:"]):not([target="_blank"])'
         );
 
         allLinks.forEach(link => {
-            if (link.dataset.listenerAdded) return; // Prevent adding multiple listeners
+            if (link.dataset.listenerAdded) return;
 
             link.addEventListener('click', function(event) {
                 const destination = this.href;
-
-                // Don't run the animation if the link is inside a mobile dropdown button
                 if (window.getComputedStyle(document.querySelector('.mobile-nav-toggle')).display !== 'none' && this.matches('.dropbtn')) {
-                    return; // Let the mobile nav script handle it
+                    return;
                 }
                 
-                event.preventDefault(); // Stop the default navigation
-                
-                // Add the class to trigger the fade-out animation
+                event.preventDefault(); 
                 document.body.classList.add('is-leaving');
 
-                // After the animation finishes, navigate to the new page
                 setTimeout(() => {
                     window.location.href = destination;
-                }, 500); // This duration MUST match your CSS animation-duration
+                }, 500);
             });
 
             link.dataset.listenerAdded = 'true';
@@ -199,8 +186,6 @@ document.addEventListener("DOMContentLoaded", function() {
 // =========================================================
 // SECTION 5: FIX FOR BROWSER BACK/FORWARD CACHE (bfcache)
 // =========================================================
-// This listener fires when a page is shown from the browser's cache (e.g., using the back button).
-// It removes the 'is-leaving' class to make sure the page is visible after navigating back.
 window.addEventListener('pageshow', function(event) {
     if (document.body.classList.contains('is-leaving')) {
         document.body.classList.remove('is-leaving');
