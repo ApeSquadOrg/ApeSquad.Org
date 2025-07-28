@@ -645,13 +645,6 @@ header nav a:hover::before {
     100% { transform: rotate(360deg); }
 }
 
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-        visibility: hidden;
-    }
-}
-
 /* --- Responsive Design --- */
 @media (max-width: 768px) {
     #hero h2 {
@@ -662,10 +655,13 @@ header nav a:hover::before {
         font-size: 2.5rem;
     }
     
+    /* This rule is intentionally removed to prevent conflict with the new mobile nav */
+    /*
     header nav ul {
         flex-direction: column;
         gap: 15px;
     }
+    */
     
     .team-grid {
         grid-template-columns: 1fr;
@@ -693,7 +689,7 @@ header nav a:hover::before {
     position: relative;
     border-top: 4px solid;
     border-image: linear-gradient(90deg, var(--primary-purple), var(--standout-blue), var(--accent-orange)) 1;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); /* Fix for border-image */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
 
 .footer-content {
@@ -701,12 +697,12 @@ header nav a:hover::before {
     justify-content: space-between;
     gap: 40px;
     margin-bottom: 40px;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    flex-wrap: wrap;
 }
 
 .footer-section {
     flex: 1;
-    min-width: 250px; /* Ensures sections don't get too squished */
+    min-width: 250px;
 }
 
 .footer-section.about p {
@@ -764,7 +760,7 @@ header nav a:hover::before {
 .socials a:hover {
     color: var(--standout-blue);
     transform: scale(1.2) translateY(-3px);
-    display: inline-block; /* Required for transform to work properly */
+    display: inline-block;
     text-shadow: 0 0 15px var(--standout-blue);
 }
 
@@ -782,7 +778,6 @@ header nav a:hover::before {
     letter-spacing: 1px;
 }
 
-/* --- Footer Responsive Adjustments --- */
 @media (max-width: 768px) {
     .footer-content {
         flex-direction: column;
@@ -808,7 +803,7 @@ header nav a:hover::before {
         linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
         radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
-    padding: 120px 0; /* Extra top padding for pages without a hero image */
+    padding: 120px 0;
 }
 
 .rankings-intro {
@@ -841,7 +836,7 @@ header nav a:hover::before {
     background: rgba(0, 0, 0, 0.4);
     border: 3px solid;
     border-image: linear-gradient(135deg, var(--primary-purple), var(--standout-blue)) 1;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); /* Fix for border-image display */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
     border-radius: 15px;
     box-shadow: 0 10px 40px rgba(156, 70, 200, 0.2);
     transition: all 0.3s ease-in-out;
@@ -857,7 +852,7 @@ header nav a:hover::before {
     display: block;
     max-width: 100%;
     height: auto;
-    border-radius: 10px; /* Rounds the corners of the image itself */
+    border-radius: 10px;
 }
 
 /* ================================================== */
@@ -873,13 +868,12 @@ header nav a:hover::before {
 
 .donation-content-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr; /* Image column, Text column */
+    grid-template-columns: 1fr 1.2fr;
     gap: 60px;
     align-items: center;
     margin-top: 50px;
 }
 
-/* --- Image Styling with Glow Effect --- */
 .donation-image-wrapper {
     position: relative;
     display: flex;
@@ -916,7 +910,6 @@ header nav a:hover::before {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* --- Text and Button Styling --- */
 .donation-text-wrapper h3 {
     font-family: var(--font-headings);
     font-size: 2.8rem;
@@ -955,13 +948,12 @@ header nav a:hover::before {
 }
 
 .btn-primary-donate:hover {
-    transform: scale(1.2) translateY(-3px); /* Enhance hover effect */
+    transform: scale(1.2) translateY(-3px);
 }
 
-/* --- Responsive Adjustments for Donations Page --- */
 @media (max-width: 992px) {
     .donation-content-grid {
-        grid-template-columns: 1fr; /* Stack columns */
+        grid-template-columns: 1fr;
         gap: 50px;
     }
     .donation-text-wrapper {
@@ -976,7 +968,6 @@ header nav a:hover::before {
 /*                    MERCH PAGES                     */
 /* ================================================== */
 
-/* --- Merch Gallery Page Styling --- */
 #merch-gallery {
     padding: 120px 0;
 }
@@ -1063,8 +1054,6 @@ header nav a:hover::before {
     opacity: 1;
 }
 
-
-/* --- Individual Product Page Styling --- */
 #product-page {
     padding: 120px 0;
 }
@@ -1131,8 +1120,6 @@ header nav a:hover::before {
     transform: translateX(-5px);
 }
 
-
-/* --- Responsive for Product Pages --- */
 @media (max-width: 992px) {
     .product-details-grid {
         grid-template-columns: 1fr;
@@ -1143,10 +1130,9 @@ header nav a:hover::before {
 /*             PRODUCT PAGE IMAGE CAROUSEL            */
 /* ================================================== */
 
-/* Overriding the old container style to work with the carousel */
 .product-image-container {
     position: relative;
-    overflow: hidden; /* This is important for rounded corners */
+    overflow: hidden;
     border-radius: 15px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -1155,16 +1141,16 @@ header nav a:hover::before {
 .carousel-viewport {
     width: 100%;
     height: 100%;
-    overflow: hidden; /* This hides the other slides */
+    overflow: hidden;
 }
 
 .carousel-track {
     display: flex;
-    transition: transform 0.5s ease-in-out; /* The sliding animation */
+    transition: transform 0.5s ease-in-out;
 }
 
 .carousel-slide {
-    flex: 0 0 100%; /* Each slide takes up 100% of the viewport width */
+    flex: 0 0 100%;
     min-width: 100%;
     box-sizing: border-box;
 }
@@ -1173,10 +1159,9 @@ header nav a:hover::before {
     display: block;
     width: 100%;
     height: auto;
-    object-fit: contain; /* Use 'contain' to ensure the whole product is visible */
+    object-fit: contain;
 }
 
-/* --- Carousel Buttons --- */
 .carousel-button {
     position: absolute;
     top: 50%;
@@ -1208,7 +1193,6 @@ header nav a:hover::before {
     right: 15px;
 }
 
-/* --- Carousel Indicator Dots --- */
 .carousel-indicators {
     position: absolute;
     bottom: 20px;
@@ -1238,10 +1222,7 @@ header nav a:hover::before {
 /*          CORRECTED TOURNAMENTS PAGE STYLES         */
 /* ================================================== */
 
-/* --- Overrides for General Styles on the Tournaments Page --- */
-
 #tournaments-page h2 {
-    /* This rule ensures the main title on this page matches the global style */
     font-size: 3.5rem;
     background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple), var(--accent-orange), var(--standout-blue));
     background-size: 300% 300%;
@@ -1253,7 +1234,6 @@ header nav a:hover::before {
 }
 
 #tournaments-page .section-title {
-    /* This overrides the global H3 style to be what we want for this page */
     color: var(--accent-orange);
     text-shadow: none;
     text-align: left;
@@ -1267,8 +1247,6 @@ header nav a:hover::before {
 #tournaments-page .section-title:first-of-type {
     margin-top: 0;
 }
-
-/* --- Styles for Tournament Cards --- */
 
 #tournaments-page .tournaments-grid {
     display: grid;
@@ -1310,7 +1288,6 @@ header nav a:hover::before {
 }
 
 #tournaments-page .tournament-info h3 {
-    /* Overriding the global H3 for the card title */
     font-size: 1.8rem;
     margin-bottom: 5px;
     color: var(--accent-orange);
@@ -1371,20 +1348,19 @@ header nav a:hover::before {
     justify-content: center;
 }
 
-/* THIS IS THE KEY FIX: Specifically styling the buttons INSIDE the tournament cards */
 #tournaments-page .tournament-links .btn {
-    background: var(--accent-orange); /* Resetting background */
+    background: var(--accent-orange);
     color: #fff;
     padding: 10px 25px;
     text-decoration: none;
-    font-family: var(--font-headings); /* Using a simpler font */
+    font-family: var(--font-headings);
     font-size: 1.1rem;
-    font-weight: normal; /* Resetting font weight */
+    font-weight: normal;
     border: none;
-    border-radius: 5px; /* Resetting border radius */
-    text-transform: none; /* Resetting text transform */
+    border-radius: 5px;
+    text-transform: none;
     letter-spacing: 1px;
-    box-shadow: none; /* Resetting box shadow */
+    box-shadow: none;
     text-shadow: none;
 }
 #tournaments-page .tournament-links .btn:hover {
@@ -1402,9 +1378,6 @@ header nav a:hover::before {
     color: #fff;
 }
 
-
-/* --- New Styles for Tournament Modal & Accordion --- */
-/* These styles are unique and should not conflict */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(10, 10, 10, 0.85);
@@ -1514,21 +1487,15 @@ header nav a:hover::before {
     font-weight: 700;
 }
 
-/* ================================================== */
-/*        STYLES FOR MODAL CONTROLS (NEW)             */
-/* ================================================== */
-
-/* Container for the 'Expand All' button */
 .modal-controls {
     text-align: center;
-    margin-bottom: 25px; /* Adds space between the button and the accordion */
+    margin-bottom: 25px;
 }
 
-/* Specific styling for the button inside the modal */
 .modal-controls .btn {
     padding: 8px 20px;
     font-size: 1rem;
-    border-radius: 5px; /* A more standard button shape */
+    border-radius: 5px;
     background: transparent;
     border: 2px solid var(--primary-purple);
     color: var(--primary-purple);
@@ -1543,7 +1510,7 @@ header nav a:hover::before {
 .modal-controls .btn:hover {
     background: var(--primary-purple);
     color: var(--light-text);
-    transform: scale(1.05); /* Keep a simple hover effect */
+    transform: scale(1.05);
     box-shadow: 0 0 10px var(--primary-purple);
 }
 
@@ -1551,12 +1518,10 @@ header nav a:hover::before {
 /*          CLEANER DROPDOWN MENU STYLES              */
 /* ================================================== */
 
-/* Container for the dropdown menu (the <li> element) */
 header nav .dropdown {
     position: relative;
 }
 
-/* A sleeker, CSS-drawn arrow icon */
 header nav .dropbtn::after {
     content: '';
     display: inline-block;
@@ -1568,52 +1533,43 @@ header nav .dropbtn::after {
     transform: rotate(45deg);
     transition: transform 0.3s ease-out, border-color 0.3s ease;
     margin-left: 8px;
-    margin-bottom: 2px; /* Fine-tune vertical alignment */
+    margin-bottom: 2px;
 }
 
-/* Animate the arrow on hover */
 header nav .dropdown:hover .dropbtn::after {
-    transform: rotate(-135deg); /* Flips the arrow upwards */
+    transform: rotate(-135deg);
     border-color: var(--primary-purple);
 }
 
-/* The dropdown content container (hidden by default) */
 header nav .dropdown-content {
     display: none;
     position: absolute;
-    /* Using a dark, solid background provides better contrast and looks cleaner */
     background: var(--darker-bg);
     min-width: 220px;
-    border-radius: 8px; /* Softer radius */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Softer shadow */
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     z-index: 1001;
-    overflow: hidden; /* Ensures children conform to the border-radius */
-    
-    /* A subtle top border to add a splash of color and definition */
+    overflow: hidden;
     border-top: 3px solid var(--primary-purple);
-
-    /* Positioning and animation */
     top: 100%;
     left: 50%;
     opacity: 0;
-    transform: translateX(-50%) translateY(10px); /* Start slightly lower */
+    transform: translateX(-50%) translateY(10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-    padding: 5px 0; /* Add a little space at the top and bottom */
+    padding: 5px 0;
 }
 
-/* The magic rule: Show the dropdown on hover */
 header nav .dropdown:hover .dropdown-content {
     display: block;
     opacity: 1;
-    transform: translateX(-50%) translateY(0); /* Animate into place */
+    transform: translateX(-50%) translateY(0);
 }
 
-/* Styling for the individual links inside the dropdown */
 header nav .dropdown-content a {
     font-family: var(--font-headings);
     font-size: 1.1rem;
     color: var(--light-text);
-    padding: 13px 25px; /* More generous padding */
+    padding: 13px 25px;
     display: block;
     text-align: left;
     position: relative;
@@ -1623,19 +1579,16 @@ header nav .dropdown-content a {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Remove the underline effect from the main nav */
 header nav .dropdown-content a::before {
     display: none;
 }
 
-/* Clean hover effect for dropdown links */
 header nav .dropdown-content a:hover {
-    color: var(--standout-blue); /* Use your standout blue for a nice accent */
-    background-color: rgba(3, 183, 250, 0.1); /* Subtle background glow */
-    text-shadow: 0 0 8px rgba(3, 183, 250, 0.5); /* Matching text glow */
+    color: var(--standout-blue);
+    background-color: rgba(3, 183, 250, 0.1);
+    text-shadow: 0 0 8px rgba(3, 183, 250, 0.5);
 }
 
-/* Add a very fine line to separate the items */
 header nav .dropdown-content a:not(:last-child) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -1669,7 +1622,6 @@ header nav .dropdown-content a:not(:last-child) {
     align-items: flex-start;
 }
 
-/* --- Main Card Styles --- */
 .map-card {
     background-size: cover;
     background-position: center center;
@@ -1717,7 +1669,6 @@ header nav .dropdown-content a:not(:last-child) {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
 }
 
-/* --- Current and Next Map Sizing --- */
 .current-map-card {
     flex-basis: 100%;
     max-width: 800px;
@@ -1759,7 +1710,6 @@ header nav .dropdown-content a:not(:last-child) {
     text-shadow: 0 0 15px var(--accent-orange);
 }
 
-/* --- Full Rotation List --- */
 .full-rotation-list {
     flex-basis: 100%;
     max-width: 800px;
@@ -1815,8 +1765,6 @@ header nav .dropdown-content a:not(:last-child) {
     color: rgba(0,0,0,0.7);
 }
 
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .next-map-card {
         grid-template-columns: 1fr;
@@ -1838,42 +1786,20 @@ header nav .dropdown-content a:not(:last-child) {
 /*           PAGE TRANSITION: FADE IN & OUT           */
 /* ================================================== */
 
-/* Animation for the new page fading IN */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* Animation for the old page fading OUT */
 @keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
 
-/* Apply the "IN" animation to the body by default */
 body {
-    /* ... your other existing body styles from the top of the file ... */
-    /* Make sure to keep these if they are not already there */
-    font-family: var(--font-body);
-    line-height: 1.6;
-    background: var(--dark-bg);
-    color: var(--light-text);
-    overflow-x: hidden;
-    position: relative;
-    
-    /* This is the key change */
     animation: fadeIn 0.5s ease-out forwards;
 }
 
-/* Apply the "OUT" animation when we click a link */
 body.is-leaving {
     animation: fadeOut 0.5s ease-in forwards;
 }
@@ -1883,7 +1809,6 @@ body.is-leaving {
 /* ================================================== */
 
 #about-artist {
-    /* Reusing a background gradient pattern from other pages for consistency */
     background: 
         linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
         radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
@@ -1893,7 +1818,6 @@ body.is-leaving {
 
 .artist-grid {
     display: grid;
-    /* Adapting the two-column layout from your donations page */
     grid-template-columns: 1fr 2fr; 
     gap: 50px;
     align-items: center;
@@ -1901,7 +1825,6 @@ body.is-leaving {
 }
 
 .artist-image img {
-    /* Using the circular, bordered style from your team cards for a cohesive look */
     width: 100%;
     max-width: 280px;
     aspect-ratio: 1 / 1;
@@ -1909,29 +1832,24 @@ body.is-leaving {
     border-radius: 50%;
     margin: 0 auto;
     display: block;
-
-    /* Adding your theme's glow effect */
     border: 4px solid var(--primary-purple);
     box-shadow: 0 0 25px rgba(156, 70, 200, 0.5);
     transition: all 0.3s ease;
 }
 
 .artist-image img:hover {
-    /* Reusing hover effects from team cards */
     transform: scale(1.05);
     border-color: var(--standout-blue);
     box-shadow: 0 0 35px rgba(3, 183, 250, 0.7);
 }
 
 .artist-bio h3 {
-    /* Using the tech font for a standout heading */
     font-family: var(--font-tech);
     font-size: 2.5rem;
     color: var(--accent-orange);
     text-shadow: 0 0 10px var(--accent-orange);
     margin-bottom: 20px;
     letter-spacing: 1px;
-    /* Resetting global h3 styles */
     background: none;
     -webkit-text-fill-color: unset; 
 }
@@ -1948,11 +1866,10 @@ body.is-leaving {
 }
 
 .artist-socials a {
-    /* Exactly matching your footer's social icon style for consistency */
     color: var(--light-text);
     font-size: 1.8rem;
     margin-right: 25px;
-    display: inline-block; /* Required for transform to work properly */
+    display: inline-block;
     transition: all 0.3s ease;
 }
 
@@ -1962,10 +1879,9 @@ body.is-leaving {
     text-shadow: 0 0 15px var(--standout-blue);
 }
 
-/* --- Responsive adjustments for the artist section --- */
 @media (max-width: 768px) {
     .artist-grid {
-        grid-template-columns: 1fr; /* Stack columns */
+        grid-template-columns: 1fr;
         gap: 40px;
         text-align: center;
     }
@@ -1979,7 +1895,7 @@ body.is-leaving {
     }
     
     .artist-socials a {
-        margin: 0 15px; /* Adjust spacing for centered layout */
+        margin: 0 15px;
     }
 }
 
@@ -2001,28 +1917,16 @@ body.is-leaving {
     text-shadow: 0 0 10px var(--accent-orange);
     margin-bottom: 3rem;
     letter-spacing: 3px;
-    /* Reset global h3 styles to avoid conflicts */
     background: none;
     -webkit-text-fill-color: unset;
 }
 
-/* --- UPDATED TIER GRID FOR 5-COLUMN LAYOUT --- */
 .tier-grid {
     display: grid;
     gap: 2.5rem;
-    /* 
-      DEFAULT (Mobile/Tablet):
-      Creates a responsive grid that fits as many 300px cards as possible before wrapping.
-      This will result in 1, 2, or 3 columns on smaller screens.
-    */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-/* 
-  MEDIA QUERY (Large Desktops):
-  When the screen width is 1400px or wider, this rule activates
-  and overrides the default, forcing the grid into exactly 5 columns.
-*/
 @media (min-width: 1400px) {
     .tier-grid {
         grid-template-columns: repeat(5, 1fr);
@@ -2080,7 +1984,6 @@ body.is-leaving {
     text-shadow: 0 0 5px var(--standout-blue);
 }
 
-/* Use a more restrained button for the cards to not clash with the main donate button */
 .tier-card .btn {
     font-size: 1.1rem;
     padding: 12px 30px;
@@ -2092,8 +1995,6 @@ body.is-leaving {
     background: linear-gradient(45deg, var(--secondary-purple), var(--primary-purple));
 }
 
-
-/* --- Tier Name and Highlight Colors --- */
 .tier-bronze  { color: #cd7f32; }
 .tier-silver  { color: #c0c0c0; }
 .tier-gold    { color: #ffd700; }
@@ -2101,7 +2002,7 @@ body.is-leaving {
 .tier-ruby    { color: #e0115f; }
 
 /* ================================================== */
-/*                MOBILE HEADER STYLES (CORRECTED)    */
+/*        MOBILE NAVIGATION & OVERLAY STYLES          */
 /* ================================================== */
 
 /* --- The Hamburger Menu Button --- */
@@ -2147,8 +2048,7 @@ body.is-leaving {
 .mobile-nav-toggle[aria-expanded="true"] span { opacity: 0; }
 .mobile-nav-toggle[aria-expanded="true"]::after { transform: translateY(-10px) rotate(-45deg); }
 
-
-/* --- PASTE THIS ENTIRE BLOCK IN ITS PLACE --- */
+/* --- Mobile Media Query (for screens 900px or less) --- */
 @media (max-width: 900px) {
     /* Show the hamburger button */
     .mobile-nav-toggle {
@@ -2160,15 +2060,14 @@ body.is-leaving {
         position: fixed;
         inset: 0 0 0 30%; /* top, right, bottom, left */
         z-index: 9998;
-
-        /* === THIS IS THE NEW, CORRECT CODE === */
-        /* Use a solid, opaque background from your theme */
+        
+        /* Give the menu a solid, non-transparent background */
         background: var(--dark-bg); 
         
-        /* Add a border on the left to define the edge */
+        /* Add a border on the left to define its edge */
         border-left: 2px solid var(--primary-purple);
         
-        /* Add a shadow to create depth and separation */
+        /* Add a shadow to create depth */
         box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
 
         transform: translateX(100%);
@@ -2238,39 +2137,17 @@ body.is-leaving {
         transform: rotate(-135deg);
     }
 }
-/* --- END OF THE BLOCK TO PASTE --- */
-}
-/* ================================================== */
-/*          MOBILE NAVIGATION OVERLAY & FIXES         */
-/* ================================================== */
 
-/* This class will be added to the <body> via JavaScript */
+/* --- Mobile Navigation Overlay --- */
 body.nav-open {
-    /* Prevent the main page from scrolling when the menu is open */
     overflow: hidden;
 }
 
-/* 
-  This creates a pseudo-element on the body that acts as our dark overlay.
-  It only appears when the body has the .nav-open class.
-*/
 body.nav-open::before {
     content: '';
     position: fixed;
-    inset: 0; /* Cover the entire screen */
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
-    
-    /* 
-      Must be lower than the nav panel (9998) and the toggle button (9999),
-      but high enough to cover the rest of the page content.
-    */
-    z-index: 9997; 
-
-    /* Optional: fade the overlay in */
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9997;
     animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }
