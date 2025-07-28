@@ -2143,11 +2143,16 @@ body.nav-open {
     overflow: hidden;
 }
 
-body.nav-open::before {
+/* 
+  THIS IS THE CRITICAL FIX: The overlay is now a pseudo-element of the HEADER
+  This puts it in the same stacking context as the nav panel, allowing z-index to work.
+*/
+body.nav-open header::before {
     content: '';
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
-    z-index: 9997;
+    /* This z-index is now relative to the header's children */
+    z-index: 9990; /* Must be LOWER than the nav panel (9998) */
     animation: fadeIn 0.3s ease;
 }
