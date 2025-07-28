@@ -2262,3 +2262,37 @@ body.is-leaving {
     /* The rest of the rules in this block are fine */
 }
 
+/* ================================================== */
+/*          MOBILE NAVIGATION OVERLAY & FIXES         */
+/* ================================================== */
+
+/* This class will be added to the <body> via JavaScript */
+body.nav-open {
+    /* Prevent the main page from scrolling when the menu is open */
+    overflow: hidden;
+}
+
+/* 
+  This creates a pseudo-element on the body that acts as our dark overlay.
+  It only appears when the body has the .nav-open class.
+*/
+body.nav-open::before {
+    content: '';
+    position: fixed;
+    inset: 0; /* Cover the entire screen */
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    
+    /* 
+      Must be lower than the nav panel (9998) and the toggle button (9999),
+      but high enough to cover the rest of the page content.
+    */
+    z-index: 9997; 
+
+    /* Optional: fade the overlay in */
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
