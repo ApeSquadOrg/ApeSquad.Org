@@ -3,10 +3,10 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     // =====================================================
-    // SECTION 1: EFFICIENTLY LOAD HEADER AND FOOTER
+    // SECTION 1: DYNAMICALLY LOAD HEADER AND FOOTER
     // =====================================================
+    // This function fetches HTML content and injects it into a specified element.
     const loadComponent = (selector, filePath) => {
-        // This function now returns the fetch promise
         const element = document.querySelector(selector);
         if (element) {
             return fetch(filePath)
@@ -23,34 +23,89 @@ document.addEventListener("DOMContentLoaded", function() {
         return Promise.resolve();
     };
     
-    // Use Promise.all to wait for both components to load
+    // Use Promise.all to wait for both components to load before running other scripts
     Promise.all([
         loadComponent('header', 'header.html'),
         loadComponent('footer', 'footer.html')
     ]).then(() => {
         // This code runs only AFTER the header and footer are loaded
-        console.log("Header and Footer loaded. Initializing transitions...");
+        console.log("Header and Footer loaded. Initializing site modules...");
+        
+        // Initialize all scripts that depend on the header/footer HTML
         initializePageTransitions();
+        initializeMobileNav();
     });
 
 
     // =========================================================
-    // SECTION 2: SMOOTH PAGE TRANSITIONS (CORRECTED)
+    // SECTION 2: MOBILE NAVIGATION & DROPDOWN LOGIC
+    // =========================================================
+    function initializeMobileNav() {
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        const primaryNav = document.querySelector('header nav');
+
+        // Safety check in case the elements aren't found
+        if (!navToggle || !primaryNav) {
+            console.warn("Mobile navigation elements not found, skipping initialization.");
+            return;
+        }
+
+        // --- Handle Hamburger Button Click ---
+        navToggle.addEventListener('click', () => {
+            const isVisible = primaryNav.getAttribute('data-visible') === 'true';
+            
+            if (isVisible) {
+                // If menu is open, close it
+                primaryNav.setAttribute('data-visible', 'false');
+                navToggle.setAttribute('aria-expanded', 'false');
+            } else {
+                // If menu is closed, open it
+                primaryNav.setAttribute('data-visible', 'true');
+                navToggle.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        // --- Handle Dropdown Accordion on Mobile ---
+        const dropdowns = primaryNav.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            const dropBtn = dropdown.querySelector('.dropbtn');
+            if (dropBtn) {
+                dropBtn.addEventListener('click', (e) => {
+                    // Check if we are in mobile view (the toggle is visible)
+                    // This makes it work like an accordion on mobile but not on desktop
+                    if (window.getComputedStyle(navToggle).display !== 'none') {
+                        e.preventDefault(); // Prevent link navigation on mobile
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            }
+        });
+    }
+
+
+    // =========================================================
+    // SECTION 3: SMOOTH PAGE TRANSITIONS
     // =========================================================
     function initializePageTransitions() {
+        // Select all links that don't open in a new tab or point to an anchor
         const allLinks = document.querySelectorAll(
             'a[href]:not([href^="#"]):not([href^="mailto:"]):not([target="_blank"])'
         );
 
         allLinks.forEach(link => {
-            // This check prevents adding the same listener multiple times
-            if (link.dataset.listenerAdded) return;
+            if (link.dataset.listenerAdded) return; // Prevent adding multiple listeners
 
             link.addEventListener('click', function(event) {
-                event.preventDefault();
                 const destination = this.href;
 
-                // KEY FIX: Add the class to the body tag, as intended by your CSS
+                // Don't run the animation if the link is inside a mobile dropdown button
+                if (window.getComputedStyle(document.querySelector('.mobile-nav-toggle')).display !== 'none' && this.matches('.dropbtn')) {
+                    return; // Let the mobile nav script handle it
+                }
+                
+                event.preventDefault(); // Stop the default navigation
+                
+                // Add the class to trigger the fade-out animation
                 document.body.classList.add('is-leaving');
 
                 // After the animation finishes, navigate to the new page
@@ -62,98 +117,92 @@ document.addEventListener("DOMContentLoaded", function() {
             link.dataset.listenerAdded = 'true';
         });
     }
-    // We no longer call initializePageTransitions() here, we wait for components to load first.
-
+    
 
     // =========================================================
-    // SECTION 3: IMAGE CAROUSEL (Unchanged)
+    // SECTION 4: IMAGE CAROUSEL (IF PRESENT ON PAGE)
     // =========================================================
     const carouselTrack = document.querySelector('.carousel-track');
-    
     if (carouselTrack) {
-        // This entire section is self-contained and correct, no changes needed.
         const slides = Array.from(carouselTrack.children);
         const nextButton = document.querySelector('.carousel-button.next');
         const prevButton = document.querySelector('.carousel-button.prev');
         const indicatorsContainer = document.querySelector('.carousel-indicators');
         
-        // This check prevents errors if the carousel is empty
-        if (slides.length === 0) return;
+        if (slides.length > 0) {
+            const slideWidth = slides[0].getBoundingClientRect().width;
 
-        const slideWidth = slides[0].getBoundingClientRect().width;
+            const setSlidePosition = (slide, index) => {
+                slide.style.left = slideWidth * index + 'px';
+            };
+            slides.forEach(setSlidePosition);
 
-        const setSlidePosition = (slide, index) => {
-            slide.style.left = slideWidth * index + 'px';
-        };
-        slides.forEach(setSlidePosition);
+            slides.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.classList.add('indicator-dot');
+                if (index === 0) dot.classList.add('active');
+                indicatorsContainer.appendChild(dot);
+            });
+            const indicators = Array.from(indicatorsContainer.children);
 
-        slides.forEach((_, index) => {
-            const dot = document.createElement('button');
-            dot.classList.add('indicator-dot');
-            if (index === 0) dot.classList.add('active');
-            indicatorsContainer.appendChild(dot);
-        });
-        const indicators = Array.from(indicatorsContainer.children);
+            const moveToSlide = (track, currentSlide, targetSlide) => {
+                if (!targetSlide) return;
+                track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+                currentSlide.classList.remove('current-slide');
+                targetSlide.classList.add('current-slide');
+            };
 
-        const moveToSlide = (track, currentSlide, targetSlide) => {
-            if (!targetSlide) return;
-            track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
-            currentSlide.classList.remove('current-slide');
-            targetSlide.classList.add('current-slide');
-        };
-
-        const updateIndicators = (currentDot, targetDot) => {
-            if (!targetDot) return;
-            currentDot.classList.remove('active');
-            targetDot.classList.add('active');
-        };
-        
-        slides[0].classList.add('current-slide');
-
-        nextButton.addEventListener('click', e => {
-            const currentSlide = carouselTrack.querySelector('.current-slide') || slides[0];
-            const nextSlide = currentSlide.nextElementSibling || slides[0];
-            const currentDot = indicatorsContainer.querySelector('.active');
-            const nextDot = currentDot.nextElementSibling || indicators[0];
-
-            moveToSlide(carouselTrack, currentSlide, nextSlide);
-            updateIndicators(currentDot, nextDot);
-        });
-
-        prevButton.addEventListener('click', e => {
-            const currentSlide = carouselTrack.querySelector('.current-slide') || slides[0];
-            const prevSlide = currentSlide.previousElementSibling || slides[slides.length - 1];
-            const currentDot = indicatorsContainer.querySelector('.active');
-            const prevDot = currentDot.previousElementSibling || indicators[indicators.length - 1];
+            const updateIndicators = (currentDot, targetDot) => {
+                if (!targetDot) return;
+                currentDot.classList.remove('active');
+                targetDot.classList.add('active');
+            };
             
-            moveToSlide(carouselTrack, currentSlide, prevSlide);
-            updateIndicators(currentDot, prevDot);
-        });
+            slides[0].classList.add('current-slide');
 
-        indicatorsContainer.addEventListener('click', e => {
-            const targetDot = e.target.closest('button.indicator-dot');
-            if (!targetDot) return;
+            nextButton.addEventListener('click', e => {
+                const currentSlide = carouselTrack.querySelector('.current-slide') || slides[0];
+                const nextSlide = currentSlide.nextElementSibling || slides[0];
+                const currentDot = indicatorsContainer.querySelector('.active');
+                const nextDot = currentDot.nextElementSibling || indicators[0];
 
-            const currentSlide = carouselTrack.querySelector('.current-slide') || slides[0];
-            const currentDot = indicatorsContainer.querySelector('.active');
-            const targetIndex = indicators.findIndex(dot => dot === targetDot);
-            const targetSlide = slides[targetIndex];
+                moveToSlide(carouselTrack, currentSlide, nextSlide);
+                updateIndicators(currentDot, nextDot);
+            });
 
-            moveToSlide(carouselTrack, currentSlide, targetSlide);
-            updateIndicators(currentDot, targetDot);
-        });
+            prevButton.addEventListener('click', e => {
+                const currentSlide = carouselTrack.querySelector('.current-slide') || slides[0];
+                const prevSlide = currentSlide.previousElementSibling || slides[slides.length - 1];
+                const currentDot = indicatorsContainer.querySelector('.active');
+                const prevDot = currentDot.previousElementSibling || indicators[indicators.length - 1];
+                
+                moveToSlide(carouselTrack, currentSlide, prevSlide);
+                updateIndicators(currentDot, prevDot);
+            });
+
+            indicatorsContainer.addEventListener('click', e => {
+                const targetDot = e.target.closest('button.indicator-dot');
+                if (!targetDot) return;
+
+                const currentSlide = carouselTrack.querySelector('.current-slide') || slides[0];
+                const currentDot = indicatorsContainer.querySelector('.active');
+                const targetIndex = indicators.findIndex(dot => dot === targetDot);
+                const targetSlide = slides[targetIndex];
+
+                moveToSlide(carouselTrack, currentSlide, targetSlide);
+                updateIndicators(currentDot, targetDot);
+            });
+        }
     }
 });
 
 // =========================================================
-// SECTION 4: FIX FOR BROWSER BACK/FORWARD CACHE (bfcache)
+// SECTION 5: FIX FOR BROWSER BACK/FORWARD CACHE (bfcache)
 // =========================================================
-// This event listener fires every time the page is displayed,
-// including when navigating back/forward in browser history.
+// This listener fires when a page is shown from the browser's cache (e.g., using the back button).
+// It removes the 'is-leaving' class to make sure the page is visible after navigating back.
 window.addEventListener('pageshow', function(event) {
-    // The `is-leaving` class is added when a user clicks a link to navigate away.
-    // If the user uses the back button, the browser might restore the page from its
-    // cache with this class still applied, making the page invisible.
-    // We remove the class to ensure the page is visible and the fadeIn animation plays.
-    document.body.classList.remove('is-leaving');
+    if (document.body.classList.contains('is-leaving')) {
+        document.body.classList.remove('is-leaving');
+    }
 });
