@@ -2148,7 +2148,7 @@ body.is-leaving {
 .mobile-nav-toggle[aria-expanded="true"]::after { transform: translateY(-10px) rotate(-45deg); }
 
 
-/* --- Mobile Media Query (for screens 900px or less) --- */
+/* --- PASTE THIS ENTIRE BLOCK IN ITS PLACE --- */
 @media (max-width: 900px) {
     /* Show the hamburger button */
     .mobile-nav-toggle {
@@ -2161,11 +2161,15 @@ body.is-leaving {
         inset: 0 0 0 30%; /* top, right, bottom, left */
         z-index: 9998;
 
-        /* === THIS IS THE KEY FIX === */
-        /* Give the nav panel its own semi-transparent background and blur effect */
-        background: rgba(10, 10, 10, 0.85); /* A dark, glassy background */
-        backdrop-filter: blur(1rem); /* Blurs the content behind it */
-        /* === END OF FIX === */
+        /* === THIS IS THE NEW, CORRECT CODE === */
+        /* Use a solid, opaque background from your theme */
+        background: var(--dark-bg); 
+        
+        /* Add a border on the left to define the edge */
+        border-left: 2px solid var(--primary-purple);
+        
+        /* Add a shadow to create depth and separation */
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
 
         transform: translateX(100%);
         transition: transform 350ms ease-out;
@@ -2233,6 +2237,8 @@ body.is-leaving {
     header nav .dropdown.active .dropbtn::after {
         transform: rotate(-135deg);
     }
+}
+/* --- END OF THE BLOCK TO PASTE --- */
 }
 /* ================================================== */
 /*          MOBILE NAVIGATION OVERLAY & FIXES         */
