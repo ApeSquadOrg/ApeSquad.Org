@@ -112,9 +112,14 @@
 
         /* Large Phones / Tablet Portrait */
         @media (max-width: 768px) {
+            /* === THIS IS THE FIX === */
             #club-page {
-                padding: 80px 0; /* Reduce overall page padding */
+                /* Pushes content down to clear the fixed nav bar */
+                /* You can adjust 120px if needed */
+                padding: 120px 0 80px 0; 
             }
+            /* === END FIX === */
+            
             .clubContainer {
                 padding: 25px 20px; /* Reduce container padding */
             }
@@ -128,9 +133,6 @@
 
         /* Standard Mobile Phones */
         @media (max-width: 480px) {
-            #club-page {
-                padding: 60px 0; /* Further reduce padding */
-            }
             .club-intro {
                 font-size: 1rem; /* Make intro text smaller */
             }
