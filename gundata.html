@@ -138,7 +138,7 @@
         border: 1px solid var(--border-color);
         border-radius: 6px;
         padding: 12px;
-        width: 260px;
+        width: 280px;
         box-shadow: 0 1px 4px rgba(0,0,0,0.2);
         font-size: 0.85rem;
       }
@@ -154,9 +154,22 @@
       .close-card-btn { background: none; border: none; color: #aaa; font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 0 5px; transition: color 0.2s; }
       .close-card-btn:hover { color: #fff; }
       .weapon-card-body ul { list-style: none; margin: 0; padding: 0; }
-      .weapon-card-body li { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .weapon-card-body li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
       .weapon-card-body li:last-child { border-bottom: none; }
       .weapon-card-body strong { color: #ccc; }
+      .weapon-card-notes {
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        font-size: 0.8rem;
+        line-height: 1.4;
+        color: #ddd;
+      }
+      .weapon-card-notes strong {
+        color: var(--accent-orange);
+        display: block;
+        margin-bottom: 4px;
+      }
 
       /* Mobile Layout Order */
       .graph-container { order: 1; }
@@ -279,38 +292,38 @@
         const DEFAULT_MAX_DPS = 800;
         const INFO_PANEL_HOVER_THRESHOLD_PX = 30;
 
-        // --- WEAPON DATA ---
+        // --- WEAPON DATA (UPDATED FROM CHART) ---
         const weaponData = [
             // LIGHT
-            { name: "93R", class: "LIGHT", bodyDamage: 26, headDamage: 39, rpm: 1000, burstCount: 3, burstDelay: 0.275, minDropoff: 32, maxDropoff: 40, dropoffModifier: 0.4 },
-            { name: "ARN-220", class: "LIGHT", bodyDamage: 17, headDamage: 25.5, rpm: 725, minDropoff: 37.5, maxDropoff: 45, dropoffModifier: 0.72 },
-            { name: "LH1", class: "LIGHT", bodyDamage: 42, headDamage: 84, rpm: 280, minDropoff: 50, maxDropoff: 55, dropoffModifier: 0.72 },
-            { name: "M11", class: "LIGHT", bodyDamage: 16, headDamage: 24, rpm: 1000, minDropoff: 10, maxDropoff: 17.5, dropoffModifier: 0.52 },
-            { name: "SR-84", class: "LIGHT", bodyDamage: 118, headDamage: 236, rpm: 40, minDropoff: 80, maxDropoff: 100, dropoffModifier: 0.75 },
-            { name: "Throwing Knives", class: "LIGHT", bodyDamage: 60, headDamage: 90, rpm: 545.45, burstCount: 2, burstDelay: 0.59, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0 },
-            { name: "V9S", class: "LIGHT", bodyDamage: 40, headDamage: 60, rpm: 360, minDropoff: 10, maxDropoff: 15, dropoffModifier: 0.67 },
-            { name: "XP-54", class: "LIGHT", bodyDamage: 16, headDamage: 24, rpm: 860, minDropoff: 22.5, maxDropoff: 32.5, dropoffModifier: 0.52 },
-            { name: "M26 Matter", class: "LIGHT", bodyDamage: 121, headDamage: 121, rpm: 85, minDropoff: 15, maxDropoff: 25, dropoffModifier: 0.64 },
-            { name: "SH1900", class: "LIGHT", bodyDamage: 195, headDamage: 195, rpm: 80, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0 },
+            { name: "93R", class: "LIGHT", bodyDamage: 26, headDamage: 39, rpm: 1000, burstCount: 3, burstDelay: 0.275, minDropoff: 32, maxDropoff: 42, dropoffModifier: 0.4, magazineSize: 24, emptyReload: 1.75, tacticalReload: 1.45, notes: "" },
+            { name: "ARN-220", class: "LIGHT", bodyDamage: 17, headDamage: 25.5, rpm: 725, minDropoff: 37.5, maxDropoff: 45, dropoffModifier: 0.72, magazineSize: "60 (30)", emptyReload: "2.80 (0.80)", tacticalReload: 2.45, notes: 'Quick reload is 0.80s long. It triggers when you have emptied a magazine, and when you have a "quick magazine" available (indicated by the bars near your ammo count). Otherwise, a normal reload will occur.' },
+            { name: "LH1", class: "LIGHT", bodyDamage: 42, headDamage: 84, rpm: 280, minDropoff: 50, maxDropoff: 55, dropoffModifier: 0.72, magazineSize: 15, emptyReload: 2.85, tacticalReload: 1.95, notes: "" },
+            { name: "M11", class: "LIGHT", bodyDamage: 16, headDamage: 24, rpm: 1000, minDropoff: 10, maxDropoff: 17.5, dropoffModifier: 0.52, magazineSize: 40, emptyReload: 1.85, tacticalReload: 1.55, notes: "" },
+            { name: "M26 Matter", class: "LIGHT", bodyDamage: 121, headDamage: 121, rpm: 85, minDropoff: 15, maxDropoff: 25, dropoffModifier: 0.64, magazineSize: 8, emptyReload: 2.45, tacticalReload: 2.05, notes: "" },
+            { name: "SH1900", class: "LIGHT", bodyDamage: 195, headDamage: 195, rpm: 80, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0, magazineSize: 2, emptyReload: 2.60, tacticalReload: 2.20, notes: "" },
+            { name: "SR-84", class: "LIGHT", bodyDamage: 118, headDamage: 236, rpm: 40, minDropoff: 80, maxDropoff: 100, dropoffModifier: 0.75, magazineSize: 6, emptyReload: 3.35, tacticalReload: 1.95, notes: "Bullets are hitscan up until 40m, and then converted into projectiles afterwards." },
+            { name: "Throwing Knives", class: "LIGHT", bodyDamage: 60, headDamage: 90, rpm: 545.45, burstCount: 2, burstDelay: 0.59, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0, magazineSize: "N/A", emptyReload: "N/A", tacticalReload: "N/A", notes: "TTK does not account for projectile travel time, or the initial delay when throwing the knives. It represents more of a 'time-to-death' calculation, if anything." },
+            { name: "V9S", class: "LIGHT", bodyDamage: 40, headDamage: 60, rpm: 360, minDropoff: 10, maxDropoff: 15, dropoffModifier: 0.67, magazineSize: 20, emptyReload: 1.50, tacticalReload: 1.25, notes: "" },
+            { name: "XP-54", class: "LIGHT", bodyDamage: 16, headDamage: 24, rpm: 860, minDropoff: 22.5, maxDropoff: 32.5, dropoffModifier: 0.52, magazineSize: 34, emptyReload: 2.50, tacticalReload: 2.25, notes: "" },
             // MEDIUM
-            { name: "AKM", class: "MEDIUM", bodyDamage: 20, headDamage: 30, rpm: 600, minDropoff: 30, maxDropoff: 37.5, dropoffModifier: 0.55 },
-            { name: "CB-01 Repeater", class: "MEDIUM", bodyDamage: 84, headDamage: 126, rpm: 73, minDropoff: 40, maxDropoff: 45, dropoffModifier: 0.69 },
-            { name: "FAMAS", class: "MEDIUM", bodyDamage: 23, headDamage: 34.5, rpm: 1080, burstCount: 3, burstDelay: 0.27, minDropoff: 35, maxDropoff: 42.5, dropoffModifier: 0.50 },
-            { name: "FCAR", class: "MEDIUM", bodyDamage: 22, headDamage: 33, rpm: 540, minDropoff: 35, maxDropoff: 40, dropoffModifier: 0.55 },
-            { name: "Pike .556", class: "MEDIUM", bodyDamage: 50, headDamage: 75, rpm: 200, minDropoff: 45, maxDropoff: 50, dropoffModifier: 0.75 },
-            { name: "R.357", class: "MEDIUM", bodyDamage: 74, headDamage: 148, rpm: 140, minDropoff: 27.5, maxDropoff: 44, dropoffModifier: 0.4 },
-            { name: "Cerberus 12GA", class: "MEDIUM", bodyDamage: 99, headDamage: 99, rpm: 100, minDropoff: 10, maxDropoff: 17.5, dropoffModifier: 0.63 },
-            { name: "CL-40 (Splash)", class: "MEDIUM", bodyDamage: 90, headDamage: 90, rpm: 75, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0 },
-            { name: "Model 1887", class: "MEDIUM", bodyDamage: 108, headDamage: 108, rpm: 77, minDropoff: 20, maxDropoff: 30, dropoffModifier: 0.65 },
+            { name: "AKM", class: "MEDIUM", bodyDamage: 20, headDamage: 30, rpm: 600, minDropoff: 30, maxDropoff: 37.5, dropoffModifier: 0.55, magazineSize: 32, emptyReload: 2.35, tacticalReload: 2.35, notes: "" },
+            { name: "CB-01 Repeater", class: "MEDIUM", bodyDamage: 84, headDamage: 126, rpm: 73, minDropoff: 40, maxDropoff: 45, dropoffModifier: 0.69, magazineSize: 8, emptyReload: 5.05, tacticalReload: "(varies)", notes: "Firing the weapon will cancel the reload animation." },
+            { name: "Cerberus 12GA", class: "MEDIUM", bodyDamage: 99, headDamage: 99, rpm: 100, minDropoff: 10, maxDropoff: 17.5, dropoffModifier: 0.63, magazineSize: 3, emptyReload: 2.95, tacticalReload: "(varies)", notes: "Deals 99 damage on hit (9 x 11 pellets), and then an extra ~31 damage from the fire DoT that last for ~2 seconds. DoT does not stack, and it resets on every hit." },
+            { name: "CL-40 (Splash)", class: "MEDIUM", bodyDamage: 90, headDamage: 90, rpm: 75, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0, magazineSize: 5, emptyReload: 3.95, tacticalReload: "(varies)", notes: "Inner blast radius for maximum damage is 0.6m." },
+            { name: "FAMAS", class: "MEDIUM", bodyDamage: 23, headDamage: 34.5, rpm: 1080, burstCount: 3, burstDelay: 0.27, minDropoff: 35, maxDropoff: 42.5, dropoffModifier: 0.50, magazineSize: 27, emptyReload: 2.60, tacticalReload: 2.15, notes: "15 bullets deal 345 damage to the body, so a Heavy player may be killable within 5 bursts upon taking chip damage. In that scenario, its TTK vs. Heavy @ Body = 1.64s, and its TTK vs. Heavy @ Head = 1.14s (with 10 headshots)." },
+            { name: "FCAR", class: "MEDIUM", bodyDamage: 22, headDamage: 33, rpm: 540, minDropoff: 35, maxDropoff: 40, dropoffModifier: 0.55, magazineSize: 25, emptyReload: 2.10, tacticalReload: 2.10, notes: "" },
+            { name: "Model 1887", class: "MEDIUM", bodyDamage: 108, headDamage: 108, rpm: 69, minDropoff: 20, maxDropoff: 30, dropoffModifier: 0.65, magazineSize: 6, emptyReload: 4.30, tacticalReload: "(varies)", notes: "Firing the weapon will cancel the reload animation." },
+            { name: "Pike .556", class: "MEDIUM", bodyDamage: 50, headDamage: 75, rpm: 200, minDropoff: 45, maxDropoff: 50, dropoffModifier: 0.75, magazineSize: 12, emptyReload: 3.25, tacticalReload: 2.10, notes: "" },
+            { name: "R.357", class: "MEDIUM", bodyDamage: 74, headDamage: 148, rpm: 140, minDropoff: 27.5, maxDropoff: 44, dropoffModifier: 0.4, magazineSize: 6, emptyReload: 2.50, tacticalReload: 2.20, notes: "" },
             // HEAVY
-            { name: ".50 Akimbo", class: "HEAVY", bodyDamage: 44, headDamage: 88, rpm: 230, minDropoff: 35, maxDropoff: 42, dropoffModifier: 0.50 },
-            { name: "Flamethrower", class: "HEAVY", bodyDamage: 30, headDamage: 30, rpm: 170, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0 },
-            { name: "Lewis Gun", class: "HEAVY", bodyDamage: 22, headDamage: 33, rpm: 500, minDropoff: 35, maxDropoff: 40, dropoffModifier: 0.67 },
-            { name: "M60", class: "HEAVY", bodyDamage: 20, headDamage: 30, rpm: 580, minDropoff: 25, maxDropoff: 35, dropoffModifier: 0.50 },
-            { name: "M134 Minigun", class: "HEAVY", bodyDamage: 11, headDamage: 14.6, rpm: 1500, minDropoff: 30, maxDropoff: 50, dropoffModifier: 0.53 },
-            { name: "ShAK-50", class: "HEAVY", bodyDamage: 30, headDamage: 45, rpm: 420, minDropoff: 15, maxDropoff: 25, dropoffModifier: 0.67 },
-            { name: "KS-23", class: "HEAVY", bodyDamage: 100, headDamage: 100, rpm: 78, minDropoff: 18, maxDropoff: 23, dropoffModifier: 0.70 },
-            { name: "SA1216", class: "HEAVY", bodyDamage: 72, headDamage: 72, rpm: 190, burstCount: 4, burstDelay: 0.75, minDropoff: 12.5, maxDropoff: 20, dropoffModifier: 0.67 }
+            { name: ".50 Akimbo", class: "HEAVY", bodyDamage: 44, headDamage: 88, rpm: 230, minDropoff: 35, maxDropoff: 42, dropoffModifier: 0.50, magazineSize: 14, emptyReload: 3.00, tacticalReload: 2.20, notes: "" },
+            { name: "Flamethrower", class: "HEAVY", bodyDamage: 30, headDamage: 30, rpm: 170, minDropoff: 0, maxDropoff: 0, dropoffModifier: 1.0, magazineSize: 30, emptyReload: 3.55, tacticalReload: 3.55, notes: "(need information about whether or not the fire DoT sticks to the player while dealing damage with Flamethrower ammo)" },
+            { name: "KS-23", class: "HEAVY", bodyDamage: 100, headDamage: 100, rpm: 78, minDropoff: 18, maxDropoff: 23, dropoffModifier: 0.70, magazineSize: 6, emptyReload: 5.55, tacticalReload: "(varies)", notes: "Shots are hitscan within 25m, and then they become projectiles afterwards (with a projectile velocity of 280 m/s). Firing the weapon will cancel the reload animation." },
+            { name: "Lewis Gun", class: "HEAVY", bodyDamage: 22, headDamage: 33, rpm: 500, minDropoff: 35, maxDropoff: 40, dropoffModifier: 0.67, magazineSize: 47, emptyReload: 3.55, tacticalReload: 3.25, notes: "" },
+            { name: "M60", class: "HEAVY", bodyDamage: 20, headDamage: 30, rpm: 580, minDropoff: 25, maxDropoff: 35, dropoffModifier: 0.50, magazineSize: 70, emptyReload: 3.55, tacticalReload: 3.55, notes: "" },
+            { name: "M134 Minigun", class: "HEAVY", bodyDamage: 11, headDamage: 14.6, rpm: 1500, minDropoff: 30, maxDropoff: 50, dropoffModifier: 0.53, magazineSize: 250, emptyReload: 5.25, tacticalReload: 5.00, notes: "TTK assumes a full ramp-up to maximum fire rate. Major levels of spread make it 100% accurate only at extreme close range (within ~5m). Spin-up time until minimum fire rate (500 RPM) is 0.90s. Spin-up time until maximum fire rate is 1.60s." },
+            { name: "SA1216", class: "HEAVY", bodyDamage: 72, headDamage: 72, rpm: 190, burstCount: 4, burstDelay: 0.80, minDropoff: 12.5, maxDropoff: 20, dropoffModifier: 0.67, magazineSize: "16 (4)", emptyReload: "3.25 (0.80)", tacticalReload: 2.35, notes: 'Quick reload is 0.80s long. It triggers when you have emptied a magazine, and when you have a "quick magazine" available (indicated by the bars near your ammo count). Otherwise, a normal reload will occur.' },
+            { name: "ShAK-50", class: "HEAVY", bodyDamage: 30, headDamage: 45, rpm: 420, minDropoff: 15, maxDropoff: 25, dropoffModifier: 0.67, magazineSize: 20, emptyReload: 3.20, tacticalReload: 2.40, notes: "Shoots 2 bullets per round, spread out horizontally, each dealing 15 damage." }
         ];
 
         const weaponColors = {
@@ -385,7 +398,7 @@
             }
 
             updateMixedHitButtonText();
-            renderWeaponCards();
+            scheduleUpdateGraph(); // Initial graph render
             updateClearButtonVisibility();
         }
 
@@ -495,7 +508,9 @@
         function handleHspSliderInput() {
             hspValueDisplay.textContent = `${hspSlider.value}%`;
             updateMixedHitButtonText();
-            scheduleUpdateGraph();
+            if (hitlocToggleGroup.querySelector('.toggle-btn.active').dataset.hitloc === 'Mixed') {
+                scheduleUpdateGraph();
+            }
         }
 
         function handleGraphClick(e) {
@@ -791,7 +806,8 @@
 
         function renderWeaponCards() {
             weaponCardsContainer.innerHTML = '';
-            selectedWeaponNames.forEach(weaponName => {
+            const sortedSelection = Array.from(selectedWeaponNames).sort((a,b) => a.localeCompare(b));
+            sortedSelection.forEach(weaponName => {
                 const weapon = weaponData.find(w => w.name === weaponName);
                 if (weapon) {
                     const card = createWeaponCard(weapon);
@@ -806,6 +822,8 @@
             card.dataset.weaponId = weapon.name;
 
             const dropoffText = (weapon.minDropoff === 0 && weapon.maxDropoff === 0) ? 'None' : `${weapon.minDropoff}m - ${weapon.maxDropoff}m`;
+            const reloadText = (weapon.emptyReload && weapon.tacticalReload) ? `${weapon.emptyReload}s / ${weapon.tacticalReload}s` : 'N/A';
+            const notesHTML = weapon.notes ? `<div class="weapon-card-notes"><strong>Notes:</strong> <span>${weapon.notes.replace(/\n/g, '<br>')}</span></div>` : '';
 
             card.innerHTML = `
                 <div class="weapon-card-header" style="border-color: ${weapon.color};">
@@ -815,11 +833,13 @@
                 <div class="weapon-card-body">
                     <ul>
                         <li><strong>Class:</strong> <span>${weapon.class}</span></li>
-                        <li><strong>RPM:</strong> <span>${weapon.rpm}</span></li>
-                        <li><strong>Body Damage:</strong> <span>${weapon.bodyDamage}</span></li>
-                        <li><strong>Head Damage:</strong> <span>${weapon.headDamage}</span></li>
-                        <li><strong>Dropoff:</strong> <span>${dropoffText}</span></li>
+                        <li><strong>Body/Head Dmg:</strong> <span>${weapon.bodyDamage} / ${weapon.headDamage}</span></li>
+                        <li><strong>Rate of Fire:</strong> <span>${weapon.rpm || 'N/A'} RPM</span></li>
+                        <li><strong>Magazine Size:</strong> <span>${weapon.magazineSize || 'N/A'}</span></li>
+                        <li><strong>Reload (Empty/Tac):</strong> <span>${reloadText}</span></li>
+                        <li><strong>Dropoff Range:</strong> <span>${dropoffText}</span></li>
                     </ul>
+                    ${notesHTML}
                 </div>
             `;
             
