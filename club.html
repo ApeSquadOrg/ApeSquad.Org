@@ -91,6 +91,16 @@
             transform: translateX(5px);
         }
 
+        /* --- NEW CSS RULE TO STYLE THE LINKS --- */
+        .clubList li a {
+            color: inherit; /* Inherits text color from the parent <li> */
+            text-decoration: none; /* Removes the default underline */
+            display: block; /* Makes the entire area of the <li> clickable */
+            margin: -5px -10px; /* Expands link to fill the li's padding area */
+            padding: 5px 10px; /* Restores padding inside the link */
+        }
+
+
         /* --- Loader and Error States --- */
         .loader-container {
             text-align: center;
@@ -161,7 +171,8 @@
     <!-- YOUR WORKING SCRIPT - now on the same page -->
     <script>
         const platform = 'crossplay';
-        const apiUrl = `https://api.the-finals-leaderboard.com/v1/leaderboard/s6/${platform}`;
+        // UPDATED: Changed s6 to s7 to match the season of the player stat links
+        const apiUrl = `https://api.the-finals-leaderboard.com/v1/leaderboard/s7/${platform}`;
         const targetClubTags = ['APEZ'];
 
         async function fetchAndDisplayMembers(clubTag, appContainer) {
@@ -170,7 +181,6 @@
                 const data = await response.json();
 
                 const clubContainer = document.createElement('div');
-                // This class gets styled by the new CSS
                 clubContainer.classList.add('clubContainer');
 
                 const heading = document.createElement('h2');
@@ -178,7 +188,6 @@
                 clubContainer.appendChild(heading);
 
                 const memberList = document.createElement('ul');
-                // This class gets styled by the new CSS
                 memberList.classList.add('clubList');
                 clubContainer.appendChild(memberList);
 
@@ -187,10 +196,33 @@
 
                     if (clubMembers.length > 0) {
                         clubMembers.forEach(member => {
-                            const username = member.name.split('#')[0];
+                            // --- MODIFICATION START ---
+
+                            // Get the full name (e.g., "Player#1234") for the URL
+                            const fullName = member.name;
+                            // Get just the name part for display
+                            const displayName = fullName.split('#')[0];
+                            // URL-encode the full name to handle the '#' character (becomes %23)
+                            const encodedName = encodeURIComponent(fullName);
+                            // Construct the final URL for the player's stats page
+                            const playerPageUrl = `https://www.davg25.com/app/the-finals-leaderboard-tracker/player-stats/?id=${encodedName}&season=s7`;
+
+                            // Create the list item and the anchor (link) element
                             const listItem = document.createElement('li');
-                            listItem.textContent = username;
+                            const link = document.createElement('a');
+
+                            // Configure the link
+                            link.href = playerPageUrl;
+                            link.textContent = displayName;
+                            link.target = "_blank"; // Open link in a new tab
+                            link.rel = "noopener noreferrer"; // Security measure for new tabs
+
+                            // Put the link inside the list item
+                            listItem.appendChild(link);
+                            // Add the list item to the list
                             memberList.appendChild(listItem);
+                            
+                            // --- MODIFICATION END ---
                         });
                     } else {
                         const noMembersMessage = document.createElement('li');
@@ -228,14 +260,5 @@
             displayAllClubs();
         });
     </script>
-   <!-- ==================== -->
-    <!--   Footer Starts Here   -->
-    <!-- ==================== -->
-    <!-- The content of footer.html will be loaded here -->
-    <footer></footer>
-
-    <!-- SCRIPT TO LOAD HEADER AND FOOTER -->
-
-    <script src="/js/main.js"></script>
 </body>
 </html>
