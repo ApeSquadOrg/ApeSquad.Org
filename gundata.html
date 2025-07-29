@@ -458,7 +458,7 @@
             plotAreaEl.appendChild(svg);
             drawGrid(svg, plotWidth, plotHeight, currentMaxY, yAxisStep);
 
-            renderWeaponLines(svg, filteredWeapons, plotWidth, plotHeight, currentMaxY, calculationFn, activeTarget, activeHitLoc);
+            renderWeaponLines(svg, filteredWeapons, plotWidth, plotHeight, currentMaxY, calculationFn, activeTarget, activeHitLoc, activeMetric);
             renderLegendItems();
             applySelectionStyles();
         }
@@ -743,13 +743,19 @@
                 svg.appendChild(createSVGElement('line', { x1: x, y1: 0, x2: x, y2: plotHeight, class: 'grid-line' }));
             }
         }
-        function renderWeaponLines(svg, weapons, plotWidth, plotHeight, yMax, calculationFn, targetType, hitLocation) {
+        function renderWeaponLines(svg, weapons, plotWidth, plotHeight, yMax, calculationFn, targetType, hitLocation, activeMetric) {
             weaponLineElements = {};
             currentlyPlottedWeapons = [];
 
             weapons.forEach(weapon => {
                 const valueAtZero = calculationFn(weapon, 0, targetType, hitLocation);
-                if (!isFinite(valueAtZero) || valueAtZero === 0) return;
+
+                // **THE FIX IS HERE**
+                // Don't render if value is infinite. Also don't render if metric is DPS and DPS is zero.
+                // A TTK of zero is valid and should be rendered.
+                if (!isFinite(valueAtZero) || (activeMetric === 'DPS' && valueAtZero === 0)) {
+                    return;
+                }
 
                 currentlyPlottedWeapons.push(weapon);
                 
