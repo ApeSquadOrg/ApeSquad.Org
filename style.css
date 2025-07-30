@@ -2263,3 +2263,201 @@ body.nav-open::before {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+/* ================================================== */
+/*             GADGET STATISTICS PAGE                 */
+/* ================================================== */
+
+#gadget-stats {
+    background: 
+        linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
+        radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
+    padding: 120px 0;
+}
+
+.stats-intro {
+    text-align: center;
+    max-width: 700px;
+    margin: -20px auto 60px auto;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    opacity: 0.8;
+}
+
+/* --- Filter Controls --- */
+.filter-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+/* Re-styling the existing .btn for filter purposes */
+.filter-controls .btn {
+    padding: 10px 25px;
+    font-size: 1rem;
+    font-family: var(--font-headings);
+    letter-spacing: 2px;
+    border-radius: 8px;
+    background: transparent;
+    border: 2px solid var(--primary-purple);
+    color: var(--primary-purple);
+    box-shadow: none;
+    text-shadow: none;
+    transform: none;
+    transition: all 0.3s ease;
+}
+
+.filter-controls .btn:hover {
+    background: var(--primary-purple);
+    color: var(--light-text);
+    box-shadow: 0 0 15px var(--primary-purple);
+    transform: translateY(-3px);
+}
+
+.filter-controls .btn.active {
+    background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+    border-color: var(--secondary-purple);
+    color: #fff;
+    box-shadow: 0 5px 20px rgba(156, 70, 200, 0.4);
+    transform: translateY(-3px);
+}
+
+.filter-controls .btn::before {
+    display: none; /* Hiding the shine effect on these specific buttons */
+}
+
+
+/* --- Gadget Grid Layout --- */
+.gadget-grid {
+    display: grid;
+    /* This creates a responsive grid that fits as many 350px cards as it can */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+/* --- Gadget Card Styling --- */
+.gadget-card {
+    background: linear-gradient(160deg, var(--jungle-green), var(--jungle-dark));
+    border-radius: 15px;
+    border: 2px solid var(--jungle-green);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.gadget-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--standout-blue);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7), 0 0 25px rgba(3, 183, 250, 0.2);
+}
+
+/* Card Header: Image, Name, Type */
+.gadget-card-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--jungle-light);
+}
+
+.gadget-card-header img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain; /* Use 'contain' so the full gadget is visible */
+    filter: drop-shadow(0 0 10px rgba(3, 183, 250, 0.3));
+}
+
+/* Using existing h3 styles for the name */
+.gadget-card-header h3 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    font-family: var(--font-tech);
+    background: linear-gradient(45deg, var(--primary-purple), var(--standout-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+}
+
+.gadget-type {
+    font-family: var(--font-headings);
+    color: var(--accent-orange);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1rem;
+}
+
+/* Card Body: Description and Stats List */
+.gadget-card-body {
+    padding-top: 20px;
+}
+
+.gadget-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.8;
+    margin-bottom: 25px;
+    min-height: 80px; /* Ensures cards have a similar height */
+}
+
+.gadget-stat-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.gadget-stat-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-body);
+    font-size: 1rem;
+}
+
+.gadget-stat-list .stat-name {
+    color: var(--light-text);
+    opacity: 0.9;
+}
+
+.gadget-stat-list .stat-value {
+    font-family: var(--font-tech);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--standout-blue);
+    text-shadow: 0 0 8px var(--standout-blue);
+}
+
+/* --- Stat Bar for Percentages --- */
+.stat-bar-container {
+    width: 60%;
+    height: 20px;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-bar {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--primary-purple), var(--standout-blue));
+    box-shadow: 0 0 10px var(--standout-blue);
+}
+
+.stat-bar-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-tech);
+    font-size: 0.8rem;
+    color: var(--light-text);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
