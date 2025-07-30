@@ -2499,3 +2499,42 @@ body.nav-open::before {
         justify-content: center;
     }
 }
+/* --- Stats Table for Complex Gadgets like H+ Infuser --- */
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    font-family: var(--font-body);
+}
+
+.stats-table th, .stats-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid var(--jungle-green);
+}
+
+.stats-table th {
+    background-color: rgba(26, 67, 20, 0.5); /* Reusing a theme color */
+    font-family: var(--font-headings);
+    letter-spacing: 1px;
+    font-weight: normal;
+    font-size: 1.1rem;
+    color: var(--light-text);
+}
+
+.stats-table td {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+.stats-table .sub-header {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #aaa;
+    border-bottom: 1px solid var(--jungle-green);
+}
+
+.stats-table .target-class {
+    font-weight: bold;
+    color: var(--light-text);
+}
