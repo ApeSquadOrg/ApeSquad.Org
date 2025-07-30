@@ -136,6 +136,117 @@
                     </div>
                 </div>
 
+<!-- Card: Glitch Grenade -->
+<div class="gadget-card">
+    <div class="gadget-main-content">
+        <div class="gadget-identity">
+            <img src="images/gadgets/glitch-grenade.png" alt="Glitch Grenade">
+            <h3>Glitch Grenade</h3>
+        </div>
+        <div class="gadget-details">
+            <p class="quote">“Thrown projectile that disables specializations and gadgets, glitches contestant's screens, and disables powered objects in the affected area”</p>
+            <p>The Glitch Grenade is a thrown gadget that disables opponents' gadgets and deployables temporarily in an area.</p>
+            <div class="gadget-stats-grid">
+                <div class="stat-item"><span class="stat-name">Cooldown</span><span class="stat-value">20s</span></div>
+                <div class="stat-item"><span class="stat-name">Ammo</span><span class="stat-value">2</span></div>
+                <div class="stat-item"><span class="stat-name">Duration</span><span class="stat-value">5s</span></div>
+                <div class="stat-item"><span class="stat-name">Priming Time</span><span class="stat-value">1.5s</span></div>
+            </div>
+        </div>
+    </div>
+    <details class="gadget-properties-accordion">
+        <summary>View Properties & Effects</summary>
+        <div class="properties-content">
+            <div class="property-group">
+                <h4>Gadget</h4>
+                <ul>
+                    <li><strong>Grenade:</strong> Thrown overhand or underhand.</li>
+                    <li><strong>Multiple Charges:</strong> Has 2 charges that recharge individually.</li>
+                </ul>
+            </div>
+            <div class="property-group">
+                <h4>Projectile</h4>
+                <ul>
+                    <li><strong>Projectile:</strong> Affected by gravity and has travel time.</li>
+                    <li><strong>Bounce:</strong> Bounces off surfaces.</li>
+                    <li><strong>Trigger on Time:</strong> Detonates after a fixed time.</li>
+                    <li><strong>Trigger on Impact:</strong> Detonates on impact with shields.</li>
+                    <li><strong>Interceptible:</strong> Can be destroyed by an APS Turret.</li>
+                    <li><strong>Not Damaging:</strong> Does not deal damage on impact.</li>
+                </ul>
+            </div>
+            <div class="property-group">
+                <h4>Explosion</h4>
+                <ul>
+                    <li><strong>Explosive:</strong> Applies its effect in an area.</li>
+                    <li><strong>Glitching:</strong> Disables enemy gadgets and HUD.</li>
+                    <li><strong>Disabling:</strong> Disables glitchable deployables.</li>
+                    <li><strong>Not Damaging:</strong> Does not inflict damage.</li>
+                    <li><strong>No Structure Damage:</strong> Cannot damage structures.</li>
+                    <li><strong>No Friendly Fire:</strong> Does not glitch teammates.</li>
+                </ul>
+            </div>
+        </div>
+    </details>
+</div>
+<!-- Card: Gravity Vortex -->
+<div class="gadget-card">
+    <div class="gadget-main-content">
+        <div class="gadget-identity">
+            <img src="images/gadgets/gravity-vortex.png" alt="Gravity Vortex">
+            <h3>Gravity Vortex</h3>
+        </div>
+        <div class="gadget-details">
+            <p class="quote">“A remote-triggered device that creates a gravity vortex, pulling in objects and slowing contestants.”</p>
+            <p>The Gravity Vortex creates a powerful gravitational field, pulling nearby objects and contestants towards its center and slowing their movement.</p>
+            <div class="gadget-stats-grid">
+                <div class="stat-item"><span class="stat-name">Cooldown</span><span class="stat-value">20s</span></div>
+                <div class="stat-item"><span class="stat-name">Ammo</span><span class="stat-value">1</span></div>
+                <div class="stat-item"><span class="stat-name">Duration</span><span class="stat-value">7-10s</span></div>
+            </div>
+        </div>
+    </div>
+    <!-- You can add a <details> accordion here later when property information is available -->
+</div>
+/* --- Stats Table for Complex Gadgets like H+ Infuser --- */
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    font-family: var(--font-body);
+}
+
+.stats-table th, .stats-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid var(--jungle-green);
+}
+
+.stats-table th {
+    background-color: rgba(26, 67, 20, 0.5); /* Reusing a theme color */
+    font-family: var(--font-headings);
+    letter-spacing: 1px;
+    font-weight: normal;
+    font-size: 1.1rem;
+    color: var(--light-text);
+}
+
+.stats-table td {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+.stats-table .sub-header {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #aaa;
+    border-bottom: 1px solid var(--jungle-green);
+}
+
+.stats-table .target-class {
+    font-weight: bold;
+    color: var(--light-text);
+}
                 <!-- =================== -->
                 <!--  MEDIUM CLASS GADGETS  -->
                 <!-- =================== -->
