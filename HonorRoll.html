@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8868N4WQZJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A tribute to the generous donors and talented helpers who have contributed to Ape Squad Esports projects. See our Hall of Champions.">
+    <title>Ape Squad | Hall of Champions</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Link to your main stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome for icons (based on your CSS) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Page-specific styles for the Honor Roll -->
+    <style>
+        #honor-roll {
+            padding-top: 120px; /* Standard padding for pages without a hero image */
+            padding-bottom: 100px;
+            background: linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg));
+        }
+
+        /* Using the 'section-title' style from your tournaments page for consistent subheadings */
+        #honor-roll .section-title {
+            color: var(--accent-orange);
+            text-shadow: none;
+            text-align: left;
+            font-size: 2.5rem;
+            border-left: 5px solid var(--jungle-green);
+            padding-left: 15px;
+            margin-top: 80px; /* More space between major sections */
+            margin-bottom: 40px;
+        }
+
+        /* Custom grid for project-specific contributors */
+        .contributor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* A simple card for listing contributors, borrowing from your .player-card styles */
+        .contributor-card {
+            background: linear-gradient(145deg, var(--jungle-green), var(--jungle-dark));
+            border: 2px solid var(--jungle-green);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .contributor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+            border-color: var(--primary-purple);
+        }
+
+        .contributor-card h4 {
+            font-family: var(--font-tech);
+            font-size: 1.8rem;
+            color: var(--light-text);
+            margin-bottom: 8px;
+        }
+        
+        .contributor-card p {
+            font-size: 1rem;
+            color: var(--standout-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+        
+        /* Styles for the patron tiers section */
+        .patron-tier-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+             gap: 30px;
+        }
+        
+        .patron-tier-card {
+            background: rgba(0,0,0,0.3);
+            border: 2px solid var(--jungle-green);
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        /* Reusing your tier color classes for consistency */
+        .patron-tier-card .tier-name {
+             font-family: var(--font-tech);
+             font-size: 2rem;
+             margin-bottom: 20px;
+             padding-bottom: 15px;
+             border-bottom: 1px solid var(--jungle-green);
+             text-align: center;
+             text-shadow: 0 0 10px;
+        }
+
+        .patron-list {
+            list-style: none;
+            padding-left: 0;
+            text-align: center;
+        }
+        
+        .patron-list li {
+            font-family: var(--font-headings);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            padding: 8px 0;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- This header is left empty. Your js/main.js file will populate it. -->
+    <header></header>
+
+    <main>
+        <section id="honor-roll">
+            <div class="container">
+                
+                <!-- Main Page Title using your global h2 style -->
+                <h2 data-text="Hall of Champions">Hall of Champions</h2>
+                
+                <!-- Intro text using the style from your rankings page -->
+                <p class="rankings-intro">
+                    Ape Squad Esports is built by the passion, dedication, and generosity of our community. This page is dedicated to the legends—the donors and helpers who have contributed their time, skill, and resources to our projects. We couldn't do it without you. Thank you.
+                </p>
+
+                <!-- 
+                  PROJECT MVP SPOTLIGHT SECTION 
+                  Using the 'artist-grid' layout from your CSS for a feature spotlight.
+                -->
+                <h3 class="section-title">Project MVP</h3>
+                <div class="artist-grid">
+                    <div class="artist-image">
+                        <!-- Placeholder Image: Replace with the actual image path -->
+                        <img src="images/team/pfp_placeholder.png" alt="Photo of Project MVP">
+                    </div>
+                    <div class="artist-bio">
+                        <!-- Using the 'artist-bio h3' style -->
+                        <h3>VantaBlack</h3>
+                        <p>
+                           For their monumental effort in designing and developing the new Ape Squad website, VantaBlack has earned the title of Project MVP. Their vision and technical skill have given our community a home base we can all be proud of. From the glowing buttons to the animated backgrounds, their touch is on every pixel.
+                        </p>
+                        <div class="artist-socials">
+                            <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" target="_blank" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
+                            <a href="#" target="_blank" aria-label="Website"><i class="fas fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 
+                  PROJECT-SPECIFIC CONTRIBUTORS
+                -->
+                <h3 class="section-title">Project: 2024 Website Revamp</h3>
+                <div class="contributor-grid">
+                    <div class="contributor-card">
+                        <h4>VantaBlack</h4>
+                        <p>Lead Designer & Developer</p>
+                    </div>
+                    <div class="contributor-card">
+                        <h4>PixelPusher</h4>
+                        <p>Graphic Design & Assets</p>
+                    </div>
+                    <div class="contributor-card">
+                        <h4>Glitch</h4>
+                        <p>Content & Copywriting</p>
+                    </div>
+                    <div class="contributor-card">
+                        <h4>Seraph</h4>
+                        <p>User Testing & Feedback</p>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Project: Charity Stream Marathon</h3>
+                <div class="contributor-grid">
+                     <div class="contributor-card">
+                        <h4>Rogue_AI</h4>
+                        <p>Stream Organizer</p>
+                    </div>
+                     <div class="contributor-card">
+                        <h4>Echo</h4>
+                        <p>Moderation & Tech Support</p>
+                    </div>
+                     <div class="contributor-card">
+                        <h4>The entire Ape Squad Team</h4>
+                        <p>Stream Talent</p>
+                    </div>
+                </div>
+
+                <!-- 
+                  GENERAL PATRONS / DONATION TIERS
+                -->
+                <h3 class="section-title">Community Patrons</h3>
+                <div class="patron-tier-grid">
+                    
+                    <div class="patron-tier-card">
+                        <h4 class="tier-name tier-ruby">Ruby Tier</h4>
+                        <ul class="patron-list">
+                            <li>AnonymousChimp</li>
+                            <li>GorillaGamer</li>
+                        </ul>
+                    </div>
+
+                    <div class="patron-tier-card">
+                        <h4 class="tier-name tier-diamond">Diamond Tier</h4>
+                        <ul class="patron-list">
+                            <li>DiamondHands</li>
+                            <li>IceWielder</li>
+                            <li>CryptoApe</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="patron-tier-card">
+                        <h4 class="tier-name tier-gold">Gold Tier</h4>
+                        <ul class="patron-list">
+                            <li>GoldenGun</li>
+                            <li>Midas</li>
+                            <li>Aurelius</li>
+                            <li>SolidGold</li>
+                        </ul>
+                    </div>
+
+                    <div class="patron-tier-card">
+                        <h4 class="tier-name tier-silver">Silver Tier</h4>
+                        <ul class="patron-list">
+                            <li>Silverback</li>
+                            <li>Argent</li>
+                            <li>Moonlight</li>
+                            <li>Sterling</li>
+                            <li>QuickSilver</li>
+                            <li>Luna</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="patron-tier-card">
+                        <h4 class="tier-name tier-bronze">Bronze Tier</h4>
+                        <ul class="patron-list">
+                            <li>BronzeBeard</li>
+                            <li>CopperTop</li>
+                            <li>Rusty</li>
+                            <li>... and many more!</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- This footer is left empty. Your js/main.js file will populate it. -->
+    <footer></footer>
+    
+    <!-- This script handles global functionality like loading the header/footer, mobile nav, etc. -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>
