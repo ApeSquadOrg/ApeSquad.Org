@@ -3,12 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gadget Statistics - Ape Squad Esports</title>
-
-    <!-- Your existing CSS file -->
+    <title>Gadget Wiki - Ape Squad Esports</title>
     <link rel="stylesheet" href="style.css">
-
-    <!-- Google Fonts & Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -16,209 +12,158 @@
 </head>
 <body>
 
-    <!-- ==================== -->
-    <!--   Header Starts Here   -->
-    <!-- ==================== -->
     <header>
         <!-- Paste your header content here or load it with JavaScript -->
     </header>
 
     <main>
-        <!-- ====================== -->
-        <!--  Gadget Stats Section  -->
-        <!-- ====================== -->
-        <section id="gadget-stats">
+        <section id="gadget-wiki">
             <div class="container">
-                <h2 class="glitch" data-text="GADGET ANALYTICS">GADGET ANALYTICS</h2>
-                <p class="stats-intro">
-                    Deep dive into the meta. Analyze gadget performance, usage rates, and effectiveness to gain a tactical edge on the battlefield.
+                <h2 class="glitch" data-text="GADGET DATABASE">GADGET DATABASE</h2>
+                <p class="gadget-intro">
+                    Master the tools of the trade. An in-depth encyclopedia of every gadget available in the arena, detailing their stats, effects, and strategic properties.
                 </p>
 
-                <!-- Filter Controls -->
-                <div class="filter-controls">
-                    <button class="btn active" data-filter="all">All</button>
-                    <button class="btn" data-filter="lethal">Lethal</button>
-                    <button class="btn" data-filter="tactical">Tactical</button>
-                    <button class="btn" data-filter="support">Support</button>
+                <!-- ================== -->
+                <!--  LIGHT CLASS GADGETS  -->
+                <!-- ================== -->
+                <div class="gadget-class-section" id="light-gadgets">
+                    <h2 class="gadget-class-title">Light Class</h2>
+                    <div class="gadget-grid">
+
+                        <!-- Card: Breach Charge -->
+                        <div class="gadget-card">
+                            <div class="gadget-main-content">
+                                <div class="gadget-identity">
+                                    <img src="images/gadgets/breach-charge.png" alt="Breach Charge">
+                                    <h3>Breach Charge</h3>
+                                </div>
+                                <div class="gadget-details">
+                                    <p>The Breach Charge is a mounted gadget which, when remotely detonated, creates an explosion that breaches structures and damages opponents.</p>
+                                    <div class="gadget-stats-grid">
+                                        <div class="stat-item"><span class="stat-name">Cooldown</span><span class="stat-value">30s</span></div>
+                                        <div class="stat-item"><span class="stat-name">Ammo</span><span class="stat-value">3</span></div>
+                                        <div class="stat-item"><span class="stat-name">Damage</span><span class="stat-value">80</span></div>
+                                        <div class="stat-item"><span class="stat-name">Radius</span><span class="stat-value">2.5m</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <details class="gadget-properties-accordion">
+                                <summary>View Properties & Effects</summary>
+                                <div class="properties-content">
+                                    <div class="property-group">
+                                        <h4>Gadget</h4>
+                                        <ul>
+                                            <li><strong>Tossed:</strong> Can be thrown a short distance.</li>
+                                            <li><strong>Single Charge:</strong> Recharges after use.</li>
+                                            <li><strong>Retrievable:</strong> Can be picked up to restore a charge.</li>
+                                            <li><strong>Remote Controlled:</strong> Detonate all deployed charges from anywhere.</li>
+                                            <li><strong>Deployment Limit:</strong> Max of 3 deployed.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="property-group">
+                                        <h4>Charge</h4>
+                                        <ul>
+                                            <li><strong>Attached:</strong> Sticks to surfaces.</li>
+                                            <li><strong>Destructible:</strong> Can be destroyed by damage.</li>
+                                            <li><strong>Glitchable:</strong> Disabled by Glitch effects.</li>
+                                            <li><strong>Sound Cue:</strong> Beeps while armed.</li>
+                                            <li><strong>Reversible:</strong> If an enemy destroys it, they get credit for the kill.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="property-group">
+                                        <h4>Explosion</h4>
+                                        <ul>
+                                            <li><strong>Explosive:</strong> Area of effect damage.</li>
+                                            <li><strong>Damaging:</strong> Deals damage to contestants.</li>
+                                            <li><strong>Major Structure Damage:</strong> Destroys walls.</li>
+                                            <li><strong>No Friendly Fire:</strong> Does not harm teammates (unless enemy triggers it).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+
+                        <!-- Card: Gateway -->
+                        <div class="gadget-card">
+                            <div class="gadget-main-content">
+                                <div class="gadget-identity">
+                                    <img src="images/gadgets/gateway.png" alt="Gateway">
+                                    <h3>Gateway</h3>
+                                </div>
+                                <div class="gadget-details">
+                                    <p class="quote">“A pair of deployable gateway entrances; when both are placed and activated, contestants and objects can move between the two locations”</p>
+                                    <p>The Gateway is a thrown gadget that creates two portals between which contestants and objects can teleport.</p>
+                                    <div class="gadget-stats-grid">
+                                        <div class="stat-item"><span class="stat-name">Cooldown</span><span class="stat-value">40s</span></div>
+                                        <div class="stat-item"><span class="stat-name">Ammo</span><span class="stat-value">2</span></div>
+                                        <div class="stat-item"><span class="stat-name">Max Range</span><span class="stat-value">70m</span></div>
+                                        <div class="stat-item"><span class="stat-name">Duration</span><span class="stat-value">20s</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <details class="gadget-properties-accordion">
+                                <summary>View Properties & Effects</summary>
+                                <div class="properties-content">
+                                    <div class="property-group">
+                                        <h4>Gadget</h4>
+                                        <ul>
+                                            <li><strong>Grenade:</strong> Thrown overhand or underhand.</li>
+                                            <li><strong>Multiple Charges:</strong> Has 2 charges; both must be used to create the gateway.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="property-group">
+                                        <h4>Projectile</h4>
+                                        <ul>
+                                            <li><strong>Projectile:</strong> Affected by gravity and has travel time.</li>
+                                            <li><strong>Bounce:</strong> Bounces off surfaces.</li>
+                                            <li><strong>Interceptible:</strong> Can be destroyed by an APS Turret.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="property-group">
+                                        <h4>Gateway</h4>
+                                        <ul>
+                                            <li><strong>Glitchable:</strong> Disabled by Glitch effects.</li>
+                                            <li><strong>Usable by Opponents:</strong> Enemies can also use the portals.</li>
+                                            <li><strong>Movement:</strong> Provides a special mode of transport.</li>
+                                            <li><strong>Not Destructible:</strong> Cannot be damaged.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+
+                    </div>
                 </div>
 
-                <!-- Gadget Grid -->
-                <div class="gadget-grid">
-                    
-                    <!-- Card 1: Frag Grenade (Lethal) -->
-                    <div class="gadget-card" data-category="lethal">
-                        <div class="gadget-card-header">
-                            <img src="images/gadgets/frag-grenade.png" alt="Frag Grenade">
-                            <div class="gadget-title-group">
-                                <h3>Frag Grenade</h3>
-                                <p class="gadget-type">Lethal</p>
-                            </div>
-                        </div>
-                        <div class="gadget-card-body">
-                            <p class="gadget-description">A cookable fragmentation grenade with a moderate blast radius. The go-to choice for clearing corners and flushing out enemies.</p>
-                            <ul class="gadget-stat-list">
-                                <li>
-                                    <span class="stat-name">Pick Rate</span>
-                                    <div class="stat-bar-container">
-                                        <div class="stat-bar" style="width: 78%;"></div>
-                                        <span class="stat-bar-value">78%</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="stat-name">Avg Damage / Use</span>
-                                    <span class="stat-value">62</span>
-                                </li>
-                                <li>
-                                    <span class="stat-name">Kills per Match</span>
-                                    <span class="stat-value">2.1</span>
-                                </li>
-                            </ul>
-                        </div>
+                <!-- =================== -->
+                <!--  MEDIUM CLASS GADGETS  -->
+                <!-- =================== -->
+                <div class="gadget-class-section" id="medium-gadgets">
+                    <h2 class="gadget-class-title">Medium Class</h2>
+                    <div class="gadget-grid">
+                        <!-- Add Medium class gadget cards here -->
                     </div>
-
-                    <!-- Card 2: Stun Grenade (Tactical) -->
-                    <div class="gadget-card" data-category="tactical">
-                        <div class="gadget-card-header">
-                            <img src="images/gadgets/stun-grenade.png" alt="Stun Grenade">
-                            <div class="gadget-title-group">
-                                <h3>Stun Grenade</h3>
-                                <p class="gadget-type">Tactical</p>
-                            </div>
-                        </div>
-                        <div class="gadget-card-body">
-                            <p class="gadget-description">Detonates on impact, blinding and deafening opponents caught in the blast. Perfect for initiating an aggressive push.</p>
-                            <ul class="gadget-stat-list">
-                                <li>
-                                    <span class="stat-name">Pick Rate</span>
-                                    <div class="stat-bar-container">
-                                        <div class="stat-bar" style="width: 65%;"></div>
-                                        <span class="stat-bar-value">65%</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="stat-name">Avg Stun Duration</span>
-                                    <span class="stat-value">3.5s</span>
-                                </li>
-                                <li>
-                                    <span class="stat-name">Win Rate When Used</span>
-                                    <span class="stat-value">58%</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Card 3: Medkit (Support) -->
-                    <div class="gadget-card" data-category="support">
-                        <div class="gadget-card-header">
-                            <img src="images/gadgets/medkit.png" alt="Medkit">
-                            <div class="gadget-title-group">
-                                <h3>Medkit</h3>
-                                <p class="gadget-type">Support</p>
-                            </div>
-                        </div>
-                        <div class="gadget-card-body">
-                            <p class="gadget-description">A deployable field kit that provides rapid health regeneration to the user. Essential for survivability during long firefights.</p>
-                            <ul class="gadget-stat-list">
-                                <li>
-                                    <span class="stat-name">Pick Rate</span>
-                                    <div class="stat-bar-container">
-                                        <div class="stat-bar" style="width: 42%;"></div>
-                                        <span class="stat-bar-value">42%</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="stat-name">Avg Health Restored</span>
-                                    <span class="stat-value">75 HP</span>
-                                </li>
-                                <li>
-                                    <span class="stat-name">Uses per Life</span>
-                                    <span class="stat-value">0.8</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Card 4: EMP Grenade (Tactical) -->
-                    <div class="gadget-card" data-category="tactical">
-                        <div class="gadget-card-header">
-                            <img src="images/gadgets/emp-grenade.png" alt="EMP Grenade">
-                            <div class="gadget-title-group">
-                                <h3>EMP Grenade</h3>
-                                <p class="gadget-type">Tactical</p>
-                            </div>
-                        </div>
-                        <div class="gadget-card-body">
-                            <p class="gadget-description">Disables enemy electronics, optics, and HUDs in a wide radius. A powerful counter to defensive setups and high-tech gear.</p>
-                            <ul class="gadget-stat-list">
-                                <li>
-                                    <span class="stat-name">Pick Rate</span>
-                                    <div class="stat-bar-container">
-                                        <div class="stat-bar" style="width: 55%;"></div>
-                                        <span class="stat-bar-value">55%</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="stat-name">Avg Effect Duration</span>
-                                    <span class="stat-value">8s</span>
-                                </li>
-                                <li>
-                                    <span class="stat-name">Devices Disabled</span>
-                                    <span class="stat-value">3.4</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <!-- Add more gadget cards as needed -->
-
                 </div>
+
+                <!-- ================== -->
+                <!--  HEAVY CLASS GADGETS  -->
+                <!-- ================== -->
+                <div class="gadget-class-section" id="heavy-gadgets">
+                    <h2 class="gadget-class-title">Heavy Class</h2>
+                    <div class="gadget-grid">
+                        <!-- Add Heavy class gadget cards here -->
+                    </div>
+                </div>
+
             </div>
         </section>
     </main>
 
-    <!-- ==================== -->
-    <!--   Footer Starts Here   -->
-    <!-- ==================== -->
     <footer>
         <!-- Paste your footer content here or load it with JavaScript -->
     </footer>
-    
-    <!-- SCRIPT FOR FILTERING -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterControls = document.querySelector('.filter-controls');
-            const gadgetCards = document.querySelectorAll('.gadget-card');
 
-            if (filterControls) {
-                filterControls.addEventListener('click', (e) => {
-                    // Only run if a button is clicked
-                    if (e.target.tagName !== 'BUTTON') return;
-
-                    // Get the filter value from the data-filter attribute
-                    const filterValue = e.target.getAttribute('data-filter');
-
-                    // Set active class on button
-                    const currentActive = filterControls.querySelector('.active');
-                    if (currentActive) {
-                        currentActive.classList.remove('active');
-                    }
-                    e.target.classList.add('active');
-                    
-                    // Filter the cards
-                    gadgetCards.forEach(card => {
-                        const cardCategory = card.getAttribute('data-category');
-                        if (filterValue === 'all' || filterValue === cardCategory) {
-                            card.style.display = 'flex'; // Use 'flex' since that's its display type
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            }
-
-            // If you use header/footer loading, place that script here too.
-        });
-    </script>
-    <script src="js/main.js"></script> <!-- Your main JS if you have one -->
+    <script src="js/main.js"></script>
 </body>
 </html>
