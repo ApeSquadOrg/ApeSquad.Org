@@ -124,16 +124,16 @@
                         </div>
                         <div class="map-toggles">
                             <div class="toggle-switch">
-                                <input type="checkbox" id="toggle-pois">
-                                <label for="toggle-pois">POIs WIP</label>
+                                <input type="checkbox" id="toggle-pois" checked>
+                                <label for="toggle-pois">POIs</label>
                             </div>
                             <div class="toggle-switch">
-                                <input type="checkbox" id="toggle-objectives">
-                                <label for="toggle-objectives">Objectives WIP</label>
+                                <input type="checkbox" id="toggle-objectives" checked>
+                                <label for="toggle-objectives">Objectives</label>
                             </div>
                             <div class="toggle-switch">
-                                <input type="checkbox" id="toggle-spawns">
-                                <label for="toggle-spawns">Spawns WIP</label>
+                                <input type="checkbox" id="toggle-spawns" checked>
+                                <label for="toggle-spawns">Spawns</label>
                             </div>
                         </div>
                         <button id="reset-view-btn" title="Reset Map View">
@@ -187,7 +187,6 @@
             const resetViewBtn = document.getElementById("reset-view-btn");
             
             let panzoomInstance = null;
-            let initialZoom = 1; // Will hold the calculated min zoom for the current map
 
             function renderMap(mapName) {
                 const map = mapsData.find(m => m.name === mapName);
@@ -215,37 +214,23 @@
                 updateToggleVisibility();
 
                 const panContainer = displayArea.querySelector('.pan-container');
-                const mapImage = panContainer.querySelector('img');
-                const viewport = displayArea.querySelector('.map-image-wrapper');
-
-                // We must wait for the image to load to know its actual dimensions
-                mapImage.onload = () => {
-                    const viewportWidth = viewport.clientWidth;
-                    const viewportHeight = viewport.clientHeight;
-                    const imageWidth = mapImage.naturalWidth;
-                    const imageHeight = mapImage.naturalHeight;
-
-                    // Calculate the zoom level needed to cover the viewport
-                    const scaleX = viewportWidth / imageWidth;
-                    const scaleY = viewportHeight / imageHeight;
-                    initialZoom = Math.max(scaleX, scaleY);
-
+                
+                // We no longer need to wait for the image to load. The library
+                // will work on the element as sized by the CSS.
+                if (panContainer) {
                     panzoomInstance = panzoom(panContainer, {
                         bounds: true,
                         maxZoom: 10,
-                        minZoom: initialZoom, // This is the key change!
-                        initialZoom: initialZoom,
-                        initialX: 0,
-                        initialY: 0,
+                        // CRITICAL FIX: Set minZoom to 1. This prevents zooming out
+                        // beyond the initial size set by the CSS.
+                        minZoom: 1, 
+                        // Start at a non-zoomed state.
+                        initialZoom: 1,
                         beforeMouseDown: function(e) {
                             const shouldIgnore = e.target.classList.contains('poi-dot') || e.target.classList.contains('objective-marker') || e.target.classList.contains('spawn-marker');
                             return shouldIgnore;
                         }
                     });
-                };
-                // In case the image is already cached and onload doesn't fire
-                if (mapImage.complete) {
-                    mapImage.onload();
                 }
             }
             
@@ -295,11 +280,10 @@
                 modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
                 document.addEventListener('keydown', (event) => { if (event.key === "Escape") closeModal(); });
 
-                // Reset button now resets to the calculated initial zoom
+                // SIMPLIFIED AND CORRECTED: Use the built-in reset function.
                 resetViewBtn.addEventListener('click', () => {
                     if (panzoomInstance) {
-                        panzoomInstance.moveTo(0, 0);
-                        panzoomInstance.zoomAbs(0, 0, initialZoom);
+                        panzoomInstance.reset();
                     }
                 });
             }
