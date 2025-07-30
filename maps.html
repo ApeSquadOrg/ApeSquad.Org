@@ -76,25 +76,12 @@
 
         #map-display-area h3 { font-family: var(--font-tech); font-size: 2rem; text-align: left; margin-bottom: 15px; color: var(--accent-orange); text-shadow: 0 0 10px var(--accent-orange); border-left: 5px solid var(--accent-orange); padding-left: 15px; }
         
-        /* The outer container acts as the viewport */
         .map-image-wrapper { 
-            position: relative; 
-            border-radius: 15px; 
-            overflow: hidden; 
-            padding: 3px; 
-            background: linear-gradient(135deg, var(--primary-purple), var(--standout-blue)); 
-            animation: borderPulse 4s ease-in-out infinite; 
-            cursor: grab;
+            position: relative; border-radius: 15px; overflow: hidden; padding: 3px; background: linear-gradient(135deg, var(--primary-purple), var(--standout-blue)); animation: borderPulse 4s ease-in-out infinite; cursor: grab;
         }
         .map-image-wrapper:active { cursor: grabbing; }
 
-        /* The inner container is what Panzoom will transform */
-        .pan-container {
-            width: 100%;
-            height: 100%;
-            /* THIS IS THE CRITICAL FIX: It provides the positioning context for the markers */
-            position: relative; 
-        }
+        .pan-container { width: 100%; height: 100%; position: relative; }
         .pan-container img { width: 100%; display: block; border-radius: 12px; }
         
         .poi-dot, .objective-marker, .spawn-marker { position: absolute; transform: translate(-50%, -50%); transition: all 0.2s ease; }
@@ -126,7 +113,7 @@
         <section id="maps-section">
             <div class="container">
                 <h2>Strategic Maps</h2>
-                <p class="section-intro">Select a map, then use your mouse wheel to zoom and drag to pan. Use the toggles to show or hide points of interest for tactical planning.</p>
+                <p class="section-intro">Select a map, then use your mouse wheel to zoom and drag to pan. The map will stay within its borders. Use the toggles for tactical planning.</p>
                 
                 <div class="map-layout-wrapper">
                     
@@ -200,6 +187,7 @@
             const resetViewBtn = document.getElementById("reset-view-btn");
             
             let panzoomInstance = null;
+            let initialZoom = 1; // Will hold the calculated min zoom for the current map
 
             function renderMap(mapName) {
                 const map = mapsData.find(m => m.name === mapName);
@@ -218,7 +206,7 @@
                     <h3>${map.name}</h3>
                     <div class="map-image-wrapper">
                         <div class="pan-container">
-                            <img src="${map.imageSrc}" alt="Top-down map of ${map.name}" loading="lazy">
+                            <img src="${map.imageSrc}" alt="Top-down map of ${map.name}">
                             ${poiDotsHTML}
                             ${objectiveMarkersHTML}
                             ${spawnMarkersHTML}
@@ -227,20 +215,37 @@
                 updateToggleVisibility();
 
                 const panContainer = displayArea.querySelector('.pan-container');
-                if (panContainer) {
+                const mapImage = panContainer.querySelector('img');
+                const viewport = displayArea.querySelector('.map-image-wrapper');
+
+                // We must wait for the image to load to know its actual dimensions
+                mapImage.onload = () => {
+                    const viewportWidth = viewport.clientWidth;
+                    const viewportHeight = viewport.clientHeight;
+                    const imageWidth = mapImage.naturalWidth;
+                    const imageHeight = mapImage.naturalHeight;
+
+                    // Calculate the zoom level needed to cover the viewport
+                    const scaleX = viewportWidth / imageWidth;
+                    const scaleY = viewportHeight / imageHeight;
+                    initialZoom = Math.max(scaleX, scaleY);
+
                     panzoomInstance = panzoom(panContainer, {
-                        maxZoom: 5,
-                        minZoom: 0.8,
                         bounds: true,
-                        boundsPadding: 0.1,
-                        autocenter: true, // Automatically center the map on load
-                        // Prevent pan from starting on any clickable marker
-                        filterKey: () => true, // Enable panning on any key
+                        maxZoom: 10,
+                        minZoom: initialZoom, // This is the key change!
+                        initialZoom: initialZoom,
+                        initialX: 0,
+                        initialY: 0,
                         beforeMouseDown: function(e) {
                             const shouldIgnore = e.target.classList.contains('poi-dot') || e.target.classList.contains('objective-marker') || e.target.classList.contains('spawn-marker');
                             return shouldIgnore;
                         }
                     });
+                };
+                // In case the image is already cached and onload doesn't fire
+                if (mapImage.complete) {
+                    mapImage.onload();
                 }
             }
             
@@ -290,11 +295,11 @@
                 modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
                 document.addEventListener('keydown', (event) => { if (event.key === "Escape") closeModal(); });
 
-                // CORRECTED AND SIMPLIFIED RESET BUTTON LOGIC
+                // Reset button now resets to the calculated initial zoom
                 resetViewBtn.addEventListener('click', () => {
                     if (panzoomInstance) {
                         panzoomInstance.moveTo(0, 0);
-                        panzoomInstance.zoomAbs(0, 0, 1);
+                        panzoomInstance.zoomAbs(0, 0, initialZoom);
                     }
                 });
             }
