@@ -2265,10 +2265,10 @@ body.nav-open::before {
 }
 
 /* ================================================== */
-/*             GADGET STATISTICS PAGE                 */
+/*             GADGET WIKI PAGE                       */
 /* ================================================== */
 
-#gadget-stats {
+#gadget-wiki {
     background: 
         linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
         radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
@@ -2276,188 +2276,226 @@ body.nav-open::before {
     padding: 120px 0;
 }
 
-.stats-intro {
+.gadget-intro {
     text-align: center;
-    max-width: 700px;
+    max-width: 800px;
     margin: -20px auto 60px auto;
     font-size: 1.1rem;
     line-height: 1.7;
     opacity: 0.8;
 }
 
-/* --- Filter Controls --- */
-.filter-controls {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 50px;
-    flex-wrap: wrap;
+/* --- Class-based Section Titles --- */
+.gadget-class-section {
+    margin-bottom: 80px;
 }
 
-/* Re-styling the existing .btn for filter purposes */
-.filter-controls .btn {
-    padding: 10px 25px;
-    font-size: 1rem;
-    font-family: var(--font-headings);
-    letter-spacing: 2px;
-    border-radius: 8px;
-    background: transparent;
-    border: 2px solid var(--primary-purple);
-    color: var(--primary-purple);
-    box-shadow: none;
+/* Reusing the tournament page section title style for consistency */
+.gadget-class-title {
+    color: var(--accent-orange);
     text-shadow: none;
-    transform: none;
-    transition: all 0.3s ease;
+    text-align: left;
+    font-size: 2.8rem;
+    border-left: 5px solid var(--accent-orange);
+    padding-left: 20px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
 }
-
-.filter-controls .btn:hover {
-    background: var(--primary-purple);
-    color: var(--light-text);
-    box-shadow: 0 0 15px var(--primary-purple);
-    transform: translateY(-3px);
-}
-
-.filter-controls .btn.active {
-    background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
-    border-color: var(--secondary-purple);
-    color: #fff;
-    box-shadow: 0 5px 20px rgba(156, 70, 200, 0.4);
-    transform: translateY(-3px);
-}
-
-.filter-controls .btn::before {
-    display: none; /* Hiding the shine effect on these specific buttons */
-}
-
 
 /* --- Gadget Grid Layout --- */
 .gadget-grid {
     display: grid;
-    /* This creates a responsive grid that fits as many 350px cards as it can */
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
+    /* Using a single-column layout as cards are now much taller */
+    grid-template-columns: 1fr;
+    gap: 40px;
 }
 
-/* --- Gadget Card Styling --- */
+/* --- Detailed Gadget Card Styling --- */
 .gadget-card {
-    background: linear-gradient(160deg, var(--jungle-green), var(--jungle-dark));
+    background: linear-gradient(160deg, var(--jungle-dark), var(--darker-bg));
     border-radius: 15px;
     border: 2px solid var(--jungle-green);
-    padding: 25px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: hidden; /* Important for inner elements */
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .gadget-card:hover {
-    transform: translateY(-10px);
     border-color: var(--standout-blue);
     box-shadow: 0 15px 40px rgba(0,0,0,0.7), 0 0 25px rgba(3, 183, 250, 0.2);
 }
 
-/* Card Header: Image, Name, Type */
-.gadget-card-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--jungle-light);
+/* --- Main Card Content Area --- */
+.gadget-main-content {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 200px 1fr; /* Icon column | Info column */
+    gap: 30px;
+    align-items: flex-start;
 }
 
-.gadget-card-header img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain; /* Use 'contain' so the full gadget is visible */
-    filter: drop-shadow(0 0 10px rgba(3, 183, 250, 0.3));
+.gadget-identity {
+    text-align: center;
 }
 
-/* Using existing h3 styles for the name */
-.gadget-card-header h3 {
-    font-size: 2rem;
-    margin-bottom: 5px;
+.gadget-identity img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(3, 183, 250, 0.4));
+    margin-bottom: 20px;
+}
+
+.gadget-identity h3 {
+    font-size: 2.5rem;
     font-family: var(--font-tech);
     background: linear-gradient(45deg, var(--primary-purple), var(--standout-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: none;
+    margin-bottom: 0;
 }
 
-.gadget-type {
-    font-family: var(--font-headings);
-    color: var(--accent-orange);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 1rem;
-}
-
-/* Card Body: Description and Stats List */
-.gadget-card-body {
-    padding-top: 20px;
-}
-
-.gadget-description {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    opacity: 0.8;
-    margin-bottom: 25px;
-    min-height: 80px; /* Ensures cards have a similar height */
-}
-
-.gadget-stat-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.gadget-stat-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: var(--font-body);
-    font-size: 1rem;
-}
-
-.gadget-stat-list .stat-name {
-    color: var(--light-text);
+.gadget-details p {
+    font-size: 1.1rem;
+    line-height: 1.7;
     opacity: 0.9;
+    margin-bottom: 25px;
 }
 
-.gadget-stat-list .stat-value {
+.gadget-details p.quote {
+    font-style: italic;
+    color: var(--accent-orange);
+    border-left: 3px solid var(--accent-orange);
+    padding-left: 15px;
+    opacity: 1;
+}
+
+.gadget-stats-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat-item {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.stat-item .stat-name {
+    font-family: var(--font-headings);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: var(--light-text);
+    opacity: 0.7;
+}
+
+.stat-item .stat-value {
     font-family: var(--font-tech);
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--standout-blue);
     text-shadow: 0 0 8px var(--standout-blue);
 }
 
-/* --- Stat Bar for Percentages --- */
-.stat-bar-container {
-    width: 60%;
-    height: 20px;
-    background-color: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-    position: relative;
-    overflow: hidden;
+/* --- Properties Accordion --- */
+.gadget-properties-accordion {
+    background: var(--dark-bg);
+    border-top: 2px solid var(--jungle-green);
 }
 
-.stat-bar {
-    height: 100%;
-    border-radius: 10px;
-    background: linear-gradient(90deg, var(--primary-purple), var(--standout-blue));
-    box-shadow: 0 0 10px var(--standout-blue);
+.gadget-properties-accordion summary {
+    padding: 15px 30px;
+    cursor: pointer;
+    font-family: var(--font-headings);
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
 }
 
-.stat-bar-value {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.gadget-properties-accordion summary:hover {
+    background-color: var(--jungle-dark);
+}
+
+.gadget-properties-accordion summary::-webkit-details-marker { display: none; }
+.gadget-properties-accordion summary::after {
+    content: '+';
     font-family: var(--font-tech);
-    font-size: 0.8rem;
+    font-size: 1.5rem;
+    color: var(--primary-purple);
+    transition: transform 0.3s ease;
+}
+.gadget-properties-accordion[open] summary::after {
+    transform: rotate(45deg);
+}
+
+.properties-content {
+    padding: 0 30px 30px 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.property-group h4 {
+    font-family: var(--font-tech);
+    color: var(--accent-orange);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--jungle-green);
+    padding-bottom: 8px;
+}
+
+.property-group ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.property-group li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    color: #ccc;
+}
+
+.property-group li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--standout-blue);
+    font-weight: 700;
+}
+
+.property-group li strong {
     color: var(--light-text);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    font-weight: 700;
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .gadget-main-content {
+        grid-template-columns: 1fr; /* Stack icon and details */
+        text-align: center;
+    }
+
+    .gadget-identity img {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .gadget-stats-grid {
+        justify-content: center;
+    }
 }
