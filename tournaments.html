@@ -70,7 +70,6 @@
                   <div class="tournament-links">
                     <a href="#" class="btn">Register Your Team</a>
                     <a href="#" class="btn btn-secondary">View Rules</a>
-                    <!-- ADDED: Disabled promo button for upcoming event -->
                     <button class="btn btn-secondary" disabled>Promo Coming Soon</button>
                   </div>
                 </div>
@@ -91,8 +90,8 @@
                   </div>
                   <div class="tournament-links">
                     <button class="btn" id="volcanic-placements-btn">View Placements & Teams</button>
-                    <!-- ADDED: Promo button with YouTube video ID -->
-                    <button class="btn btn-secondary" id="volcanic-promo-btn" data-video-id="dQw4w9WgXcQ">Watch Promo</button>
+                    <!-- **EDIT THIS LINE** with your Volcanic Panic promo link -->
+                    <button class="btn btn-secondary" id="volcanic-promo-btn" data-video-id="https://www.youtube.com/watch?v=M6ePAoBSREM&ab_channel=ApeSquad">Watch Promo</button>
                   </div>
                 </div>
 
@@ -107,8 +106,8 @@
                     </div>
                     <div class="tournament-links">
                        <button class="btn" id="jungle-rumble-placements-btn">View Placements & Teams</button>
-                       <!-- ADDED: Promo button with YouTube video ID -->
-                       <button class="btn btn-secondary" id="jungle-rumble-promo-btn" data-video-id="_z-hL_3ge8I">Watch Promo</button>
+                       <!-- **EDIT THIS LINE** with your Jungle Rumble promo link -->
+                       <button class="btn btn-secondary" id="jungle-rumble-promo-btn" data-video-id="https://www.youtube.com/watch?v=3xXFhbyyKcY&ab_channel=ApeSquad">Watch Promo</button>
                     </div>
                   </div>
               </div>
@@ -135,9 +134,43 @@
         const modalBody = document.getElementById('modal-body');
         const closeBtn = document.getElementById('modal-close-btn');
 
-        // --- Data for tournaments ---
-        const volcanicPanicData = [ /* ... existing data ... */ ];
-        const jungleRumbleData = [ /* ... existing data ... */ ];
+        const volcanicPanicData = [
+            { placement: '1st Place', rankClass: 'gold', team: 'BRICKED', players: ['stn2k', 'bizzyow', 'stewj1', 'NA'] },
+            { placement: '2nd Place', rankClass: 'silver', team: 'Make A Wish Foundation', players: ['Viper', 'Varien', 'Derp', 'Kafeneio'] },
+            { placement: '3rd Place', rankClass: 'bronze', team: 'Scallywags', players: ['Wallyo', 'Balise', 'Gremlin', 'Zuki'] },
+            { placement: '4th Place', team: 'tuffologists', players: ['n0rmalize', 'aerroc', 'purestrafez'] },
+            { placement: '5th-6th Place', team: '4th Party Cashbox', players: ['Brutal Logic', 'Tmills', 'Appoh'] },
+            { placement: '5th-6th Place', team: 'AHS', players: ['Lasagna', 'UNI', 'Sloth'] },
+            { placement: '7th-8th Place', team: 'DIH Reincarnated', players: ['hdsponz', 'brendyz', 'ethano1', 'none'] },
+            { placement: '7th-8th Place', team: 'SupportLight.OL', players: ['calcifer.io', 'kaelwhale', 'Troop', 'jussangell'] },
+            { placement: '9th-12th Place', team: '200ms', players: ['wolfx.exe', 'bransyah_', '6rooty'] },
+            { placement: '9th-12th Place', team: 'Aura corp', players: ['elspuzeman', 'Demo', 'Ink', 'Udrakoni'] },
+            { placement: '9th-12th Place', team: 'Big Bewdie Warriors', players: ['ekazo', 'zenworldo', 'sloth'] },
+            { placement: '9th-12th Place', team: 'SlaHMH', players: ['.lqtus', 'Rottxnx', 'Evsitn', 'Theretardo'] },
+            { placement: '13th-16th Place', team: 'Cool Kidz With a Z', players: ['fairwhisper11', 'p4yd1rt', 'ghost_bulb', 'texaspride1'] },
+            { placement: '13th-16th Place', team: 'Day One Crashouts', players: ['mrboomnzoom', 'wittyprop', 'bootyconnoisseur8777', 'simplisss'] },
+            { placement: '13th-16th Place', team: 'Freaks', players: ['Crimson', 'r0ck5l1d3', 'fana3436'] },
+            { placement: '13th-16th Place', team: 'MUNTLINGS', players: ['epi9798', 'honor_the_pure', 'tiger5016', 'oreyos'] }
+        ];
+
+        const jungleRumbleData = [
+            { placement: '1st Place', rankClass: 'gold', team: 'Noods', players: ['Lasanga12', 'A1r-forrce', 'Uni'] },
+            { placement: '2nd Place', rankClass: 'silver', team: 'Holtows finest', players: ['Brendy', 'Lamp', 'Lycommit', 'Springhour'] },
+            { placement: '3rd Place', rankClass: 'bronze', team: 'Cathedral', players: ['MrDerp', 'FiestPackMule91', 'Mvches', 'Zee', 'Villa'] },
+            { placement: '4th Place', team: 'Bricked', players: ['stn2k', 'bizzyow', 'slxth.', 'balise'] },
+            { placement: '5th-6th Place', team: 'THE SMALL SPLASH', players: ['n0rmalize', 'stewj', 'ethano7417', 'zuki0238'] },
+            { placement: '5th-6th Place', team: 'Aura LLC', players: ['Udrakoni', 'F1reRise', 'Joffery', 'Ink'] },
+            { placement: '7th-8th Place', team: 'Disaster Stack', players: ['impieux.', 'peppajakzo', 'fatzive'] },
+            { placement: '7th-8th Place', team: 'Warriors of Chaac (WOC)', players: ['lettherebecarnxge', 'Carnxge', 'Ket', 'B0oboo', 'Asixcy'] },
+            { placement: '9th-12th Place', team: 'Ape Squad', players: ['Rippie', 'Beam0', 'Hashi'] },
+            { placement: '9th-12th Place', team: '4th Party Cashbox', players: ['brutallogic', 'Kazi', 'Sirgnal', 'Kafeneio (Maybe)'] },
+            { placement: '9th-12th Place', team: 'Kyoto Haters 3', players: ['ekazo', 'slvth_', 'clarifyyy', 'pullkia'] },
+            { placement: '9th-12th Place', team: 'Aped On', players: ['TTK_Controlla', 'baliselikesdudes', 'torio0325'] },
+            { placement: '13th-16th Place', team: 'SPACESHООВS', players: ['bongo', 'Contestant Beetz', 'Pinhead'] },
+            { placement: '13th-16th Place', team: 'DIFF', players: ['bucketshoe', 'sterling', 'Pouff', 'Realcornguy'] },
+            { placement: '13th-16th Place', team: 'RAH', players: ['tbovvy', 'chunkmaster8734', 'numb', '!', 'Pearl'] },
+            { placement: '13th-16th Place', team: 'The Oatreals', players: ['calcifer.io', 'denyalol', 'kaelwhale'] }
+        ];
 
         function openModal() {
             modalOverlay.classList.add('active');
@@ -146,34 +179,16 @@
         function closeModal() {
             modalOverlay.classList.remove('active');
             document.body.style.overflow = '';
-            // Clear the modal body on close to stop videos from playing in the background
-            setTimeout(() => { modalBody.innerHTML = ''; }, 300); 
+            setTimeout(() => { modalBody.innerHTML = ''; }, 300);
         }
 
-        // --- UPDATED FUNCTION TO BUILD PLACEMENT MODAL CONTENT ---
         function buildPlacementModalContent(title, data) {
-            let content = `<h1>${title}</h1> ... `; // Your existing build function content
-            // ... (The rest of your existing buildModalContent function)
-            // For brevity, I'm omitting the full function, but it should remain here.
-            let fullContent = `
-                <h1>${title}</h1>
-                <div class="modal-controls">
-                    <button id="expand-all-btn" class="btn" data-state="collapsed">Expand All</button>
-                </div>
-            `;
+            let content = `<h1>${title}</h1><div class="modal-controls"><button id="expand-all-btn" class="btn" data-state="collapsed">Expand All</button></div>`;
             data.forEach(teamData => {
                 const playerListItems = teamData.players.map(player => `<li>${player}</li>`).join('');
-                fullContent += `
-                    <details class="placement-accordion">
-                        <summary>
-                            <span class="placement-rank ${teamData.rankClass || ''}">${teamData.placement}</span>
-                            <span class="team-name">${teamData.team}</span>
-                        </summary>
-                        <ul class="player-list">${playerListItems}</ul>
-                    </details>
-                `;
+                content += `<details class="placement-accordion"><summary><span class="placement-rank ${teamData.rankClass || ''}">${teamData.placement}</span><span class="team-name">${teamData.team}</span></summary><ul class="player-list">${playerListItems}</ul></details>`;
             });
-            modalBody.innerHTML = fullContent;
+            modalBody.innerHTML = content;
             const expandBtn = document.getElementById('expand-all-btn');
             if (expandBtn) {
                 expandBtn.addEventListener('click', function() {
@@ -187,55 +202,42 @@
             openModal();
         }
 
-        // --- ADDED: FUNCTION TO BUILD VIDEO MODAL CONTENT ---
-        function buildVideoModalContent(youtubeId) {
-            // Create the HTML for a responsive YouTube embed
-            const videoHtml = `
-                <div class="video-container">
-                    <iframe 
-                        src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&showinfo=0" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-            `;
-            // Set the HTML in the modal body and open it
+        // NEW: Function to extract video ID from any YouTube link
+        function extractVideoId(url) {
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : url; // If it's a link, get ID. If not, assume it is the ID.
+        }
+
+        // UPDATED: Function to build the video modal
+        function buildVideoModalContent(videoIdentifier) {
+            const youtubeId = extractVideoId(videoIdentifier);
+            if (!youtubeId) {
+                modalBody.innerHTML = `<h1>Invalid YouTube Link or ID</h1><p>Please check the link provided in the button's data-video-id attribute.</p>`;
+                openModal();
+                return;
+            }
+            const videoHtml = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&showinfo=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
             modalBody.innerHTML = videoHtml;
             openModal();
         }
 
-        // --- Event listeners for Placement buttons ---
-        const volcanicBtn = document.getElementById('volcanic-placements-btn');
-        if (volcanicBtn) {
-            volcanicBtn.addEventListener('click', () => {
-                buildPlacementModalContent('Volcanic Panic Placements', volcanicPanicData);
-            });
-        }
+        // --- Event Listeners for Buttons ---
+        document.getElementById('volcanic-placements-btn')?.addEventListener('click', () => {
+            buildPlacementModalContent('Volcanic Panic Placements', volcanicPanicData);
+        });
 
-        const jungleRumbleBtn = document.getElementById('jungle-rumble-placements-btn');
-        if (jungleRumbleBtn) {
-            jungleRumbleBtn.addEventListener('click', () => {
-                buildPlacementModalContent('Jungle Rumble Placements', jungleRumbleData);
-            });
-        }
+        document.getElementById('jungle-rumble-placements-btn')?.addEventListener('click', () => {
+            buildPlacementModalContent('Jungle Rumble Placements', jungleRumbleData);
+        });
 
-        // --- ADDED: Event listeners for new Promo buttons ---
-        const volcanicPromoBtn = document.getElementById('volcanic-promo-btn');
-        if (volcanicPromoBtn) {
-            volcanicPromoBtn.addEventListener('click', (event) => {
-                const videoId = event.currentTarget.dataset.videoId;
-                buildVideoModalContent(videoId);
-            });
-        }
+        document.getElementById('volcanic-promo-btn')?.addEventListener('click', (event) => {
+            buildVideoModalContent(event.currentTarget.dataset.videoId);
+        });
 
-        const jungleRumblePromoBtn = document.getElementById('jungle-rumble-promo-btn');
-        if (jungleRumblePromoBtn) {
-            jungleRumblePromoBtn.addEventListener('click', (event) => {
-                const videoId = event.currentTarget.dataset.videoId;
-                buildVideoModalContent(videoId);
-            });
-        }
+        document.getElementById('jungle-rumble-promo-btn')?.addEventListener('click', (event) => {
+            buildVideoModalContent(event.currentTarget.dataset.videoId);
+        });
         
         // --- General Modal Controls ---
         closeBtn.addEventListener('click', closeModal);
