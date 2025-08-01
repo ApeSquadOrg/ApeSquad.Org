@@ -2723,7 +2723,7 @@ body.nav-open::before {
 /* A wider container for specific pages like the bracket */
 .container-full-width {
     width: 95%; /* Take up most of the screen */
-    max-width: 1920px; /* A very generous max-width for large monitors */
+    max-width: 2560px; /* A very generous max-width for large monitors */
     margin: auto;
     position: relative;
     z-index: 2;
