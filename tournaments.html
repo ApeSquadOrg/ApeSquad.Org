@@ -23,7 +23,7 @@
     <!-- Link to your external stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- ADDED: STYLES FOR RESPONSIVE VIDEO EMBED IN MODAL -->
+    <!-- STYLES FOR RESPONSIVE VIDEO EMBED IN MODAL -->
     <style>
         .video-container {
             position: relative;
@@ -45,6 +45,35 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px; /* Adds space between buttons */
+        }
+
+        /* <!-- ADDED: Styles for the Staff Honor Roll Modal --> */
+        .staff-list {
+            text-align: left;
+        }
+        .staff-role-group {
+            margin-bottom: 25px;
+        }
+        .staff-role-group h3 {
+            border-bottom: 2px solid #ffc107; /* Or your theme's accent color */
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            color: #ffc107;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1.5px;
+        }
+        .staff-role-group ul {
+            list-style-type: none;
+            padding-left: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+        }
+        .staff-role-group ul li {
+            background-color: #333;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.9em;
         }
     </style>
 
@@ -90,8 +119,9 @@
                   </div>
                   <div class="tournament-links">
                     <button class="btn" id="volcanic-placements-btn">View Placements & Teams</button>
-                    <!-- **EDIT THIS LINE** with your Volcanic Panic promo link -->
                     <button class="btn btn-secondary" id="volcanic-promo-btn" data-video-id="https://www.youtube.com/watch?v=M6ePAoBSREM&ab_channel=ApeSquad">Watch Promo</button>
+                    <!-- ADDED: Staff Honor Roll Button -->
+                    <button class="btn btn-secondary" id="volcanic-staff-btn">Staff Honor Roll</button>
                   </div>
                 </div>
 
@@ -106,8 +136,9 @@
                     </div>
                     <div class="tournament-links">
                        <button class="btn" id="jungle-rumble-placements-btn">View Placements & Teams</button>
-                       <!-- **EDIT THIS LINE** with your Jungle Rumble promo link -->
                        <button class="btn btn-secondary" id="jungle-rumble-promo-btn" data-video-id="https://www.youtube.com/watch?v=3xXFhbyyKcY&ab_channel=ApeSquad">Watch Promo</button>
+                       <!-- ADDED: Staff Honor Roll Button -->
+                       <button class="btn btn-secondary" id="jungle-rumble-staff-btn">Staff Honor Roll</button>
                     </div>
                   </div>
               </div>
@@ -133,6 +164,8 @@
         const modalOverlay = document.getElementById('modal-overlay');
         const modalBody = document.getElementById('modal-body');
         const closeBtn = document.getElementById('modal-close-btn');
+
+        // --- Data for Modals ---
 
         const volcanicPanicData = [
             { placement: '1st Place', rankClass: 'gold', team: 'BRICKED', players: ['stn2k', 'bizzyow', 'stewj1', 'NA'] },
@@ -172,6 +205,25 @@
             { placement: '13th-16th Place', team: 'The Oatreals', players: ['calcifer.io', 'denyalol', 'kaelwhale'] }
         ];
 
+        // ADDED: Data for Staff Honor Rolls
+        const volcanicStaffData = [
+            { role: 'Tournament Organizers', names: ['Rippie', 'Hashi'] },
+            { role: 'Head Admin', names: ['Beam'] },
+            { role: 'Casters', names: ['Rippie', 'Viper', 'Normal', 'A1r-Forrce'] },
+            { role: 'Admins', names: ['Joffery', 'Brendy', 'Ket'] },
+            { role: 'Social Media & Graphics', names: ['Rippie'] }
+        ];
+
+        const jungleRumbleStaffData = [
+            { role: 'Tournament Organizers', names: ['Rippie', 'Hashi'] },
+            { role: 'Head Admin', names: ['Beam'] },
+            { role: 'Casters', names: ['Rippie', 'Viper'] },
+            { role: 'Admins', names: ['Joffery', 'Brendy'] },
+            { role: 'Social Media & Graphics', names: ['Rippie'] }
+        ];
+
+
+        // --- Modal Control Functions ---
         function openModal() {
             modalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -181,6 +233,8 @@
             document.body.style.overflow = '';
             setTimeout(() => { modalBody.innerHTML = ''; }, 300);
         }
+        
+        // --- Modal Builder Functions ---
 
         function buildPlacementModalContent(title, data) {
             let content = `<h1>${title}</h1><div class="modal-controls"><button id="expand-all-btn" class="btn" data-state="collapsed">Expand All</button></div>`;
@@ -202,14 +256,29 @@
             openModal();
         }
 
-        // NEW: Function to extract video ID from any YouTube link
+        // ADDED: Function to build the staff honor roll modal
+        function buildStaffModalContent(title, staffData) {
+            let content = `<h1>${title}</h1><div class="staff-list">`;
+            staffData.forEach(roleData => {
+                const staffMembers = roleData.names.map(name => `<li>${name}</li>`).join('');
+                content += `
+                    <div class="staff-role-group">
+                        <h3>${roleData.role}</h3>
+                        <ul>${staffMembers}</ul>
+                    </div>
+                `;
+            });
+            content += '</div>';
+            modalBody.innerHTML = content;
+            openModal();
+        }
+
         function extractVideoId(url) {
             const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
             const match = url.match(regex);
-            return match ? match[1] : url; // If it's a link, get ID. If not, assume it is the ID.
+            return match ? match[1] : url;
         }
 
-        // UPDATED: Function to build the video modal
         function buildVideoModalContent(videoIdentifier) {
             const youtubeId = extractVideoId(videoIdentifier);
             if (!youtubeId) {
@@ -237,6 +306,15 @@
 
         document.getElementById('jungle-rumble-promo-btn')?.addEventListener('click', (event) => {
             buildVideoModalContent(event.currentTarget.dataset.videoId);
+        });
+
+        // ADDED: Event listeners for the new staff buttons
+        document.getElementById('volcanic-staff-btn')?.addEventListener('click', () => {
+            buildStaffModalContent('Volcanic Panic Staff Honor Roll', volcanicStaffData);
+        });
+
+        document.getElementById('jungle-rumble-staff-btn')?.addEventListener('click', () => {
+            buildStaffModalContent('Jungle Rumble Staff Honor Roll', jungleRumbleStaffData);
         });
         
         // --- General Modal Controls ---
