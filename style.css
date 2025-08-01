@@ -2715,3 +2715,16 @@ body.nav-open::before {
         width: 100%; /* Grand final also takes full width */
     }
 }
+
+/* ================================================== */
+/*     PAGE-SPECIFIC WIDE CONTAINER (FOR BRACKET)     */
+/* ================================================== */
+
+/* A wider container for specific pages like the bracket */
+.container-full-width {
+    width: 95%; /* Take up most of the screen */
+    max-width: 1920px; /* A very generous max-width for large monitors */
+    margin: auto;
+    position: relative;
+    z-index: 2;
+}
