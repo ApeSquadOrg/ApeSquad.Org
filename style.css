@@ -2540,7 +2540,7 @@ body.nav-open::before {
 }
 
 /* ================================================== */
-/*        DOUBLE ELIMINATION BRACKET STYLES           */
+/*   ROBUST DOUBLE ELIMINATION BRACKET STYLES (V2)    */
 /* ================================================== */
 
 #bracket-page {
@@ -2551,7 +2551,6 @@ body.nav-open::before {
         radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
 }
 
-/* Title for each bracket section (Upper, Lower, etc.) */
 .bracket-section-title {
     color: var(--accent-orange);
     text-shadow: none;
@@ -2561,12 +2560,8 @@ body.nav-open::before {
     margin-bottom: 30px;
     margin-top: 50px;
 }
+.bracket-section-title:first-of-type { margin-top: 0; }
 
-.bracket-section-title:first-of-type {
-    margin-top: 0;
-}
-
-/* Main container to allow horizontal scrolling on small screens */
 .tournament-container {
     width: 100%;
     overflow-x: auto;
@@ -2575,50 +2570,47 @@ body.nav-open::before {
     border: 1px solid var(--jungle-green);
     border-radius: 10px;
 }
+/* Hide scrollbar for a cleaner look, but keep functionality */
+.tournament-container::-webkit-scrollbar { height: 8px; }
+.tournament-container::-webkit-scrollbar-track { background: var(--darker-bg); }
+.tournament-container::-webkit-scrollbar-thumb { background: var(--jungle-green); border-radius: 4px; }
+.tournament-container::-webkit-scrollbar-thumb:hover { background: var(--jungle-light); }
+
 
 .bracket {
     display: flex;
-    min-width: 1200px; /* Forces a minimum width to ensure layout is not cramped */
+    align-items: center; /* Vertically aligns rounds and connectors */
 }
 
+/* --- Round & Match Styling (Largely Unchanged) --- */
 .round {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 280px; /* Width of each round column */
-    margin-right: 20px;
+    justify-content: space-around;
+    width: 280px;
+    flex-shrink: 0;
 }
-
 .round-title {
     font-family: var(--font-tech);
     color: var(--light-text);
     text-align: center;
     font-size: 1.1rem;
     opacity: 0.8;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
-
 .match {
-    position: relative; /* Anchor for connector lines */
-    margin-bottom: 40px; /* Space between matches in a round */
+    margin-bottom: 20px;
 }
 .match:last-child {
     margin-bottom: 0;
 }
-
 .match-wrapper {
     background-color: var(--jungle-dark);
     border: 1px solid var(--jungle-light);
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
+    overflow: hidden;
 }
-
-.match-wrapper:hover {
-    border-color: var(--accent-orange);
-    transform: scale(1.02);
-}
-
 .participant {
     display: flex;
     justify-content: space-between;
@@ -2626,82 +2618,85 @@ body.nav-open::before {
     padding: 12px 15px;
     font-size: 1rem;
     color: #ccc;
-    transition: background-color 0.2s ease;
+}
+.participant:first-of-type { border-bottom: 1px solid var(--jungle-light); }
+.participant.winner { color: var(--accent-orange); font-weight: bold; }
+.participant.winner .team-name { text-shadow: 0 0 5px var(--accent-orange); }
+.participant .score { font-family: var(--font-tech); color: var(--standout-blue); font-weight: 700; }
+.tbd { color: #666; font-style: italic; }
+
+
+/* --- NEW: Connector Column Styling --- */
+.connectors {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* This is key for auto-spacing */
+    width: 60px;
+    height: 100%;
+    flex-shrink: 0;
 }
 
-.participant:first-of-type {
-    border-bottom: 1px solid var(--jungle-light);
+.connector {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Fills the space provided by the flex parent */
 }
 
-.participant.winner {
-    color: var(--accent-orange);
-    font-weight: bold;
-}
-
-.participant.winner .team-name {
-     text-shadow: 0 0 5px var(--accent-orange);
-}
-
-.participant .score {
-    font-family: var(--font-tech);
-    color: var(--standout-blue);
-    font-weight: 700;
-}
-
-.tbd {
-    color: #666;
-    font-style: italic;
-}
-
-/* --- BRACKET CONNECTOR LINES --- */
-
-/* Horizontal line coming OUT of a match */
-.match::after {
+/* Horizontal line from top match */
+.connector::before {
     content: '';
     position: absolute;
-    right: -20px; /* Into the margin-right of the round */
     top: 50%;
-    width: 20px;
+    left: 0;
+    transform: translateY(-50%);
+    width: 50%;
     height: 2px;
     background-color: var(--jungle-light);
 }
 
-/* Vertical line CONNECTING matches */
-.match:not(:only-child):nth-child(odd)::before {
+/* Horizontal line to the destination match */
+.connector::after {
     content: '';
     position: absolute;
     top: 50%;
-    right: -20px;
-    width: 2px;
-    height: calc(100% + 40px); /* 100% of the match height + its margin-bottom */
+    right: 0;
+    transform: translateY(-50%);
+    width: 50%;
+    height: 2px;
     background-color: var(--jungle-light);
 }
 
-/* Hide unnecessary lines */
-.grand-final .match::after,
-.grand-final .match::before {
-    display: none;
+/* Vertical line connecting the two horizontal lines */
+.connector-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-color: var(--jungle-light);
 }
 
-/* --- ALIGNMENT & SPACING --- */
-
-/* This pushes the match down to align with the space between two other matches */
-.spacer-top {
-    padding-top: 60px; /* Adjust this value to perfectly align rounds */
+/* Special connector for the final match which has only one input */
+.final-connector {
+    height: 100%;
 }
+.final-connector .connector-line { display: none; } /* Hide the vertical line */
+.final-connector .connector::before {
+    width: 100%; /* Make the line span the entire connector width */
+}
+.final-connector .connector::after { display: none; } /* Not needed */
 
+
+/* --- Grand Final Specific Styling --- */
 .grand-final-wrapper {
+    padding: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-width: auto;
-    padding: 20px;
 }
-
 .grand-final .round {
     width: 350px;
 }
-
 .grand-final .match-wrapper {
     border: 2px solid var(--accent-orange);
     box-shadow: 0 0 20px rgba(242, 144, 69, 0.4);
