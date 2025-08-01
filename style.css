@@ -2540,7 +2540,7 @@ body.nav-open::before {
 }
 
 /* ================================================== */
-/*   ROBUST DOUBLE ELIMINATION BRACKET STYLES (V2)    */
+/*   FULLY RESPONSIVE BRACKET STYLES (V3)             */
 /* ================================================== */
 
 #bracket-page {
@@ -2563,26 +2563,17 @@ body.nav-open::before {
 .bracket-section-title:first-of-type { margin-top: 0; }
 
 .tournament-container {
+    /* No longer a scroll container by default */
     width: 100%;
-    overflow-x: auto;
-    padding: 20px 10px;
-    background: rgba(0,0,0,0.2);
-    border: 1px solid var(--jungle-green);
-    border-radius: 10px;
+    padding: 20px 0; /* Adjusted padding */
 }
-/* Hide scrollbar for a cleaner look, but keep functionality */
-.tournament-container::-webkit-scrollbar { height: 8px; }
-.tournament-container::-webkit-scrollbar-track { background: var(--darker-bg); }
-.tournament-container::-webkit-scrollbar-thumb { background: var(--jungle-green); border-radius: 4px; }
-.tournament-container::-webkit-scrollbar-thumb:hover { background: var(--jungle-light); }
-
 
 .bracket {
     display: flex;
     align-items: center; /* Vertically aligns rounds and connectors */
 }
 
-/* --- Round & Match Styling (Largely Unchanged) --- */
+/* --- Round & Match Styling --- */
 .round {
     display: flex;
     flex-direction: column;
@@ -2598,12 +2589,8 @@ body.nav-open::before {
     opacity: 0.8;
     margin-bottom: 20px;
 }
-.match {
-    margin-bottom: 20px;
-}
-.match:last-child {
-    margin-bottom: 0;
-}
+.match { margin-bottom: 20px; }
+.match:last-child { margin-bottom: 0; }
 .match-wrapper {
     background-color: var(--jungle-dark);
     border: 1px solid var(--jungle-light);
@@ -2625,78 +2612,48 @@ body.nav-open::before {
 .participant .score { font-family: var(--font-tech); color: var(--standout-blue); font-weight: 700; }
 .tbd { color: #666; font-style: italic; }
 
-
-/* --- NEW: Connector Column Styling --- */
+/* --- HORIZONTAL CONNECTORS (DESKTOP) --- */
 .connectors {
     display: flex;
     flex-direction: column;
-    justify-content: space-around; /* This is key for auto-spacing */
+    justify-content: space-around;
     width: 60px;
     height: 100%;
     flex-shrink: 0;
 }
-
-.connector {
-    position: relative;
-    width: 100%;
-    height: 100%; /* Fills the space provided by the flex parent */
+.connector { position: relative; width: 100%; height: 100%; }
+.connector::before, .connector::after {
+    content: ''; position: absolute; top: 50%; width: 50%; height: 2px;
+    background-color: var(--jungle-light); transform: translateY(-50%);
 }
-
-/* Horizontal line from top match */
-.connector::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    width: 50%;
-    height: 2px;
-    background-color: var(--jungle-light);
-}
-
-/* Horizontal line to the destination match */
-.connector::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    width: 50%;
-    height: 2px;
-    background-color: var(--jungle-light);
-}
-
-/* Vertical line connecting the two horizontal lines */
+.connector::before { left: 0; }
+.connector::after { right: 0; }
 .connector-line {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 100%;
-    background-color: var(--jungle-light);
+    position: absolute; top: 0; left: 50%; width: 2px; height: 100%;
+    background-color: var(--jungle-light); transform: translateX(-50%);
+}
+.final-connector { height: 100%; }
+.final-connector .connector-line { display: none; }
+.final-connector .connector::before { width: 100%; }
+.final-connector .connector::after { display: none; }
+
+/* --- VERTICAL CONNECTORS (MOBILE) --- */
+.vertical-connector {
+    display: none; /* Hidden on desktop by default */
+    padding: 20px 0;
+    justify-content: center;
+    align-items: center;
+    color: var(--jungle-light);
+    font-size: 2rem;
 }
 
-/* Special connector for the final match which has only one input */
-.final-connector {
-    height: 100%;
-}
-.final-connector .connector-line { display: none; } /* Hide the vertical line */
-.final-connector .connector::before {
-    width: 100%; /* Make the line span the entire connector width */
-}
-.final-connector .connector::after { display: none; } /* Not needed */
-
-
-/* --- Grand Final Specific Styling --- */
+/* --- Grand Final Styling --- */
 .grand-final-wrapper {
-    padding: 20px;
+    padding: 20px 0;
     display: flex;
     justify-content: center;
 }
-.grand-final .round {
-    width: 350px;
-}
+.grand-final .round { width: 350px; }
 .grand-final .match-wrapper {
     border: 2px solid var(--accent-orange);
     box-shadow: 0 0 20px rgba(242, 144, 69, 0.4);
@@ -2704,4 +2661,36 @@ body.nav-open::before {
 .grand-final .round-title {
     font-size: 1.5rem;
     color: var(--accent-orange);
+}
+
+/* ================================================== */
+/*       RESPONSIVE BRACKET MEDIA QUERY (MOBILE)      */
+/* ================================================== */
+@media (max-width: 1024px) {
+    .tournament-container {
+        /* Re-enable scrolling on desktop if needed, but not for mobile */
+    }
+
+    .bracket {
+        flex-direction: column; /* This is the magic: stack rounds vertically */
+        align-items: stretch; /* Make rounds take full width */
+        min-width: 0 !important; /* Override inline min-width */
+    }
+
+    .round {
+        width: 100%; /* Rounds take up the full container width */
+        margin-bottom: 20px;
+    }
+
+    .connectors {
+        display: none; /* Hide the horizontal connector lines */
+    }
+    
+    .vertical-connector {
+        display: flex; /* Show the vertical down-arrow connectors */
+    }
+    
+    .grand-final .round {
+        width: 100%; /* Grand final also takes full width */
+    }
 }
