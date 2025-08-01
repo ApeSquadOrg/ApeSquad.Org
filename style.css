@@ -2540,7 +2540,7 @@ body.nav-open::before {
 }
 
 /* ================================================== */
-/*   FULLY RESPONSIVE BRACKET STYLES (V3)             */
+/*   FINAL RESPONSIVE BRACKET STYLES (V4)             */
 /* ================================================== */
 
 #bracket-page {
@@ -2563,17 +2563,31 @@ body.nav-open::before {
 .bracket-section-title:first-of-type { margin-top: 0; }
 
 .tournament-container {
-    /* No longer a scroll container by default */
+    /* KEY CHANGE: Re-introduce horizontal scroll ONLY when needed */
+    overflow-x: auto;
     width: 100%;
-    padding: 20px 0; /* Adjusted padding */
+    padding: 20px 10px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--jungle-green);
+    border-radius: 10px;
 }
+/* Style the scrollbar to match the theme */
+.tournament-container::-webkit-scrollbar { height: 8px; }
+.tournament-container::-webkit-scrollbar-track { background: var(--darker-bg); border-radius: 4px;}
+.tournament-container::-webkit-scrollbar-thumb { background: var(--jungle-green); border-radius: 4px; }
+.tournament-container::-webkit-scrollbar-thumb:hover { background: var(--jungle-light); }
+
 
 .bracket {
     display: flex;
     align-items: center; /* Vertically aligns rounds and connectors */
 }
+/* DEFINE MIN-WIDTHS HERE INSTEAD OF INLINE HTML */
+.upper-bracket { min-width: 1420px; }
+.lower-bracket { min-width: 1760px; }
 
-/* --- Round & Match Styling --- */
+
+/* --- Round & Match Styling (Largely Unchanged) --- */
 .round {
     display: flex;
     flex-direction: column;
@@ -2612,6 +2626,7 @@ body.nav-open::before {
 .participant .score { font-family: var(--font-tech); color: var(--standout-blue); font-weight: 700; }
 .tbd { color: #666; font-style: italic; }
 
+
 /* --- HORIZONTAL CONNECTORS (DESKTOP) --- */
 .connectors {
     display: flex;
@@ -2637,6 +2652,7 @@ body.nav-open::before {
 .final-connector .connector::before { width: 100%; }
 .final-connector .connector::after { display: none; }
 
+
 /* --- VERTICAL CONNECTORS (MOBILE) --- */
 .vertical-connector {
     display: none; /* Hidden on desktop by default */
@@ -2646,6 +2662,7 @@ body.nav-open::before {
     color: var(--jungle-light);
     font-size: 2rem;
 }
+
 
 /* --- Grand Final Styling --- */
 .grand-final-wrapper {
@@ -2668,13 +2685,17 @@ body.nav-open::before {
 /* ================================================== */
 @media (max-width: 1024px) {
     .tournament-container {
-        /* Re-enable scrolling on desktop if needed, but not for mobile */
+        /* KEY CHANGE: Turn off horizontal scrolling for the vertical mobile view */
+        overflow-x: hidden;
+        border: none;
+        background: transparent;
+        padding: 0;
     }
 
     .bracket {
-        flex-direction: column; /* This is the magic: stack rounds vertically */
-        align-items: stretch; /* Make rounds take full width */
-        min-width: 0 !important; /* Override inline min-width */
+        flex-direction: column; /* Stack rounds vertically */
+        align-items: stretch;   /* Make rounds take full width */
+        min-width: 0 !important; /* Override min-width */
     }
 
     .round {
