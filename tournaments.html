@@ -23,7 +23,7 @@
     <!-- Link to your external stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- STYLES FOR RESPONSIVE VIDEO EMBED IN MODAL -->
+    <!-- STYLES FOR PAGE FEATURES -->
     <style>
         .video-container {
             position: relative;
@@ -40,14 +40,11 @@
             width: 100%;
             height: 100%;
         }
-        /* Style to allow multiple buttons to wrap nicely */
         .tournament-links {
             display: flex;
             flex-wrap: wrap;
             gap: 10px; /* Adds space between buttons */
         }
-
-        /* <!-- ADDED: Styles for the Staff Honor Roll Modal --> */
         .staff-list {
             text-align: left;
         }
@@ -55,7 +52,7 @@
             margin-bottom: 25px;
         }
         .staff-role-group h3 {
-            border-bottom: 2px solid #ffc107; /* Or your theme's accent color */
+            border-bottom: 2px solid #ffc107;
             padding-bottom: 8px;
             margin-bottom: 12px;
             color: #ffc107;
@@ -74,6 +71,79 @@
             padding: 5px 12px;
             border-radius: 5px;
             font-size: 0.9em;
+        }
+
+        /* --- ADDED: Styles for At a Glance Stats --- */
+        .tournament-stats {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #ffc107; /* Accent color */
+        }
+        .tournament-stats h4 {
+            margin: 0 0 5px 0;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        .tournament-stats p {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        /* --- ADDED: Styles for Hall of Fame --- */
+        #hall-of-fame {
+            padding: 50px 0;
+            text-align: center;
+        }
+        .champions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .champion-card {
+            background: #222; /* Slightly different background */
+            border: 1px solid #ffc107; /* Gold border */
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .champion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(255, 193, 7, 0.4);
+        }
+        .champion-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-top: 0;
+            color: #ffc107; /* Gold color for the team name */
+        }
+        .champion-card h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            border-top: 1px solid #444;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        .champion-card ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .champion-card ul li {
+            background-color: #333;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+        .champion-card ul li::before {
+            content: '🏆'; /* Trophy emoji */
+            margin-right: 10px;
         }
     </style>
 
@@ -95,6 +165,11 @@
                   <div class="tournament-info">
                     <h3>Ape Squad Worlds</h3><p class="date">SOON</p>
                     <div class="status-info"><h4>Status</h4><p>TBD</p></div>
+                     <!-- ADDED: At a Glance Stats for Upcoming -->
+                    <div class="tournament-stats">
+                        <h4>Prize Pool</h4>
+                        <p>TBD</p>
+                    </div>
                   </div>
                   <div class="tournament-links">
                     <a href="#" class="btn">Register Your Team</a>
@@ -113,6 +188,11 @@
                   <div class="tournament-graphic"><img src="/images/tournament/volcanicpanic.png" alt="Volcanic Panic Graphic"></div>
                   <div class="tournament-info">
                     <h3>Volcanic Panic</h3><p class="date">June 14th, 2025</p>
+                     <!-- ADDED: At a Glance Stats -->
+                    <div class="tournament-stats">
+                        <h4>Prize Pool</h4>
+                        <p>$500</p> <!-- **EDIT THIS VALUE** -->
+                    </div>
                     <div class="winners-podium">
                       <h4>Winners</h4><ol><li>BRICKED</li><li>Make a Wish Foundation</li><li>Scallywags</li></ol>
                     </div>
@@ -120,7 +200,6 @@
                   <div class="tournament-links">
                     <button class="btn" id="volcanic-placements-btn">View Placements & Teams</button>
                     <button class="btn btn-secondary" id="volcanic-promo-btn" data-video-id="https://www.youtube.com/watch?v=M6ePAoBSREM&ab_channel=ApeSquad">Watch Promo</button>
-                    <!-- ADDED: Staff Honor Roll Button -->
                     <button class="btn btn-secondary" id="volcanic-staff-btn">Staff Honor Roll</button>
                   </div>
                 </div>
@@ -130,6 +209,11 @@
                     <div class="tournament-graphic"><img src="images/tournament/junglerumble.png" alt="Jungle Rumble Graphic"></div>
                     <div class="tournament-info">
                       <h3>Jungle Rumble</h3><p class="date">February 22nd, 2025</p>
+                       <!-- ADDED: At a Glance Stats -->
+                      <div class="tournament-stats">
+                        <h4>Prize Pool</h4>
+                        <p>$250</p> <!-- **EDIT THIS VALUE** -->
+                      </div>
                       <div class="winners-podium">
                         <h4>Winners</h4><ol><li>Noods</li><li>Holtows Finest</li><li>Cathedral</li></ol>
                       </div>
@@ -137,12 +221,46 @@
                     <div class="tournament-links">
                        <button class="btn" id="jungle-rumble-placements-btn">View Placements & Teams</button>
                        <button class="btn btn-secondary" id="jungle-rumble-promo-btn" data-video-id="https://www.youtube.com/watch?v=3xXFhbyyKcY&ab_channel=ApeSquad">Watch Promo</button>
-                       <!-- ADDED: Staff Honor Roll Button -->
                        <button class="btn btn-secondary" id="jungle-rumble-staff-btn">Staff Honor Roll</button>
                     </div>
                   </div>
               </div>
           </div>
+      </section>
+
+      <!-- ADDED: HALL OF FAME SECTION -->
+      <section id="hall-of-fame">
+        <div class="container">
+            <h2 class="section-title">Hall of Fame</h2>
+            <div class="champions-grid">
+                <!-- Add a new champion-card for each winning team -->
+                <div class="champion-card">
+                    <h3>BRICKED</h3>
+                    <h4>Championships Won</h4>
+                    <ul>
+                        <li>Volcanic Panic</li>
+                    </ul>
+                </div>
+                <div class="champion-card">
+                    <h3>Noods</h3>
+                    <h4>Championships Won</h4>
+                    <ul>
+                        <li>Jungle Rumble</li>
+                    </ul>
+                </div>
+                 <!-- Add more cards here as you get more champions! -->
+                 <!-- Example for a multi-win team:
+                 <div class="champion-card">
+                    <h3>Future Champions</h3>
+                    <h4>Championships Won</h4>
+                    <ul>
+                        <li>Ape Squad Worlds</li>
+                        <li>Arctic Anarchy</li>
+                    </ul>
+                </div> 
+                -->
+            </div>
+        </div>
       </section>
     </main>
 
@@ -166,7 +284,6 @@
         const closeBtn = document.getElementById('modal-close-btn');
 
         // --- Data for Modals ---
-
         const volcanicPanicData = [
             { placement: '1st Place', rankClass: 'gold', team: 'BRICKED', players: ['stn2k', 'bizzyow', 'stewj1', 'NA'] },
             { placement: '2nd Place', rankClass: 'silver', team: 'Make A Wish Foundation', players: ['Viper', 'Varien', 'Derp', 'Kafeneio'] },
@@ -185,7 +302,6 @@
             { placement: '13th-16th Place', team: 'Freaks', players: ['Crimson', 'r0ck5l1d3', 'fana3436'] },
             { placement: '13th-16th Place', team: 'MUNTLINGS', players: ['epi9798', 'honor_the_pure', 'tiger5016', 'oreyos'] }
         ];
-
         const jungleRumbleData = [
             { placement: '1st Place', rankClass: 'gold', team: 'Noods', players: ['Lasanga12', 'A1r-forrce', 'Uni'] },
             { placement: '2nd Place', rankClass: 'silver', team: 'Holtows finest', players: ['Brendy', 'Lamp', 'Lycommit', 'Springhour'] },
@@ -204,8 +320,6 @@
             { placement: '13th-16th Place', team: 'RAH', players: ['tbovvy', 'chunkmaster8734', 'numb', '!', 'Pearl'] },
             { placement: '13th-16th Place', team: 'The Oatreals', players: ['calcifer.io', 'denyalol', 'kaelwhale'] }
         ];
-
-        // ADDED: Data for Staff Honor Rolls
         const volcanicStaffData = [
             { role: 'Tournament Coordinator', names: ['Burritahsupreme'] },
             { role: 'Casters', names: ['Rio', 'Yung', 'whysatanwhy', 'Sonsoyo'] },
@@ -213,7 +327,6 @@
             { role: 'Social Media & Graphics', names: ['Justin'] },
             { role: 'Director', names: ['Justin'] }
         ];
-
         const jungleRumbleStaffData = [
             { role: 'Tournament Coordinator', names: ['Burritahsupreme'] },
             { role: 'Casters', names: ['Waltzcast', 'Sonsoyo'] },
@@ -223,8 +336,7 @@
 
         ];
 
-
-        // --- Modal Control Functions ---
+        // --- Modal Control Functions & Builders ---
         function openModal() {
             modalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -234,9 +346,6 @@
             document.body.style.overflow = '';
             setTimeout(() => { modalBody.innerHTML = ''; }, 300);
         }
-        
-        // --- Modal Builder Functions ---
-
         function buildPlacementModalContent(title, data) {
             let content = `<h1>${title}</h1><div class="modal-controls"><button id="expand-all-btn" class="btn" data-state="collapsed">Expand All</button></div>`;
             data.forEach(teamData => {
@@ -244,88 +353,51 @@
                 content += `<details class="placement-accordion"><summary><span class="placement-rank ${teamData.rankClass || ''}">${teamData.placement}</span><span class="team-name">${teamData.team}</span></summary><ul class="player-list">${playerListItems}</ul></details>`;
             });
             modalBody.innerHTML = content;
-            const expandBtn = document.getElementById('expand-all-btn');
-            if (expandBtn) {
-                expandBtn.addEventListener('click', function() {
-                    const accordions = modalBody.querySelectorAll('.placement-accordion');
-                    const isCollapsed = this.dataset.state === 'collapsed';
-                    accordions.forEach(acc => { acc.open = isCollapsed; });
-                    this.dataset.state = isCollapsed ? 'expanded' : 'collapsed';
-                    this.textContent = isCollapsed ? 'Collapse All' : 'Expand All';
-                });
-            }
+            document.getElementById('expand-all-btn')?.addEventListener('click', function() {
+                const accordions = modalBody.querySelectorAll('.placement-accordion');
+                const isCollapsed = this.dataset.state === 'collapsed';
+                accordions.forEach(acc => { acc.open = isCollapsed; });
+                this.dataset.state = isCollapsed ? 'expanded' : 'collapsed';
+                this.textContent = isCollapsed ? 'Collapse All' : 'Expand All';
+            });
             openModal();
         }
-
-        // ADDED: Function to build the staff honor roll modal
         function buildStaffModalContent(title, staffData) {
             let content = `<h1>${title}</h1><div class="staff-list">`;
             staffData.forEach(roleData => {
                 const staffMembers = roleData.names.map(name => `<li>${name}</li>`).join('');
-                content += `
-                    <div class="staff-role-group">
-                        <h3>${roleData.role}</h3>
-                        <ul>${staffMembers}</ul>
-                    </div>
-                `;
+                content += `<div class="staff-role-group"><h3>${roleData.role}</h3><ul>${staffMembers}</ul></div>`;
             });
             content += '</div>';
             modalBody.innerHTML = content;
             openModal();
         }
-
         function extractVideoId(url) {
             const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
             const match = url.match(regex);
             return match ? match[1] : url;
         }
-
         function buildVideoModalContent(videoIdentifier) {
             const youtubeId = extractVideoId(videoIdentifier);
             if (!youtubeId) {
                 modalBody.innerHTML = `<h1>Invalid YouTube Link or ID</h1><p>Please check the link provided in the button's data-video-id attribute.</p>`;
-                openModal();
-                return;
+                openModal(); return;
             }
-            const videoHtml = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&showinfo=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
-            modalBody.innerHTML = videoHtml;
+            modalBody.innerHTML = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&showinfo=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
             openModal();
         }
 
-        // --- Event Listeners for Buttons ---
-        document.getElementById('volcanic-placements-btn')?.addEventListener('click', () => {
-            buildPlacementModalContent('Volcanic Panic Placements', volcanicPanicData);
-        });
-
-        document.getElementById('jungle-rumble-placements-btn')?.addEventListener('click', () => {
-            buildPlacementModalContent('Jungle Rumble Placements', jungleRumbleData);
-        });
-
-        document.getElementById('volcanic-promo-btn')?.addEventListener('click', (event) => {
-            buildVideoModalContent(event.currentTarget.dataset.videoId);
-        });
-
-        document.getElementById('jungle-rumble-promo-btn')?.addEventListener('click', (event) => {
-            buildVideoModalContent(event.currentTarget.dataset.videoId);
-        });
-
-        // ADDED: Event listeners for the new staff buttons
-        document.getElementById('volcanic-staff-btn')?.addEventListener('click', () => {
-            buildStaffModalContent('Volcanic Panic Staff Honor Roll', volcanicStaffData);
-        });
-
-        document.getElementById('jungle-rumble-staff-btn')?.addEventListener('click', () => {
-            buildStaffModalContent('Jungle Rumble Staff Honor Roll', jungleRumbleStaffData);
-        });
+        // --- Event Listeners ---
+        document.getElementById('volcanic-placements-btn')?.addEventListener('click', () => buildPlacementModalContent('Volcanic Panic Placements', volcanicPanicData));
+        document.getElementById('jungle-rumble-placements-btn')?.addEventListener('click', () => buildPlacementModalContent('Jungle Rumble Placements', jungleRumbleData));
+        document.getElementById('volcanic-promo-btn')?.addEventListener('click', (e) => buildVideoModalContent(e.currentTarget.dataset.videoId));
+        document.getElementById('jungle-rumble-promo-btn')?.addEventListener('click', (e) => buildVideoModalContent(e.currentTarget.dataset.videoId));
+        document.getElementById('volcanic-staff-btn')?.addEventListener('click', () => buildStaffModalContent('Volcanic Panic Staff Honor Roll', volcanicStaffData));
+        document.getElementById('jungle-rumble-staff-btn')?.addEventListener('click', () => buildStaffModalContent('Jungle Rumble Staff Honor Roll', jungleRumbleStaffData));
         
-        // --- General Modal Controls ---
         closeBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (event) => {
-            if (event.target === modalOverlay) closeModal();
-        });
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
-        });
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal(); });
     });
     </script>
     
