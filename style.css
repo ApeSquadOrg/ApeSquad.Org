@@ -2538,3 +2538,175 @@ body.nav-open::before {
     font-weight: bold;
     color: var(--light-text);
 }
+
+/* ================================================== */
+/*        DOUBLE ELIMINATION BRACKET STYLES           */
+/* ================================================== */
+
+#bracket-page {
+    padding: 120px 0;
+    background: 
+        linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
+        radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
+}
+
+/* Title for each bracket section (Upper, Lower, etc.) */
+.bracket-section-title {
+    color: var(--accent-orange);
+    text-shadow: none;
+    font-size: 2.5rem;
+    border-left: 5px solid var(--jungle-green);
+    padding-left: 15px;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.bracket-section-title:first-of-type {
+    margin-top: 0;
+}
+
+/* Main container to allow horizontal scrolling on small screens */
+.tournament-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 20px 10px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--jungle-green);
+    border-radius: 10px;
+}
+
+.bracket {
+    display: flex;
+    min-width: 1200px; /* Forces a minimum width to ensure layout is not cramped */
+}
+
+.round {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 280px; /* Width of each round column */
+    margin-right: 20px;
+}
+
+.round-title {
+    font-family: var(--font-tech);
+    color: var(--light-text);
+    text-align: center;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    padding-bottom: 20px;
+}
+
+.match {
+    position: relative; /* Anchor for connector lines */
+    margin-bottom: 40px; /* Space between matches in a round */
+}
+.match:last-child {
+    margin-bottom: 0;
+}
+
+.match-wrapper {
+    background-color: var(--jungle-dark);
+    border: 1px solid var(--jungle-light);
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.match-wrapper:hover {
+    border-color: var(--accent-orange);
+    transform: scale(1.02);
+}
+
+.participant {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: #ccc;
+    transition: background-color 0.2s ease;
+}
+
+.participant:first-of-type {
+    border-bottom: 1px solid var(--jungle-light);
+}
+
+.participant.winner {
+    color: var(--accent-orange);
+    font-weight: bold;
+}
+
+.participant.winner .team-name {
+     text-shadow: 0 0 5px var(--accent-orange);
+}
+
+.participant .score {
+    font-family: var(--font-tech);
+    color: var(--standout-blue);
+    font-weight: 700;
+}
+
+.tbd {
+    color: #666;
+    font-style: italic;
+}
+
+/* --- BRACKET CONNECTOR LINES --- */
+
+/* Horizontal line coming OUT of a match */
+.match::after {
+    content: '';
+    position: absolute;
+    right: -20px; /* Into the margin-right of the round */
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    background-color: var(--jungle-light);
+}
+
+/* Vertical line CONNECTING matches */
+.match:not(:only-child):nth-child(odd)::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    width: 2px;
+    height: calc(100% + 40px); /* 100% of the match height + its margin-bottom */
+    background-color: var(--jungle-light);
+}
+
+/* Hide unnecessary lines */
+.grand-final .match::after,
+.grand-final .match::before {
+    display: none;
+}
+
+/* --- ALIGNMENT & SPACING --- */
+
+/* This pushes the match down to align with the space between two other matches */
+.spacer-top {
+    padding-top: 60px; /* Adjust this value to perfectly align rounds */
+}
+
+.grand-final-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: auto;
+    padding: 20px;
+}
+
+.grand-final .round {
+    width: 350px;
+}
+
+.grand-final .match-wrapper {
+    border: 2px solid var(--accent-orange);
+    box-shadow: 0 0 20px rgba(242, 144, 69, 0.4);
+}
+.grand-final .round-title {
+    font-size: 1.5rem;
+    color: var(--accent-orange);
+}
