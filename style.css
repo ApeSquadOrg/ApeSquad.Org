@@ -2728,6 +2728,8 @@ body.nav-open::before {
     position: relative;
     z-index: 2;
 }
+
+
 /* ================================================== */
 /*        INTERACTIVE CALENDAR PAGE STYLES            */
 /* ================================================== */
@@ -2885,6 +2887,7 @@ body.nav-open::before {
     color: var(--light-text);
     text-decoration: none;
     flex-grow: 1; 
+    min-width: 0; /* FIX: Allows element to shrink and text to truncate */
 }
 
 .calendar-event:hover .event-name-link {
