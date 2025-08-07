@@ -2803,7 +2803,8 @@ body.nav-open::before {
 
 .weekdays, .calendar-days {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    /* THE KEY FIX IS HERE */
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 5px;
 }
 
@@ -2887,7 +2888,7 @@ body.nav-open::before {
     color: var(--light-text);
     text-decoration: none;
     flex-grow: 1; 
-    min-width: 0; /* FIX: Allows element to shrink and text to truncate */
+    min-width: 0; /* Important for flex items inside a grid */
 }
 
 .calendar-event:hover .event-name-link {
