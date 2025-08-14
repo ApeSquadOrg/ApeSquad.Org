@@ -788,28 +788,32 @@
         }
         
         function calculateTTK(weapon, range, targetType, hitLocation) {
-            const targetHealth = HEALTH_VALUES[targetType];
-            if (!targetHealth) return Infinity;
+    const targetHealth = HEALTH_VALUES[targetType];
+    if (!targetHealth) return Infinity;
 
-            let damagePerShot;
-            if (hitLocation === "Mixed") damagePerShot = calculateAverageDamagePerShot(weapon, range);
-            else damagePerShot = calculateDamageAtRange(weapon, range, hitLocation);
+    let damagePerShot;
+    if (hitLocation === "Mixed") damagePerShot = calculateAverageDamagePerShot(weapon, range);
+    else damagePerShot = calculateDamageAtRange(weapon, range, hitLocation);
 
-            if (damagePerShot <= 0) return Infinity;
-            
-            const shotsToKill = Math.ceil(targetHealth / damagePerShot);
-            if (shotsToKill === 1) return 0.0;
-            if (!weapon.rpm || weapon.rpm <= 0) return Infinity;
-            
-            const timeBetweenShots = 60 / weapon.rpm;
-            let ttk = (shotsToKill - 1) * timeBetweenShots;
+    if (damagePerShot <= 0) return Infinity;
+    
+    const shotsToKill = Math.ceil(targetHealth / damagePerShot);
+    if (shotsToKill === 1) return 0.0;
+    if (!weapon.rpm || weapon.rpm <= 0) return Infinity;
+    
+    const timeBetweenShots = 60 / weapon.rpm;
+    let ttk = (shotsToKill - 1) * timeBetweenShots;
 
-            if (weapon.burstCount && weapon.burstDelay && weapon.burstCount > 1) {
-                const burstsToFire = Math.floor((shotsToKill - 1) / weapon.burstCount);
-                ttk += burstsToFire * weapon.burstDelay;
-            }
-            return ttk;
-        }
+    // --- CORRECTED BURST LOGIC ---
+    if (weapon.burstCount && weapon.burstDelay && weapon.burstCount > 1) {
+        const burstsToFire = Math.floor((shotsToKill - 1) / weapon.burstCount);
+        // This line now correctly adds the *additional* time from the burst delay
+        // by subtracting the short interval it replaces.
+        ttk += burstsToFire * (weapon.burstDelay - timeBetweenShots);
+    }
+    
+    return ttk;
+}
 
         function calculateDPS(weapon, range, targetType, hitLocation) {
             if (!weapon.rpm || weapon.rpm <= 0) return 0;
@@ -1101,6 +1105,7 @@
     <script src="/js/main.js"></script>
 </body>
 </html>
+
 
 
 
