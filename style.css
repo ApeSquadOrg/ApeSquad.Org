@@ -3048,7 +3048,6 @@ body.nav-open::before {
 }
 
 /* Timeline-specific styles - isolated from header/footer */
-/* Additional overrides to prevent style.css from affecting timeline */
 .timeline-container {
     all: initial;
     font-family: 'Inter', sans-serif !important;
@@ -3078,7 +3077,12 @@ body.nav-open::before {
 }
 
 .timeline-container {
+    /* --- OPTIMIZATION: Replaced the entire aurora effect with a static gradient background. --- */
+    /* This is extremely performant and requires virtually no processing power, unlike the animated blur filter. */
     background-color: var(--color-black);
+    background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(110, 107, 241, 0.15), transparent),
+        linear-gradient(to bottom, rgba(13, 13, 14, 0.8), var(--color-black));
     font-family: 'Inter', sans-serif;
     color: var(--color-text);
     position: relative;
@@ -3086,48 +3090,18 @@ body.nav-open::before {
     min-height: 100vh;
 }
 
+/* --- OPTIMIZATION: Removed the entire .background-aurora element and its animations. --- */
+/* This element was the primary cause of high GPU usage. */
+/* The @keyframes move-aurora-1 and move-aurora-2 have also been removed below. */
 .timeline-container .background-aurora {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-    filter: blur(100px) brightness(0.6);
+    display: none;
 }
 
-.timeline-container .background-aurora::before,
-.timeline-container .background-aurora::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.2;
-    mix-blend-mode: screen;
-}
-
-.timeline-container .background-aurora::before {
-    width: 1200px;
-    height: 1200px;
-    background: radial-gradient(circle, var(--accent-blue), var(--accent-green));
-    top: -20%;
-    left: -10%;
-    animation: move-aurora-1 45s infinite alternate ease-in-out;
-}
-
-.timeline-container .background-aurora::after {
-    width: 1000px;
-    height: 1000px;
-    background: radial-gradient(circle, var(--accent-purple), var(--accent-orange));
-    bottom: -30%;
-    right: -20%;
-    animation: move-aurora-2 60s infinite alternate ease-in-out;
-}
-
-@keyframes move-aurora-1 { to { transform: translate(300px, 200px) rotate(30deg) scale(1.2); opacity: 0.3; } }
-@keyframes move-aurora-2 { to { transform: translate(-250px, -150px) rotate(-45deg) scale(0.9); opacity: 0.25; } }
 @keyframes dot-activate { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1.2); } }
-@keyframes pulse-glow { 0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 15px transparent; } 50% { box-shadow: 0 12px 36px rgba(0,0,0,0.4), 0 0 30px var(--accent-color-transparent); } }
+
+/* --- OPTIMIZATION: Removed the pulse-glow animation that animated box-shadow. --- */
+/* Animating box-shadow causes expensive repaints. The hover effect still works. */
+/* @keyframes pulse-glow { ... } has been removed. */
 
 .timeline-container .container {
     width: 90%;
@@ -3152,8 +3126,9 @@ body.nav-open::before {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
-    animation: titlePulse 4s ease-in-out infinite;
     letter-spacing: -0.02em;
+    /* --- OPTIMIZATION: Removed the titlePulse animation that animated a drop-shadow filter. --- */
+    /* This saves rendering cycles on every frame. */
 }
 
 .timeline-container .subtitle {
@@ -3181,19 +3156,19 @@ body.nav-open::before {
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-/* --- OPTIMIZATION: Use transform: scaleY() for the progress bar. This is GPU-accelerated and much faster than animating 'height'. --- */
+/* This progress bar is already well-optimized using `transform: scaleY`, which is GPU-friendly. No change needed. */
 .timeline-container .timeline::after {
     content: '';
     position: absolute;
     top: 200px;
     left: 50%;
     width: 6px;
-    height: calc(100% - 400px); /* Set to full height */
+    height: calc(100% - 400px);
     background: var(--gradient);
     border-radius: 3px;
     box-shadow: 0 0 15px rgba(8, 237, 131, 0.4);
-    transform-origin: top; /* Animate from the top down */
-    transform: translateX(-50%) scaleY(var(--timeline-progress, 0)); /* Animate scale instead of height */
+    transform-origin: top;
+    transform: translateX(-50%) scaleY(var(--timeline-progress, 0));
 }
 
 .timeline-container .season-section { position: relative; z-index: 1; }
@@ -3218,21 +3193,24 @@ body.nav-open::before {
 .timeline-container .item-right .timeline-content::after { left: -18px; border-width: 12px 18px 12px 0; border-color: transparent var(--color-dark-1) transparent transparent; }
 .timeline-container .timeline-dot { position: absolute; width: 20px; height: 20px; background: var(--color-dark-1); border: 4px solid var(--accent-color); top: 40px; border-radius: 50%; z-index: 5; box-shadow: 0 0 15px var(--accent-color-transparent); animation: dot-activate 2s ease-in-out infinite alternate; }
 
-/* --- OPTIMIZATION: Removed 'backdrop-filter: blur()' which is very slow. Using a solid background is much more performant. Added 'will-change' to hint to the browser about animations. --- */
 .timeline-container .timeline-content {
     padding: 25px 25px 45px;
-    background: linear-gradient(135deg, #212224, #2c2d30); /* Solid, performant background */
+    background: linear-gradient(135deg, #212224, #2c2d30);
     position: relative;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
-    animation: pulse-glow 5s ease-in-out infinite;
+    /* --- OPTIMIZATION: Removed the constant 'pulse-glow' animation. --- */
     transform: translateY(0);
-    will-change: transform, box-shadow; /* Hint for animations */
-    transition: transform 0.3s ease;
+    will-change: transform, box-shadow; /* Hint is still useful for the hover transition */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added box-shadow transition for hover */
 }
 
-.timeline-container .timeline-content:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 40px var(--accent-color-transparent); }
+/* The hover effect is kept as it's user-initiated and less costly than a constant animation */
+.timeline-container .timeline-content:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 40px var(--accent-color-transparent); 
+}
 .timeline-container .timeline-content::after { content: ''; position: absolute; top: 35px; width: 0; height: 0; border-style: solid; filter: drop-shadow(0 0 3px rgba(0,0,0,0.3)); }
 .timeline-container .event-tag { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); padding: 4px 10px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: 6px; letter-spacing: 0.5px; line-height: 1; color: var(--color-black); }
 .timeline-container .tag-premier { background-color: var(--accent-purple); } 
@@ -3257,8 +3235,6 @@ body.nav-open::before {
 .timeline-container .theme-embark { --accent-color: var(--accent-red); --accent-color-transparent: #EA2B0050; } 
 .timeline-container .theme-default { --accent-color: var(--color-text-muted); --accent-color-transparent: #99999950; }
 
-@keyframes titlePulse { 0%, 100% { filter: drop-shadow(0 0 10px rgba(8,237,131,0.3)); } 50% { filter: drop-shadow(0 0 25px rgba(8,237,131,0.6)); } }
-
 /* Scroll indicator */
 .timeline-container .scroll-indicator { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--color-text-muted); font-size: 0.9rem; opacity: 1; transition: opacity 0.3s ease; z-index: 100; text-align: center; }
 .timeline-container .scroll-indicator.hidden { opacity: 0; pointer-events: none; }
@@ -3271,8 +3247,8 @@ body.nav-open::before {
     .timeline-container .timeline-item { width: 100%; left: 0 !important; padding: 15px 20px; }
     .timeline-container .timeline::before,
     .timeline-container .timeline::after { left: 20px; transform: none; }
-    /* Ensure the transform origin is correct on mobile */
     .timeline-container .timeline::after { transform-origin: top; transform: scaleY(var(--timeline-progress, 0)); }
     .timeline-container .timeline-dot { left: 10px !important; right: auto !important; }
     .timeline-container .timeline-content::after { left: -18px !important; right: auto !important; border-width: 12px 18px 12px 0 !important; border-color: transparent var(--color-dark-1) transparent transparent !important; }
 }
+
