@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Finals Esports Timeline Showcase</title>
+
+    <!-- Google Font for the Timeline -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Link to your main stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- This header is left empty. Your js/main.js file will populate it. -->
+    <header></header>
+
+    <!-- Main Timeline Content -->
+    <div class="timeline-container">
+        <div class="background-aurora"></div>
+        
+        <div class="scroll-indicator">
+            <div>Scroll to explore</div>
+        </div>
+        
+        <div class="container">
+            <div class="header">
+                <h1 class="main-title">Loading Timeline...</h1>
+                <p class="subtitle">Fetching the latest data from the arena!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!--
+      CORRECTION:
+      The entire large <script> block that was here has been removed.
+      It has been replaced with a single script tag that correctly loads
+      your main JavaScript file, just like your 404.html page.
+    -->
+    <script src="/js/main.js"></script>
+
+    <!-- The timeline-specific JavaScript can remain here as it's unique to this page -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // NOTE: The header/footer loading logic has been removed from here
+        // as it is now handled by main.js
+
+        const SPREADSHEET_ID = '1ANpjO4mcIdjZGZ939-Os2fYq0lDkUvTPn1Ibj4KpBbA';
+        const GID = '0'; 
+
+        const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&headers=1`;
+        
+        let timelineElement = null;
+        let timelineItems = [];
+
+        const fetchAndRenderTimeline = async () => {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) { throw new Error('Network response was not ok'); }
+                let text = await response.text();
+                
+                const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\)/s)[1];
+                const data = JSON.parse(jsonString);
+
+                const events = data.table.rows.map(row => {
+                    const cells = row.c;
+                    return { 
+                        season: cells[0]?.v || '', 
+                        eventName: cells[1]?.v || 'Untitled Event', 
+                        type: cells[2]?.v || '', 
+                        category: cells[3]?.v || 'Community', 
+                        date: cells[4]?.f || cells[4]?.v || 'TBD', 
+                        description: cells[5]?.v || '', 
+                        link: cells[6]?.v || null 
+                    };
+                }).filter(event => event.season && event.eventName);
+
+                const timelineHTML = generateTimelineHTML(events);
+                const timelineContainer = document.querySelector('.timeline-container .container');
+                timelineContainer.innerHTML = `
+                    <div class="header">
+<br><br><br>
+                        <h1 class="main-title">History of The Finals Esports</h1>
+                        <p class="subtitle">From Beta Tournaments to Global Competition</p>
+                    </div>
+                    <div class="timeline">${timelineHTML}</div>
+                `;
+
+                initializeScrollEffects();
+
+            } catch (error) {
+                console.error('Failed to fetch or render timeline data:', error);
+                document.querySelector('.timeline-container .container').innerHTML = `
+                    <div class="header">
+                        <h1 class="main-title">Error Loading Timeline</h1>
+                        <p class="subtitle">Could not connect to the data source. Please try again later.</p>
+                    </div>
+                `;
+            }
+        };
+
+        const initializeScrollEffects = () => {
+            timelineElement = document.querySelector('.timeline-container .timeline');
+            timelineItems = document.querySelectorAll('.timeline-container .timeline-item');
+            
+            if (!timelineElement) return;
+
+            window.addEventListener('scroll', updateScrollEffects);
+            updateScrollEffects();
+            
+            let hasScrolled = false;
+            const scrollIndicator = document.querySelector('.timeline-container .scroll-indicator');
+            
+            window.addEventListener('scroll', () => {
+                if (!hasScrolled && window.scrollY > 50) {
+                    hasScrolled = true;
+                    if (scrollIndicator) scrollIndicator.classList.add('hidden');
+                }
+            });
+        };
+
+        const updateScrollEffects = () => {
+            if (!timelineElement) return;
+
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            
+            const timelineRect = timelineElement.getBoundingClientRect();
+            const timelineTop = timelineRect.top + scrollTop;
+            const timelineHeight = timelineRect.height;
+            
+            let progress = 0;
+            if (scrollTop + windowHeight > timelineTop) {
+                const visibleDistance = Math.min(scrollTop + windowHeight - timelineTop, timelineHeight);
+                progress = Math.max(0, Math.min(1, visibleDistance / timelineHeight));
+            }
+            
+            if (timelineElement) {
+                const maxHeight = timelineHeight;
+                const progressHeight = (progress * maxHeight) - 450;
+                
+                let style = document.getElementById('timeline-progress-style');
+                if (!style) {
+                    style = document.createElement('style');
+                    style.id = 'timeline-progress-style';
+                    document.head.appendChild(style);
+                }
+                style.textContent = `
+                    .timeline-container .timeline::after {
+                        height: ${progressHeight}px !important;
+                    }
+                `;
+            }
+            
+            timelineItems.forEach((item, index) => {
+                const itemRect = item.getBoundingClientRect();
+                const itemCenter = itemRect.top + itemRect.height / 2;
+                
+                if (itemCenter < windowHeight && itemCenter > 0) {
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                    }, index * 50);
+                }
+            });
+        };
+
+        const getThemeAndTag = (category) => {
+            const catLower = (category || '').toLowerCase().replace(/\s+/g, '-');
+            const validThemes = ['community', 'premier', 'grassroots', 'special-event', 'milestone', 'embark'];
+            if (validThemes.includes(catLower)) {
+                return { theme: `theme-${catLower}`, tag: `tag-${catLower}` };
+            }
+            return { theme: 'theme-default', tag: 'tag-default' };
+        };
+        
+        const generateLinkHTML = (link) => {
+            if (!link || link.trim().toLowerCase() === 'n/a') { return ''; }
+            const isVideo = link.includes('youtube.com') || link.includes('twitch.tv');
+            const linkText = isVideo ? '📺 Watch VOD' : 'ℹ️ More Info';
+            return `<div class="event-links"><div class="event-link"><a href="${link}" target="_blank">${linkText}</a></div></div>`;
+        };
+
+        const generateTimelineHTML = (events) => {
+            let currentSeason = null;
+            let itemCounter = 0;
+            const seasonDividerColors = ['green', 'cyan', 'blue', 'purple', 'orange', 'red'];
+            let colorIndex = 0;
+            let html = '';
+
+            events.forEach(event => {
+                if (event.season !== currentSeason) {
+                    if (currentSeason !== null) { html += `</div>`; }
+                    currentSeason = event.season;
+                    const dividerColorClass = `divider-theme-${seasonDividerColors[colorIndex % seasonDividerColors.length]}`;
+                    colorIndex++;
+                    html += `<div class="season-section" id="season-${currentSeason.toLowerCase().replace(/[^a-z0-9]/g, '-')}"><div class="timeline-divider ${dividerColorClass}"><span><strong>${currentSeason}</strong></span></div>`;
+                }
+
+                const positionClass = itemCounter % 2 === 0 ? 'item-left' : 'item-right';
+                const { theme, tag } = getThemeAndTag(event.category);
+                html += `<div class="timeline-item ${theme} ${positionClass}"><div class="timeline-dot"></div><div class="timeline-content"><span class="event-tag ${tag}">${event.category}</span><h3 class="event-title">${event.eventName}</h3><p class="event-subtitle">${event.type}</p><p class="event-date">${event.date}</p>${event.description ? `<p class="event-description">${event.description}</p>` : ''}${generateLinkHTML(event.link)}</div></div>`;
+                itemCounter++;
+            });
+
+            if (events.length > 0) { html += `</div>`; }
+            return html;
+        };
+
+        fetchAndRenderTimeline();
+    });
+    </script>
+    <!-- This footer is left empty. Your js/main.js file will populate it. -->
+    <footer></footer>
+    
+    <!-- This script handles global functionality like loading the header/footer -->
+    <script src="/js/main.js"></script>
+</body>
+</html>
