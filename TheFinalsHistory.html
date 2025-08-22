@@ -46,88 +46,138 @@
     <script src="/js/main.js"></script>
 
     <!-- The timeline-specific JavaScript can remain here as it's unique to this page -->
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // NOTE: The header/footer loading logic has been removed from here
-        // as it is now handled by main.js
+   <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const SPREADSHEET_ID = '1ANpjO4mcIdjZGZ939-Os2fYq0lDkUvTPn1Ibj4KpBbA';
+    const GID = '0'; 
+    const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&headers=1`;
+    
+    // --- Helper function to generate HTML ---
+    // (These functions are unchanged, just grouped for clarity)
+    const getThemeAndTag = (category) => {
+        const catLower = (category || '').toLowerCase().replace(/\s+/g, '-');
+        const validThemes = ['community', 'premier', 'grassroots', 'special-event', 'milestone', 'embark'];
+        if (validThemes.includes(catLower)) {
+            return { theme: `theme-${catLower}`, tag: `tag-${catLower}` };
+        }
+        return { theme: 'theme-default', tag: 'tag-default' };
+    };
+    
+    const generateLinkHTML = (link) => {
+        if (!link || link.trim().toLowerCase() === 'n/a') { return ''; }
+        const isVideo = link.includes('youtube.com') || link.includes('twitch.tv');
+        const linkText = isVideo ? '📺 Watch VOD' : 'ℹ️ More Info';
+        return `<div class="event-links"><div class="event-link"><a href="${link}" target="_blank">${linkText}</a></div></div>`;
+    };
 
-        const SPREADSHEET_ID = '1ANpjO4mcIdjZGZ939-Os2fYq0lDkUvTPn1Ibj4KpBbA';
-        const GID = '0'; 
+    const generateTimelineHTML = (events) => {
+        let currentSeason = null;
+        let itemCounter = 0;
+        const seasonDividerColors = ['green', 'cyan', 'blue', 'purple', 'orange', 'red'];
+        let colorIndex = 0;
+        let html = '';
 
-        const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&headers=1`;
-        
-        let timelineElement = null;
-        let timelineItems = [];
-
-        const fetchAndRenderTimeline = async () => {
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) { throw new Error('Network response was not ok'); }
-                let text = await response.text();
-                
-                const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\)/s)[1];
-                const data = JSON.parse(jsonString);
-
-                const events = data.table.rows.map(row => {
-                    const cells = row.c;
-                    return { 
-                        season: cells[0]?.v || '', 
-                        eventName: cells[1]?.v || 'Untitled Event', 
-                        type: cells[2]?.v || '', 
-                        category: cells[3]?.v || 'Community', 
-                        date: cells[4]?.f || cells[4]?.v || 'TBD', 
-                        description: cells[5]?.v || '', 
-                        link: cells[6]?.v || null 
-                    };
-                }).filter(event => event.season && event.eventName);
-
-                const timelineHTML = generateTimelineHTML(events);
-                const timelineContainer = document.querySelector('.timeline-container .container');
-                timelineContainer.innerHTML = `
-                    <div class="header">
-<br><br><br>
-                        <h1 class="main-title">History of The Finals Esports</h1>
-                        <p class="subtitle">From Beta Tournaments to Global Competition</p>
-                    </div>
-                    <div class="timeline">${timelineHTML}</div>
-                `;
-
-                initializeScrollEffects();
-
-            } catch (error) {
-                console.error('Failed to fetch or render timeline data:', error);
-                document.querySelector('.timeline-container .container').innerHTML = `
-                    <div class="header">
-                        <h1 class="main-title">Error Loading Timeline</h1>
-                        <p class="subtitle">Could not connect to the data source. Please try again later.</p>
-                    </div>
-                `;
+        events.forEach(event => {
+            if (event.season !== currentSeason) {
+                if (currentSeason !== null) { html += `</div>`; }
+                currentSeason = event.season;
+                const dividerColorClass = `divider-theme-${seasonDividerColors[colorIndex % seasonDividerColors.length]}`;
+                colorIndex++;
+                html += `<div class="season-section" id="season-${currentSeason.toLowerCase().replace(/[^a-z0-9]/g, '-')}"><div class="timeline-divider ${dividerColorClass}"><span><strong>${currentSeason}</strong></span></div>`;
             }
-        };
 
-        const initializeScrollEffects = () => {
-            timelineElement = document.querySelector('.timeline-container .timeline');
-            timelineItems = document.querySelectorAll('.timeline-container .timeline-item');
-            
-            if (!timelineElement) return;
+            const positionClass = itemCounter % 2 === 0 ? 'item-left' : 'item-right';
+            const { theme, tag } = getThemeAndTag(event.category);
+            html += `<div class="timeline-item ${theme} ${positionClass}"><div class="timeline-dot"></div><div class="timeline-content"><span class="event-tag ${tag}">${event.category}</span><h3 class="event-title">${event.eventName}</h3><p class="event-subtitle">${event.type}</p><p class="event-date">${event.date}</p>${event.description ? `<p class="event-description">${event.description}</p>` : ''}${generateLinkHTML(event.link)}</div></div>`;
+            itemCounter++;
+        });
 
-            window.addEventListener('scroll', updateScrollEffects);
-            updateScrollEffects();
+        if (events.length > 0) { html += `</div>`; }
+        return html;
+    };
+
+
+    // --- Main application logic ---
+    const fetchAndRenderTimeline = async () => {
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) { throw new Error('Network response was not ok'); }
+            let text = await response.text();
             
-            let hasScrolled = false;
-            const scrollIndicator = document.querySelector('.timeline-container .scroll-indicator');
-            
-            window.addEventListener('scroll', () => {
-                if (!hasScrolled && window.scrollY > 50) {
-                    hasScrolled = true;
-                    if (scrollIndicator) scrollIndicator.classList.add('hidden');
+            const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\)/s)[1];
+            const data = JSON.parse(jsonString);
+
+            const events = data.table.rows.map(row => {
+                const cells = row.c;
+                return { 
+                    season: cells[0]?.v || '', 
+                    eventName: cells[1]?.v || 'Untitled Event', 
+                    type: cells[2]?.v || '', 
+                    category: cells[3]?.v || 'Community', 
+                    date: cells[4]?.f || cells[4]?.v || 'TBD', 
+                    description: cells[5]?.v || '', 
+                    link: cells[6]?.v || null 
+                };
+            }).filter(event => event.season && event.eventName);
+
+            const timelineHTML = generateTimelineHTML(events);
+            const timelineContainer = document.querySelector('.timeline-container .container');
+            timelineContainer.innerHTML = `
+                <div class="header">
+                    <br><br><br>
+                    <h1 class="main-title">History of The Finals Esports</h1>
+                    <p class="subtitle">From Beta Tournaments to Global Competition</p>
+                </div>
+                <div class="timeline">${timelineHTML}</div>
+            `;
+
+            initializeScrollEffects();
+
+        } catch (error) {
+            console.error('Failed to fetch or render timeline data:', error);
+            document.querySelector('.timeline-container .container').innerHTML = `
+                <div class="header">
+                    <h1 class="main-title">Error Loading Timeline</h1>
+                    <p class="subtitle">Could not connect to the data source. Please try again later.</p>
+                </div>
+            `;
+        }
+    };
+
+    const initializeScrollEffects = () => {
+        const timelineElement = document.querySelector('.timeline-container .timeline');
+        const timelineItems = document.querySelectorAll('.timeline-container .timeline-item');
+        const scrollIndicator = document.querySelector('.timeline-container .scroll-indicator');
+        
+        if (!timelineElement || timelineItems.length === 0) return;
+
+        // OPTIMIZATION 1: Use IntersectionObserver for revealing items on scroll
+        // This is far more performant than checking positions in a scroll loop.
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Stagger the animation using a timeout
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 50);
+                    // Stop observing the element once it's visible
+                    observer.unobserve(entry.target);
                 }
             });
-        };
+        }, { 
+            rootMargin: '0px 0px -15% 0px' // Trigger when item is 15% from the bottom of the viewport
+        });
 
-        const updateScrollEffects = () => {
-            if (!timelineElement) return;
+        // Tell the observer to watch each timeline item
+        timelineItems.forEach(item => {
+            observer.observe(item);
+        });
 
+        // OPTIMIZATION 2: Use requestAnimationFrame for the progress bar animation
+        // This ensures the expensive style update only happens once per frame, not hundreds of times.
+        let ticking = false;
+
+        const updateProgressBar = () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const windowHeight = window.innerHeight;
             
@@ -141,80 +191,50 @@
                 progress = Math.max(0, Math.min(1, visibleDistance / timelineHeight));
             }
             
-            if (timelineElement) {
-                const maxHeight = timelineHeight;
-                const progressHeight = (progress * maxHeight) - 450;
-                
-                let style = document.getElementById('timeline-progress-style');
-                if (!style) {
-                    style = document.createElement('style');
-                    style.id = 'timeline-progress-style';
-                    document.head.appendChild(style);
-                }
-                style.textContent = `
-                    .timeline-container .timeline::after {
-                        height: ${progressHeight}px !important;
-                    }
-                `;
-            }
+            const maxHeight = timelineHeight;
+            const progressHeight = (progress * maxHeight) - 450;
             
-            timelineItems.forEach((item, index) => {
-                const itemRect = item.getBoundingClientRect();
-                const itemCenter = itemRect.top + itemRect.height / 2;
-                
-                if (itemCenter < windowHeight && itemCenter > 0) {
-                    setTimeout(() => {
-                        item.classList.add('visible');
-                    }, index * 50);
-                }
-            });
-        };
-
-        const getThemeAndTag = (category) => {
-            const catLower = (category || '').toLowerCase().replace(/\s+/g, '-');
-            const validThemes = ['community', 'premier', 'grassroots', 'special-event', 'milestone', 'embark'];
-            if (validThemes.includes(catLower)) {
-                return { theme: `theme-${catLower}`, tag: `tag-${catLower}` };
+            // This is still an expensive operation, but now it only runs on animation frames.
+            let style = document.getElementById('timeline-progress-style');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = 'timeline-progress-style';
+                document.head.appendChild(style);
             }
-            return { theme: 'theme-default', tag: 'tag-default' };
-        };
-        
-        const generateLinkHTML = (link) => {
-            if (!link || link.trim().toLowerCase() === 'n/a') { return ''; }
-            const isVideo = link.includes('youtube.com') || link.includes('twitch.tv');
-            const linkText = isVideo ? '📺 Watch VOD' : 'ℹ️ More Info';
-            return `<div class="event-links"><div class="event-link"><a href="${link}" target="_blank">${linkText}</a></div></div>`;
-        };
-
-        const generateTimelineHTML = (events) => {
-            let currentSeason = null;
-            let itemCounter = 0;
-            const seasonDividerColors = ['green', 'cyan', 'blue', 'purple', 'orange', 'red'];
-            let colorIndex = 0;
-            let html = '';
-
-            events.forEach(event => {
-                if (event.season !== currentSeason) {
-                    if (currentSeason !== null) { html += `</div>`; }
-                    currentSeason = event.season;
-                    const dividerColorClass = `divider-theme-${seasonDividerColors[colorIndex % seasonDividerColors.length]}`;
-                    colorIndex++;
-                    html += `<div class="season-section" id="season-${currentSeason.toLowerCase().replace(/[^a-z0-9]/g, '-')}"><div class="timeline-divider ${dividerColorClass}"><span><strong>${currentSeason}</strong></span></div>`;
+            style.textContent = `
+                .timeline-container .timeline::after {
+                    height: ${progressHeight}px !important;
                 }
-
-                const positionClass = itemCounter % 2 === 0 ? 'item-left' : 'item-right';
-                const { theme, tag } = getThemeAndTag(event.category);
-                html += `<div class="timeline-item ${theme} ${positionClass}"><div class="timeline-dot"></div><div class="timeline-content"><span class="event-tag ${tag}">${event.category}</span><h3 class="event-title">${event.eventName}</h3><p class="event-subtitle">${event.type}</p><p class="event-date">${event.date}</p>${event.description ? `<p class="event-description">${event.description}</p>` : ''}${generateLinkHTML(event.link)}</div></div>`;
-                itemCounter++;
-            });
-
-            if (events.length > 0) { html += `</div>`; }
-            return html;
+            `;
+            
+            // Allow the next animation frame to be requested
+            ticking = false;
         };
 
-        fetchAndRenderTimeline();
-    });
-    </script>
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateProgressBar);
+                ticking = true;
+            }
+        });
+
+        // Initial call to set the state on page load
+        updateProgressBar();
+        
+        // Logic for hiding the scroll indicator (unchanged)
+        let hasScrolled = false;
+        window.addEventListener('scroll', () => {
+            if (!hasScrolled && window.scrollY > 50) {
+                hasScrolled = true;
+                if (scrollIndicator) scrollIndicator.classList.add('hidden');
+            }
+        });
+    };
+
+    // Start the process
+    fetchAndRenderTimeline();
+});
+</script>
     <!-- This footer is left empty. Your js/main.js file will populate it. -->
     <footer></footer>
     
@@ -222,3 +242,4 @@
     <script src="/js/main.js"></script>
 </body>
 </html>
+
