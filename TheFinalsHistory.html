@@ -36,24 +36,20 @@
 
     <!-- Footer Placeholder -->
     <div id="footer-placeholder"></div>
+    <footer></footer>
 
-    <!--
-      CORRECTION:
-      The entire large <script> block that was here has been removed.
-      It has been replaced with a single script tag that correctly loads
-      your main JavaScript file, just like your 404.html page.
-    -->
-    <script src="/js/main.js"></script>
+    <!-- This script handles global functionality like loading the header/footer -->
+    <!-- 'defer' ensures it doesn't block HTML parsing -->
+    <script src="/js/main.js" defer></script>
 
-    <!-- The timeline-specific JavaScript can remain here as it's unique to this page -->
-   <script>
+    <!-- Optimized timeline-specific JavaScript -->
+    <script>
 document.addEventListener('DOMContentLoaded', () => {
     const SPREADSHEET_ID = '1ANpjO4mcIdjZGZ939-Os2fYq0lDkUvTPn1Ibj4KpBbA';
     const GID = '0'; 
     const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&headers=1`;
     
-    // --- Helper function to generate HTML ---
-    // (These functions are unchanged, just grouped for clarity)
+    // --- Helper functions for generating HTML ---
     const getThemeAndTag = (category) => {
         const catLower = (category || '').toLowerCase().replace(/\s+/g, '-');
         const validThemes = ['community', 'premier', 'grassroots', 'special-event', 'milestone', 'embark'];
@@ -67,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!link || link.trim().toLowerCase() === 'n/a') { return ''; }
         const isVideo = link.includes('youtube.com') || link.includes('twitch.tv');
         const linkText = isVideo ? '📺 Watch VOD' : 'ℹ️ More Info';
-        return `<div class="event-links"><div class="event-link"><a href="${link}" target="_blank">${linkText}</a></div></div>`;
+        return `<div class="event-links"><div class="event-link"><a href="${link}" target="_blank" rel="noopener noreferrer">${linkText}</a></div></div>`;
     };
 
     const generateTimelineHTML = (events) => {
@@ -96,9 +92,38 @@ document.addEventListener('DOMContentLoaded', () => {
         return html;
     };
 
+    // --- New helper function to separate rendering from fetching ---
+    const renderTimeline = (events) => {
+        const timelineHTML = generateTimelineHTML(events);
+        const timelineContainer = document.querySelector('.timeline-container .container');
+        timelineContainer.innerHTML = `
+            <div class="header">
+                <br><br><br>
+                <h1 class="main-title">History of The Finals Esports</h1>
+                <p class="subtitle">From Beta Tournaments to Global Competition</p>
+            </div>
+            <div class="timeline">${timelineHTML}</div>
+        `;
+        initializeScrollEffects();
+    };
 
-    // --- Main application logic ---
+    // --- Main application logic with caching ---
     const fetchAndRenderTimeline = async () => {
+        const cacheKey = 'timelineDataCache';
+        const cacheDuration = 15 * 60 * 1000; // 15 minutes
+
+        // Try to load from cache
+        const cachedItem = localStorage.getItem(cacheKey);
+        if (cachedItem) {
+            const { timestamp, events } = JSON.parse(cachedItem);
+            if (Date.now() - timestamp < cacheDuration) {
+                console.log('Loading timeline from cache.');
+                renderTimeline(events);
+                return;
+            }
+        }
+
+        // Fetch from network if cache is old or missing
         try {
             const response = await fetch(API_URL);
             if (!response.ok) { throw new Error('Network response was not ok'); }
@@ -108,42 +133,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = JSON.parse(jsonString);
 
             const events = data.table.rows.map(row => {
-                const cells = row.c;
                 return { 
-                    season: cells[0]?.v || '', 
-                    eventName: cells[1]?.v || 'Untitled Event', 
-                    type: cells[2]?.v || '', 
-                    category: cells[3]?.v || 'Community', 
-                    date: cells[4]?.f || cells[4]?.v || 'TBD', 
-                    description: cells[5]?.v || '', 
-                    link: cells[6]?.v || null 
+                    season: row.c[0]?.v || '', 
+                    eventName: row.c[1]?.v || 'Untitled Event', 
+                    type: row.c[2]?.v || '', 
+                    category: row.c[3]?.v || 'Community', 
+                    date: row.c[4]?.f || row.c[4]?.v || 'TBD', 
+                    description: row.c[5]?.v || '', 
+                    link: row.c[6]?.v || null 
                 };
             }).filter(event => event.season && event.eventName);
 
-            const timelineHTML = generateTimelineHTML(events);
-            const timelineContainer = document.querySelector('.timeline-container .container');
-            timelineContainer.innerHTML = `
-                <div class="header">
-                    <br><br><br>
-                    <h1 class="main-title">History of The Finals Esports</h1>
-                    <p class="subtitle">From Beta Tournaments to Global Competition</p>
-                </div>
-                <div class="timeline">${timelineHTML}</div>
-            `;
-
-            initializeScrollEffects();
+            // Save new data to cache
+            localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), events }));
+            renderTimeline(events);
 
         } catch (error) {
             console.error('Failed to fetch or render timeline data:', error);
             document.querySelector('.timeline-container .container').innerHTML = `
-                <div class="header">
-                    <h1 class="main-title">Error Loading Timeline</h1>
-                    <p class="subtitle">Could not connect to the data source. Please try again later.</p>
-                </div>
-            `;
+                <div class="header"><h1 class="main-title">Error Loading Timeline</h1><p class="subtitle">Could not connect to the data source. Please try again later.</p></div>`;
         }
     };
 
+    // --- OPTIMIZED scroll effects function ---
     const initializeScrollEffects = () => {
         const timelineElement = document.querySelector('.timeline-container .timeline');
         const timelineItems = document.querySelectorAll('.timeline-container .timeline-item');
@@ -151,94 +163,49 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (!timelineElement || timelineItems.length === 0) return;
 
-        // OPTIMIZATION 1: Use IntersectionObserver for revealing items on scroll
-        // This is far more performant than checking positions in a scroll loop.
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach((entry, index) => {
+        // IntersectionObserver for revealing items (this was already good)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Stagger the animation using a timeout
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 50);
-                    // Stop observing the element once it's visible
+                    entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
                 }
             });
-        }, { 
-            rootMargin: '0px 0px -15% 0px' // Trigger when item is 15% from the bottom of the viewport
-        });
+        }, { rootMargin: '0px 0px -15% 0px' });
+        timelineItems.forEach(item => observer.observe(item));
 
-        // Tell the observer to watch each timeline item
-        timelineItems.forEach(item => {
-            observer.observe(item);
-        });
-
-        // OPTIMIZATION 2: Use requestAnimationFrame for the progress bar animation
-        // This ensures the expensive style update only happens once per frame, not hundreds of times.
+        // HIGH-PERFORMANCE progress bar animation
         let ticking = false;
-
         const updateProgressBar = () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const windowHeight = window.innerHeight;
-            
             const timelineRect = timelineElement.getBoundingClientRect();
-            const timelineTop = timelineRect.top + scrollTop;
-            const timelineHeight = timelineRect.height;
+            const progress = Math.max(0, Math.min(1, -timelineRect.top / (timelineRect.height - window.innerHeight)));
             
-            let progress = 0;
-            if (scrollTop + windowHeight > timelineTop) {
-                const visibleDistance = Math.min(scrollTop + windowHeight - timelineTop, timelineHeight);
-                progress = Math.max(0, Math.min(1, visibleDistance / timelineHeight));
-            }
-            
-            const maxHeight = timelineHeight;
-            const progressHeight = (progress * maxHeight) - 450;
-            
-            // This is still an expensive operation, but now it only runs on animation frames.
-            let style = document.getElementById('timeline-progress-style');
-            if (!style) {
-                style = document.createElement('style');
-                style.id = 'timeline-progress-style';
-                document.head.appendChild(style);
-            }
-            style.textContent = `
-                .timeline-container .timeline::after {
-                    height: ${progressHeight}px !important;
-                }
-            `;
-            
-            // Allow the next animation frame to be requested
+            // This is super fast: just update a CSS variable
+            timelineElement.style.setProperty('--timeline-progress', progress);
             ticking = false;
         };
 
-        window.addEventListener('scroll', () => {
+        const onScroll = () => {
             if (!ticking) {
                 window.requestAnimationFrame(updateProgressBar);
                 ticking = true;
             }
-        });
-
-        // Initial call to set the state on page load
-        updateProgressBar();
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        updateProgressBar(); // Initial call
         
-        // Logic for hiding the scroll indicator (unchanged)
-        let hasScrolled = false;
-        window.addEventListener('scroll', () => {
-            if (!hasScrolled && window.scrollY > 50) {
-                hasScrolled = true;
+        // Logic for hiding the scroll indicator
+        const hideIndicator = () => {
+            if (window.scrollY > 50) {
                 if (scrollIndicator) scrollIndicator.classList.add('hidden');
+                window.removeEventListener('scroll', hideIndicator); // Remove listener once done
             }
-        });
+        };
+        window.addEventListener('scroll', hideIndicator, { passive: true });
     };
 
-    // Start the process
     fetchAndRenderTimeline();
 });
-</script>
-    <!-- This footer is left empty. Your js/main.js file will populate it. -->
-    <footer></footer>
-    
-    <!-- This script handles global functionality like loading the header/footer -->
-    <script src="/js/main.js"></script>
+    </script>
 </body>
 </html>
