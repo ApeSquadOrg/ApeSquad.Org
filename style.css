@@ -2099,6 +2099,9 @@ body.is-leaving {
 .tier-gold    { color: #ffd700; }
 .tier-diamond { color: #b9f2ff; }
 .tier-ruby    { color: #e0115f; }
+.tier-amethyst {color: #9966cc; /* A purple shade */}
+.tier-obsidian {color: #4B4B4B; /* A dark grey/black shade */}
+.tier-mythic {color: #FFFFFF; /* White, or choose a more unique "mythic" color */}
 
 /* ================================================== */
 /*        MOBILE NAVIGATION & OVERLAY STYLES          */
@@ -4083,5 +4086,6 @@ body.nav-open::before {
         width: 100%; /* No longer fixed width */
     }
 }
+
 
 
