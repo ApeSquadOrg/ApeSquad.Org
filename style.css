@@ -3251,4 +3251,837 @@ body.nav-open::before {
     .timeline-container .timeline-dot { left: 10px !important; right: auto !important; }
     .timeline-container .timeline-content::after { left: -18px !important; right: auto !important; border-width: 12px 18px 12px 0 !important; border-color: transparent var(--color-dark-1) transparent transparent !important; }
 }
+/* ================================================== */
+/*      TOURNAMENT BRACKET - COMPLETE STYLES         */
+/* ================================================== */
+
+/* Bracket page main container */
+#bracket-page-main {
+    padding-top: 120px;
+    padding-bottom: 100px;
+    position: relative;
+    /* z-index: 1; */ 
+    flex: 1;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Background overlay for bracket page */
+.overlay-background {
+    position: fixed; 
+    inset: 0; 
+    z-index: -1;
+    background-color: var(--darker-bg);
+    background-image: radial-gradient(ellipse at center, var(--dark-bg) 0%, var(--darker-bg) 70%);
+}
+
+.overlay-background::before {
+    content: ''; 
+    position: absolute; 
+    inset: 0; 
+    z-index: 1;
+    background-image: repeating-linear-gradient(to right, transparent, transparent 49px, rgba(3, 183, 250, 0.15) 50px), repeating-linear-gradient(to bottom, transparent, transparent 49px, rgba(3, 183, 250, 0.15) 50px);
+    background-size: 50px 50px; 
+    animation: moveGrid 20s linear infinite;
+}
+
+@keyframes moveGrid { 
+    to { background-position: -50px -50px; } 
+}
+
+/* Main bracket layout */
+.bracket-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding: 20px;
+    padding-bottom: 40px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.bracket-container {
+    /* MODIFIED: Changed to a vertical column layout for the brackets */
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    min-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+/* The .main-brackets-column rule is no longer needed and has been removed */
+
+/* Bracket sections */
+.bracket-section {
+    background-color: rgba(10, 10, 15, 0.7);
+    border: 2px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 10px;
+    padding: 15px; 
+    display: flex; 
+    flex-direction: column; 
+    position: relative;
+}
+
+.bracket-section > h2 { 
+    font-size: 1.8rem; 
+    margin-bottom: 15px;
+    text-transform: uppercase; 
+    color: var(--accent-orange); 
+    text-align: center; 
+    flex-shrink: 0; 
+}
+
+.losers-bracket {
+    padding-bottom: 40px;
+}
+
+.losers-bracket > h2 { 
+    color: var(--primary-purple); 
+}
+
+/* Rounds container */
+.rounds-container { 
+    display: flex; 
+    gap: 25px;
+    flex-grow: 1; 
+    position: relative;
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
+.winners-bracket .rounds-container { 
+    min-height: 850px;
+}
+
+.losers-bracket .rounds-container { 
+    gap: 15px;
+    min-height: 450px;
+}
+
+/* Round styling */
+.round { 
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1; 
+    min-width: 185px;
+    position: relative; 
+}
+
+.losers-bracket .round {
+    min-width: 145px;
+}
+
+.round-title { 
+    font-size: 1rem; 
+    text-align: center; 
+    color: var(--light-text); 
+    margin-bottom: 25px;
+    margin-top: 10px;
+    font-weight: 700; 
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+    padding: 8px 10px;
+    background-color: rgba(10, 10, 15, 0.95);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.round-content {
+    position: relative;
+    flex: 1;
+    min-height: 400px;
+}
+
+/* Match styling */
+.matchup { 
+    position: absolute; 
+    width: 100%; 
+}
+
+.connector-svg { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    z-index: 1; 
+    opacity: 1; 
+}
+
+/* Team styling */
+.team { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 8px 12px;
+    background-color: #0c0c0c; 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    position: relative; 
+    z-index: 5; 
+}
+
+.team:first-of-type { 
+    border-top-left-radius: 6px; 
+    border-top-right-radius: 6px; 
+}
+
+.team:last-of-type { 
+    border-bottom-left-radius: 6px; 
+    border-bottom-right-radius: 6px; 
+    border-top: 0; 
+}
+
+.team-name { 
+    font-size: 0.95rem;
+    font-weight: 700; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    padding-right: 10px;
+}
+
+.team-score { 
+    font-size: 1rem;
+    font-weight: 900; 
+    min-width: 25px; 
+    text-align: center; 
+    flex-shrink: 0;
+}
+
+.team.winner { 
+    background-color: #1a1a1a; 
+}
+
+.winners-bracket .team.winner { 
+    border-color: var(--accent-orange); 
+}
+
+.losers-bracket .team.winner { 
+    border-color: var(--primary-purple); 
+}
+
+.winners-bracket .team.winner .team-name, 
+.winners-bracket .team.winner .team-score { 
+    background: linear-gradient(90deg, var(--accent-orange), var(--standout-blue)); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    background-size: 250% 250%; 
+    animation: gradientShift 3s ease-in-out infinite alternate; 
+}
+
+.losers-bracket .team.winner .team-name, 
+.losers-bracket .team.winner .team-score { 
+    background: linear-gradient(90deg, var(--primary-purple), var(--secondary-purple)); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    background-size: 250% 250%; 
+    animation: gradientShift 3s ease-in-out infinite alternate; 
+}
+
+/* Grand Finals Column */
+.grand-finals-column {
+    /* MODIFIED: Changed to be a full-width, centered top section */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+    max-width: 1200px; /* Constrains width on very large screens */
+    margin: 0 auto 50px auto; /* Centers horizontally and adds space below */
+}
+
+.tournament-title {
+    text-align: center; 
+    font-size: 2.2rem;
+    font-weight: 900; 
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--accent-orange), var(--primary-purple), var(--standout-blue));
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%; 
+    animation: gradientShift 4s ease-in-out infinite;
+}
+
+.grand-finals-column > h2 { 
+    font-size: 1.8rem;
+    text-transform: uppercase; 
+    color: var(--light-text); 
+    text-shadow: 0 0 15px rgba(0,0,0,0.8); 
+}
+
+.grand-final-showdown { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%; 
+    gap: 15px; 
+}
+
+.team-pod { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 12px;
+    padding: 15px;
+    border-radius: 15px; 
+    background-color: rgba(10, 10, 15, 0.7); 
+    border: 2px solid rgba(255, 255, 255, 0.1); 
+    transition: all 0.3s ease; 
+}
+
+.team-pod.winner { 
+    border-color: var(--accent-orange); 
+    box-shadow: 0 0 25px rgba(255, 200, 55, 0.4); 
+    background-color: rgba(30, 20, 10, 0.7); 
+}
+
+.from-bracket-label { 
+    font-size: 0.8rem;
+    text-transform: uppercase; 
+    font-weight: 700; 
+}
+
+.left-team .from-bracket-label { 
+    color: var(--accent-orange); 
+}
+
+.right-team .from-bracket-label { 
+    color: var(--primary-purple); 
+}
+
+.team-logo-placeholder { 
+    width: 90px;
+    height: 90px; 
+    border-radius: 50%; 
+    border: 3px dashed rgba(255,255,255,0.2); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.3); 
+}
+
+.team-pod.winner .team-logo-placeholder { 
+    border-color: var(--standout-blue); 
+}
+
+.team-name-large { 
+    font-size: 1.4rem;
+    font-weight: 800; 
+    text-align: center; 
+    word-break: break-word;
+}
+
+.match-centerpiece { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px;
+}
+
+.team-score-large { 
+    font-size: 3.5rem;
+    font-weight: 900; 
+}
+
+.vs-divider { 
+    font-size: 1.8rem;
+    font-weight: 900; 
+    color: var(--primary-purple); 
+    line-height: 1; 
+}
+
+/* Tournament Winner */
+.tournament-winner { 
+    width: 100%; 
+    background-color: rgba(10, 10, 15, 0.7); 
+    border: 2px solid var(--accent-orange); 
+    border-radius: 15px; 
+    padding: 20px;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 15px;
+    box-shadow: 0 0 25px rgba(255, 200, 55, 0.4); 
+}
+
+.winner-title { 
+    font-size: 1.5rem;
+    text-transform: uppercase; 
+    color: var(--light-text); 
+    font-weight: 700; 
+}
+
+.winner-logo-container { 
+    width: 110px;
+    height: 110px; 
+    border: 3px dashed var(--standout-blue); 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background-color: rgba(0, 0, 0, 0.3); 
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.5); 
+}
+
+.winner-team-name { 
+    font-size: 1.8rem;
+    font-weight: 900; 
+    text-transform: uppercase; 
+    background: linear-gradient(90deg, var(--accent-orange), var(--standout-blue)); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    background-size: 250% 250%; 
+    animation: gradientShift 3s ease-in-out infinite alternate;
+    text-align: center;
+    word-break: break-word;
+}
+
+/* Grand Final Reset */
+.grand-final-reset { 
+    width: 100%; 
+    background-color: rgba(10, 10, 15, 0.7); 
+    border: 2px solid var(--primary-purple); 
+    border-radius: 15px; 
+    padding: 18px;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 12px;
+    box-shadow: 0 0 25px rgba(231, 90, 124, 0.3); 
+}
+
+.reset-title { 
+    font-size: 1.2rem;
+    text-transform: uppercase; 
+    color: var(--light-text); 
+    font-weight: 700; 
+}
+
+.grand-final-reset .team-pod { 
+    padding: 10px;
+    gap: 8px;
+}
+
+.grand-final-reset .team-logo-placeholder { 
+    width: 70px;
+    height: 70px; 
+    font-size: 0.9rem;
+}
+
+.grand-final-reset .team-name-large { 
+    font-size: 1.1rem;
+}
+
+.grand-final-reset .team-score-large { 
+    font-size: 2.2rem;
+}
+
+.grand-final-reset .vs-divider { 
+    font-size: 1.3rem;
+}
+
+.grand-final-reset .match-centerpiece { 
+    gap: 12px;
+}
+
+.grand-final-reset .from-bracket-label { 
+    display: none; 
+}
+
+/* Page Title */
+.page-title {
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    background: linear-gradient(90deg, var(--accent-orange), var(--primary-purple), var(--standout-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: gradientShift 4s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(255, 200, 55, 0.3);
+}
+
+/* ===== RESPONSIVE DESIGN - IMPROVED ===== */
+
+/* For smaller desktops & large laptops */
+@media (max-width: 1600px) and (min-width: 1201px) {
+    .bracket-container {
+        min-width: 95%; 
+        max-width: 1300px;
+        gap: 15px;
+    }
+    
+    .rounds-container {
+        gap: 20px;
+    }
+
+    .round {
+        min-width: 160px;
+    }
+
+    .team-name {
+        font-size: 0.9rem;
+    }
+    
+    .grand-finals-column {
+        width: 100%; /* Keeps it full-width within the container */
+    }
+
+    .winners-bracket .rounds-container {
+        min-height: 800px;
+    }
+    .losers-bracket .rounds-container {
+        min-height: 400px;
+    }
+}
+
+/* For smaller laptops */
+@media (max-width: 1400px) and (min-width: 1201px) {
+    .round {
+        min-width: 145px;
+    }
+    .rounds-container {
+        gap: 15px;
+    }
+    .grand-finals-column {
+        width: 100%; /* Keeps it full-width within the container */
+    }
+    .team-name {
+        font-size: 0.85rem;
+    }
+}
+
+/* Tablet and smaller desktop - Stack layout */
+@media (max-width: 1200px) {
+    .bracket-wrapper {
+        overflow-x: hidden;
+        padding: 15px;
+        padding-bottom: 25px;
+    }
+    
+    .bracket-container {
+        flex-direction: column;
+        min-width: unset;
+        width: 100%;
+        gap: 20px;
+    }
+    
+    .grand-finals-column {
+        width: 100%;
+        padding-top: 0;
+        gap: 20px;
+        margin-bottom: 30px; /* Adjust margin for smaller screens */
+    }
+    
+    .rounds-container {
+        gap: 22px;
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-bottom: 30px; 
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .round {
+        min-width: 170px;
+        flex-shrink: 0;
+    }
+    
+    .winners-bracket .rounds-container {
+        min-height: 650px;
+    }
+    
+    .losers-bracket .rounds-container {
+        min-height: 480px;
+    }
+    
+    .tournament-title {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+    
+    .team-name {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile tablets */
+@media (max-width: 768px) {
+    #bracket-page-main {
+        padding-top: 100px;
+        padding-bottom: 40px;
+    }
+    
+    .bracket-wrapper {
+        padding: 10px;
+        padding-bottom: 20px;
+    }
+    
+    .page-title { 
+        font-size: 2.2rem; 
+        letter-spacing: 2px; 
+        margin-bottom: 20px; 
+    }
+    
+    .tournament-title { 
+        font-size: 1.8rem; 
+        letter-spacing: 2px; 
+    }
+    
+    .grand-finals-column > h2 { 
+        font-size: 1.6rem; 
+    }
+    
+    .team-name-large { 
+        font-size: 1.3rem; 
+    }
+    
+    .team-score-large { 
+        font-size: 3rem; 
+    }
+    
+    .vs-divider { 
+        font-size: 1.8rem; 
+    }
+    
+    .team-logo-placeholder { 
+        width: 80px; 
+        height: 80px; 
+        font-size: 1rem;
+    }
+    
+    .winner-team-name { 
+        font-size: 1.8rem; 
+    }
+    
+    .winner-logo-container { 
+        width: 100px; 
+        height: 100px; 
+        font-size: 1.3rem;
+    }
+    
+    .rounds-container {
+        gap: 18px;
+    }
+    
+    .round {
+        min-width: 155px;
+    }
+    
+    .team-name {
+        font-size: 0.85rem;
+    }
+    
+    .team-score {
+        font-size: 0.95rem;
+        min-width: 22px;
+    }
+    
+    .team {
+        padding: 6px 10px;
+    }
+    
+    .bracket-section {
+        padding: 12px;
+    }
+    
+    .bracket-section > h2 {
+        font-size: 1.5rem;
+    }
+    
+    .grand-final-showdown {
+        gap: 10px;
+    }
+    
+    .match-centerpiece {
+        gap: 15px;
+    }
+    
+    .team-pod {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    /* .main-brackets-column is removed */
+    
+    .winners-bracket .rounds-container {
+        min-height: 580px;
+    }
+    
+    .losers-bracket .rounds-container {
+        min-height: 450px;
+    }
+}
+
+/* Small mobile phones */
+@media (max-width: 480px) {
+    .bracket-wrapper {
+        padding: 8px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .bracket-container {
+        min-width: 750px;
+    }
+    
+    .page-title { 
+        font-size: 1.8rem; 
+        letter-spacing: 1px; 
+        margin-bottom: 15px;
+    }
+    
+    .tournament-title {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+    
+    .grand-finals-column > h2 {
+        font-size: 1.4rem;
+    }
+    
+    .rounds-container {
+        gap: 15px;
+    }
+    
+    .round {
+        min-width: 135px;
+    }
+    
+    .team {
+        padding: 5px 8px;
+    }
+    
+    .team-name {
+        font-size: 0.75rem;
+    }
+    
+    .team-score {
+        font-size: 0.85rem;
+        min-width: 20px;
+    }
+    
+    .bracket-section {
+        padding: 8px;
+    }
+    
+    .bracket-section > h2 {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+    }
+    
+    .round-title {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        padding: 6px 8px;
+    }
+    
+    .team-name-large {
+        font-size: 1.1rem;
+    }
+    
+    .team-score-large {
+        font-size: 2.5rem;
+    }
+    
+    .vs-divider {
+        font-size: 1.5rem;
+    }
+    
+    .team-logo-placeholder {
+        width: 60px;
+        height: 60px;
+        font-size: 0.8rem;
+    }
+    
+    .winner-team-name {
+        font-size: 1.4rem;
+    }
+    
+    .winner-logo-container {
+        width: 80px;
+        height: 80px;
+        font-size: 1rem;
+    }
+    
+    .winner-title {
+        font-size: 1.2rem;
+    }
+    
+    .tournament-winner {
+        padding: 15px;
+        gap: 10px;
+    }
+    
+    .team-pod {
+        padding: 8px;
+        gap: 8px;
+    }
+    
+    .grand-final-showdown {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .match-centerpiece {
+        gap: 12px;
+    }
+    
+    .from-bracket-label {
+        font-size: 0.7rem;
+    }
+    
+    .grand-finals-column {
+        width: 100%; /* No longer fixed width */
+    }
+    
+    .winners-bracket .rounds-container {
+        min-height: 520px;
+    }
+    
+    .losers-bracket .rounds-container {
+        min-height: 420px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+    .bracket-container {
+        min-width: 650px;
+    }
+    
+    .round {
+        min-width: 115px;
+    }
+    
+    .team-name {
+        font-size: 0.7rem;
+    }
+    
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .tournament-title {
+        font-size: 1.3rem;
+    }
+    
+    .grand-finals-column {
+        width: 100%; /* No longer fixed width */
+    }
+}
+
 
