@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8868N4WQZJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official rules and format for the Ape Squad Worlds: Tidal Survival tournament. Find information on prize pool, schedule, map pool, and how to enter.">
+    <title>Tournament Rules | Ape Squad</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Link to global stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Page-specific styles (optional) -->
+    <style>
+        #rules-page {
+            padding: 120px 0;
+            background: 
+                linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
+                radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
+        }
+
+        .rules-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--mid-grey);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        #rules-page h1 {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple), var(--accent-orange), var(--standout-blue));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite;
+            text-shadow: none;
+        }
+
+        #rules-page .subtitle {
+            text-align: center;
+            font-family: var(--font-tech);
+            color: var(--light-text);
+            opacity: 0.8;
+            margin-bottom: 50px;
+        }
+
+        .rules-section {
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--mid-grey);
+        }
+
+        .rules-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .rules-section h2 {
+            font-size: 2.5rem;
+            color: var(--accent-orange);
+            text-shadow: none;
+            text-align: left;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--accent-orange);
+            padding-left: 15px;
+            /* Resetting the global h2 style */
+            background: none;
+            -webkit-text-fill-color: unset;
+            animation: none;
+        }
+
+        .rules-section h3 {
+            font-size: 1.6rem;
+            font-family: var(--font-tech);
+            color: var(--standout-blue);
+            margin-top: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--dark-grey);
+            text-shadow: none;
+            background: none;
+            -webkit-text-fill-color: unset;
+        }
+
+        .rules-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: #e0e0e0;
+        }
+
+        .rules-section ul {
+            list-style: none;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .rules-section ul li {
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .rules-section ul li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--primary-purple);
+            font-weight: 700;
+            font-size: 1.2rem;
+            top: -2px;
+        }
+
+        .rules-section a {
+            color: var(--standout-blue);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .rules-section a:hover {
+            color: var(--accent-orange);
+            text-shadow: 0 0 8px var(--accent-orange);
+        }
+        
+        .discord-channel {
+            background-color: #2f3136;
+            color: #dcddde;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .rule-highlight {
+            background: rgba(242, 144, 69, 0.1);
+            border-left: 4px solid var(--accent-orange);
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--light-text);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- This header is populated by js/main.js -->
+    <header></header>
+
+    <main>
+        <!-- Start of unique page content -->
+        
+        <section id="rules-page">
+            <div class="container">
+                <div class="rules-container">
+        
+                    <h1>Ape Squad Worlds: Tidal Survival</h1>
+                    <p class="subtitle">September 11th + 13th, 2025</p>
+        
+                    <div class="rules-section">
+                        <h2>Tournament Information</h2>
+                        <p><strong>Note:</strong> Tournament Rules are subject to change. Please join the official Discord server and check this page regularly to stay up to date.</p>
+                        
+                        <h3>Organization & Links</h3>
+                        <ul>
+                            <li><strong>Hosted by:</strong> Ape Squad</li>
+                            <li><strong>Servers:</strong> NA & EU</li>
+                            <li><strong>Official Stream:</strong> <a href="https://www.twitch.tv/ApeSquadOrg" target="_blank" rel="noopener noreferrer">ApeSquadOrg on Twitch</a></li>
+                            <li><strong>Official Discord (Required):</strong> <a href="https://discord.gg/apesquad" target="_blank" rel="noopener noreferrer">https://discord.gg/apesquad</a></li>
+                            <li><strong>Tournament Bracket:</strong> <a href="#" target="_blank">Link Available Soon</a></li>
+                        </ul>
+        
+                        <h3>Prize Pool</h3>
+                        <ul>
+                            <li><strong>1st Place Team:</strong> 60%</li>
+                            <li><strong>2nd Place Team:</strong> 30%</li>
+                            <li><strong>3rd Place Team:</strong> 10%</li>
+                        </ul>
+                    </div>
+        
+                    <div class="rules-section">
+                        <h2>Tournament Entry</h2>
+                        <ul>
+                            <li>To enter, please visit our tournaments page at <a href="https://apesquad.org/tournaments" target="_blank" rel="noopener noreferrer">apesquad.org/tournaments</a>.</li>
+                            <li>Ensure all fields are filled out correctly. Incomplete or incorrect submissions may be discarded.</li>
+                            <li>After signing up, all team members must join the <a href="https://discord.gg/apesquad" target="_blank" rel="noopener noreferrer">Ape Squad Discord</a> to be assigned team roles.</li>
+                            <li>Teams will be contacted via Discord prior to the tournament to confirm attendance.</li>
+                            <li>If your team must drop out, please contact a Tournament Organizer (TO) in the Discord IMMEDIATELY.</li>
+                            <li>The tournament is limited to 16 slots per region. Teams signing up after slots are full will be placed on a reserve list.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rules-section">
+                        <h2>Tournament Format</h2>
+                        <h3>Qualifiers (Sept. 11th - NA & EU)</h3>
+                        <p>View participating teams at <a href="https://apesquad.org/Teams" target="_blank" rel="noopener noreferrer">apesquad.org/Teams</a>.</p>
+                        <ul>
+                            <li><strong>Format:</strong> This is a standard 3v3, 16-team, double-elimination bracket.</li>
+                            <li><strong>Bracket Matches:</strong> Best of 3 (Bo3)</li>
+                            <li>The bracket will be played until only <strong>8 teams remain</strong> (4 in the Upper Bracket, 4 in the Lower Bracket). The bracket will NOT be played to completion.</li>
+                            <li>After the Top 8 is locked in, one final match will be played to help determine seeding for the World Finals.</li>
+                        </ul>
+        
+                        <h3>World Finals (Sept. 13th)</h3>
+                        <p>The final championship day bracket will be posted on the website after qualifiers are complete.</p>
+                        <ul>
+                            <li><strong>Format:</strong> This is a standard 3v3, 16-team, double-elimination bracket.</li>
+                            <li><strong>Winners / Losers Bracket Matches:</strong> Best of 3 (Bo3)</li>
+                            <li><strong>Winners Grand Finals:</strong> Best of 5 (Bo5)</li>
+                            <li><strong>Bracket Reset:</strong> If required, a Best of 3 (Bo3) series will be played after a 5 minute break.</li>
+                        </ul>
+                    </div>
+        
+                    <div class="rules-section">
+                        <h2>Map and Server Selection</h2>
+                        <h3>Map Selection Process</h3>
+                        <p>Map bans will be used for all matches. Team Captains must submit their picks and bans in the <span class="discord-channel">#🌎map-pick-bans</span> channel in Discord.</p>
+                        <h3>Map Pool</h3>
+                        <p>The map variant will be Standard, Clear Night, Gameshow off.</p>
+                        <ul>
+                            <li>Las Vegas</li>
+                            <li>Monaco</li>
+                            <li>Bernal</li>
+                            <li>Skyway Stadium</li>
+                            <li>Sys$Horizon</li>
+                            <li>Fortune Stadium</li>
+                            <li>Nozomi/Citadel</li>
+                        </ul>
+                        <h3>Qualifier Server Selection</h3>
+                        <p>Regional qualifiers must be played on their designated regional servers.</p>
+                        <ul>
+                            <li>EU Qualifier matches must be played on EU servers.</li>
+                            <li>NA Qualifier matches must be played on NA servers.</li>
+                        </ul>
+                        <p>An exception may be made only if <strong>both</strong> competing teams mutually agree to play on an alternate server and inform a Tournament Organizer beforehand.</p>
+                        <h3>World Finals Server Selection</h3>
+                        <p>For the cross-regional World Finals, the higher-seeded team will recieve the server for the first round. Servers will alternate each subsequent round. If needed, a coin flip will determine the server of the final game.</p>
+                        <p><strong>Example (NA Team is Higher Seed):</strong></p>
+                        <ul>
+                            <li>Round 1: NA Server</li>
+                            <li>Round 2: EU Server</li>
+                            <li>Round 3 (Coin Flip)</li>
+                        </ul>
+                        <h3>Score Reporting</h3>
+                        <p>After a full round of matches are complete, Captains must report all subsequent scores at one time in the <span class="discord-channel">#🏆score-report</span> channel in Discord.</p>
+                   <p><strong>Please include the following:<strong></p>
+                        <ul>
+                            <li>Team Names</li>
+                            <li>Score</li>
+                            <li>Images of Results</li>
+                        </ul>
+ </div>
+        
+                    <div class="rules-section">
+                        <h2>Gameplay Rules</h2>
+                        <p class="rule-highlight">ALL PLAYERS MUST RECORD OR STREAM THEIR GAMEPLAY for potential review by tournament organizers. Failure to provide footage upon request may result in disqualification.</p>
+                        <ul>
+                            <li><strong>Class Changes:</strong> No "bait and switch" class changes. You should play the class you load into the match with.</li>
+                            <li><strong>Banned Items:</strong> There are currently no banned classes or specializations.</li>
+                            <li><strong>Substitutions:</strong> Subs are allowed before and during the tournament. You must inform a TO immediately, providing the name of the player being replaced and the substitute. Teams may play as a duo if a sub cannot be found or sub is not approved. A team will be disqualified if they are down to one player and cannot find a replacement.</li>
+                            <li><strong>Cheating & Exploits:</strong> Any form of cheating is strictly prohibited. This includes third-party software, scripts, and in-game exploits. Teams found cheating will be immediately disqualified.
+                                <ul>
+                                    <li>See <a href="https://id.embark.games/support/faq/76-the-finals-fair-play-guidelines" target="_blank" rel="noopener noreferrer">THE FINALS Fair Play Guidelines</a>.</li>
+                                    <li>See <a href="https://id.embark.games/support/faq/44-anti-cheat-faq" target="_blank" rel="noopener noreferrer">Anti-Cheat FAQ</a>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+        
+                    <div class="rules-section">
+                        <h2>Technical & Procedural Rules</h2>
+
+                        <h3>Disconnects, Crashes, and Remakes</h3>
+
+                        <h4>Player-Initiated Remake Policy</h4>
+                        <p>Each team is allotted <strong>one (1) technical remake per series</strong> (i.e., one total for a Bo3 or Bo5 series). This remake can be requested if a player gets disconnected, having connection issues, or their game crashes, provided the following condition is met:</p>
+                        <ul>
+                            <li>The issue occurs <strong>before the first vault of the game has been 50% opened</strong>.</li>
+                        </ul>
+                        <p>If a disconnect or crash occurs after this point, the game must continue. The affected player is encouraged to reconnect as soon as possible. Their team must continue to play with a disadvantage until the player returns.</p>
+                        <p class="rule-highlight">Intentional disconnects (i.e., "rage quitting") are a serious offense and could result in an immediate forfeit of the game.</p>
+
+                        <h4>Server-Wide Issues</h4>
+                        <ul>
+                            <li>If multiple players from both teams disconnect simultaneously, the issue may be deemed a server-wide problem.</li>
+                            <li>A TO will investigate and may order a mandatory game restart. A restart due to server issues will <strong>not</strong> count against either team's remake allowance.</li>
+                        </ul>
+
+                        <h3>No-Shows & Disqualifications</h3>
+                        <ul>
+                            <li>Teams must be checked-in at least 60 minutes before the tournament start time.</li>
+                            <li>Teams not checked-in 30 minutes before the start time will be replaced by a reserve team.</li>
+                            <li>We reserve the right to disqualify teams at our discretion for poor sportsmanship or rule violations.</li>
+                        </ul>
+                    </div>
+        
+                    <div class="rules-section">
+                        <h2>Captain Information</h2>
+                        <ul>
+                            <li>Team Captains are the primary point of contact between their team and the Tournament Organizers.</li>
+                            <li>Captains are responsible for ensuring their team has joined the Discord and received their roles.</li>
+                            <li><strong>Check-in is mandatory.</strong> Captains must check in via the private <span class="discord-channel">#✅check-in</span> channel in Discord at least 60 minutes prior to the tournament.</li>
+                            <li>Lobby codes for <strong>streamed games</strong> will be distributed via private channels to team captains. All streamed lobbies will be hosted by a TO.</li>
+                        </ul>
+                    </div>
+        
+                    <div class="rules-section">
+                        <h2>Payouts</h2>
+                        <p>Please allow a maximum of 7 days from the completion of the tournament for prize payout. This allows time for review of tournament footage if needed.</p>
+                    </div>
+        
+                </div>
+            </div>
+        </section>
+
+        <!-- End of unique page content -->
+    </main>
+
+    <!-- This footer is populated by js/main.js -->
+    <footer></footer>
+    
+    <!-- Global script for header/footer loading -->
+    <script src="/js/main.js"></script>
+
+</body>
+</html>
