@@ -13,14 +13,68 @@
     <!-- Tracking Scripts would go here -->
 
     <style>
-        /* --- NEW: Combined container for filters and actions --- */
+        /* Base styles (assuming these might be in your style.css) */
+        :root {
+            --primary-purple: #9c46c8;
+            --accent-orange: #ff6b00;
+            --standout-blue: #03b7fa;
+            --neutral-dark-1: #1a1a1e;
+            --neutral-dark-2: #101013;
+            --neutral-light-1: #333;
+            --light-text: #f0f0f0;
+            --font-headings: 'Bebas Neue', sans-serif;
+            --font-tech: 'Orbitron', sans-serif;
+        }
+        body {
+            background-color: var(--neutral-dark-2);
+            color: var(--light-text);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        h2 {
+            font-family: var(--font-headings);
+            font-size: 4rem;
+            color: var(--light-text);
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        h2::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--primary-purple);
+            z-index: -1;
+        }
+        .loading-spinner {
+            border: 5px solid #f3f3f3; 
+            border-top: 5px solid var(--primary-purple);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- Page-specific styles from your example --- */
         .page-actions {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 15px;
             margin-bottom: 50px;
-            flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+            flex-wrap: wrap;
         }
         
         .region-filters {
@@ -39,7 +93,7 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none; /* Ensure links don't have underlines */
+            text-decoration: none;
             display: inline-block;
         }
         .filter-btn:hover {
@@ -53,7 +107,6 @@
             box-shadow: 0 0 15px rgba(156, 70, 200, 0.5);
         }
 
-        /* --- NEW: Style for the standout bracket button --- */
         .btn-highlight {
             border-color: var(--accent-orange);
             color: var(--accent-orange);
@@ -61,7 +114,7 @@
         .btn-highlight:hover {
             background-color: var(--accent-orange);
             border-color: var(--accent-orange);
-            color: var(--neutral-dark-1); /* Dark text on orange background */
+            color: var(--neutral-dark-1);
         }
 
         .region-header {
@@ -69,7 +122,6 @@
             font-size: 2.5rem;
             font-family: var(--font-headings);
             color: var(--accent-orange);
-            text-shadow: none;
             border-bottom: 2px solid var(--neutral-light-1);
             padding-bottom: 10px;
             margin: 40px 0 20px 0;
@@ -122,9 +174,6 @@
             font-family: var(--font-tech);
             font-size: 1.5rem;
             color: var(--light-text);
-            text-shadow: none;
-            background: none;
-            -webkit-text-fill-color: unset;
             margin: 0 0 10px 0;
         }
         .player-list {
@@ -140,7 +189,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .team-card.paid {
+        .team-card.paid { /* This class gives the green "confirmed" border */
             border-color: #28a745;
         }
         .team-card.paid:hover {
@@ -159,10 +208,6 @@
             background-color: #28a745;
             color: white;
         }
-        .status-not-confirmed {
-            background-color: #dc3545;
-            color: white;
-        }
     </style>
 </head>
 <body>
@@ -174,9 +219,6 @@
             <div class="container">
                 <h2 data-text="Registered Teams">Registered Teams</h2>
                 
-                <!-- ============================================== -->
-                <!-- MODIFIED SECTION: Changed to two bracket buttons -->
-                <!-- ============================================== -->
                 <div class="page-actions">
                     <div class="region-filters">
                         <button class="filter-btn active" data-region="ALL">All Regions</button>
@@ -188,10 +230,7 @@
                     <a href="/NA-Bracket" class="filter-btn btn-highlight">View NA Bracket</a>
                     <a href="/EU-Bracket" class="filter-btn btn-highlight">View EU Bracket</a>
                 </div>
-                <!-- ============================================== -->
-                <!-- END OF MODIFIED SECTION                        -->
-                <!-- ============================================== -->
-
+                
                 <div id="teams-list-container" class="team-grid">
                     <div class="loading-spinner-wrapper" style="grid-column: 1 / -1; display: flex; justify-content: center; padding: 50px;">
                         <div class="loading-spinner"></div>
@@ -208,14 +247,21 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
+            // ===================================================================
             // !!! IMPORTANT: PASTE YOUR SPREADSHEET ID HERE !!!
-            const SPREADSHEET_ID = '18ssXK0LkUp3BoFISZcupegxXcVYFuvwHer2iKnblu6Y';
-            const GID = '0';
-            const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&headers=1`;
+            // This is the long string of characters in your Google Sheet URL.
+            // ===================================================================
+            const SPREADSHEET_ID = '10ZmWteGljWdAu4TIMMkKkt23jFSuuKlTtqc-bxpVvN4'; // <-- REPLACE THIS
+            // ===================================================================
+
+            const EU_GID = '1547719174'; // Your EU Sheet GID
+            const NA_GID = '1340906972'; // Your NA Sheet GID
+
+            const EU_API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${EU_GID}&headers=1`;
+            const NA_API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${NA_GID}&headers=1`;
 
             const teamsContainer = document.getElementById('teams-list-container');
             const loader = document.querySelector('.loading-spinner-wrapper');
-            // Modified to select the new container for the filters
             const filterButtonsContainer = document.querySelector('.region-filters');
             
             let allTeamsData = [];
@@ -228,11 +274,8 @@
             function createTeamCardHTML(team) {
                 const sanitizedName = sanitizeTeamName(team.teamName);
                 const teamLogoUrl = `images/worlds/logos/${sanitizedName}.png`;
-                const isPaid = team.paid && team.paid.trim().toLowerCase() === 'yes';
-                const cardStatusClass = isPaid ? 'paid' : '';
-                const statusBadgeHTML = isPaid 
-                    ? `<div class="status-badge status-confirmed">Confirmed</div>`
-                    : `<div class="status-badge status-not-confirmed">Not Confirmed</div>`;
+                const cardStatusClass = 'paid'; // Assumes all teams are confirmed
+                const statusBadgeHTML = `<div class="status-badge status-confirmed">Confirmed</div>`;
 
                 return `
                     <div class="team-card ${cardStatusClass}">
@@ -242,9 +285,9 @@
                         <div class="team-card-info">
                             <h3>${team.teamName}</h3>
                             <ul class="player-list">
-                                <li><strong>C:</strong> ${team.captainEmbark}</li>
-                                <li><strong>P2:</strong> ${team.player2}</li>
-                                <li><strong>P3:</strong> ${team.player3}</li>
+                                <li><strong>Player 1:</strong> ${team.player1}</li>
+                                <li><strong>Player 2:</strong> ${team.player2}</li>
+                                <li><strong>Player 3:</strong> ${team.player3}</li>
                             </ul>
                             ${statusBadgeHTML}
                         </div>
@@ -283,30 +326,45 @@
                 teamsContainer.innerHTML = html || `<p class="rankings-intro" style="grid-column: 1 / -1;">No teams have signed up yet. Check back soon!</p>`;
             }
             
+            function processSheetData(responseText, region) {
+                const jsonString = responseText.match(/google\.visualization\.Query\.setResponse\((.*)\)/s)[1];
+                const data = JSON.parse(jsonString);
+
+                return data.table.rows.map(row => ({
+                    teamName: row.c[0]?.v || '',    // Column A
+                    player1:  row.c[1]?.v || 'N/A', // Column B
+                    player2:  row.c[2]?.v || 'N/A', // Column C
+                    player3:  row.c[3]?.v || 'N/A', // Column D
+                    region:   region
+                })).filter(team => team.teamName && team.teamName.trim() !== '');
+            }
+
             async function initializeTeamList() {
                 try {
-                    const response = await fetch(API_URL);
-                    if (!response.ok) throw new Error(`Network response error`);
-                    const text = await response.text();
-                    const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\)/s)[1];
-                    const data = JSON.parse(jsonString);
+                    const [naResponse, euResponse] = await Promise.all([
+                        fetch(NA_API_URL),
+                        fetch(EU_API_URL)
+                    ]);
 
-                    allTeamsData = data.table.rows.map(row => ({
-                        attending: row.c[1]?.v || 'No',
-                        region: row.c[2]?.v || 'N/A',
-                        teamName: row.c[3]?.v || 'Unnamed Team',
-                        captainEmbark: row.c[6]?.v || 'N/A',
-                        player2: row.c[7]?.v || 'N/A',
-                        player3: row.c[8]?.v || 'N/A',
-                        paid: row.c[13]?.v || 'No'
-                    })).filter(team => team.attending.toLowerCase().startsWith('yes') && team.teamName !== 'Unnamed Team');
+                    if (!naResponse.ok || !euResponse.ok) throw new Error(`Network response error`);
+
+                    const [naText, euText] = await Promise.all([
+                        naResponse.text(),
+                        euResponse.text()
+                    ]);
+
+                    const naTeams = processSheetData(naText, 'NA');
+                    const euTeams = processSheetData(euText, 'EU');
+
+                    allTeamsData = [...naTeams, ...euTeams];
                     
                     if (loader) loader.style.display = 'none';
                     renderTeams('ALL');
+
                 } catch (error) {
                     console.error('Failed to fetch or process team data:', error);
                     if(loader) loader.style.display = 'none';
-                    teamsContainer.innerHTML = `<p class="rankings-intro" style="grid-column: 1 / -1; color: var(--accent-orange);">Could not load team data. Please check the Spreadsheet ID and ensure the sheet is public.</p>`;
+                    teamsContainer.innerHTML = `<p class="rankings-intro" style="grid-column: 1 / -1; color: var(--accent-orange);">Could not load team data. Make sure the Spreadsheet ID is correct and both sheets are public.</p>`;
                 }
             }
 
