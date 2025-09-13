@@ -12,6 +12,70 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@700;800;900&family=Roboto&display=swap" rel="stylesheet">
+
+    <!-- =================================================================
+         === ADDED CSS FIXES FOR LOGOS AND SCROLLBARS ARE RIGHT HERE ===
+         ================================================================= -->
+    <style>
+        /* --- Fix for Massive Logos --- */
+
+        /* Set a fixed size for the logo containers in the Grand Finals */
+        .grand-final-showdown .team-logo-placeholder,
+        .grand-final-reset .team-logo-placeholder {
+            width: 90px;
+            height: 90px;
+            margin: 10px auto;
+            display: flex; /* Helps center the content */
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.2); /* Gives a background if no logo is present */
+            border-radius: 50%; /* Makes the placeholder circular */
+        }
+
+        /* Set a larger size for the overall tournament champion's logo */
+        .tournament-winner .winner-logo-container {
+            width: 140px;
+            height: 140px;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+        }
+
+        /* This styles the <img> tag itself once your JavaScript adds it */
+        .team-logo-placeholder img,
+        .winner-logo-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* This is key: it scales the image to fit without stretching */
+        }
+
+
+        /* --- Fix for Double Scrollbar --- */
+        
+        /* 1. Prevent the main page body from ever getting a horizontal scrollbar. */
+        body {
+            overflow-x: hidden;
+        }
+
+        /* 2. Make the .bracket-wrapper the single, designated container for horizontal scrolling. */
+        .bracket-wrapper {
+            width: 100%; /* Ensures the wrapper doesn't extend past the screen */
+            overflow-x: auto; /* Adds a horizontal scrollbar ONLY if its content is wider */
+            padding: 20px 0;
+        }
+
+        /* 3. Give the inner .bracket-container a minimum width. */
+        .bracket-container {
+            /* This is the total width of all your bracket columns. If the screen is narrower 
+            than this, the scrollbar on .bracket-wrapper will appear. Adjust as needed. */
+            min-width: 1400px; 
+            padding: 0 20px; /* Adds some space at the start and end of the bracket */
+        }
+
+    </style>
 </head>
 <body>
 
@@ -185,10 +249,29 @@
     function initializeBracket() {
         const BRACKET_CONFIG = {
             winners: {
-                rounds: [ { matchups: [{ top: 30, height: 60 },{ top: 120, height: 60 },{ top: 210, height: 60 },{ top: 300, height: 60 },{ top: 390, height: 60 },{ top: 480, height: 60 },{ top: 570, height: 60 },{ top: 660, height: 60 }] }, { matchups: [{ top: 75, height: 60 },{ top: 255, height: 60 },{ top: 435, height: 60 },{ top: 615, height: 60 }] }, { matchups: [{ top: 165, height: 60 },{ top: 525, height: 60 }] }, { matchups: [{ top: 345, height: 60 }] } ]
+                rounds: [
+                    // Ensure Round 1 matches have proper spacing
+                    { matchups: [{ top: 30, height: 60 },{ top: 120, height: 60 },{ top: 210, height: 60 },{ top: 300, height: 60 },{ top: 390, height: 60 },{ top: 480, height: 60 },{ top: 570, height: 60 },{ top: 660, height: 60 }] },
+                    { matchups: [{ top: 75, height: 60 },{ top: 255, height: 60 },{ top: 435, height: 60 },{ top: 615, height: 60 }] },
+                    { matchups: [{ top: 165, height: 60 },{ top: 525, height: 60 }] },
+                    { matchups: [{ top: 345, height: 60 }] }
+                ]
             },
             losers: {
-                rounds: [ { matchups: [{ top: 30, height: 60 },{ top: 130, height: 60 },{ top: 230, height: 60 },{ top: 330, height: 60 }] }, { matchups: [{ top: 30, height: 60 },{ top: 130, height: 60 },{ top: 230, height: 60 },{ top: 330, height: 60 }] }, { matchups: [{ top: 80, height: 60 },{ top: 280, height: 60 }] }, { matchups: [{ top: 80, height: 60 },{ top: 280, height: 60 }] }, { matchups: [{ top: 180, height: 60 }] }, { matchups: [{ top: 180, height: 60 }] } ]
+                rounds: [
+                    // Losers R1
+                    { matchups: [{ top: 30, height: 60 },{ top: 130, height: 60 },{ top: 230, height: 60 },{ top: 330, height: 60 }] },
+                    // Losers R2 
+                    { matchups: [{ top: 30, height: 60 },{ top: 130, height: 60 },{ top: 230, height: 60 },{ top: 330, height: 60 }] },
+                    // Losers R3
+                    { matchups: [{ top: 80, height: 60 },{ top: 280, height: 60 }] },
+                    // Losers Quarter-Final
+                    { matchups: [{ top: 80, height: 60 },{ top: 280, height: 60 }] },
+                    // Losers Semi-Final
+                    { matchups: [{ top: 180, height: 60 }] },
+                    // Losers Final
+                    { matchups: [{ top: 180, height: 60 }] }
+                ]
             }
         };
 
@@ -246,7 +329,9 @@
             const midX = s1_x + (t_x - s1_x) / 2;
             const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             path.setAttribute('d', `M ${s1_x} ${s1_y} L ${midX} ${s1_y} L ${midX} ${s2_y} L ${s1_x} ${s2_y} M ${midX} ${t_y} L ${t_x} ${t_y}`);
-            path.setAttribute('stroke', 'rgba(255, 255, 255, 0.4)'); path.setAttribute('stroke-width', '2'); path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', 'rgba(255, 255, 255, 0.4)'); 
+            path.setAttribute('stroke-width', '2'); 
+            path.setAttribute('fill', 'none');
             svg.appendChild(path);
         }
 
@@ -256,8 +341,12 @@
             const s_x = sRect.right - containerRect.left, s_y = sRect.top + sRect.height / 2 - containerRect.top;
             const t_x = tRect.left - containerRect.left, t_y = tRect.top + tRect.height / 2 - containerRect.top;
             const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            line.setAttribute('x1', s_x); line.setAttribute('y1', s_y); line.setAttribute('x2', t_x); line.setAttribute('y2', t_y);
-            line.setAttribute('stroke', 'rgba(255, 255, 255, 0.4)'); line.setAttribute('stroke-width', '2');
+            line.setAttribute('x1', s_x); 
+            line.setAttribute('y1', s_y); 
+            line.setAttribute('x2', t_x); 
+            line.setAttribute('y2', t_y);
+            line.setAttribute('stroke', 'rgba(255, 255, 255, 0.4)'); 
+            line.setAttribute('stroke-width', '2');
             svg.appendChild(line);
         }
 
@@ -267,9 +356,13 @@
 
         function getCellValue(row, colIndex) { return (row?.c?.[colIndex]?.v) ?? ''; }
 
-        function sanitizeTeamNameForLogo(name) {
-            if (!name || name.trim().toLowerCase() === 'tbd') return '';
-            return name.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/--+/g, '-');
+        function getTeamLogoPath(teamName) {
+            if (!teamName || teamName.trim().toLowerCase() === 'tbd') {
+                return '';
+            }
+            // Converts "Spacestation Gaming" to "spacestation-gaming"
+            const fileName = teamName.trim().toLowerCase().replace(/\s+/g, '-');
+            return `images/worlds/logos/${fileName}.png`;
         }
 
         async function updateBracketData() {
@@ -280,50 +373,29 @@
                 const json = JSON.parse(text.substring(47, text.length - 2));
                 const rows = json.table.rows;
 
-                // --- NEW LOGIC START ---
-
-                // First Pass: Find the definitive tournament champion.
-                let tournamentChampionName = 'TBD';
-                for (const row of rows) {
-                    const winnerInRow = getCellValue(row, 5); // Column F for Winner
-                    if (winnerInRow && winnerInRow.trim() !== '') {
-                        tournamentChampionName = winnerInRow;
-                    }
-                }
-                
-                // Update the Tournament Champions section ONCE with the definitive winner
-                const tournamentWinnerSection = document.querySelector('.tournament-winner');
-                const winnerLogoContainer = tournamentWinnerSection.querySelector('.winner-logo-container');
-                tournamentWinnerSection.querySelector('.winner-team-name').textContent = tournamentChampionName;
-                const winnerLogoFile = sanitizeTeamNameForLogo(tournamentChampionName);
-                winnerLogoContainer.innerHTML = winnerLogoFile 
-                    ? `<img src="images/worlds/logos/${winnerLogoFile}.png" alt="${tournamentChampionName} Logo" onerror="this.onerror=null;this.src='images/default-logo.png';">`
-                    : '<span>LOGO</span>';
-
-                // --- NEW LOGIC END ---
-
-                // Select all other required elements for matchups
+                // Select all required elements once
                 const winnersMatchups = document.querySelectorAll('.winners-bracket .matchup');
                 const losersMatchups = document.querySelectorAll('.losers-bracket .matchup');
                 const gfMatchContainer = document.getElementById('grand-final-match');
                 const gfLeftTeamPod = gfMatchContainer.querySelector('.left-team');
                 const gfRightTeamPod = gfMatchContainer.querySelector('.right-team');
+                const gfLeftLogoContainer = gfLeftTeamPod.querySelector('.team-logo-placeholder');
+                const gfRightLogoContainer = gfRightTeamPod.querySelector('.team-logo-placeholder');
                 const gfScores = gfMatchContainer.querySelectorAll('.match-centerpiece .team-score-large');
+                const tournamentWinnerSection = document.querySelector('.tournament-winner');
+                const winnerLogoContainer = tournamentWinnerSection.querySelector('.winner-logo-container');
                 const gfResetContainer = document.getElementById('grand-final-reset-container');
                 const gfResetLeftPod = gfResetContainer.querySelector('.left-team');
                 const gfResetRightPod = gfResetContainer.querySelector('.right-team');
+                const gfResetLeftLogoContainer = gfResetLeftPod.querySelector('.team-logo-placeholder');
+                const gfResetRightLogoContainer = gfResetRightPod.querySelector('.team-logo-placeholder');
                 const gfResetScores = gfResetContainer.querySelectorAll('.match-centerpiece .team-score-large');
                 
                 let w_idx = 0, l_idx = 0;
 
-                // Second Pass: Populate all individual matchups
                 for (const row of rows) {
-                    const roundName = getCellValue(row, 0).toLowerCase();
-                    const team1Name = getCellValue(row, 1) || 'TBD';
-                    const team1Score = getCellValue(row, 2) || 0;
-                    const team2Name = getCellValue(row, 3) || 'TBD';
-                    const team2Score = getCellValue(row, 4) || 0;
-                    const winnerName = getCellValue(row, 5);
+                    const roundName = getCellValue(row, 0).toLowerCase(), team1Name = getCellValue(row, 1) || 'TBD', team1Score = getCellValue(row, 2) || 0;
+                    const team2Name = getCellValue(row, 3) || 'TBD', team2Score = getCellValue(row, 4) || 0, winnerName = getCellValue(row, 5);
                     let currentMatchup = null;
 
                     if (roundName.includes("winners'")) { if (w_idx < winnersMatchups.length) currentMatchup = winnersMatchups[w_idx++]; } 
@@ -333,37 +405,54 @@
                             gfResetContainer.style.display = 'flex';
                             gfResetLeftPod.querySelector('.team-name-large').textContent = team1Name;
                             gfResetRightPod.querySelector('.team-name-large').textContent = team2Name;
-                            gfResetScores[0].textContent = team1Score; 
-                            gfResetScores[1].textContent = team2Score;
+                            gfResetScores[0].textContent = team1Score; gfResetScores[1].textContent = team2Score;
                             
-                            const team1ResetLogoFile = sanitizeTeamNameForLogo(team1Name);
-                            const team2ResetLogoFile = sanitizeTeamNameForLogo(team2Name);
-                            gfResetLeftPod.querySelector('.team-logo-placeholder').innerHTML = team1ResetLogoFile ? `<img src="images/worlds/logos/${team1ResetLogoFile}.png" alt="${team1Name} Logo" onerror="this.onerror=null;this.src='images/default-logo.png';">` : 'LOGO';
-                            gfResetRightPod.querySelector('.team-logo-placeholder').innerHTML = team2ResetLogoFile ? `<img src="images/worlds/logos/${team2ResetLogoFile}.png" alt="${team2Name} Logo" onerror="this.onerror=null;this.src='images/default-logo.png';">` : 'LOGO';
+                            const team1ResetLogoPath = getTeamLogoPath(team1Name);
+                            const team2ResetLogoPath = getTeamLogoPath(team2Name);
+                            gfResetLeftLogoContainer.innerHTML = team1ResetLogoPath ? `<img src="${team1ResetLogoPath}" alt="${team1Name} Logo">` : 'LOGO';
+                            gfResetRightLogoContainer.innerHTML = team2ResetLogoPath ? `<img src="${team2ResetLogoPath}" alt="${team2Name} Logo">` : 'LOGO';
 
                             [gfResetLeftPod, gfResetRightPod].forEach(p => p.classList.remove('winner'));
-                            if (winnerName.trim().toLowerCase() === team1Name.trim().toLowerCase()) { gfResetLeftPod.classList.add('winner'); }
-                            else if (winnerName.trim().toLowerCase() === team2Name.trim().toLowerCase()) { gfResetRightPod.classList.add('winner'); }
-                            
+                            if (winnerName.trim().toLowerCase() === team1Name.trim().toLowerCase()) { 
+                                gfResetLeftPod.classList.add('winner'); 
+                                tournamentWinnerSection.querySelector('.winner-team-name').textContent = winnerName;
+                                const winnerLogoPath = getTeamLogoPath(winnerName);
+                                winnerLogoContainer.innerHTML = winnerLogoPath ? `<img src="${winnerLogoPath}" alt="${winnerName} Logo">` : '<span>LOGO</span>';
+                            } else if (winnerName.trim().toLowerCase() === team2Name.trim().toLowerCase()) { 
+                                gfResetRightPod.classList.add('winner'); 
+                                tournamentWinnerSection.querySelector('.winner-team-name').textContent = winnerName; 
+                                const winnerLogoPath = getTeamLogoPath(winnerName);
+                                winnerLogoContainer.innerHTML = winnerLogoPath ? `<img src="${winnerLogoPath}" alt="${winnerName} Logo">` : '<span>LOGO</span>';
+                            }
                         } else { gfResetContainer.style.display = 'none'; }
                         continue;
                     } else if (roundName.includes('grand final')) {
                         gfLeftTeamPod.querySelector('.team-name-large').textContent = team1Name;
                         gfRightTeamPod.querySelector('.team-name-large').textContent = team2Name;
-                        gfScores[0].textContent = team1Score; 
-                        gfScores[1].textContent = team2Score;
+                        gfScores[0].textContent = team1Score; gfScores[1].textContent = team2Score;
                         
-                        const team1LogoFile = sanitizeTeamNameForLogo(team1Name);
-                        const team2LogoFile = sanitizeTeamNameForLogo(team2Name);
-                        gfLeftTeamPod.querySelector('.team-logo-placeholder').innerHTML = team1LogoFile ? `<img src="images/worlds/logos/${team1LogoFile}.png" alt="${team1Name} Logo" onerror="this.onerror=null;this.src='images/default-logo.png';">` : 'LOGO';
-                        gfRightTeamPod.querySelector('.team-logo-placeholder').innerHTML = team2LogoFile ? `<img src="images/worlds/logos/${team2LogoFile}.png" alt="${team2Name} Logo" onerror="this.onerror=null;this.src='images/default-logo.png';">` : 'LOGO';
+                        const team1LogoPath = getTeamLogoPath(team1Name);
+                        const team2LogoPath = getTeamLogoPath(team2Name);
+                        gfLeftLogoContainer.innerHTML = team1LogoPath ? `<img src="${team1LogoPath}" alt="${team1Name} Logo">` : 'LOGO';
+                        gfRightLogoContainer.innerHTML = team2LogoPath ? `<img src="${team2LogoPath}" alt="${team2Name} Logo">` : 'LOGO';
                         
                         [gfLeftTeamPod, gfRightTeamPod].forEach(p => p.classList.remove('winner'));
-                        if (winnerName.trim().toLowerCase() === team1Name.trim().toLowerCase()) { gfLeftTeamPod.classList.add('winner'); }
-                        else if (winnerName.trim().toLowerCase() === team2Name.trim().toLowerCase()) { gfRightTeamPod.classList.add('winner'); }
+                        if (winnerName.trim().toLowerCase() === team1Name.trim().toLowerCase()) { 
+                            gfLeftTeamPod.classList.add('winner'); 
+                            tournamentWinnerSection.querySelector('.winner-team-name').textContent = winnerName; 
+                            const winnerLogoPath = getTeamLogoPath(winnerName);
+                            winnerLogoContainer.innerHTML = winnerLogoPath ? `<img src="${winnerLogoPath}" alt="${winnerName} Logo">` : '<span>LOGO</span>';
+                        } else if (winnerName.trim().toLowerCase() === team2Name.trim().toLowerCase()) { 
+                            gfRightTeamPod.classList.add('winner'); 
+                            tournamentWinnerSection.querySelector('.winner-team-name').textContent = winnerName; 
+                            const winnerLogoPath = getTeamLogoPath(winnerName);
+                            winnerLogoContainer.innerHTML = winnerLogoPath ? `<img src="${winnerLogoPath}" alt="${winnerName} Logo">` : '<span>LOGO</span>';
+                        } else if (tournamentWinnerSection.querySelector('.winner-team-name').textContent === 'TBD') {
+                            tournamentWinnerSection.querySelector('.winner-team-name').textContent = 'TBD';
+                            winnerLogoContainer.innerHTML = '<span>LOGO</span>';
+                        }
                         continue;
                     }
-
                     if (currentMatchup) {
                         const teams = currentMatchup.querySelectorAll('.team');
                         if (teams.length === 2) {
