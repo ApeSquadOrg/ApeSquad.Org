@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APE SQUAD - Tournament Bracket (Final)</title>
+<style>
+/* --- Font Imports --- */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@700;800;900&family=Roboto&display=swap');
+    /* ================================================== */
+    /*      APE SQUAD ESPORTS - BRACKET STYLESHEET        */
+    /* ================================================== */
+
+    :root {
+        --primary-purple: #e75a7c;
+        --secondary-purple: #b549c6;
+        --accent-orange: #FFC837;
+        --standout-blue: #03b7fa;
+        --light-text: #f4f4f4;
+        --darker-bg-color: #050505;
+        --font-tech: 'Orbitron', sans-serif;
+        --dark-purple-bg: #1a0924;
+        --connector-color: rgba(255, 255, 255, 0.4);
+        --team-bg: #0c0c0c;
+        --team-border: rgba(255, 255, 255, 0.1);
+    }
+
+    /* --- Global & Background Setup --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        background: transparent;
+        width: 2560px; height: 1440px;
+        margin: 0; padding: 0;
+        overflow: hidden;
+        font-family: var(--font-tech);
+        color: var(--light-text);
+        position: relative;
+    }
+    .overlay-background {
+        position: fixed; inset: 0; z-index: -1;
+        background-color: var(--darker-bg-color);
+        background-image: radial-gradient(ellipse at center, var(--dark-purple-bg) 0%, var(--darker-bg-color) 70%);
+    }
+    .overlay-background::before {
+        content: ''; position: absolute; inset: 0; z-index: 1;
+        background-image: 
+            repeating-linear-gradient(to right, transparent, transparent 49px, rgba(3, 183, 250, 0.15) 50px),
+            repeating-linear-gradient(to bottom, transparent, transparent 49px, rgba(3, 183, 250, 0.15) 50px);
+        background-size: 50px 50px; animation: moveGrid 20s linear infinite;
+    }
+    @keyframes moveGrid { to { background-position: -50px -50px; } }
+    @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+    /* --- Main Layout Containers --- */
+    .bracket-container {
+        width: 100%; height: 100%;
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+    }
+    .main-brackets-column {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex-grow: 1;
+        min-width: 0;
+    }
+
+    /* Bracket Sections */
+    .bracket-section {
+        background-color: rgba(10, 10, 15, 0.7);
+        border: 2px solid var(--team-border);
+        border-radius: 10px;
+        padding: 15px; 
+        display: flex; 
+        flex-direction: column;
+        min-height: 0;
+        position: relative;
+    }
+    .winners-bracket { flex: 1.5 1 0; }
+    .losers-bracket { flex: 1 1 0; }
+    
+    .bracket-section > h2 {
+        font-size: 1.8rem; margin-bottom: 10px;
+        text-transform: uppercase; color: var(--accent-orange);
+        text-align: center; flex-shrink: 0;
+    }
+    .losers-bracket > h2 { color: var(--primary-purple); }
+
+    /* Connector System */
+    .rounds-container {
+        display: flex;
+        gap: 50px;
+        flex-grow: 1;
+        position: relative;
+    }
+    .losers-bracket .rounds-container {
+        gap: 40px;
+    }
+
+    .round {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1; 
+        min-width: 230px;
+        position: relative;
+    }
+    .round-title {
+        font-size: 1.1rem; text-align: center;
+        color: var(--light-text); margin-bottom: 10px;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+    .matchup { 
+        position: absolute;
+        width: 100%;
+        /* This prevents tiny sub-pixel rendering issues from affecting layout calculations */
+        transform: translateZ(0); 
+    }
+    
+    .connector-svg {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0; /* Hidden by default */
+        transition: opacity 0.5s ease-in; /* Smooth fade-in for the final reveal */
+    }
+    
+    /* Team & Score Styling */
+    .team {
+        display: flex; justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: var(--team-bg); 
+        border: 1px solid var(--team-border);
+        position: relative;
+        z-index: 5;
+    }
+    .team:first-of-type { border-top-left-radius: 6px; border-top-right-radius: 6px; }
+    .team:last-of-type { border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; border-top: 0; }
+    .team-name { 
+        font-size: 1.1rem; 
+        font-weight: 700;
+        white-space: nowrap; /* Prevent wrapping while being measured */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Fallback in case JS fails */
+    }
+    .team-score { font-size: 1.2rem; font-weight: 900; min-width: 30px; text-align: center; }
+
+    .team.winner { background-color: #1a1a1a; }
+    .winners-bracket .team.winner { border-color: var(--accent-orange); }
+    .losers-bracket .team.winner { border-color: var(--primary-purple); }
+    .winners-bracket .team.winner .team-name, .winners-bracket .team.winner .team-score {
+        background: linear-gradient(90deg, var(--accent-orange), var(--standout-blue));
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        background-size: 250% 250%; animation: gradientShift 3s ease-in-out infinite alternate;
+    }
+    .losers-bracket .team.winner .team-name, .losers-bracket .team.winner .team-score {
+        background: linear-gradient(90deg, var(--primary-purple), var(--secondary-purple));
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        background-size: 250% 250%; animation: gradientShift 3s ease-in-out infinite alternate;
+    }
+
+    /* --- Grand Finals Column Layout --- */
+    .grand-finals-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 30px;
+        width: 750px;
+        flex-shrink: 0;
+        padding-top: 40px;
+    }
+    .tournament-title {
+        text-align: center; font-size: 2.8rem; font-weight: 900;
+        text-transform: uppercase; letter-spacing: 5px;
+        background: linear-gradient(90deg, var(--accent-orange), var(--primary-purple), var(--standout-blue));
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        background-size: 300% 300%; animation: gradientShift 4s ease-in-out infinite;
+    }
+    .grand-finals-column > h2 {
+        font-size: 2.2rem; text-transform: uppercase; color: var(--light-text);
+        text-shadow: 0 0 15px rgba(0,0,0,0.8);
+    }
+    
+    .grand-final-showdown {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+    }
+    .team-pod {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        border-radius: 15px;
+        background-color: rgba(10, 10, 15, 0.7);
+        border: 2px solid var(--team-border);
+        transition: all 0.3s ease;
+        min-width: 0; /* Allow flex shrinking */
+    }
+    .team-pod.winner {
+        border-color: var(--accent-orange);
+        box-shadow: 0 0 25px rgba(255, 200, 55, 0.4);
+        background-color: rgba(30, 20, 10, 0.7);
+    }
+
+    .from-bracket-label {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    .left-team .from-bracket-label { color: var(--accent-orange); }
+    .right-team .from-bracket-label { color: var(--primary-purple); }
+
+    .team-logo-placeholder {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 3px dashed rgba(255,255,255,0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        color: rgba(255,255,255,0.3);
+        /* Styles for when an image is loaded */
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: border-style 0.3s ease;
+    }
+    .team-pod.winner .team-logo-placeholder {
+        border-color: var(--standout-blue);
+    }
+
+    .team-name-large {
+        font-size: 2.2rem;
+        font-weight: 800;
+        text-align: center;
+        width: 100%;
+    }
+
+    .match-centerpiece {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+    }
+    .team-score-large {
+        font-size: 6rem;
+        font-weight: 900;
+    }
+    .vs-divider {
+        font-size: 3rem;
+        font-weight: 900;
+        color: var(--primary-purple);
+        line-height: 1;
+    }
+    
+    /* --- Tournament Winner Section --- */
+    .tournament-winner {
+        width: 100%;
+        background-color: rgba(10, 10, 15, 0.7);
+        border: 2px solid var(--accent-orange);
+        border-radius: 15px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 0 25px rgba(255, 200, 55, 0.4);
+    }
+    .winner-title {
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        color: var(--light-text);
+        font-weight: 700;
+    }
+    .winner-logo-container {
+        width: 180px;
+        height: 180px;
+        border: 3px dashed var(--standout-blue);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.5);
+         /* Styles for when an image is loaded */
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: border-style 0.3s ease;
+    }
+    .winner-team-name {
+        font-size: 2.8rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, var(--accent-orange), var(--standout-blue));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 250% 250%;
+        animation: gradientShift 3s ease-in-out infinite alternate;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* --- Grand Final Reset Section --- */
+    .grand-final-reset {
+        width: 100%;
+        background-color: rgba(10, 10, 15, 0.7);
+        border: 2px solid var(--primary-purple);
+        border-radius: 15px;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 0 25px rgba(231, 90, 124, 0.3);
+    }
+    .reset-title {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        color: var(--light-text);
+        font-weight: 700;
+    }
+    .grand-final-reset .team-pod {
+        padding: 15px;
+        gap: 10px;
+    }
+    .grand-final-reset .team-logo-placeholder {
+        width: 100px; height: 100px; font-size: 1.2rem;
+    }
+    .grand-final-reset .team-name-large { font-size: 1.8rem; }
+    .grand-final-reset .team-score-large { font-size: 4rem; }
+    .grand-final-reset .vs-divider { font-size: 2rem; }
+    .grand-final-reset .match-centerpiece { gap: 20px; }
+    .grand-final-reset .from-bracket-label { display: none; }
+
+
+    /* ============================================= */
+    /* ==== ENHANCED INTRO ANIMATION STYLES ==== */
+    /* ============================================= */
+
+    .particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: radial-gradient(circle, var(--standout-blue), transparent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Dramatic initial state with multiple transform effects */
+    .main-brackets-column,
+    .grand-finals-column,
+    .bracket-section,
+    .grand-finals-column > *,
+    .round {
+        opacity: 0;
+        transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .main-brackets-column { 
+        transform: translateX(-150px) translateY(-50px) rotateY(-45deg) scale(0.8);
+        transform-origin: center;
+        perspective: 1000px;
+    }
+    .grand-finals-column { 
+        transform: translateX(150px) translateY(50px) rotateY(45deg) scale(0.8);
+        transform-origin: center;
+        perspective: 1000px;
+    }
+
+    .bracket-section { 
+        /* transform: translateY(100px) rotateX(-20deg) scale(0.9); */
+        transform-origin: center top;
+        perspective: 1000px;
+    }
+
+    .tournament-title { 
+        transform: scale(0.3) rotateZ(-15deg) translateY(-200px);
+        filter: blur(10px);
+    }
+    .grand-finals-column > h2 { 
+        transform: scale(0.5) rotateZ(10deg) translateY(-100px);
+        filter: blur(5px);
+    }
+    .grand-final-showdown { 
+        transform: scale(0.6) rotateX(-30deg);
+        filter: blur(8px);
+    }
+    .tournament-winner { 
+        transform: scale(0.4) rotateX(30deg) translateY(150px);
+        filter: blur(12px);
+    }
+    .grand-final-reset {
+        transform: scale(0.5) rotateY(-45deg) translateX(-200px);
+        filter: blur(10px);
+    }
+
+    .matchup {}
+    .team {}
+
+    /* ANIMATED STATE - triggered by 'animate-in' class */
+    body.animate-in .main-brackets-column,
+    body.animate-in .grand-finals-column {
+        opacity: 1;
+        transform: translateX(0) translateY(0) rotateY(0deg) scale(1);
+        transition-delay: 0.3s;
+        transition-duration: 1.5s;
+    }
+
+    body.animate-in .bracket-section {
+        opacity: 1;
+        /* transform: translateY(0) rotateX(0deg) scale(1); */
+    }
+    body.animate-in .winners-bracket {
+        transition-delay: 0.8s;
+    }
+    body.animate-in .losers-bracket {
+        transition-delay: 1.0s;
+    }
+
+    body.animate-in .tournament-title { 
+        opacity: 1; 
+        transform: scale(1) rotateZ(0deg) translateY(0);
+        filter: blur(0px);
+        transition-delay: 1.2s;
+        transition-duration: 2s;
+    }
+    body.animate-in .grand-finals-column > h2 { 
+        opacity: 1; 
+        transform: scale(1) rotateZ(0deg) translateY(0);
+        filter: blur(0px);
+        transition-delay: 1.6s;
+        transition-duration: 1.5s;
+    }
+    body.animate-in .grand-final-showdown { 
+        opacity: 1; 
+        transform: scale(1) rotateX(0deg);
+        filter: blur(0px);
+        transition-delay: 2.0s;
+        transition-duration: 1.8s;
+    }
+    body.animate-in .tournament-winner { 
+        opacity: 1; 
+        transform: scale(1) rotateX(0deg) translateY(0);
+        filter: blur(0px);
+        transition-delay: 2.4s;
+        transition-duration: 1.5s;
+    }
+    body.animate-in .grand-final-reset {
+        opacity: 1;
+        transform: scale(1) rotateY(0deg) translateX(0);
+        filter: blur(0px);
+        transition-delay: 2.8s;
+        transition-duration: 1.2s;
+    }
+
+    body.animate-in .round {
+        opacity: 1;
+    }
+    body.animate-in .winners-bracket .round:nth-child(1) { transition-delay: 1.2s; }
+    body.animate-in .winners-bracket .round:nth-child(2) { transition-delay: 1.4s; }
+    body.animate-in .winners-bracket .round:nth-child(3) { transition-delay: 1.6s; }
+    body.animate-in .winners-bracket .round:nth-child(4) { transition-delay: 1.8s; }
+    
+    body.animate-in .losers-bracket .round:nth-child(1) { transition-delay: 1.5s; }
+    body.animate-in .losers-bracket .round:nth-child(2) { transition-delay: 1.7s; }
+    body.animate-in .losers-bracket .round:nth-child(3) { transition-delay: 1.9s; }
+    body.animate-in .losers-bracket .round:nth-child(4) { transition-delay: 2.1s; }
+    body.animate-in .losers-bracket .round:nth-child(5) { transition-delay: 2.3s; }
+    body.animate-in .losers-bracket .round:nth-child(6) { transition-delay: 2.5s; } /* MODIFIED: Added delay for new round */
+
+    @keyframes titleGlow {
+        0% { text-shadow: 0 0 10px transparent; }
+        50% { text-shadow: 0 0 30px var(--accent-orange), 0 0 60px var(--primary-purple); }
+        100% { text-shadow: 0 0 10px transparent; }
+    }
+
+    body.animate-in .tournament-title {
+        animation: gradientShift 4s ease-in-out infinite, titleGlow 3s ease-in-out 1.2s;
+    }
+
+    @keyframes pulseGlow {
+        0% { box-shadow: 0 0 5px rgba(255, 200, 55, 0.2); }
+        50% { box-shadow: 0 0 40px rgba(255, 200, 55, 0.6), 0 0 80px rgba(3, 183, 250, 0.3); }
+        100% { box-shadow: 0 0 5px rgba(255, 200, 55, 0.2); }
+    }
+
+    body.animate-in .tournament-winner {
+        animation: pulseGlow 4s ease-in-out 2.4s infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+    }
+
+    body.animate-in .team-pod {
+        animation: float 3s ease-in-out 3s infinite;
+    }
+</style>
+</head>
+<body>
+<div class="overlay-background"></div>
+<div class="bracket-container">
+<div class="main-brackets-column">
+    <section class="bracket-section winners-bracket">
+        <h2>Winners Bracket</h2>
+        <div class="rounds-container" id="winners-rounds">
+            <div class="round"><div class="round-title">Round 1</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+            <div class="round"><div class="round-title">Quarter-Finals</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+            <div class="round"><div class="round-title">Semi-Finals</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+            <div class="round"><div class="round-title">Winners Final</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+        </div>
+    </section>
+    
+    <!-- ============================================= -->
+    <!-- ==== MODIFIED: LOSERS BRACKET STRUCTURE ==== -->
+    <!-- ============================================= -->
+    <section class="bracket-section losers-bracket">
+        <h2>Losers Bracket</h2>
+        <div class="rounds-container" id="losers-rounds">
+            <div class="round"><div class="round-title">Losers R1</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+            <div class="round"><div class="round-title">Losers R2</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+            <div class="round"><div class="round-title">Losers R3</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+            <div class="round"><div class="round-title">Losers Quarter-Final</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+            <div class="round"><div class="round-title">Losers Semi-Final</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+            <div class="round"><div class="round-title">Losers Final</div><div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div></div>
+        </div>
+    </section>
+</div>
+
+<div class="grand-finals-column">
+    <div class="tournament-title">Ape Squad Invitational</div>
+    <h2>Grand Final</h2>
+
+    <div class="grand-final-showdown" id="grand-final-match">
+        <div class="team-pod left-team">
+            <div class="from-bracket-label">From Winners Bracket</div>
+            <div class="team-logo-placeholder"><span>LOGO</span></div>
+            <div class="team-name-large">TBD</div>
+        </div>
+        <div class="match-centerpiece">
+            <div class="team-score-large">0</div>
+            <div class="vs-divider">VS</div>
+            <div class="team-score-large">0</div>
+        </div>
+        <div class="team-pod right-team">
+            <div class="from-bracket-label">From Losers Bracket</div>
+            <div class="team-logo-placeholder"><span>LOGO</span></div>
+            <div class="team-name-large">TBD</div>
+        </div>
+    </div>
+
+    <div class="tournament-winner">
+        <h3 class="winner-title">TOURNAMENT CHAMPIONS</h3>
+        <div class="winner-logo-container">
+            <span>LOGO</span>
+        </div>
+        <div class="winner-team-name">TBD</div>
+    </div>
+
+    <div class="grand-final-reset" id="grand-final-reset-container" style="display: none;">
+        <h3 class="reset-title">Grand Final Reset</h3>
+        <div class="grand-final-showdown">
+            <div class="team-pod left-team">
+                <div class="from-bracket-label"></div>
+                <div class="team-logo-placeholder"><span>LOGO</span></div>
+                <div class="team-name-large">TBD</div>
+            </div>
+            <div class="match-centerpiece">
+                <div class="team-score-large">0</div>
+                <div class="vs-divider">VS</div>
+                <div class="team-score-large">0</div>
+            </div>
+            <div class="team-pod right-team">
+                <div class="from-bracket-label"></div>
+                <div class="team-logo-placeholder"><span>LOGO</span></div>
+                <div class="team-name-large">TBD</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+// =============================================
+// ==== ALL SCRIPTS COMBINED FOR EASY USE ====
+// =============================================
+
+// --- SCRIPT 1: BRACKET DRAWING AND PARTICLE SYSTEM ---
+
+// ========================================
+// EASY POSITIONING CONFIGURATION SYSTEM
+// ========================================
+
+const BRACKET_CONFIG = {
+    winners: {
+        // Each round's matchups can be positioned individually
+        rounds: [
+            // Round 1 (8 matchups)
+            { 
+                matchups: [
+                    { top: 30, height: 70 },   // Match 1
+                    { top: 120, height: 70 },  // Match 2  
+                    { top: 210, height: 70 },  // Match 3
+                    { top: 300, height: 70 },  // Match 4
+                    { top: 390, height: 70 },  // Match 5
+                    { top: 480, height: 70 },  // Match 6
+                    { top: 570, height: 70 },  // Match 7
+                    { top: 660, height: 70 }   // Match 8
+                ]
+            },
+            // Round 2 (4 matchups) 
+            {
+                matchups: [
+                    { top: 75, height: 70 },  // QF 1
+                    { top: 255, height: 70 },  // QF 2
+                    { top: 440, height: 70 },  // QF 3
+                    { top: 620, height: 70 }   // QF 4
+                ]
+            },
+            // Round 3 (2 matchups)
+            {
+                matchups: [
+                    { top: 170, height: 70 },  // SF 1
+                    { top: 530, height: 70 }   // SF 2
+                ]
+            },
+            // Round 4 (1 matchup)
+            {
+                matchups: [
+                    { top: 340, height: 70 }   // Winners Final
+                ]
+            }
+        ]
+    },
+    // =======================================================
+    // ==== MODIFIED: LOSERS BRACKET CONFIG (6 ROUNDS) ====
+    // =======================================================
+    losers: {
+        rounds: [
+            // Losers R1 (4 matchups)
+            {
+                matchups: [
+                    { top: 30, height: 70 },
+                    { top: 120, height: 70 },
+                    { top: 250, height: 70 },
+                    { top: 340, height: 70 }
+                ]
+            },
+            // Losers R2 (4 matchups)
+            {
+                matchups: [
+                    { top: 30, height: 70 },
+                    { top: 120, height: 70 },
+                    { top: 250, height: 70 },
+                    { top: 340, height: 70 }
+                ]
+            },
+            // Losers R3 (2 matchups)
+            {
+                matchups: [
+                    { top: 75, height: 70 },
+                    { top: 295, height: 70 }
+                ]
+            },
+            // Losers Quarter-Final (2 matchups)
+            {
+                matchups: [
+                    { top: 75, height: 70 },
+                    { top: 295, height: 70 }
+                ]
+            },
+            // Losers Semi-Final (1 matchup)
+            {
+                matchups: [
+                    { top: 185, height: 70 }
+                ]
+            },
+            // Losers Final (1 matchup)
+            {
+                matchups: [
+                    { top: 185, height: 70 }
+                ]
+            }
+        ]
+    }
+};
+
+// Quick adjustment functions for easy tweaking
+function adjustWinnersPositions(roundIndex, adjustments) {
+    const round = BRACKET_CONFIG.winners.rounds[roundIndex];
+    if (round) {
+        adjustments.forEach((adj, matchIndex) => {
+            if (round.matchups[matchIndex]) {
+                if (adj.top !== undefined) round.matchups[matchIndex].top = adj.top;
+                if (adj.height !== undefined) round.matchups[matchIndex].height = adj.height;
+            }
+        });
+        drawAllBrackets(); // Redraw with new positions
+    }
+}
+
+function adjustLosersPositions(roundIndex, adjustments) {
+    const round = BRACKET_CONFIG.losers.rounds[roundIndex];
+    if (round) {
+        adjustments.forEach((adj, matchIndex) => {
+            if (round.matchups[matchIndex]) {
+                if (adj.top !== undefined) round.matchups[matchIndex].top = adj.top;
+                if (adj.height !== undefined) round.matchups[matchIndex].height = adj.height;
+            }
+        });
+        drawAllBrackets(); // Redraw with new positions
+    }
+}
+
+// Global adjustment function - shifts all positions in a bracket by an offset
+function adjustAllPositions(bracket, offsetTop = 0, offsetHeight = 0) {
+    const config = BRACKET_CONFIG[bracket];
+    if (config) {
+        config.rounds.forEach(round => {
+            round.matchups.forEach(matchup => {
+                matchup.top += offsetTop;
+                matchup.height += offsetHeight;
+            });
+        });
+        drawAllBrackets();
+    }
+}
+
+function debounce(func, wait = 10) {
+let timeout;
+return function(...args) {
+clearTimeout(timeout);
+timeout = setTimeout(() => func.apply(this, args), wait);
+};
+}
+
+function drawAllBrackets() {
+const winnersRules = [
+{ from: 0, to: 1, type: '2-to-1' },
+{ from: 1, to: 2, type: '2-to-1' },
+{ from: 2, to: 3, type: '2-to-1' }
+];
+
+// =============================================
+// ==== MODIFIED: LOSERS BRACKET RULES ====
+// =============================================
+const losersRules = [
+    { from: 0, to: 1, type: '1-to-1' }, // R1 -> R2
+    { from: 1, to: 2, type: '2-to-1' }, // R2 -> R3
+    { from: 2, to: 3, type: '1-to-1' }, // R3 -> QF
+    { from: 3, to: 4, type: '2-to-1' }, // QF -> SF
+    { from: 4, to: 5, type: '1-to-1' }  // SF -> Final
+];
+
+drawBracket('winners-rounds', winnersRules, BRACKET_CONFIG.winners);
+drawBracket('losers-rounds', losersRules, BRACKET_CONFIG.losers);
+}
+
+function drawBracket(containerId, rules, positionConfig) {
+const container = document.getElementById(containerId);
+if (!container) return;
+
+// Use the new positioning system
+positionMatchupsFromConfig(container, positionConfig);
+
+let svg = container.querySelector('.connector-svg');
+if (svg) {
+svg.innerHTML = '';
+} else {
+svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+svg.classList.add('connector-svg');
+container.prepend(svg);
+}
+
+const containerRect = container.getBoundingClientRect();
+const rounds = Array.from(container.querySelectorAll('.round'));
+
+rules.forEach(rule => {
+const fromRoundEl = rounds[rule.from];
+const toRoundEl = rounds[rule.to];
+if (!fromRoundEl || !toRoundEl) return;
+
+const fromMatches = Array.from(fromRoundEl.querySelectorAll('.matchup'));
+const toMatches = Array.from(toRoundEl.querySelectorAll('.matchup'));
+
+if (rule.type === '2-to-1') {
+for (let i = 0; i < toMatches.length; i++) {
+draw2to1Connection(svg, fromMatches[i * 2], fromMatches[i * 2 + 1], toMatches[i], containerRect);
+}
+} else if (rule.type === '1-to-1') {
+for (let i = 0; i < toMatches.length; i++) {
+// Handle cases where source round may have more matches than target
+if (fromMatches[i] && toMatches[i]) {
+    draw1to1Connection(svg, fromMatches[i], toMatches[i], containerRect);
+}
+}
+}
+});
+}
+
+// New positioning function that uses the config
+function positionMatchupsFromConfig(container, positionConfig) {
+const rounds = Array.from(container.querySelectorAll('.round'));
+
+rounds.forEach((roundEl, roundIndex) => {
+const roundConfig = positionConfig.rounds[roundIndex];
+if (!roundConfig) return;
+
+const matchups = roundEl.querySelectorAll('.matchup');
+matchups.forEach((matchup, matchupIndex) => {
+const matchupConfig = roundConfig.matchups[matchupIndex];
+if (matchupConfig) {
+matchup.style.top = `${matchupConfig.top}px`;
+if (matchupConfig.height) {
+matchup.style.height = `${matchupConfig.height}px`;
+}
+}
+});
+});
+}
+
+function draw2to1Connection(svg, source1, source2, target, containerRect) {
+if(!source1 || !source2 || !target) return;
+const s1Rect = source1.getBoundingClientRect();
+const s2Rect = source2.getBoundingClientRect();
+const tRect = target.getBoundingClientRect();
+
+const s1_x = s1Rect.right - containerRect.left;
+const s1_y = s1Rect.top + s1Rect.height / 2 - containerRect.top;
+const s2_y = s2Rect.top + s2Rect.height / 2 - containerRect.top;
+const t_x = tRect.left - containerRect.left;
+const t_y = tRect.top + tRect.height / 2 - containerRect.top;
+const midX = s1_x + (t_x - s1_x) / 2;
+
+const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+const d = `M ${s1_x} ${s1_y} L ${midX} ${s1_y} L ${midX} ${s2_y} L ${s1_x} ${s2_y} M ${midX} ${t_y} L ${t_x} ${t_y}`;
+
+path.setAttribute('d', d);
+path.setAttribute('stroke', 'var(--connector-color)');
+path.setAttribute('stroke-width', '2');
+path.setAttribute('fill', 'none');
+
+svg.appendChild(path);
+}
+
+function draw1to1Connection(svg, source, target, containerRect) {
+if(!source || !target) return;
+const sRect = source.getBoundingClientRect();
+const tRect = target.getBoundingClientRect();
+
+const s_x = sRect.right - containerRect.left;
+const s_y = sRect.top + sRect.height / 2 - containerRect.top;
+const t_x = tRect.left - containerRect.left;
+const t_y = tRect.top + tRect.height / 2 - containerRect.top;
+
+const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+line.setAttribute('x1', s_x);
+line.setAttribute('y1', s_y);
+line.setAttribute('x2', t_x);
+line.setAttribute('y2', t_y);
+line.setAttribute('stroke', 'var(--connector-color)');
+line.setAttribute('stroke-width', '2');
+
+svg.appendChild(line);
+}
+
+function createParticleSystem() {
+const particleCount = 50;
+const container = document.body;
+
+for (let i = 0; i < particleCount; i++) {
+const particle = document.createElement('div');
+particle.className = 'particle';
+particle.style.left = Math.random() * window.innerWidth + 'px';
+particle.style.top = Math.random() * window.innerHeight + 'px';
+const duration = 3 + Math.random() * 4;
+const delay = Math.random() * 2;
+particle.style.animation = `particleFloat ${duration}s ${delay}s ease-in-out infinite`;
+container.appendChild(particle);
+setTimeout(() => {
+if (particle.parentNode) particle.parentNode.removeChild(particle);
+}, (duration + delay) * 1000);
+}
+}
+const particleCSS = `
+@keyframes particleFloat {
+0% { transform: translateY(0) scale(0); opacity: 0; }
+10% { opacity: 1; transform: scale(1); }
+90% { opacity: 1; }
+100% { transform: translateY(-200px) scale(0); opacity: 0; }
+}
+`;
+const style = document.createElement('style');
+style.textContent = particleCSS;
+document.head.appendChild(style);
+
+// --- SCRIPT 2: GOOGLE SHEETS API INTEGRATION, FONT & LOGO HANDLING ---
+
+/**
+ * Converts a team name into a "slug" format (lowercase, spaces to hyphens).
+ * @param {string} name - The original team name.
+ * @returns {string} The slugified name, or an empty string if the name is invalid.
+ */
+function slugifyTeamName(name) {
+    if (!name || name.trim().toLowerCase() === 'tbd') {
+        return '';
+    }
+    return name
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '-');
+}
+
+/**
+ * Updates the logo placeholder with a team's actual logo.
+ * @param {HTMLElement} containerElement - The parent element containing the logo placeholder (e.g., .team-pod).
+ * @param {string} teamName - The name of the team to find the logo for.
+ */
+function updateLogo(containerElement, teamName) {
+    const logoPlaceholder = containerElement.querySelector('.team-logo-placeholder, .winner-logo-container');
+    if (!logoPlaceholder) return;
+
+    const slug = slugifyTeamName(teamName);
+
+    if (!slug) {
+        // Reset to default placeholder if no valid team name
+        logoPlaceholder.innerHTML = '<span>LOGO</span>';
+        logoPlaceholder.style.backgroundImage = '';
+        logoPlaceholder.style.borderStyle = 'dashed';
+    } else {
+        const logoPath = `images/teams/${slug}/${slug}.png`;
+        logoPlaceholder.style.backgroundImage = `url('${logoPath}')`;
+        logoPlaceholder.style.borderStyle = 'solid'; // Change border to solid for a cleaner look
+        logoPlaceholder.innerHTML = ''; // Remove the "LOGO" text
+    }
+}
+
+
+/**
+ * Adjusts the font size of team name elements to prevent wrapping.
+ */
+function adjustFontSizes() {
+    const elementsToAdjust = document.querySelectorAll('.team-name, .team-name-large, .winner-team-name');
+
+    elementsToAdjust.forEach(el => {
+        el.style.fontSize = '';
+        const originalWhiteSpace = el.style.whiteSpace;
+        el.style.whiteSpace = 'nowrap';
+        
+        let container = el.parentElement;
+        let availableWidth;
+
+        if (el.classList.contains('team-name')) {
+            const scoreEl = container.querySelector('.team-score');
+            const containerStyles = getComputedStyle(container);
+            const containerPadding = parseFloat(containerStyles.paddingLeft) + parseFloat(containerStyles.paddingRight);
+            availableWidth = container.clientWidth - scoreEl.offsetWidth - containerPadding - 10; 
+        } else {
+            const containerStyles = getComputedStyle(container);
+            const containerPadding = parseFloat(containerStyles.paddingLeft) + parseFloat(containerStyles.paddingRight);
+            availableWidth = container.clientWidth - containerPadding;
+        }
+
+        if (el.scrollWidth > availableWidth) {
+            let currentSize = parseFloat(window.getComputedStyle(el).fontSize);
+            while (el.scrollWidth > availableWidth && currentSize > 8) {
+                currentSize -= 1;
+                el.style.fontSize = currentSize + 'px';
+            }
+        }
+        el.style.whiteSpace = originalWhiteSpace;
+    });
+}
+
+
+const SPREADSHEET_ID = '10ZmWteGljWdAu4TIMMkKkt23jFSuuKlTtqc-bxpVvN4';
+const SHEET_GID = '2024659594';
+const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET_GID}`;
+
+function getCellValue(row, colIndex) {
+return (row?.c?.[colIndex]?.v) ?? '';
+}
+
+async function updateBracketData() {
+try {
+const response = await fetch(API_URL);
+if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+const text = await response.text();
+const json = JSON.parse(text.substring(47, text.length - 2));
+const rows = json.table.rows;
+
+const winnersMatchups = document.querySelectorAll('.winners-bracket .matchup');
+const losersMatchups = document.querySelectorAll('.losers-bracket .matchup');
+
+const gfMatchContainer = document.getElementById('grand-final-match');
+const gfLeftTeamPod = gfMatchContainer.querySelector('.left-team');
+const gfRightTeamPod = gfMatchContainer.querySelector('.right-team');
+const gfScores = gfMatchContainer.querySelectorAll('.match-centerpiece .team-score-large');
+
+const tournamentWinnerSection = document.querySelector('.tournament-winner');
+
+const gfResetContainer = document.getElementById('grand-final-reset-container');
+const gfResetLeftPod = gfResetContainer.querySelector('.left-team');
+const gfResetRightPod = gfResetContainer.querySelector('.right-team');
+const gfResetScores = gfResetContainer.querySelectorAll('.match-centerpiece .team-score-large');
+
+let w_idx = 0;
+let l_idx = 0;
+
+for (const row of rows) {
+const roundName = getCellValue(row, 0).toLowerCase();
+const team1Name = getCellValue(row, 1) || 'TBD';
+const team1Score = getCellValue(row, 2) || 0;
+const team2Name = getCellValue(row, 3) || 'TBD';
+const team2Score = getCellValue(row, 4) || 0;
+const winnerName = getCellValue(row, 5);
+let currentMatchup = null;
+
+if (roundName.includes("winners'")) {
+if (w_idx < winnersMatchups.length) currentMatchup = winnersMatchups[w_idx++];
+} else if (roundName.includes("losers'")) {
+if (l_idx < losersMatchups.length) currentMatchup = losersMatchups[l_idx++];
+} else if (roundName.includes('grand final reset')) {
+if (team1Name && team1Name.toLowerCase() !== 'tbd') {
+    gfResetContainer.style.display = 'flex';
+    gfResetLeftPod.querySelector('.team-name-large').textContent = team1Name;
+    gfResetRightPod.querySelector('.team-name-large').textContent = team2Name;
+    updateLogo(gfResetLeftPod, team1Name);
+    updateLogo(gfResetRightPod, team2Name);
+    gfResetScores[0].textContent = team1Score;
+    gfResetScores[1].textContent = team2Score;
+    [gfResetLeftPod, gfResetRightPod].forEach(p => p.classList.remove('winner'));
+    if (winnerName.trim().toLowerCase() === team1Name.trim().toLowerCase()) {
+        gfResetLeftPod.classList.add('winner');
+        tournamentWinnerSection.querySelector('.winner-team-name').textContent = winnerName;
+    } else if (winnerName.trim().toLowerCase() === team2Name.trim().toLowerCase()) {
+        gfResetRightPod.classList.add('winner');
+        tournamentWinnerSection.querySelector('.winner-team-name').textContent = winnerName;
+    }
+    updateLogo(tournamentWinnerSection, winnerName);
+} else {
+    gfResetContainer.style.display = 'none';
+}
+continue;
+} else if (roundName.includes('grand final')) {
+    gfLeftTeamPod.querySelector('.team-name-large').textContent = team1Name;
+    gfRightTeamPod.querySelector('.team-name-large').textContent = team2Name;
+    updateLogo(gfLeftTeamPod, team1Name);
+    updateLogo(gfRightTeamPod, team2Name);
+    gfScores[0].textContent = team1Score;
+    gfScores[1].textContent = team2Score;
+    [gfLeftTeamPod, gfRightTeamPod].forEach(p => p.classList.remove('winner'));
+    if (winnerName.trim().toLowerCase() === team1Name.trim().toLowerCase()) {
+        gfLeftTeamPod.classList.add('winner');
+        tournamentWinnerSection.querySelector('.winner-team-name').textContent = winnerName;
+    } else if (winnerName.trim().toLowerCase() === team2Name.trim().toLowerCase()) {
+        gfRightTeamPod.classList.add('winner');
+        tournamentWinnerSection.querySelector('.winner-team-name').textContent = winnerName;
+    } else if (tournamentWinnerSection.querySelector('.winner-team-name').textContent === 'TBD') {
+        tournamentWinnerSection.querySelector('.winner-team-name').textContent = 'TBD';
+    }
+    updateLogo(tournamentWinnerSection, winnerName);
+    continue;
+}
+
+if (currentMatchup) {
+const teams = currentMatchup.querySelectorAll('.team');
+if (teams.length === 2) {
+teams[0].querySelector('.team-name').textContent = team1Name;
+teams[0].querySelector('.team-score').textContent = team1Score;
+teams[1].querySelector('.team-name').textContent = team2Name;
+teams[1].querySelector('.team-score').textContent = team2Score;
+[teams[0], teams[1]].forEach(t => t.classList.remove('winner'));
+if (winnerName.trim().toLowerCase() === team1Name.trim().toLowerCase()) {
+teams[0].classList.add('winner');
+} else if (winnerName.trim().toLowerCase() === team2Name.trim().toLowerCase()) {
+teams[1].classList.add('winner');
+}
+}
+}
+}
+adjustFontSizes(); // Adjust fonts for long names to prevent wrapping.
+requestAnimationFrame(drawAllBrackets);
+} catch (error) {
+console.error("Error fetching or updating bracket data:", error);
+}
+}
+
+
+// --- SCRIPT 3: ENHANCED INTRO ANIMATION & INITIALIZATION ---
+
+document.addEventListener('DOMContentLoaded', () => {
+// Setup non-visual things immediately
+setTimeout(() => {
+updateBracketData();
+setInterval(updateBracketData, 5000);
+}, 500);
+createParticleSystem();
+
+// --- Setup Screen Shake Animation ---
+const shakeCSS = `@keyframes shake {
+0%, 100% { transform: translateX(0); } 10% { transform: translateX(-5px) translateY(-2px); }
+20% { transform: translateX(5px) translateY(2px); } 30% { transform: translateX(-3px) translateY(-1px); }
+40% { transform: translateX(3px) translateY(1px); } 50% { transform: translateX(-2px) translateY(-1px); }
+60% { transform: translateX(2px) translateY(1px); } 70% { transform: translateX(-1px); }
+80% { transform: translateX(1px); } 90% { transform: translateX(-1px); }
+}`;
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent = shakeCSS;
+document.head.appendChild(shakeStyle);
+
+function screenShake() {
+const bracket = document.querySelector('.bracket-container');
+bracket.style.animation = 'shake 0.5s ease-in-out';
+setTimeout(() => { bracket.style.animation = ''; }, 500);
+}
+
+// --- Wait for fonts to be ready before positioning and animating ---
+document.fonts.ready.then(() => {
+
+// --- Trigger Animation Sequence ---
+setTimeout(() => {
+    // 1. Start the visual effects and trigger the CSS animations.
+    screenShake();
+    document.body.classList.add('animate-in'); // This starts the main fade-in
+
+}, 300); // 300ms delay for dramatic effect
+
+// 2. Wait longer to ensure ALL transforms, transitions, and animations are 100% complete
+setTimeout(() => {
+    // Force multiple layout recalculations to ensure everything is fully settled
+    document.body.offsetHeight;
+    
+    // Additional safety: wait one more frame to ensure browser has processed everything
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            // NOW the layout should be completely stable
+            drawAllBrackets();
+            
+            // Show the connectors
+            const svgs = document.querySelectorAll('.connector-svg');
+            svgs.forEach(svg => {
+                svg.style.opacity = '1';
+            });
+        });
+    });
+}, 5500); // Extra buffer time to allow all animations to finish
+
+});
+});
+
+window.addEventListener('resize', debounce(() => {
+requestAnimationFrame(drawAllBrackets);
+}, 100));
+
+</script>
+</body>
+</html>
