@@ -91,7 +91,10 @@
       .info-row { margin-bottom: 6px; display: flex; flex-wrap: nowrap; }
       .info-label { font-weight: bold; color: #ccc; margin-right: 5px; flex-shrink: 0; }
       .info-value { margin-left: 0; word-break: break-word; }
-      .weapon-line.hidden { opacity: 0.15; }
+      
+      /* --- THIS IS THE CHANGED LINE --- */
+      .weapon-line.hidden { display: none; }
+      
       .x-axis { position: absolute; bottom: 40px; left: 40px; right: 15px; height: 1px; background-color: var(--text-color); }
       .y-axis { position: absolute; left: 40px; top: 40px; bottom: 40px; width: 1px; background-color: var(--text-color); }
       .x-labels { position: absolute; bottom: 5px; left: 40px; right: 15px; display: flex; justify-content: space-between; font-size: 0.7rem; padding: 0 5px; }
@@ -1107,22 +1110,3 @@
     <script src="/js/main.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
