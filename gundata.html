@@ -61,6 +61,24 @@
       .toggle-group { display: flex; gap: 6px; flex-wrap: wrap; }
       .toggle-btn { padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border-color); background-color: #222; color: var(--text-color); cursor: pointer; font-size: 0.8rem; white-space: nowrap; flex-grow: 1; text-align: center; user-select: none; transition: background-color 0.3s, color 0.3s; }
       .toggle-btn.active { background-color: var(--active-color); color: #000; font-weight: bold; border-color: var(--active-color); }
+      
+      #randomize-colors-btn {
+        background-color: #333;
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background-color 0.2s, color 0.2s;
+        width: 100%;
+      }
+      #randomize-colors-btn:hover {
+        background-color: var(--accent-orange);
+        color: #000;
+        border-color: var(--accent-orange);
+      }
+
       .hsp-slider-container { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
       .hsp-slider-container input[type="range"] { flex-grow: 1; cursor: pointer; }
       .hsp-slider-container .hsp-value { font-size: 0.8rem; min-width: 35px; text-align: right; }
@@ -91,10 +109,7 @@
       .info-row { margin-bottom: 6px; display: flex; flex-wrap: nowrap; }
       .info-label { font-weight: bold; color: #ccc; margin-right: 5px; flex-shrink: 0; }
       .info-value { margin-left: 0; word-break: break-word; }
-      
-      /* --- THIS IS THE CHANGED LINE --- */
       .weapon-line.hidden { display: none; }
-      
       .x-axis { position: absolute; bottom: 40px; left: 40px; right: 15px; height: 1px; background-color: var(--text-color); }
       .y-axis { position: absolute; left: 40px; top: 40px; bottom: 40px; width: 1px; background-color: var(--text-color); }
       .x-labels { position: absolute; bottom: 5px; left: 40px; right: 15px; display: flex; justify-content: space-between; font-size: 0.7rem; padding: 0 5px; }
@@ -314,6 +329,10 @@
                       <button type="button" class="toggle-btn" data-metric="DPS">DPS</button>
                     </div>
                   </div>
+                  <div class="control-group">
+                    <label>Accessibility:</label>
+                    <button type="button" id="randomize-colors-btn">Randomize Colors</button>
+                  </div>
                   <div class="control-group hsp-slider-group" id="hsp-control-group" style="display: none;">
                     <label for="hsp-slider">Headshot Percentage:</label>
                     <div class="hsp-slider-container">
@@ -442,18 +461,14 @@
             { name: "ShAK-50", class: "HEAVY", bodyDamage: 30, headDamage: 45, rpm: 420, minDropoff: 15, maxDropoff: 25, dropoffModifier: 0.67, magazineSize: 20, emptyReload: 3.20, tacticalReload: 2.40, notes: "Shoots 2 bullets per round, spread out horizontally, each dealing 15 damage." }
         ];
 
-        const weaponColors = {
-            LIGHT: ["#F44336", "#FF9800", "#FFC107", "#E91E63", "#FF5722", "#F06292", "#EF5350", "#FFA726", "#D32F2F", "#FFEB3B"],
-            MEDIUM: ["#2196F3", "#00BCD4", "#009688", "#3F51B5", "#673AB7", "#4DB6AC", "#90CAF9", "#80DEEA", "#26A69A"],
-            HEAVY: ["#8BC34A", "#4CAF50", "#CDDC39", "#795548", "#9E9E9E", "#689F38", "#A1887F", "#558B2F"]
-        };
-
-        const colorCountersInit = { LIGHT: 0, MEDIUM: 0, HEAVY: 0 };
-        weaponData.forEach(weapon => {
-            const classKey = weapon.class;
-            const colorIndex = colorCountersInit[classKey]++;
-            weapon.color = weaponColors[classKey][colorIndex % weaponColors[classKey].length];
-        });
+        function randomizeAllWeaponColors() {
+            weaponData.forEach(weapon => {
+                const hue = Math.floor(Math.random() * 361); // 0-360 degrees on the color wheel
+                const saturation = 75 + Math.floor(Math.random() * 26); // 75-100% for vibrant colors
+                const lightness = 55 + Math.floor(Math.random() * 11); // 55-65% for bright, not washed-out colors
+                weapon.color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+            });
+        }
 
         // --- DOM & STATE ---
         const plotAreaEl = document.getElementById('plot-area');
@@ -513,6 +528,11 @@
 
             clearSelectionBtn.addEventListener('click', handleClearSelection);
 
+            document.getElementById('randomize-colors-btn').addEventListener('click', () => {
+                randomizeAllWeaponColors();
+                scheduleUpdateGraph(); // Redraw graph with new colors
+            });
+
             // --- Table Event Listeners ---
             tableSearchInput.addEventListener('input', renderTable);
             tableHeaders.forEach(header => header.addEventListener('click', handleSortClick));
@@ -531,6 +551,7 @@
             scheduleUpdateGraph(); 
             renderTable(); // Initial table render
             updateClearButtonVisibility();
+            randomizeAllWeaponColors(); // Set initial random colors on load
         }
 
         // --- CORE LOGIC ---
@@ -793,32 +814,32 @@
         }
         
         function calculateTTK(weapon, range, targetType, hitLocation) {
-    const targetHealth = HEALTH_VALUES[targetType];
-    if (!targetHealth) return Infinity;
+            const targetHealth = HEALTH_VALUES[targetType];
+            if (!targetHealth) return Infinity;
 
-    let damagePerShot;
-    if (hitLocation === "Mixed") damagePerShot = calculateAverageDamagePerShot(weapon, range);
-    else damagePerShot = calculateDamageAtRange(weapon, range, hitLocation);
+            let damagePerShot;
+            if (hitLocation === "Mixed") damagePerShot = calculateAverageDamagePerShot(weapon, range);
+            else damagePerShot = calculateDamageAtRange(weapon, range, hitLocation);
 
-    if (damagePerShot <= 0) return Infinity;
-    
-    const shotsToKill = Math.ceil(targetHealth / damagePerShot);
-    if (shotsToKill === 1) return 0.0;
-    if (!weapon.rpm || weapon.rpm <= 0) return Infinity;
-    
-    const timeBetweenShots = 60 / weapon.rpm;
-    let ttk = (shotsToKill - 1) * timeBetweenShots;
+            if (damagePerShot <= 0) return Infinity;
+            
+            const shotsToKill = Math.ceil(targetHealth / damagePerShot);
+            if (shotsToKill === 1) return 0.0;
+            if (!weapon.rpm || weapon.rpm <= 0) return Infinity;
+            
+            const timeBetweenShots = 60 / weapon.rpm;
+            let ttk = (shotsToKill - 1) * timeBetweenShots;
 
-    // --- CORRECTED BURST LOGIC ---
-    if (weapon.burstCount && weapon.burstDelay && weapon.burstCount > 1) {
-        const burstsToFire = Math.floor((shotsToKill - 1) / weapon.burstCount);
-        // This line now correctly adds the *additional* time from the burst delay
-        // by subtracting the short interval it replaces.
-        ttk += burstsToFire * (weapon.burstDelay - timeBetweenShots);
-    }
-    
-    return ttk;
-}
+            // --- CORRECTED BURST LOGIC ---
+            if (weapon.burstCount && weapon.burstDelay && weapon.burstCount > 1) {
+                const burstsToFire = Math.floor((shotsToKill - 1) / weapon.burstCount);
+                // This line now correctly adds the *additional* time from the burst delay
+                // by subtracting the short interval it replaces.
+                ttk += burstsToFire * (weapon.burstDelay - timeBetweenShots);
+            }
+            
+            return ttk;
+        }
 
         function calculateDPS(weapon, range, targetType, hitLocation) {
             if (!weapon.rpm || weapon.rpm <= 0) return 0;
@@ -1110,4 +1131,3 @@
     <script src="/js/main.js"></script>
 </body>
 </html>
-
