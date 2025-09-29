@@ -4087,3 +4087,240 @@ body.nav-open::before {
         width: 100%; /* No longer fixed width */
     }
 }
+
+/* ==================== */
+/* Meet the Squad Section */
+/* ==================== */
+#meet-the-squad {
+    padding: 60px 0;
+    text-align: center;
+    /* This is the key change: a transparent gradient instead of a solid color */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95));
+    position: relative; /* This is important for stacking context */
+    z-index: 1;
+}
+
+/* The rest of the CSS remains the same */
+.squad-intro {
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    font-size: 1.1rem;
+    color: #ccc;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.team-member-card {
+    background-color: #1a1a1a;
+    border-radius: 15px;
+    padding: 30px 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #333;
+}
+
+.team-member-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(255, 193, 7, 0.2);
+}
+
+.member-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ffc107;
+    margin-bottom: 20px;
+}
+
+.member-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: #fff;
+    margin: 0;
+}
+
+.member-role {
+    font-family: 'Roboto', sans-serif;
+    color: #ffc107;
+    font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.social-links a {
+    color: #ccc;
+    font-size: 1.8rem;
+    margin: 0 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #fff;
+    transform: scale(1.2);
+}
+
+/* ==================== */
+/* Jersey Showcase Styles */
+/* ==================== */
+.jersey-showcase {
+    margin-top: 80px; /* Adds space between player cards and this section */
+    padding-top: 60px;
+    border-top: 2px solid #333; /* A separator line */
+    text-align: center;
+}
+
+.jersey-showcase .squad-intro {
+    margin-bottom: 40px;
+}
+
+.jersey-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap; /* Allows jerseys to stack on smaller screens */
+    margin-bottom: 40px;
+}
+
+.jersey-item {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 15px;
+    padding: 20px;
+    width: 300px; /* Control the size of the jersey cards */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.jersey-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(255, 193, 7, 0.2);
+}
+
+.jersey-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    background-color: #000; /* Dark background for placeholder */
+}
+
+.jersey-view {
+    font-family: 'Bebas Neue', sans-serif;
+    color: #ffc107;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* =================================================================== */
+/*    UPDATED CARD FLIP & LAYOUT CSS (REPLACE OLD BLOCK WITH THIS)     */
+/* =================================================================== */
+
+/* --- Card Container (Wrapper for flipper and links) --- */
+.team-member-card {
+    background-color: transparent;
+    border-radius: 15px;
+    perspective: 1000px; /* Crucial for the 3D effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    padding-bottom: 20px; /* Adds space at the very bottom */
+}
+
+.team-member-card:hover {
+    transform: translateY(0); /* The flip is the main animation */
+    box-shadow: 0 10px 30px rgba(255, 193, 7, 0.3);
+}
+
+/* --- The Flipping Element --- */
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 380px; /* Set a fixed height for the flipping part */
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.team-member-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* --- Social Links (Now outside the flip) --- */
+.social-links {
+    padding-top: 25px; /* Creates space between card and links */
+    text-align: center;
+}
+
+/* --- Removing old spacing --- */
+.member-role {
+    margin-bottom: 0; /* No longer need extra space for links inside */
+}
+
+/* --- Front and Back Panels --- */
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* For Safari */
+    backface-visibility: hidden;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 15px;
+}
+
+/* --- Front Panel Content Styling --- */
+.card-front {
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Back Panel (Jersey) Styling --- */
+.card-back {
+    transform: rotateY(180deg);
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    /* CHANGE 1: Move content to the TOP */
+    justify-content: flex-start; 
+    align-items: center;
+}
+
+.jersey-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    z-index: 0; 
+}
+
+.card-back-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    /* CHANGE 2: Gradient now starts from the TOP to protect text */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 20%, rgba(0, 0, 0, 0));
+}
+
+.card-back-content .member-name,
+.card-back-content .jersey-number {
+    margin: 0; /* Reset margins for clean alignment */
+}
+
+.jersey-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: #ffc107;
+    margin-top: 5px;
+}
