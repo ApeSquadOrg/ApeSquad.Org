@@ -20,8 +20,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Social Media Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- The <style> block was removed and replaced with this line -->
+    <!-- Your Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -30,7 +33,6 @@
     <!-- ==================== -->
     <!--   Header Starts Here   -->
     <!-- ==================== -->
-    <!-- The content of header.html will be loaded here -->
     <header></header>
 
     <main>
@@ -38,10 +40,7 @@
         <!--    Hero Section      -->
         <!-- ==================== -->
         
-        <!-- This style is still needed to remove the CSS background that would cover the video -->
         <section id="hero" style="background: none;"> 
-
-            <!-- THE ONLY CHANGE IS HERE: "position: absolute" is now "position: fixed" -->
             <video autoplay loop muted playsinline id="hero-video" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
                 <source src="images/LOOP.mp4" type="video/mp4">
                 Your browser does not support the video tag.
@@ -49,47 +48,136 @@
 
             <div class="hero-content">
                 <h2>Welcome to the Jungle</h2>
-                <p>Ape Squad Worlds' prize pool is over $3000 and rising! Sign up below!
-                    <br>Join Today</p>
-                <a href="https://apesquad.org/tournaments" target="_blank" class="btn">Sign Up HERE</a>
+                <p>Ape Squad signs a NEW team for the 100k Embark Major!
+                    <br>Check them out below!</p>
+
             </div>
         </section>
 
-<!-- ===================================== -->
-<!--  NEW: Upcoming Tournament Section   -->
-<!-- ===================================== -->
-<section id="upcoming-tournament">
-    <div class="container" style="text-align: center;">
+<!-- ================================== -->
+<!--    UPDATED MEET THE SQUAD SECTION    -->
+<!-- ================================== -->
+<section id="meet-the-squad">
+    <div class="container">
+        <h2 class="glitch" data-text="MEET THE SQUAD">MEET THE SQUAD</h2>
+        <p class="squad-intro">Introducing Ape Squad, ready to dominate the arena. Hover over a player to see their official jersey.</p>
 
-        <!-- Responsive video container -->
-        <div class="video-container" style="position: relative; padding-bottom: 56.25%; /* 16:9 Aspect Ratio */ height: 0; overflow: hidden; max-width: 100%; margin: 0 auto 1.5rem;">
-            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                    src="https://www.youtube.com/embed/l4ZB6XP7j1E?si=HLp9oAzZV5xKtWye" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-            </iframe>
+        <div class="team-grid">
+            <!-- Team Member Card 1 -->
+            <div class="team-member-card">
+                <!-- This part flips -->
+                <div class="card-inner">
+                    <!-- FRONT OF THE CARD -->
+                    <div class="card-front">
+                        <div class="member-image">
+                            <img src="images/team/aloneinparis.png" alt="Profile picture of ALONEINPARIS">
+                        </div>
+                        <h3 class="member-name">ALONEINPARIS</h3>
+                        <p class="member-role">Medium</p>
+                    </div>
+                    <!-- BACK OF THE CARD -->
+                    <div class="card-back">
+                        <img src="images/team/jersey.png" alt="ALONEINPARIS Jersey" class="jersey-image">
+                        <div class="card-back-content">
+                            <h3 class="member-name">ALONEINPARIS</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- Social links are now here, always visible -->
+                <div class="social-links">
+                    <a href="https://twitch.tv/playerone" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                    <a href="https://twitter.com/playerone" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                    <a href="https://youtube.com/playerone" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Team Member Card 2 -->
+            <div class="team-member-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="member-image">
+                            <img src="images/team/donkrage.png" alt="Profile picture of DONKRAGE">
+                        </div>
+                        <h3 class="member-name">DONKRAGE</h3>
+                        <p class="member-role">Light</p>
+                    </div>
+                     <div class="card-back">
+                        <img src="images/team/jersey.png" alt="DONKRAGE Jersey" class="jersey-image">
+                        <div class="card-back-content">
+                            <h3 class="member-name">DONKRAGE</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- Social links are now here, always visible -->
+                <div class="social-links">
+                    <a href="https://twitch.tv/playertwo" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                    <a href="https://twitter.com/playertwo" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Team Member Card 3 -->
+            <div class="team-member-card">
+                 <div class="card-inner">
+                    <div class="card-front">
+                        <div class="member-image">
+                            <img src="images/team/nuok.png" alt="Profile picture of NUOK">
+                        </div>
+                        <h3 class="member-name">NUOK</h3>
+                        <p class="member-role">Heavy</p>
+                    </div>
+                     <div class="card-back">
+                        <img src="images/team/jersey.png" alt="NUOK Jersey" class="jersey-image">
+                        <div class="card-back-content">
+                           <h3 class="member-name">NUOK</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- Social links are now here, always visible -->
+                <div class="social-links">
+                    <a href="https://twitch.tv/playerthree" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                    <a href="https://twitter.com/playerthree" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Team Member Card 4 (Coach) -->
+            <div class="team-member-card">
+                 <div class="card-inner">
+                    <div class="card-front">
+                        <div class="member-image">
+                            <img src="images/team/mouzer.png" alt="Profile picture of Coach">
+                        </div>
+                        <h3 class="member-name">Mouzer</h3>
+                        <p class="member-role">Head Coach</p>
+                    </div>
+                     <div class="card-back">
+                        <img src="images/team/jersey.png" alt="Mouzer Coach Polo" class="jersey-image">
+                        <div class="card-back-content">
+                            <h3 class="member-name">Mouzer</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- Social links are now here, always visible -->
+                <div class="social-links">
+                    <a href="https://twitter.com/coach" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
         </div>
-        
-        <a href="/tournaments" class="btn">Sign Up & View Rules</a>
     </div>
 </section>
 
         <!-- ==================== -->
-        <!--  Meet the Team Section -->
+        <!--  Support Section -->
         <!-- ==================== -->
         <section id="team">
             <div class="container" style="text-align: center;">
-<h2>Support the Squad</h2>
-    <p>Love what we're building? Help fuel Ape Squad by tipping, subbing, or grabbing some gear. Every dollar keeps the arena alive.</p>
-    <br>
-    <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">Subscribe on Twitch</a>
-    <a href="https://youtube.com/@apesquadorg" target="_blank" class="btn">Check out our Youtube</a>
-    <a href="/merch" target="_blank" class="btn">Shop Our Merch</a>
-  </div>
-</section>
+            <h2>Support the Squad</h2>
+                <p>Love what we're building? Help fuel Ape Squad by tipping, subbing, or grabbing some gear. Every dollar keeps the arena alive.</p>
+                <br>
+                <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">Subscribe on Twitch</a>
+                <a href="https://youtube.com/@apesquadorg" target="_blank" class="btn">Check out our Youtube</a>
+                <a href="/merch" target="_blank" class="btn">Shop Our Merch</a>
+            </div>
+        </section>
 
        <!-- ==================== -->
        <!--   Schedule Section   -->
@@ -105,27 +193,10 @@
                             <h4>Ape Squad Worlds: Championship</h4>
                             <p>September 13th 2025</p>
                         </div>
-                        <div class="match-time">1:00 PM EST</div>
-                        <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">WATCH LIVE</a>
+                        <div class="match-time">WINNERS: ENVY</div>
+                        <a href="https://youtube.com/playlist?list=PL1bwu__yJTKFbe2cKee6o80LZRyoAoeDn&si=NCu0dE5nfI21ZEeM" target="_blank" class="btn">WATCH MATCHES</a>
                     </div>
-                <div class="match-card">
-                        <div class="match-info">
-                            <h4>Ape Squad Worlds NA Qualfiers</h4>
-                            <p>September 11th 2025</p>
-                        </div>
-                        <div class="match-time">8:00 PM EST</div>
-                        <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">WATCH LIVE</a>
-                    </div>
-                    <!-- Match Card 1 -->
-                    <div class="match-card">
-                        <div class="match-info">
-                            <h4>Ape Squad Worlds EU Qualfiers</h4>
-                            <p>September 11th 2025</p>
-                        </div>
-                        <div class="match-time">1:00 PM EST</div>
-                        <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">WATCH LIVE</a>
-                    </div>
-
+               
                     <!-- Match Card 2 -->
                     <div class="match-card">
                         <div class="match-info">
@@ -148,20 +219,13 @@
                 </div>
             </div>
        </section>
-
-       
-
+    </main>
     <!-- ==================== -->
     <!--   Footer Starts Here   -->
     <!-- ==================== -->
-    <!-- The content of footer.html will be loaded here -->
     <footer></footer>
 
     <!-- SCRIPT TO LOAD HEADER AND FOOTER -->
     <script src="js/main.js"></script>
 </body>
 </html>
-
-
-
-
