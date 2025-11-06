@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8868N4WQZJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page Not Found - You seem to be lost in the jungle. Let's get you back to the Ape Squad base.">
+    <title>404 Not Found | Ape Squad</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Link to your main stylesheet -->
+    <link rel="stylesheet" href="/style.css"> <!-- Use root-relative path for consistency -->
+
+    <!-- Page-specific styles for the 404 page -->
+    <style>
+        /* Make the 404 section fill the screen like the hero section */
+        #not-found {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            padding: 100px 20px;
+            /* Using a background similar to your hero/rankings pages */
+            background: 
+                linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
+                radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
+        }
+
+        #not-found h2 {
+            font-size: 12rem; /* Make the 404 number massive */
+            line-height: 1;
+            margin-bottom: 0;
+            /* Override the text-gradient to use a solid color for better glitch effect visibility */
+            background: none;
+            -webkit-text-fill-color: var(--primary-purple);
+        }
+
+        /* Use the hero paragraph style for the thematic message */
+        #not-found .subheading {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            font-family: var(--font-tech);
+            opacity: 0.95;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
+        }
+
+        #not-found .explanation {
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        #not-found .btn {
+            margin-bottom: 50px;
+        }
+        
+        #not-found .quick-links a {
+            color: var(--standout-blue);
+            text-decoration: none;
+            margin: 0 15px;
+            font-family: var(--font-headings);
+            letter-spacing: 1px;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        #not-found .quick-links a:hover {
+            color: var(--accent-orange);
+            text-shadow: 0 0 8px var(--accent-orange);
+        }
+
+        /* Responsive font size for the 404 */
+        @media (max-width: 768px) {
+            #not-found h2 {
+                font-size: 8rem;
+            }
+            #not-found .subheading {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- This header is left empty. Your js/main.js file will populate it. -->
+    <header></header>
+
+    <main>
+        <section id="not-found">
+            <div class="not-found-content">
+                
+                <!-- The big, glitchy 404 number -->
+                <h2 class="glitch" data-text="404">404</h2>
+
+                <p class="subheading">Looks like you've clipped out of the map.</p>
+                
+                <p class="explanation">
+                    The page you're looking for might have been moved, deleted, or perhaps it never existed in this dimension. Don't worry, we can get you back to safety.
+                </p>
+
+                <!-- A clear, themed call-to-action button -->
+                <a href="https://apesquad.org/" class="btn">Return to the Jungle</a>
+
+                <div class="quick-links">
+                    <a href="/tournaments.html">Tournaments</a>
+
+                    <a href="/donate.html">Donate</a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- This footer is left empty. Your js/main.js file will populate it. -->
+    <footer></footer>
+    
+    <!-- This script handles global functionality like loading the header/footer -->
+    <script src="/js/main.js"></script>
+
+</body>
+</html>

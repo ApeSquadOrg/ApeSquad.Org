@@ -1,0 +1,138 @@
+/* --- PROFILE CARD STYLES (v4 - Bug Fix & Improved Glare) --- */
+
+:root {
+    /* Variables for tilt effect */
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+    --pointer-from-center: 0;
+    --rotate-x: 0deg;
+    --rotate-y: 0deg;
+    --card-opacity: 0;
+    --card-radius: 15px;
+}
+
+.pc-card-wrapper {
+    perspective: 1000px;
+    position: relative;
+    touch-action: none;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.pc-card {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    display: grid;
+    position: relative; /* CRITICAL for absolute positioning of children */
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.6s ease;
+    transform: rotateX(var(--rotate-y)) rotateY(var(--rotate-x));
+}
+
+.pc-card.active {
+    transition: none;
+}
+
+/* Base layer for ape background */
+.pc-inside {
+    grid-area: 1/-1;
+    border-radius: inherit;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+/* Transparent Character Image Container */
+.pc-avatar-content {
+    grid-area: 1/-1;
+    display: grid;
+    align-items: end;
+    transform: translateZ(30px);
+    z-index: 3;
+}
+.pc-avatar-content .avatar {
+    width: 100%;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4));
+    pointer-events: none;
+}
+
+/* === BUG FIX: NAME CARD POSITIONING === */
+.pc-details {
+    /* REMOVED grid properties */
+    position: absolute; /* USE absolute positioning */
+    bottom: 20px;       /* PIN to bottom */
+    left: 20px;         /* PIN to left */
+    right: 20px;        /* PIN to right */
+    
+    padding: 0.75rem;
+    background: rgba(10, 25, 40, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(1, 163, 235, 0.3);
+    border-radius: 10px;
+    text-align: center;
+    pointer-events: none;
+    transform: translateZ(60px); 
+    z-index: 5; /* ENSURE it is on top */
+}
+
+.pc-details h3 {
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--off-white);
+    margin: 0;
+    text-shadow: 0 0 8px var(--electric-blue), 0 0 16px var(--electric-blue);
+}
+
+.pc-details p {
+    font-size: 0.9rem;
+    color: var(--light-grey);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 4px 0;
+}
+
+/* Grid Overlay Effect */
+.pc-card::after {
+    content: '';
+    position: absolute; /* Changed from grid-area for consistency */
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.5;
+    z-index: 2;
+    transform: translateZ(10px);
+}
+
+
+/* === NEW & IMPROVED GLARE EFFECT === */
+.pc-shine, .pc-glare {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 4; /* Place it above the character but below the name card */
+}
+
+/* Subtle rainbow sheen that moves with the background */
+.pc-shine {
+    mix-blend-mode: color-dodge;
+    opacity: 0.3;
+    background-image: repeating-linear-gradient(0deg, #ff853b 5%, #ff4494 25%, #633fdc 45%, #01a3eb 65%, #00ff85 85%, #ff853b 95%);
+    background-size: 200% 200%;
+    background-position: var(--background-x) var(--background-y);
+    display: none;
+}
+
+/* A sharp, bright glare spot that follows the pointer */
+.pc-glare {
+    mix-blend-mode: overlay;
+    opacity: 0;
+    background-image: radial-gradient(ellipse 80% 80% at var(--pointer-x) var(--pointer-y), hsla(0, 0%, 100%, 0.9) 0%, hsla(0, 0%, 100%, 0) 50%);
+    
+}
+.pc-card.active .pc-glare {
+    opacity: calc(var(--pointer-from-center) * 0.7 + 0.5); /* Increased base brightness */
+}
