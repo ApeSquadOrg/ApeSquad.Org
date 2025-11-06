@@ -3010,3 +3010,31 @@ header .social-links a:hover i {
     overflow: hidden; /* Prevents any minor final overflow */
     font-size: clamp(0.7rem, 3.5vw, 1.1rem) !important;
 }
+
+/* --- Add this to style.css, preferably inside the @media (max-width: 991px) block --- */
+
+.mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    z-index: 9999;
+    background: transparent;
+    border: 0;
+    width: 2rem;
+    aspect-ratio: 1;
+    cursor: pointer;
+
+    /* Styling for the hamburger lines */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: background-image 0.3s ease-in-out;
+}
+
+/* When the menu is open, switch to an 'X' icon */
+.mobile-nav-toggle[aria-expanded="true"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M6 6l18 18M24 6L6 24'/%3e%3c/svg%3e");
+}
+
+/* You can remove the old, empty .mobile-nav-toggle rule if you wish */
