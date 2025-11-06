@@ -66,7 +66,7 @@ const App = {
      */
     initMobileNav() {
         const navToggle = document.querySelector('.mobile-nav-toggle');
-        const primaryNav = document.querySelector('header nav');
+        const primaryNav = document.querySelector('.nav-links');
 
         if (!navToggle || !primaryNav) return;
 
