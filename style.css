@@ -3041,4 +3041,232 @@ header .social-links a:hover i {
     font-size: clamp(0.7rem, 3.5vw, 1.1rem) !important;
 }
 
+/*
+===========================================================
+--- ESPORTS TIMELINE - MINIMALIST STYLE (FINAL VERSION) ---
+===========================================================
+*/
+
+/* --- Core Container & Typography --- */
+.timeline-container {
+    font-family: 'Inter', var(--font-body);
+    background-color: var(--midnight-black);
+    padding: 80px 0;
+    overflow: hidden;
+    position: relative;
+}
+.timeline-container .header {
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    z-index: 5;
+}
+.timeline-container .main-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    color: var(--off-white);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 15px var(--electric-blue);
+}
+.timeline-container .subtitle {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    color: var(--light-grey);
+    max-width: 50ch;
+    margin: 0 auto;
+}
+
+/* --- Central Timeline Axis --- */
+.timeline {
+    position: relative;
+    max-width: 1000px; /* Adjust if needed for wider layout */
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+/* The simple, thin grey line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.15);
+    z-index: 1;
+}
+/* Hide the animated progress bar from the old design */
+.timeline::after {
+    display: none;
+}
+
+/* --- Season Dividers --- */
+.season-section {
+    position: relative;
+    z-index: 10;
+}
+.timeline-divider {
+    position: sticky;
+    top: 90px;
+    z-index: 20;
+    margin: 2rem 0 3rem 0;
+    display: flex;
+    justify-content: center;
+}
+.timeline-divider span {
+    display: inline-block;
+    padding: 0.75rem 2.5rem;
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: var(--off-white);
+    background: var(--near-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    box-shadow: 0 0 15px rgba(1, 163, 235, 0.3);
+    text-shadow: 0 0 8px var(--electric-blue);
+}
+
+/* --- Timeline Item Cards --- */
+.timeline-item {
+    padding: 2rem;
+    position: relative;
+    margin: 0 auto 3rem auto;
+    width: calc(70% - 120px); /* Wide spacing */
+    background: #101010; /* Slightly darker than near-black */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    z-index: 5;
+    /* Hardware-accelerated animation for performance */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Positioning */
+.item-left { left: -340px; } /* Wide spacing */
+.item-right { left: 340px; } /* Wide spacing */
+
+/* Connecting Arms */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    top: 25px;
+    width: 25px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.15);
+}
+.item-left::after { right: -25px; }
+.item-right::after { left: -25px; }
+
+/* --- Hollow Dots --- */
+.timeline-dot {
+    content: '';
+    position: absolute;
+    top: 25px;
+    width: 16px;
+    height: 16px;
+    background: transparent; /* Makes the dot hollow */
+    border: 2px solid #999; /* Default color */
+    border-radius: 50%;
+    z-index: 6;
+    transition: transform 0.3s ease;
+}
+.item-left .timeline-dot { right: -56px; }
+.item-right .timeline-dot { left: -56px; }
+.timeline-item:hover .timeline-dot {
+    transform: scale(1.1); /* Subtle hover effect */
+}
+
+/* --- Card Content Typography --- */
+.event-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+.event-title {
+    font-family: 'Inter', var(--font-body); /* Using cleaner font */
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--off-white);
+    margin: 0;
+    text-shadow: none;
+}
+.event-subtitle {
+    font-size: 1rem;
+    color: #999;
+    margin: 0.25rem 0 1rem 0;
+}
+.event-date {
+    font-size: 0.9rem;
+    color: var(--electric-blue);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.event-description {
+    font-size: 1rem;
+    color: #bbb;
+    line-height: 1.6;
+    margin: 0;
+}
+/* Hide the link buttons to match the new design */
+.event-links {
+    display: none;
+}
+
+/* --- Category Theming (Tags & Dots) --- */
+.tag-community { background-color: rgba(1, 163, 235, 0.2); color: var(--electric-blue); }
+.theme-community .timeline-dot { border-color: var(--electric-blue); }
+
+.theme-premier .timeline-dot { border-color: var(--sunset-orange); }
+
+.theme-grassroots .timeline-dot { border-color: #22c55e; }
+
+.tag-special-event { background-color: var(--neon-pink); color: var(--off-white); }
+.theme-special-event .timeline-dot { border-color: var(--neon-pink); }
+
+.tag-embark, .tag-milestone { background-color: #D4AF37; color: var(--midnight-black); font-weight: 900; }
+.theme-embark .timeline-dot, .theme-milestone .timeline-dot { border-color: #D4AF37; }
+
+/* --- Scroll Down Indicator (Unchanged) --- */
+.scroll-indicator {
+    position: absolute; bottom: 30px; left: 50%;
+    transform: translateX(-50%); z-index: 100;
+    color: var(--light-grey); font-size: 0.9rem;
+    opacity: 1; transition: opacity 0.5s ease;
+}
+.scroll-indicator.hidden { opacity: 0; pointer-events: none; }
+.scroll-indicator div { position: relative; padding-bottom: 30px; }
+.scroll-indicator div::after {
+    content: ''; position: absolute; bottom: 0; left: 50%;
+    transform: translateX(-50%); width: 2px; height: 20px;
+    background: var(--light-grey); animation: scroll-anim 2s infinite;
+}
+@keyframes scroll-anim {
+    0% { transform: scaleY(0) translateX(-50%); transform-origin: top; opacity: 0; }
+    50% { transform: scaleY(1) translateX(-50%); transform-origin: top; opacity: 1; }
+    51% { transform: scaleY(1) translateX(-50%); transform-origin: bottom; opacity: 1; }
+    100% { transform: scaleY(0) translateX(-50%); transform-origin: bottom; opacity: 0; }
+}
+
+/* --- Responsive Design (Unchanged) --- */
+@media (max-width: 768px) {
+    .timeline::before { left: 20px; }
+    .timeline-item {
+        width: calc(100% - 40px);
+        left: 0 !important;
+        margin-left: 40px;
+    }
+    .timeline-item::after { left: -25px; }
+    .timeline-dot { left: -56px !important; }
+    .timeline-divider span { font-size: 1.2rem; padding: 0.6rem 2rem; }
+}
 
