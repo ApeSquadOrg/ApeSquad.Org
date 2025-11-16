@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Finals Esports Timeline Showcase</title>
+
+    <!-- Google Font for the Timeline Content -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Link to your main stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- This header is left empty. Your js/main.js file will populate it. -->
+    <header></header>
+
+    <!-- Main Timeline Content -->
+    <main class="timeline-container">
+        
+        <div class="scroll-indicator">
+            <div>Scroll to explore</div>
+        </div>
+        
+        <!-- =================== HTML STRUCTURE CHANGE IS HERE =================== -->
+
+        <!-- The container now ONLY wraps the header, keeping it centered. -->
+        <div class="container">
+            <div class="header">
+                <!-- Initial loading state -->
+                <h1 class="main-title">Loading Timeline...</h1>
+                <p class="subtitle">Fetching the latest data from the arena!</p>
+            </div>
+        </div>
+
+        <!-- The timeline itself is now OUTSIDE the container, allowing it to be full-width. -->
+        <!-- The JS will populate this element after the data is fetched. -->
+        <div class="timeline-wrapper-for-js"></div>
+        
+        <!-- =================== END OF HTML STRUCTURE CHANGE =================== -->
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+    <footer></footer>
+
+    <!-- This script handles global functionality like loading the header/footer -->
+    <script src="/js/main.js" defer></script>
+
+    <!-- Optimized timeline-specific JavaScript (with one minor change) -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const SPREADSHEET_ID = '1ANpjO4mcIdjZGZ939-Os2fYq0lDkUvTPn1Ibj4KpBbA';
+        const GID = '0'; 
+        const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}&headers=1`;
+        
+        // --- Helper functions (no changes) ---
+        const getThemeAndTag = (category) => {
+            const catLower = (category || '').toLowerCase().replace(/\s+/g, '-');
+            const validThemes = ['community', 'premier', 'grassroots', 'special-event', 'milestone', 'embark'];
+            if (validThemes.includes(catLower)) {
+                return { theme: `theme-${catLower}`, tag: `tag-${catLower}` };
+            }
+            return { theme: 'theme-default', tag: 'tag-default' };
+        };
+        
+        const generateLinkHTML = (link) => {
+            if (!link || link.trim().toLowerCase() === 'n/a') { return ''; }
+            const isVideo = link.includes('youtube.com') || link.includes('twitch.tv');
+            const linkText = isVideo ? '📺 Watch VOD' : 'ℹ️ More Info';
+            return `<div class="event-links"><div class="event-link"><a href="${link}" target="_blank" rel="noopener noreferrer">${linkText}</a></div></div>`;
+        };
+
+        const generateTimelineHTML = (events) => {
+            let currentSeason = null;
+            let itemCounter = 0;
+            let html = '';
+
+            events.forEach(event => {
+                if (event.season !== currentSeason) {
+                    if (currentSeason !== null) { html += `</div>`; }
+                    currentSeason = event.season;
+                    html += `<div class="season-section" id="season-${currentSeason.toLowerCase().replace(/[^a-z0-9]/g, '-')}">
+                                <div class="timeline-divider"><span>${currentSeason}</span></div>`;
+                }
+                const positionClass = itemCounter % 2 === 0 ? 'item-left' : 'item-right';
+                const { theme, tag } = getThemeAndTag(event.category);
+                html += `<div class="timeline-item ${theme} ${positionClass}"><div class="timeline-dot"></div><div class="timeline-content"><span class="event-tag ${tag}">${event.category}</span><h3 class="event-title">${event.eventName}</h3><p class="event-subtitle">${event.type}</p><p class="event-date">${event.date}</p>${event.description ? `<p class="event-description">${event.description}</p>` : ''}${generateLinkHTML(event.link)}</div></div>`;
+                itemCounter++;
+            });
+
+            if (events.length > 0) { html += `</div>`; }
+            return html;
+        };
+        
+        // --- Render function (UPDATED) ---
+        const renderTimeline = (events) => {
+            const timelineHTML = generateTimelineHTML(events);
+            // UPDATE: Target the new wrapper div instead of the old container
+            const timelineWrapper = document.querySelector('.timeline-wrapper-for-js');
+            // UPDATE: Also update the main header title
+            document.querySelector('.timeline-container .main-title').textContent = 'History of The Finals Esports';
+            document.querySelector('.timeline-container .subtitle').textContent = 'From Beta Tournaments to Global Competition';
+            
+            // Populate the new wrapper with the timeline
+            timelineWrapper.innerHTML = `<div class="timeline">${timelineHTML}</div>`;
+            
+            initializeScrollEffects();
+        };
+
+        // --- Fetch function (UPDATED) ---
+        const fetchAndRenderTimeline = async () => {
+            const cacheKey = 'timelineDataCache';
+            const cacheDuration = 15 * 60 * 1000;
+
+            const cachedItem = localStorage.getItem(cacheKey);
+            if (cachedItem) {
+                const { timestamp, events } = JSON.parse(cachedItem);
+                if (Date.now() - timestamp < cacheDuration) {
+                    console.log('Loading timeline from cache.');
+                    renderTimeline(events);
+                    return;
+                }
+            }
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) { throw new Error('Network response was not ok'); }
+                let text = await response.text();
+                
+                const jsonString = text.match(/google\.visualization\.Query\.setResponse\((.*)\)/s)[1];
+                const data = JSON.parse(jsonString);
+
+                const events = data.table.rows.map(row => ({ 
+                    season: row.c[0]?.v || '', 
+                    eventName: row.c[1]?.v || 'Untitled Event', 
+                    type: row.c[2]?.v || '', 
+                    category: row.c[3]?.v || 'Community', 
+                    date: row.c[4]?.f || row.c[4]?.v || 'TBD', 
+                    description: row.c[5]?.v || '', 
+                    link: row.c[6]?.v || null 
+                })).filter(event => event.season && event.eventName);
+
+                localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), events }));
+                renderTimeline(events);
+
+            } catch (error) {
+                console.error('Failed to fetch or render timeline data:', error);
+                // UPDATE: Target the header for the error message
+                document.querySelector('.timeline-container .header').innerHTML = `<h1 class="main-title">Error Loading Timeline</h1><p class="subtitle">Could not connect to the data source. Please try again later.</p>`;
+            }
+        };
+
+        // --- Scroll effects function (UPDATED) ---
+        const initializeScrollEffects = () => {
+            // UPDATE: Target the timeline inside its new wrapper
+            const timelineElement = document.querySelector('.timeline-wrapper-for-js .timeline');
+            const timelineItems = document.querySelectorAll('.timeline-wrapper-for-js .timeline-item');
+            const scrollIndicator = document.querySelector('.timeline-container .scroll-indicator');
+            
+            if (!timelineElement || timelineItems.length === 0) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '0px 0px -15% 0px' });
+            timelineItems.forEach(item => observer.observe(item));
+
+            let ticking = false;
+            const updateProgressBar = () => {
+                // This function works fine as it is, no changes needed
+                const timelineRect = timelineElement.getBoundingClientRect();
+                const progress = Math.max(0, Math.min(1, -timelineRect.top / (timelineRect.height - window.innerHeight)));
+                timelineElement.style.setProperty('--timeline-progress', progress);
+                ticking = false;
+            };
+
+            const onScroll = () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateProgressBar);
+                    ticking = true;
+                }
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            updateProgressBar();
+            
+            const hideIndicator = () => {
+                if (window.scrollY > 50) {
+                    if (scrollIndicator) scrollIndicator.classList.add('hidden');
+                    window.removeEventListener('scroll', hideIndicator);
+                }
+            };
+            window.addEventListener('scroll', hideIndicator, { passive: true });
+        };
+
+        fetchAndRenderTimeline();
+    });
+    </script>
+</body>
+</html>
