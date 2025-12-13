@@ -3270,3 +3270,876 @@ header .social-links a:hover i {
     .timeline-divider span { font-size: 1.2rem; padding: 0.6rem 2rem; }
 }
 
+/* ========================================= */
+/* --- CREATOR AWARDS PAGE STYLES --- */
+/* ========================================= */
+
+:root {
+    --awards-gold: #FFD700;
+    --awards-gold-dim: #b89b00;
+    --awards-bg: #050505;
+}
+
+/* --- Hero Section --- */
+#awards-hero {
+    position: relative;
+    padding: 8rem 2rem 6rem 2rem;
+    text-align: center;
+    background-color: var(--awards-bg);
+    overflow: hidden;
+}
+
+.awards-hero-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+        radial-gradient(circle at 50% 30%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+        url('/images/backgrounds/esports-arena.jpg'); /* Optional: Add a faint bg image */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+#awards-hero .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.collab-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-headline);
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    color: var(--light-grey);
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.collab-badge .x-mark {
+    color: var(--awards-gold);
+    font-size: 1.5rem;
+}
+
+#awards-hero h1 {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.text-gold {
+    color: var(--awards-gold);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    background: linear-gradient(to bottom, #fff7cc, #FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* --- Timeline Section --- */
+#awards-timeline {
+    background-color: var(--midnight-black);
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.timeline-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Connecting Line */
+.timeline-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 40px;
+    right: 40px;
+    height: 2px;
+    background: #333;
+    z-index: 0;
+}
+
+.phase {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    width: 33%;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.phase.active, .phase.completed {
+    opacity: 1;
+}
+
+.phase-dot {
+    width: 30px;
+    height: 30px;
+    background: var(--midnight-black);
+    border: 2px solid #555;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    transition: all 0.3s ease;
+}
+
+.phase.active .phase-dot {
+    border-color: var(--awards-gold);
+    background: var(--awards-gold);
+    box-shadow: 0 0 15px var(--awards-gold);
+}
+
+.phase.completed .phase-dot {
+    background: var(--electric-blue);
+    border-color: var(--electric-blue);
+}
+
+.phase h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    color: var(--off-white);
+}
+
+.phase p {
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+/* --- Grand Award Section --- */
+#grand-award {
+    background: linear-gradient(to bottom, var(--midnight-black), #1a1500);
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.grand-prize-card {
+    background: rgba(0,0,0,0.5);
+    border: 2px solid var(--awards-gold);
+    border-radius: 15px;
+    padding: 3rem 2rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.1);
+}
+
+.trophy-icon {
+    font-size: 3rem;
+    color: var(--awards-gold);
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.nominee-grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.nominee-card {
+    text-align: center;
+    width: 150px;
+}
+
+.nominee-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1rem auto;
+    border: 2px solid rgba(255,255,255,0.2);
+    transition: transform 0.3s ease;
+}
+
+.nominee-card:hover .nominee-img {
+    transform: scale(1.1);
+    border-color: var(--awards-gold);
+}
+
+.nominee-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nominee-card h4 {
+    font-size: 1rem;
+    color: var(--off-white);
+}
+
+/* Winner Reveal State (Toggle 'hidden' class) */
+.winner-reveal {
+    margin-top: 2rem;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.winner-label {
+    display: block;
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    color: var(--awards-gold);
+}
+
+.winner-profile img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 4px solid var(--awards-gold);
+    box-shadow: 0 0 30px var(--awards-gold);
+    margin-bottom: 1rem;
+}
+
+.winner-name {
+    font-size: 3rem;
+    color: var(--off-white);
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* --- Categories Section --- */
+.awards-categories {
+    background-color: var(--near-black);
+    padding: 4rem 0;
+}
+
+.category-group {
+    margin-bottom: 5rem;
+}
+
+.group-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 1rem;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.award-card {
+    background: var(--midnight-black);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.award-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--electric-blue);
+    box-shadow: 0 0 20px rgba(1, 163, 235, 0.15);
+}
+
+.award-header h3 {
+    color: var(--electric-blue);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.nominee-list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.nominee-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--off-white);
+    font-family: var(--font-body);
+}
+
+.nominee-list li:last-child {
+    border-bottom: none;
+}
+
+/* Winner Banner Overlay for Award Cards */
+.winner-banner {
+    background: linear-gradient(90deg, var(--awards-gold-dim), var(--awards-gold));
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+    font-family: var(--font-headline);
+    text-transform: uppercase;
+    font-size: 1.1rem;
+}
+
+.clip-placeholder {
+    background: rgba(0,0,0,0.3);
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    color: var(--light-grey);
+    border: 1px dashed #444;
+}
+
+.clip-placeholder i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #awards-hero h1 { font-size: 2.5rem; }
+    .collab-badge { font-size: 1rem; }
+    .timeline-wrapper::before { display: none; }
+    .phase { width: 100%; margin-bottom: 1rem; }
+    .timeline-wrapper { flex-direction: column; gap: 1rem; }
+}
+
+.hero-subtitle {
+    margin-left: auto;   /* Pushes from the left */
+    margin-right: auto;  /* Pushes from the right */
+    margin-bottom: 1.5rem; /* Keeps your spacing */
+}
+
+/* ========================================
+   --- ROSTER / TEAMS SECTION STYLES ---
+   ======================================== */
+
+#rosters-section {
+    background-color: var(--midnight-black);
+    padding-bottom: 6rem;
+    position: relative;
+}
+
+/* Background visual flair */
+#rosters-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(circle at 50% 50%, rgba(1, 163, 235, 0.05), transparent 60%);
+    pointer-events: none;
+}
+
+.roster-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.roster-card {
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect: Glow Blue */
+.roster-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--electric-blue);
+    box-shadow: 0 0 20px rgba(1, 163, 235, 0.2);
+}
+
+/* Header with Team Name */
+.roster-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.roster-header h3 {
+    font-family: var(--font-headline); /* Anton */
+    font-size: 1.6rem;
+    color: var(--off-white);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    /* Truncate long names */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.roster-card:hover h3 {
+    color: var(--electric-blue);
+    text-shadow: 0 0 8px rgba(1, 163, 235, 0.6);
+}
+
+/* Player List */
+.roster-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.roster-list li {
+    font-family: var(--font-body); /* Ayuthaya */
+    font-size: 0.95rem;
+    color: var(--light-grey);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.roster-list li i {
+    width: 20px;
+    text-align: center;
+    color: var(--electric-blue);
+}
+
+/* Specific icon colors */
+.roster-list li i.fa-crown {
+    color: var(--awards-gold); /* Or #FFD700 if variable not set */
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+/* Sub Player Styling */
+.roster-list li.sub-player {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    color: #666;
+}
+
+.role-badge {
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: auto; /* Pushes to right */
+    color: #999;
+}
+/* --- NEW: Upcoming Events Section --- */
+#upcoming-events {
+    background-color: var(--near-black); /* Or your preferred background */
+    padding: 4rem 0;
+}
+
+#upcoming-events .container h2 {
+    margin-bottom: 0.5rem;
+}
+
+#upcoming-events .container p {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+}
+
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- Event Banner Styling --- */
+.event-banner-container {
+    position: relative;
+    grid-column: 1 / -1; /* Make the banner span all columns */
+    aspect-ratio: 16 / 5; /* Adjust as needed for your banner image */
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.event-banner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.event-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 40%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes content to the bottom */
+    align-items: center;
+    padding: 2rem;
+    color: var(--off-white);
+    text-align: center;
+    z-index: 2;
+}
+
+.event-info h3 {
+    font-family: var(--font-headline);
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(1, 163, 235, 0.5);
+}
+
+.event-info p {
+    font-size: 1.1rem;
+    color: var(--off-white);
+    margin-bottom: 0.5rem;
+}
+
+.event-info p a {
+    color: var(--electric-blue);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.event-overlay .btn {
+    margin-top: 1.5rem;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+}
+
+/* --- Finished Event Card Styling --- */
+.event-card {
+    background: var(--midnight-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.event-card.finished-event {
+    /* No special styling needed here as it's the default */
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--laser-purple);
+    box-shadow: 0 0 25px rgba(99, 63, 220, 0.3);
+}
+
+.event-details h4 {
+    font-size: 1.75rem;
+    font-family: var(--font-headline);
+    color: var(--off-white);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+.event-details p {
+    font-size: 1rem;
+    color: var(--light-grey);
+    margin-bottom: 0.25rem;
+}
+
+.event-details p:last-of-type { /* For the winner text */
+    color: var(--sunset-orange);
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+/* Style for the secondary button used on finished events */
+.event-card .btn.btn-secondary {
+    color: var(--off-white);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 1.75rem;
+}
+
+.event-card .btn.btn-secondary:hover {
+    background: var(--laser-purple);
+    border-color: var(--laser-purple);
+    box-shadow: 0 0 15px rgba(99, 63, 220, 0.4);
+    text-shadow: none;
+}
+
+
+/* Responsive adjustments for the event section */
+@media (max-width: 768px) {
+    .event-grid {
+        grid-template-columns: 1fr; /* Stack cards on smaller screens */
+    }
+    .event-banner-container {
+        aspect-ratio: 4 / 3; /* Adjust aspect ratio for smaller screens if needed */
+    }
+    .event-overlay {
+        padding: 1.5rem;
+    }
+    .event-info h3 {
+        font-size: 2rem;
+    }
+    .event-info p {
+        font-size: 1rem;
+    }
+    .event-card {
+        padding: 1.5rem;
+    }
+    .event-details h4 {
+        font-size: 1.4rem;
+    }
+}
+
+/* Hide banners on smaller screens if desired */
+/* @media (max-width: 480px) {
+    .event-banner-container {
+        display: none;
+    }
+    .event-overlay {
+        background: none;
+        padding: 1.5rem 1rem;
+    }
+    .event-card {
+        margin-top: 2rem;
+    }
+} */
+
+/* --- EVENTS HUB SECTION --- */
+#events-hub {
+    background-color: var(--near-black);
+    padding: 4rem 0;
+}
+
+/* Banner Container (1600x400px Aspect Ratio) */
+.event-banner-container {
+    position: relative;
+    width: 100%;
+    /* This calculates the exact 1600/400 ratio requested */
+    aspect-ratio: 4 / 1; 
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+}
+
+.event-banner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* Subtle zoom effect on banner hover */
+.event-banner-container:hover .event-banner {
+    transform: scale(1.02);
+}
+
+/* Overlay gradient so text pops */
+.event-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+    display: flex;
+    align-items: center; /* Vertically center */
+    padding: 0 4rem; /* Spacing from left */
+}
+
+.event-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-width: 600px;
+}
+
+.event-text h3 {
+    font-size: 3.5rem; /* Big Headline */
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(1, 163, 235, 0.4);
+    color: var(--off-white);
+}
+
+.event-date {
+    font-size: 1.2rem;
+    color: var(--electric-blue);
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.event-sub {
+    font-size: 1rem;
+    color: #bbb;
+    margin: 0;
+}
+
+/* Ensure the Special Button looks right in this context */
+.event-content-wrapper .btn-hero-special {
+    font-size: 1.1rem;
+    padding: 0.8rem 2.5rem;
+    margin-top: 10px;
+    box-shadow: 0 0 20px rgba(1, 163, 235, 0.5);
+}
+
+/* Responsive adjustments for the banner */
+@media (max-width: 992px) {
+    .event-banner-container {
+        aspect-ratio: 16 / 6; /* Make it a bit taller on tablets so text fits */
+    }
+    .event-text h3 { font-size: 2.5rem; }
+}
+
+@media (max-width: 768px) {
+    .event-banner-container {
+        aspect-ratio: 16 / 9; /* Standard video ratio for mobile */
+    }
+    .event-overlay {
+        padding: 2rem;
+        background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.4));
+        align-items: flex-end; /* Align to bottom on mobile */
+    }
+    .event-content-wrapper {
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+    .event-text h3 { font-size: 2rem; }
+}
+
+/* ========================================= */
+/* --- NEW: EVENTS HUB & BANNER STYLES --- */
+/* ========================================= */
+
+#events-hub {
+    background-color: var(--near-black);
+    padding: 4rem 0;
+}
+
+/* --- Banner Container (1600x400px Aspect Ratio) --- */
+.event-banner-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 1; /* Enforces the 1600x400 ratio */
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2.5rem; /* Space between the two banners */
+}
+
+/* The Image itself */
+.event-banner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fills the box without stretching */
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* Subtle zoom on hover */
+.event-banner-container:hover .event-banner {
+    transform: scale(1.02);
+}
+
+/* --- The Dark Overlay --- */
+.event-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Radial gradient makes the center darker so text pops */
+    background: transparent;
+    
+    /* Flexbox magic to CENTER everything */
+    display: flex;
+    justify-content: center; /* Horizontal Center */
+    align-items: center;     /* Vertical Center */
+    padding: 1rem;
+}
+
+/* --- Content Wrapper --- */
+.event-content-wrapper.centered-content {
+    display: flex;
+    flex-direction: column; /* Stacks text on top of button */
+    align-items: center;    /* Centers items horizontally in the column */
+    text-align: center;     /* Centers text lines */
+    gap: 1.5rem;            /* Space between text and button */
+    max-width: 800px;
+}
+
+/* --- Text Styling --- */
+.event-text h3 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(1, 163, 235, 0.6); /* Blue glow */
+    color: var(--off-white);
+    text-transform: uppercase;
+}
+
+.event-date {
+    font-size: 1.3rem;
+    color: var(--electric-blue);
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.event-sub {
+    font-size: 1.1rem;
+    color: #ddd;
+    margin: 0;
+    font-style: italic;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+/* --- Button Adjustments for Banner --- */
+.event-content-wrapper .btn-hero-special {
+    font-size: 1.1rem;
+    padding: 0.8rem 2.5rem;
+    margin-top: 10px;
+    box-shadow: 0 0 20px rgba(1, 163, 235, 0.5);
+    display: inline-flex;
+    align-items: center;
+}
+
+/* --- Responsive Mobile Styles --- */
+@media (max-width: 992px) {
+    .event-banner-container {
+        aspect-ratio: 16 / 6; /* Taller on tablets */
+    }
+    .event-text h3 { font-size: 2.5rem; }
+}
+
+@media (max-width: 768px) {
+    .event-banner-container {
+        aspect-ratio: 16 / 9; /* Standard video shape on phones */
+    }
+    .event-text h3 { font-size: 2rem; }
+    .event-date { font-size: 1.1rem; }
+}
