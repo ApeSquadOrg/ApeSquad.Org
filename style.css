@@ -4282,3 +4282,159 @@ header .social-links a:hover i {
 }
 
 
+/* ========================================= */
+/* --- NEW: EQUAL CREDIT HOSTS SECTION --- */
+/* ========================================= */
+
+/* 1. Joint Header in Hero */
+.joint-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.joint-brand {
+    color: var(--off-white);
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+
+.joint-x {
+    color: var(--awards-gold);
+    font-size: 1.2rem;
+}
+
+/* 2. Meet The Hosts Section */
+#event-hosts {
+    background-color: var(--near-black);
+    padding: 60px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 5;
+}
+
+.hosts-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.hosts-header h2 {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    margin: 0;
+    color: var(--off-white);
+}
+
+.h-line {
+    width: 60px;
+    height: 4px;
+    background: var(--awards-gold);
+    margin: 10px auto 0;
+}
+
+/* Wrapper Grid */
+.hosts-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+/* Profile Cards */
+.host-profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--midnight-black);
+    padding: 20px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    flex: 1;
+    min-width: 300px;
+}
+
+.host-profile:hover {
+    transform: translateY(-5px);
+    border-color: var(--awards-gold);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.host-img-container img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--awards-gold);
+    object-fit: cover;
+}
+
+.host-details h3 {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--off-white);
+    line-height: 1;
+    letter-spacing: 1px;
+}
+
+.host-details .role {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--light-grey);
+    margin: 5px 0 10px 0;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Social Icons */
+.host-socials a {
+    color: var(--light-grey);
+    font-size: 1.1rem;
+    margin-right: 15px;
+    transition: color 0.2s;
+}
+
+.host-socials a:hover {
+    color: var(--awards-gold);
+}
+
+/* Divider X between cards */
+.host-divider {
+    font-size: 2rem;
+    color: var(--awards-gold);
+    opacity: 0.8;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .joint-header {
+        flex-direction: column;
+        gap: 5px;
+        font-size: 1.2rem;
+    }
+    .joint-x {
+        display: none; /* Hide the X in hero on mobile, just stack names */
+    }
+    
+    .hosts-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .host-divider {
+        transform: rotate(90deg);
+        font-size: 1.5rem;
+    }
+
+    .host-profile {
+        width: 100%; 
+    }
+}
