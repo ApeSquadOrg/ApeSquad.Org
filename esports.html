@@ -11,9 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Updated Description -->
     <meta name="description" content="Meet the professional esports roster of Ape Squad. Get to know the players rewriting the rules of the arena.">
-    <!-- Updated Keywords -->
     <meta name="keywords" content="Ape Squad, esports roster, pro players, competitive gaming, The Finals, 100k major">
     <title>Ape Squad Roster | Ape Squad Esports</title>
 
@@ -148,23 +146,83 @@
                 <div class="team-header">
                     <h2 class="glitch" data-text="100K MAJOR MEMORIES">100K MAJOR MEMORIES</h2>
                 </div>
-                <p class="squad-intro">Highlights and behind-the-scenes from the big stage.</p>
+                <p class="squad-intro">Highlights and behind-the-scenes from the big stage. Click to expand.</p>
                 
                 <div class="photo-grid">
-                    <!-- Note: Ensure you have images in these paths or update the src -->
-                    <div class="photo-item"><img src="images/major/photo1.jpg" alt="100k Major Photo"></div>
-                    <div class="photo-item"><img src="images/major/photo2.jpg" alt="100k Major Photo"></div>
-                    <div class="photo-item"><img src="images/major/photo3.jpg" alt="100k Major Photo"></div>
-                    <div class="photo-item"><img src="images/major/photo4.jpg" alt="100k Major Photo"></div>
+                    <!-- ADD "clickable-photo" class to img -->
+                    <div class="photo-item"><img src="images/major/photo1.jpg" alt="Major Photo 1" class="clickable-photo"></div>
+                    <div class="photo-item"><img src="images/major/photo2.jpg" alt="Major Photo 2" class="clickable-photo"></div>
+                    <div class="photo-item"><img src="images/major/photo3.jpg" alt="Major Photo 3" class="clickable-photo"></div>
+                    <div class="photo-item"><img src="images/major/photo4.jpg" alt="Major Photo 4" class="clickable-photo"></div>
                 </div>
             </div>
         </section>
 
     </main>
 
+    <!-- THE LIGHTBOX MODAL (Hidden by default) -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg">
+        <div id="caption"></div>
+    </div>
+
     <footer class="site-footer"></footer> <!-- Populated by main.js -->
 
     <script src="js/profile-card.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- LIGHTBOX SCRIPT -->
+    <script>
+        // Get the modal
+        var modal = document.getElementById("imageModal");
+        var modalImg = document.getElementById("modalImg");
+        var captionText = document.getElementById("caption");
+        var body = document.body;
+
+        // Get all images with class "clickable-photo"
+        var images = document.querySelectorAll('.clickable-photo');
+
+        // Loop through images and add click event
+        images.forEach(function(img) {
+            img.onclick = function(){
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+                // Prevent scrolling background
+                body.style.overflow = "hidden";
+                // Add fade in effect
+                setTimeout(() => { modal.style.opacity = "1"; }, 10);
+            }
+        });
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close-modal")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        function closeModal() {
+            modal.style.opacity = "0";
+            setTimeout(() => { 
+                modal.style.display = "none"; 
+                body.style.overflow = "auto"; // Re-enable scroll
+            }, 300);
+        }
+
+        span.onclick = function() { closeModal(); }
+
+        // Also close if clicking outside the image
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        
+        // Close on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
