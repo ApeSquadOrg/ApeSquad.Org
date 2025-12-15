@@ -24,26 +24,20 @@
     <meta name="msapplication-TileColor" content="#0a0a0a">
     <meta name="theme-color" content="#0a0a0a">
 
-    <!-- Google Fonts -->
+    <!-- Preconnect for faster font/icon loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Your Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile-card.css">
 </head>
 <body>
 
-    <header class="navbar"></header> <!-- Populated by main.js -->
+    <header class="navbar"></header>
 
     <main>
-        <!-- ====================================================== -->
-        <!-- STRIKING PAGE HEADER                                   -->
-        <!-- ====================================================== -->
         <section class="page-header-striking">
             <div class="container">
                 <h2 class="glitch" data-text="OUR ROSTER">OUR ROSTER</h2>
@@ -53,28 +47,29 @@
             </div>
         </section>
 
-        <!-- ====================================================== -->
-        <!-- APE SQUAD (3 Players, 1 Coach)                         -->
-        <!-- ====================================================== -->
+        <!-- APE SQUAD -->
         <section id="ape-squad-team">
             <div class="container">
                 <div class="team-header">
-		            <img src="images/thefinals.png" alt="The Finals Logo" class="team-logo">
+		            <img src="images/thefinals.png" alt="The Finals Logo" class="team-logo" loading="lazy">
                 </div>
                 <div class="team-header">
-                    <img src="images/apesquad.png" alt="Ape Squad Logo" class="team-logo">
+                    <img src="images/apesquad.png" alt="Ape Squad Logo" class="team-logo" loading="lazy">
                     <h2 class="glitch" data-text="APE SQUAD">APE SQUAD</h2>
                 </div>
                 <p class="squad-intro">The flagship roster, dominating the competitive scene.</p>
                 <div class="team-grid">
                     
-                    <!-- Player 1: Mr.RedFox -->
+                    <!-- Player 1 -->
                     <div class="squad-member-container">
                         <div class="pc-card-wrapper">
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/mrredfox.png" alt="Player avatar"></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <!-- Note: decoding="async" prevents UI freeze while image processes -->
+                                        <img class="avatar" src="images/team/mrredfox.png" alt="Player avatar" loading="lazy" decoding="async">
+                                    </div>
                                     <div class="pc-content"><div class="pc-details"><h3>Mr.RedFox</h3><p>Light</p></div></div>
                                 </div>
                             </section>
@@ -84,13 +79,15 @@
                         </div>
                     </div>
                     
-                    <!-- Player 2: Manda -->
+                    <!-- Player 2 -->
                     <div class="squad-member-container">
                         <div class="pc-card-wrapper">
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/manda.png" alt="Player avatar"></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/manda.png" alt="Player avatar" loading="lazy" decoding="async">
+                                    </div>
                                     <div class="pc-content"><div class="pc-details"><h3>Manda</h3><p>Heavy</p></div></div>
                                 </div>
                             </section>
@@ -100,13 +97,15 @@
                         </div>
                     </div>
                     
-                    <!-- Player 3: KriegerBlue -->
+                    <!-- Player 3 -->
                     <div class="squad-member-container">
                         <div class="pc-card-wrapper">
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/kriegerblue.png" alt="Player avatar"></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/kriegerblue.png" alt="Player avatar" loading="lazy" decoding="async">
+                                    </div>
                                     <div class="pc-content"><div class="pc-details"><h3>KriegerBlue</h3><p>Medium</p></div></div>
                                 </div>
                             </section>
@@ -125,22 +124,21 @@
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/tonyquartz.png" alt="Coach avatar"></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/tonyquartz.png" alt="Coach avatar" loading="lazy" decoding="async">
+                                    </div>
                                     <div class="pc-content"><div class="pc-details"><h3>TonyQuartz</h3><p>Head Coach</p></div></div>
                                 </div>
                             </section>
                         </div>
-                        <div class="social-links">
-                        </div>
+                        <div class="social-links"></div>
                     </div>
 
                 </div>
             </div>
         </section>
 
-        <!-- ====================================================== -->
-        <!-- 100K MAJOR PHOTOS SECTION                              -->
-        <!-- ====================================================== -->
+        <!-- MAJOR PHOTOS -->
         <section id="major-photos">
             <div class="container">
                 <div class="team-header">
@@ -148,81 +146,93 @@
                 </div>
                 <p class="squad-intro">Highlights and behind-the-scenes from the big stage. Click to expand.</p>
                 
-                <div class="photo-grid">
-                    <!-- ADD "clickable-photo" class to img -->
-                    <div class="photo-item"><img src="images/major/photo1.jpg" alt="Major Photo 1" class="clickable-photo"></div>
-                    <div class="photo-item"><img src="images/major/photo2.jpg" alt="Major Photo 2" class="clickable-photo"></div>
-                    <div class="photo-item"><img src="images/major/photo3.jpg" alt="Major Photo 3" class="clickable-photo"></div>
-                    <div class="photo-item"><img src="images/major/photo4.jpg" alt="Major Photo 4" class="clickable-photo"></div>
+                <!-- ID added for Event Delegation (Faster JS) -->
+                <div class="photo-grid" id="photoGallery">
+                    <div class="photo-item">
+                        <img src="images/major/photo1.jpg" alt="Major Photo 1" class="clickable-photo" loading="lazy" decoding="async">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/major/photo2.jpg" alt="Major Photo 2" class="clickable-photo" loading="lazy" decoding="async">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/major/photo3.jpg" alt="Major Photo 3" class="clickable-photo" loading="lazy" decoding="async">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/major/photo4.jpg" alt="Major Photo 4" class="clickable-photo" loading="lazy" decoding="async">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/major/photo5.jpg" alt="Major Photo 5" class="clickable-photo" loading="lazy" decoding="async">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/major/photo6.jpg" alt="Major Photo 6" class="clickable-photo" loading="lazy" decoding="async">
+                    </div>
                 </div>
             </div>
         </section>
-
     </main>
 
-    <!-- THE LIGHTBOX MODAL (Hidden by default) -->
-    <div id="imageModal" class="modal">
+    <!-- LIGHTBOX MODAL -->
+    <div id="imageModal" class="modal" aria-hidden="true">
         <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImg">
+        <img class="modal-content" id="modalImg" alt="Enlarged photo">
         <div id="caption"></div>
     </div>
 
-    <footer class="site-footer"></footer> <!-- Populated by main.js -->
+    <footer class="site-footer"></footer> 
 
     <script src="js/profile-card.js"></script>
     <script src="js/main.js"></script>
 
-    <!-- LIGHTBOX SCRIPT -->
+    <!-- OPTIMIZED JS FOR LIGHTBOX -->
     <script>
-        // Get the modal
-        var modal = document.getElementById("imageModal");
-        var modalImg = document.getElementById("modalImg");
-        var captionText = document.getElementById("caption");
-        var body = document.body;
+        (function() {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImg");
+            const captionText = document.getElementById("caption");
+            const gallery = document.getElementById("photoGallery");
+            const closeBtn = document.querySelector(".close-modal");
+            const body = document.body;
 
-        // Get all images with class "clickable-photo"
-        var images = document.querySelectorAll('.clickable-photo');
+            // EVENT DELEGATION: 1 listener for the whole gallery instead of 6 loops
+            gallery.addEventListener('click', function(e) {
+                if (e.target.classList.contains('clickable-photo')) {
+                    const src = e.target.src;
+                    const alt = e.target.alt;
+                    
+                    // Use RequestAnimationFrame for smoother UI open
+                    requestAnimationFrame(() => {
+                        modal.style.display = "flex"; // Changed from block to flex for easier centering
+                        modal.setAttribute('aria-hidden', 'false');
+                        modalImg.src = src;
+                        captionText.innerText = alt;
+                        body.style.overflow = "hidden";
+                        
+                        // Small timeout to allow display:flex to apply before opacity transition
+                        setTimeout(() => { modal.style.opacity = "1"; }, 10);
+                    });
+                }
+            });
 
-        // Loop through images and add click event
-        images.forEach(function(img) {
-            img.onclick = function(){
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                captionText.innerHTML = this.alt;
-                // Prevent scrolling background
-                body.style.overflow = "hidden";
-                // Add fade in effect
-                setTimeout(() => { modal.style.opacity = "1"; }, 10);
+            function closeModal() {
+                modal.style.opacity = "0";
+                modal.setAttribute('aria-hidden', 'true');
+                setTimeout(() => { 
+                    modal.style.display = "none"; 
+                    body.style.overflow = ""; // Clears inline style
+                    modalImg.src = ""; // Clear src to save memory
+                }, 300);
             }
-        });
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close-modal")[0];
+            closeBtn.addEventListener('click', closeModal);
 
-        // When the user clicks on <span> (x), close the modal
-        function closeModal() {
-            modal.style.opacity = "0";
-            setTimeout(() => { 
-                modal.style.display = "none"; 
-                body.style.overflow = "auto"; // Re-enable scroll
-            }, 300);
-        }
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeModal();
+            });
 
-        span.onclick = function() { closeModal(); }
-
-        // Also close if clicking outside the image
-        modal.onclick = function(event) {
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-        
-        // Close on Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
-                closeModal();
-            }
-        });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === "Escape" && modal.style.display === "flex") closeModal();
+            });
+        })();
     </script>
 </body>
 </html>
