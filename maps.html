@@ -15,7 +15,7 @@
     
     <!-- Page-Specific Title & Description -->
     <title>Strategic Maps | Ape Squad Esports</title>
-    <meta name="description" content="Explore detailed top-down maps of The Finals with interactive points of interest. Plan your strategy with Ape Squad.">
+    <meta name="description" content="Explore detailed top-down maps of The Finals. Plan your strategy with Ape Squad.">
     <meta name="keywords" content="Ape Squad, esports, The Finals, gaming, pro team, competitive gaming, maps, strategy, monaco, seoul, las vegas">
 
     <!-- Favicon -->
@@ -46,12 +46,10 @@
         ========================================
         */
 
-        /* Let the main stylesheet handle body background and fonts */
         #maps-page {
             background-color: var(--near-black);
         }
 
-        /* Re-styling the header to match the main theme's h2 */
         #maps-page h2 {
             font-family: var(--font-headline);
             font-size: 2.8rem;
@@ -59,22 +57,52 @@
             font-weight: 400;
             text-transform: uppercase;
             text-align: center;
-            margin-bottom: 1rem;
-            /* Removing the old gradient text style */
+            margin-bottom: 0.5rem; /* Reduced margin for new button */
             background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            -webkit-text-fill-color: unset;
-            animation: none;
             color: var(--off-white);
         }
 
-        /* Make intro text match the global <p> styles */
+        /* --- NEW BUTTON STYLES --- */
+        .new-tool-banner {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn-disabled {
+            display: inline-block;
+            background-color: #333; /* Greyed out */
+            color: #777;
+            font-family: var(--font-headline);
+            text-transform: uppercase;
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            font-size: 1.1rem;
+            cursor: not-allowed;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        /* Use this class later when the tool is live to activate it */
+        .btn-active-tool {
+            background-color: var(--electric-blue);
+            color: white;
+            border-color: var(--electric-blue);
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(1, 163, 235, 0.4);
+        }
+        .btn-active-tool:hover {
+            background-color: #0088c5;
+            transform: translateY(-2px);
+        }
+
+
         .section-intro {
             text-align: center;
             font-size: 1.1rem;
             max-width: 70ch;
-            margin: -1rem auto 3rem auto;
+            margin: 0 auto 3rem auto;
             color: #BBBBBB;
             font-family: var(--font-body);
         }
@@ -86,7 +114,7 @@
             align-items: flex-start;
         }
 
-        /* --- MAP CONTROLS SIDEBAR (THEMED) --- */
+        /* --- MAP CONTROLS SIDEBAR --- */
         .map-controls-container {
             flex: 0 0 300px;
             background: var(--midnight-black);
@@ -96,9 +124,6 @@
             display: flex;
             flex-direction: column;
             gap: 2rem;
-            /* Removing old styles */
-            backdrop-filter: none;
-            box-shadow: none;
         }
         
         .map-selector-wrapper {
@@ -191,7 +216,6 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-             /* Remove old pulse animation */
             background: none;
             padding: 0;
             animation: none;
@@ -211,9 +235,7 @@
             transition: opacity 0.3s ease-in-out;
         }
 
-        #map-display-area.pois-hidden .poi-overlay, 
-        #map-display-area.objectives-hidden .objective-overlay, 
-        #map-display-area.spawns-hidden .spawn-overlay { 
+        #map-display-area.pois-hidden .poi-overlay { 
             opacity: 0; 
         }
 
@@ -241,7 +263,14 @@
         <section id="maps-page">
             <div class="container">
                 <h2>Strategic Maps</h2>
-                <p class="section-intro">Select a map from the dropdown, then use the toggles to show or hide points of interest, objectives, and spawn points for tactical planning.</p>
+                
+                <!-- NEW DISABLED BUTTON -->
+                <div class="new-tool-banner">
+                    <!-- Change 'btn-disabled' to 'btn-active-tool' and update href when ready -->
+                    <a href="#" class="btn-disabled" onclick="return false;">Interactive Strategy Tool (Coming Soon)</a>
+                </div>
+
+                <p class="section-intro">Select a map from the dropdown to view high-resolution imagery and Points of Interest.</p>
                 
                 <div class="map-layout-wrapper">
                     
@@ -250,25 +279,17 @@
                             <label for="map-selector-dropdown">Select Map</label>
                             <select id="map-selector-dropdown"></select>
                         </div>
+                        
                         <div class="map-toggles">
                             <div class="toggle-switch">
                                 <input type="checkbox" id="toggle-pois">
                                 <label for="toggle-pois">Points of Interest</label>
                             </div>
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="toggle-objectives">
-                                <label for="toggle-objectives">Objectives</label>
-                            </div>
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="toggle-spawns">
-                                <label for="toggle-spawns">Spawn Points</label>
-                            </div>
                         </div>
 
                         <div class="credit-area">
                             <p>
-                                Maps Made by: APE SQUAD<br>
-                                Cashout Locations by: Akimbof
+                                Maps Made by: APE SQUAD
                             </p>
                         </div>
 
@@ -292,24 +313,23 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
+            // Removed Objectives and Spawn overlays from data
             const mapsData = [
-                { name: "Monaco", imageSrc: "/images/maps/Monaco.png", poiOverlay: "/images/maps/overlays/Monaco_POIs.png", objectiveOverlay: "/images/maps/overlays/Monaco_Objectives.png", spawnOverlay: "/images/maps/overlays/Monaco_Spawns.png" },
-                { name: "Seoul", imageSrc: "/images/maps/Seoul.png", poiOverlay: "/images/maps/overlays/Seoul_POIs.png", objectiveOverlay: "/images/maps/overlays/Seoul_Objectives.png", spawnOverlay: "/images/maps/overlays/Seoul_Spawns.png" },
-                { name: "Las Vegas", imageSrc: "/images/maps/Vegas.png", poiOverlay: "/images/maps/overlays/Vegas_POIs.png", objectiveOverlay: "/images/maps/overlays/Vegas_Objectives.png", spawnOverlay: "/images/maps/overlays/Vegas_Spawns.png" },
-                { name: "Skyway Stadium", imageSrc: "/images/maps/Skyway.png", poiOverlay: "/images/maps/overlays/SkywayStadium_POIs.png", objectiveOverlay: "/images/maps/overlays/SkywayStadium_Objectives.png", spawnOverlay: "/images/maps/overlays/SkywayStadium_Spawns.png" },
-                { name: "SYS$HORIZON", imageSrc: "/images/maps/SysHorizon.png", poiOverlay: "/images/maps/overlays/SysHorizon_POIs.png", objectiveOverlay: "/images/maps/overlays/SysHorizon_Objectives.png", spawnOverlay: "/images/maps/overlays/SysHorizon_Spawns.png" },
-                { name: "Fortune Stadium", imageSrc: "/images/maps/Fortune.png", poiOverlay: "/images/maps/overlays/Fortune_POIs.png", objectiveOverlay: "/images/maps/overlays/Fortune_Objectives.png", spawnOverlay: "/images/maps/overlays/Fortune_Spawns.png" },
-                { name: "Nozomi/Citadel", imageSrc: "/images/maps/Citadel.png", poiOverlay: "/images/maps/overlays/Citadel_POIs.png", objectiveOverlay: "/images/maps/overlays/Citadel_Objectives.png", spawnOverlay: "/images/maps/overlays/Citadel_Spawns.png" },
-                { name: "Bernal", imageSrc: "/images/maps/Bernal.png", poiOverlay: "/images/maps/overlays/Bernal_POIs.png", objectiveOverlay: "/images/maps/overlays/Bernal_Objectives.png", spawnOverlay: "/images/maps/overlays/Bernal_Spawns.png" },
-                { name: "Fangwai City", imageSrc: "/images/maps/Fangwai.png", poiOverlay: "/images/maps/overlays/Fangwai_POIs.png", objectiveOverlay: "/images/maps/overlays/Fangwai_Objectives.png", spawnOverlay: "/images/maps/overlays/Fangwai_Spawns.png" },
-                { name: "Kyoto", imageSrc: "/images/maps/Kyoto1.png", poiOverlay: "/images/maps/overlays/Kyoto_POIs.png", objectiveOverlay: "/images/maps/overlays/Kyoto_Objectives.png", spawnOverlay: "/images/maps/overlays/Kyoto_Spawns.png" }
+                { name: "Monaco", imageSrc: "/images/maps/Monaco.png", poiOverlay: "/images/maps/overlays/Monaco_POIs.png" },
+                { name: "Seoul", imageSrc: "/images/maps/Seoul.png", poiOverlay: "/images/maps/overlays/Seoul_POIs.png" },
+                { name: "Las Vegas", imageSrc: "/images/maps/Vegas.png", poiOverlay: "/images/maps/overlays/Vegas_POIs.png" },
+                { name: "Skyway Stadium", imageSrc: "/images/maps/Skyway.png", poiOverlay: "/images/maps/overlays/SkywayStadium_POIs.png" },
+                { name: "SYS$HORIZON", imageSrc: "/images/maps/SysHorizon.png", poiOverlay: "/images/maps/overlays/SysHorizon_POIs.png" },
+                { name: "Fortune Stadium", imageSrc: "/images/maps/Fortune.png", poiOverlay: "/images/maps/overlays/Fortune_POIs.png" },
+                { name: "Nozomi/Citadel", imageSrc: "/images/maps/Citadel.png", poiOverlay: "/images/maps/overlays/Citadel_POIs.png" },
+                { name: "Bernal", imageSrc: "/images/maps/Bernal.png", poiOverlay: "/images/maps/overlays/Bernal_POIs.png" },
+                { name: "Fangwai City", imageSrc: "/images/maps/Fangwai.png", poiOverlay: "/images/maps/overlays/Fangwai_POIs.png" },
+                { name: "Kyoto", imageSrc: "/images/maps/Kyoto1.png", poiOverlay: "/images/maps/overlays/Kyoto_POIs.png" }
             ];
 
             const selectorDropdown = document.getElementById("map-selector-dropdown");
             const displayArea = document.getElementById("map-display-area");
             const togglePois = document.getElementById("toggle-pois");
-            const toggleObjectives = document.getElementById("toggle-objectives");
-            const toggleSpawns = document.getElementById("toggle-spawns");
 
             function renderMap(mapName) {
                 const map = mapsData.find(m => m.name === mapName);
@@ -318,13 +338,12 @@
                     return; 
                 }
 
+                // Simplified render function (Maps + POIs only)
                 displayArea.innerHTML = `
                     <h3>${map.name}</h3>
                     <div class="map-image-wrapper">
                         <img src="${map.imageSrc}" alt="Top-down map of ${map.name}" class="base-map" loading="lazy">
                         <img src="${map.poiOverlay}" class="map-overlay poi-overlay" alt="POI Overlay">
-                        <img src="${map.objectiveOverlay}" class="map-overlay objective-overlay" alt="Objective Overlay">
-                        <img src="${map.spawnOverlay}" class="map-overlay spawn-overlay" alt="Spawn Overlay">
                     </div>`;
                 
                 updateToggleVisibility();
@@ -351,8 +370,6 @@
 
             function updateToggleVisibility() {
                 displayArea.classList.toggle('pois-hidden', !togglePois.checked);
-                displayArea.classList.toggle('objectives-hidden', !toggleObjectives.checked);
-                displayArea.classList.toggle('spawns-hidden', !toggleSpawns.checked);
             }
 
             function setupEventListeners() {
@@ -360,10 +377,7 @@
                     transitionToMap(event.target.value);
                 });
 
-                const handleToggle = () => updateToggleVisibility();
-                togglePois.addEventListener('change', handleToggle);
-                toggleObjectives.addEventListener('change', handleToggle);
-                toggleSpawns.addEventListener('change', handleToggle);
+                togglePois.addEventListener('change', updateToggleVisibility);
             }
 
             function initializeApp() {
