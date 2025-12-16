@@ -4286,7 +4286,7 @@ header .social-links a:hover i {
 /* --- NEW: EQUAL CREDIT HOSTS SECTION --- */
 /* ========================================= */
 
-/* 1. Joint Header in Hero */
+/* 1. Joint Header in Hero (Remains the same) */
 .joint-header {
     display: flex;
     justify-content: center;
@@ -4336,15 +4336,15 @@ header .social-links a:hover i {
     margin: 10px auto 0;
 }
 
-/* Wrapper Grid */
+/* Wrapper Grid - UPDATED FOR 3 PEOPLE */
 .hosts-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 40px;
-    max-width: 900px;
+    gap: 30px; /* Space between cards */
+    max-width: 1200px; /* Increased max-width to fit 3 cards */
     margin: 0 auto;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
 /* Profile Cards */
@@ -4353,13 +4353,16 @@ header .social-links a:hover i {
     align-items: center;
     gap: 20px;
     background: var(--midnight-black);
-    padding: 20px 30px;
+    padding: 20px 25px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     transition: transform 0.3s ease, border-color 0.3s ease;
+    
+    /* Sizing logic for 3 cards */
     flex: 1;
-    min-width: 300px;
+    min-width: 280px; /* Won't get smaller than this */
+    max-width: 350px; /* Won't get wider than this */
 }
 
 .host-profile:hover {
@@ -4369,8 +4372,8 @@ header .social-links a:hover i {
 }
 
 .host-img-container img {
-    width: 80px;
-    height: 80px;
+    width: 70px; /* Slightly smaller to fit 3 comfortably */
+    height: 70px;
     border-radius: 50%;
     border: 3px solid var(--awards-gold);
     object-fit: cover;
@@ -4378,7 +4381,7 @@ header .social-links a:hover i {
 
 .host-details h3 {
     font-family: var(--font-headline);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin: 0;
     color: var(--off-white);
     line-height: 1;
@@ -4387,7 +4390,7 @@ header .social-links a:hover i {
 
 .host-details .role {
     font-family: var(--font-body);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--light-grey);
     margin: 5px 0 10px 0;
     font-weight: bold;
@@ -4406,14 +4409,17 @@ header .social-links a:hover i {
     color: var(--awards-gold);
 }
 
-/* Divider X between cards */
-.host-divider {
-    font-size: 2rem;
-    color: var(--awards-gold);
-    opacity: 0.8;
+/* Mobile Responsive */
+@media (max-width: 992px) {
+    .hosts-wrapper {
+        gap: 20px;
+    }
+    .host-profile {
+        width: 100%;
+        max-width: 100%; /* Full width on tablets/mobile */
+    }
 }
 
-/* Mobile Responsive */
 @media (max-width: 768px) {
     .joint-header {
         flex-direction: column;
@@ -4421,20 +4427,6 @@ header .social-links a:hover i {
         font-size: 1.2rem;
     }
     .joint-x {
-        display: none; /* Hide the X in hero on mobile, just stack names */
-    }
-    
-    .hosts-wrapper {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .host-divider {
-        transform: rotate(90deg);
-        font-size: 1.5rem;
-    }
-
-    .host-profile {
-        width: 100%; 
+        display: none; 
     }
 }
