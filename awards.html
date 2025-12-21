@@ -23,6 +23,43 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile-card.css">
+    <!-- CSS Adjustments for Voting Phase -->
+    <style>
+        /* Center the Main Grand Prize Text */
+        .grand-prize-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Wrapper to center the single card */
+        .single-nominee-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        /* Specific styles for the Single Mystery Card to ensure text is centered */
+        .single-nominee-wrapper .nominee-card {
+            width: 100%;
+            max-width: 300px;
+            transform: scale(1.1); /* Slight zoom for emphasis */
+            text-align: center;    /* FORCE TEXT CENTER */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .single-nominee-wrapper .nominee-card h4 {
+            margin-top: 15px;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
@@ -44,14 +81,14 @@
                 <h1>The Finals<br><span class="text-gold">Contestant Choice Awards</span></h1>
                 <p class="hero-subtitle">Celebrating the streamers, casters, and community builders who shaped the arena.</p>
                 <div class="hero-actions">
-                    <a href="https://forms.gle/wjggd5AX2MMywgG7A" target="_blank" class="btn btn-hero-special">
-                        <i class="fa-solid fa-check-to-slot"></i> Nominate Here
+                    <a href="https://forms.gle/8DmyQgj3tHjre2fR7" target="_blank" class="btn btn-hero-special">
+                        <i class="fa-solid fa-check-to-slot"></i> Vote Here
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- NEW: EVENT ORGANIZERS / HOSTS SECTION -->
+        <!-- EVENT ORGANIZERS / HOSTS SECTION -->
         <section id="event-hosts">
             <div class="container">
                 <div class="hosts-header">
@@ -63,7 +100,6 @@
                     <!-- HOST 1: APE SQUAD -->
                     <div class="host-profile">
                         <div class="host-img-container">
-                            <!-- REPLACE WITH APE SQUAD LOGO URL -->
                             <img src="images/staff/sonsoyo.png" alt="Ape Squad">
                         </div>
                         <div class="host-details">
@@ -76,12 +112,9 @@
                         </div>
                     </div>
 
-    
-
                     <!-- HOST 2: MOMMA GERBIL -->
                     <div class="host-profile">
                         <div class="host-img-container">
-                             <!-- REPLACE WITH MOMMA GERBIL LOGO URL -->
                             <img src="images/staff/momma.jpg" alt="Momma Gerbil">
                         </div>
                         <div class="host-details">
@@ -93,38 +126,34 @@
                             </div>
                         </div>
                     </div>
-                     <!-- HOST 3: JUSTIN -->
-            <div class="host-profile">
-                <div class="host-img-container">
-                     <!-- REPLACE WITH JUSTIN LOGO URL -->
-                    <img src="images/staff/justin.png" alt="Justin">
-                </div>
-                <div class="host-details">
-                    <h3>Justin</h3>
-                    <p class="role">Ape Squad</p>
-                    <div class="host-socials">
-                        <a href="https://x.com/ApeSquadOrg" target="_blank"><i class="fa-brands fa-twitter"></i></a>
-                        <!-- Add other socials if needed -->
+                    
+                    <!-- HOST 3: JUSTIN -->
+                    <div class="host-profile">
+                        <div class="host-img-container">
+                            <img src="images/staff/justin.png" alt="Justin">
+                        </div>
+                        <div class="host-details">
+                            <h3>Justin</h3>
+                            <p class="role">Ape Squad</p>
+                            <div class="host-socials">
+                                <a href="https://x.com/ApeSquadOrg" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-        </div>
-    </div>
-</section>
                 </div>
             </div>
         </section>
 
-        <!-- TIMELINE SECTION -->
+        <!-- TIMELINE SECTION (Voting Active) -->
         <section id="awards-timeline">
             <div class="container">
                 <div class="timeline-wrapper">
-                    <div class="phase active">
+                    <div class="phase">
                         <div class="phase-dot"></div>
                         <h3>Nominations</h3>
                     </div>
-                    <div class="phase">
+                    <div class="phase active">
                         <div class="phase-dot"></div>
                         <h3>Voting</h3>
                     </div>
@@ -136,49 +165,28 @@
             </div>
         </section>
 
-        <!-- GRAND AWARD SECTION (With Placeholders) -->
+        <!-- GRAND AWARD SECTION (Centered) -->
         <section id="grand-award">
             <div class="container">
                 <h2 class="section-title">Grand Award</h2>
                 <div class="grand-prize-card">
                     <div class="trophy-icon"><i class="fa-solid fa-trophy"></i></div>
                     <h3>Creator of the Year</h3>
-                    <p>The ultimate recognition for impact, consistency, and community spirit.</p>
+                    <p>The ultimate recognition. Who will take the crown?</p>
                     
-                    <div class="nominee-grid">
-                        <!-- Placeholder 1 -->
+                    <!-- Single Centered Mystery Card -->
+                    <div class="single-nominee-wrapper">
                         <div class="nominee-card">
                             <div class="nominee-placeholder">
-                                <i class="fa-solid fa-user-astronaut"></i>
+                                <i class="fa-solid fa-crown"></i>
                             </div>
-                            <h4>TBD</h4>
-                        </div>
-                        <!-- Placeholder 2 -->
-                        <div class="nominee-card">
-                            <div class="nominee-placeholder">
-                                <i class="fa-solid fa-user-ninja"></i>
-                            </div>
-                            <h4>TBD</h4>
-                        </div>
-                        <!-- Placeholder 3 -->
-                        <div class="nominee-card">
-                            <div class="nominee-placeholder">
-                                <i class="fa-solid fa-user-secret"></i>
-                            </div>
-                            <h4>TBD</h4>
-                        </div>
-                        <!-- Placeholder 4 -->
-                        <div class="nominee-card">
-                            <div class="nominee-placeholder">
-                                <i class="fa-solid fa-user-gear"></i>
-                            </div>
-                            <h4>TBD</h4>
+                            <h4>Winner Revealed Soon</h4>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
-
         <!-- CATEGORIES SECTION -->
         <section id="nominees" class="awards-categories">
             <div class="container">
@@ -190,37 +198,55 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Streamer of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>NeonGutz</li>
+                                <li>Lycommit</li>
+                                <li>AloneInParis</li>
+                                <li>Lamp</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>YouTuber of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>Appoh</li>
+                                <li>Yung</li>
+                                <li>NeonGutz</li>
+                                <li>Ronin</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Most Entertaining Creator</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>NeonGutz</li>
+                                <li>AloneInParis</li>
+                                <li>Yung</li>
+                                <li>Lycommit</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Best Informative/ Educational</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>Appoh</li>
+                                <li>Ronin</li>
+                                <li>Ardy</li>
+                                <li>Jinko</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Best Female Content Creator</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>Waterdance</li>
+                                <li>Onyxgraves</li>
+                                <li>HotCrossBun</li>
+                                <li>Roo404</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Rising Star Award<br><span style="font-size:0.8em; opacity:0.7">(New Creator)</span></h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>LuiBoolin</li>
+                                <li>Splashhh006</li>
+                                <li>Lostboykaleido</li>
+                                <li>Kellymilkies</li>
                             </ul>
                         </div>
                     </div>
@@ -233,31 +259,46 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Caster of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>Ardy</li>
+                                <li>Sonsoyo</li>
+                                <li>Waltz</li>
+                                <li>Gerry</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Artist of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>CartoonChaser</li>
+                                <li>Wirt</li>
+                                <li>Droowings</li>
+                                <li>Psychic Wolfe</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Best Community Event</h3></div>
                             <ul class="nominee-list">
-                                <li>Event 1</li><li>Event 2</li><li>Event 3</li>
+                                <li>PHL</li>
+                                <li>Yung's PVA Tour</li>
+                                <li>Etelcup</li>
+                                <li>WaltzCups</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Best Discord Community</h3></div>
                             <ul class="nominee-list">
-                                <li>Community 1</li><li>Community 2</li><li>Community 3</li>
+                                <li>PHL</li>
+                                <li>The Finals Official</li>
+                                <li>The Finals | RU</li>
+                                <li>Ruby Grind</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Community MVP<br><span style="font-size:0.8em; opacity:0.7">(Mods/Non-Creators)</span></h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>BurritahSupreme</li>
+                                <li>LilyLegend</li>
+                                <li>Wirt</li>
+                                <li>Gofer</li>
                             </ul>
                         </div>
                     </div>
@@ -270,25 +311,37 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Player of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>Uni</li>
+                                <li>Oji</li>
+                                <li>Lasagna</li>
+                                <li>Grad</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Coach of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>Yung</li>
+                                <li>Appoh</li>
+                                <li>Ardy</li>
+                                <li>MouzerOG</li>
                             </ul>
                         </div>
                         <div class="award-card">
                             <div class="award-header"><h3>Most Improved Team</h3></div>
                             <ul class="nominee-list">
-                                <li>Team 1</li><li>Team 2</li><li>Team 3</li>
+                                <li>TSM</li>
+                                <li>Team Secret</li>
+                                <li>NTMR</li>
+                                <li>Fnatic</li>
                             </ul>
                         </div>
                         <div class="award-card">
-                            <div class="award-header"><h3>Hardest Working Player</h3></div>
+                            <div class="award-header"><h3>Most Improved Player</h3></div>
                             <ul class="nominee-list">
-                                <li>Nominee 1</li><li>Nominee 2</li><li>Nominee 3</li>
+                                <li>Oji</li>
+                                <li>Arko</li>
+                                <li>Uni</li>
+                                <li>Gremlin</li>
                             </ul>
                         </div>
                     </div>
