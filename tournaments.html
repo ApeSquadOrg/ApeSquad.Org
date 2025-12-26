@@ -34,6 +34,45 @@
 
     <!-- Your Stylesheets -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Internal Style Patch for Layout Issues -->
+    <style>
+        /* 1. Fix Title Sizing */
+        .tournament-card-overlay h3 {
+            font-size: 1.4rem !important; 
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            white-space: normal;
+        }
+
+        /* 2. Prevent Description Overflow */
+        .tournament-card-overlay p {
+            font-size: 0.9rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limit description to 3 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 1rem; /* Space between text and buttons */
+        }
+
+        /* 3. Button Layout */
+        .tournament-card-overlay .card-actions {
+            display: flex;
+            align-items: center;
+            /* Since we removed the text, this will align the Watch button to the left (or center if you prefer) */
+            justify-content: flex-start; 
+            width: 100%;
+        }
+
+        /* Shrink the button inside cards slightly so it fits nicely */
+        .tournament-card-overlay .btn {
+            font-size: 0.75rem !important;
+            padding: 5px 15px !important;
+            line-height: 1.2;
+            height: auto;
+            min-height: unset;
+        }
+    </style>
 </head>
 <body>
 
@@ -53,15 +92,15 @@
                     </a>
                 </div>
 
-                <!-- Showcase Section - Holiday Snowdown -->
+                <!-- Showcase Section - Battle for Break Point -->
                 <div class="showcase-container">
                     <div class="tournament-showcase">
-                        <img src="/images/tournament/holidaysnowdown.png" alt="Holiday Snowdown tournament">
+                        <img src="/images/tournament/battleforbreakpoint.png" alt="Battle for Break Point tournament">
                         <div class="showcase-badge">Featured Event</div>
                         <div class="showcase-overlay">
                             <div>
-                                <h3>Holiday Snowdown</h3>
-                                <p>December 21st. The frost bites back in our festive end-of-year winter spectacle. Witness the squads skate on thin ice for winter glory!</p>
+                                <h3>Battle for Break Point</h3>
+                                <p>The ultimate showdown is here. New legends will rise as the squad fights to survive the breaking point.</p>
                             </div>
                             <div class="card-actions">
                                 <span class="showcase-cta">View Details <i class="fa-solid fa-arrow-right"></i></span>
@@ -70,28 +109,42 @@
                                 </a>
                             </div>
                         </div>
-                        <!-- This link covers the entire card -->
-                        <a href="/tournaments/holiday-snowdown.html" class="card-link-cover" aria-label="View details for Holiday Snowdown"></a>
+                        <a href="/tournaments/battle-for-break-point.html" class="card-link-cover" aria-label="View details for Battle for Break Point"></a>
                     </div>
                 </div>
 
                 <!-- Tournaments Grid -->
                 <div class="tournaments-grid">
                     
-                    <!-- Ape Squad Worlds: Tidal Survival (Moved from Showcase) -->
+                    <!-- Holiday Snowdown -->
+                    <div class="tournament-card">
+                        <img src="/images/tournament/holidaysnowdown.png" alt="Holiday Snowdown tournament">
+                        <div class="tournament-card-overlay">
+                            <h3>Holiday Snowdown</h3>
+                            <p>December 21st. The frost bites back in our festive end-of-year winter spectacle.</p>
+                             <div class="card-actions">
+                                <!-- View Bracket text removed -->
+                                <a href="https://twitch.tv/apesquadorg" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
+                                    <i class="fa-brands fa-twitch"></i> Watch VOD
+                                </a>
+                            </div>
+                        </div>
+                        <a href="/tournaments/holiday-snowdown.html" class="card-link-cover" aria-label="View details for Holiday Snowdown"></a>
+                    </div>
+
+                    <!-- Ape Squad Worlds: Tidal Survival -->
                     <div class="tournament-card">
                         <img src="/images/tournament/WORLDS.png" alt="Ape Squad Worlds: Tidal Survival tournament">
                         <div class="tournament-card-overlay">
                             <h3>Ape Squad Worlds</h3>
                             <p>The thrilling conclusion of our oceanic world championship. See who survived the tide!</p>
                              <div class="card-actions">
-                                <span class="view-results-cta">View Bracket <i class="fa-solid fa-arrow-right"></i></span>
+                                <!-- View Bracket text removed -->
                                 <a href="https://youtube.com/playlist?list=PL1bwu__yJTKFbe2cKee6o80LZRyoAoeDn&si=qQJT2i6crMNva-qe" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
                                     <i class="fa-solid fa-play"></i> Watch Here
                                 </a>
                             </div>
                         </div>
-                        <!-- This link covers the entire card -->
                         <a href="/tournaments/tidal-survival.html" class="card-link-cover" aria-label="View details for Tidal Survival"></a>
                     </div>
 
@@ -102,13 +155,12 @@
                             <h3>Volcanic Panic</h3>
                             <p>The heat was on in this explosive invitational where legends were forged in fire.</p>
                              <div class="card-actions">
-                                <span class="view-results-cta">View Results <i class="fa-solid fa-arrow-right"></i></span>
+                                <!-- View Results text removed -->
                                 <a href="https://www.youtube.com/watch?v=JGXmDkka-vw&t=401s" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
                                     <i class="fa-solid fa-play"></i> Watch Here
                                 </a>
                             </div>
                         </div>
-                        <!-- This link covers the entire card -->
                         <a href="/tournaments/volcanic-panic.html" class="card-link-cover" aria-label="View results for Volcanic Panic"></a>
                     </div>
 
@@ -117,15 +169,13 @@
                         <img src="/images/tournament/junglerumble.png" alt="Jungle Rumble tournament">
                         <div class="tournament-card-overlay">
                             <h3>Jungle Rumble</h3>
-                            <p>Our classic brawl where it all began. Revisit the raw energy of the original rumble.</p>
-                            <div class="card-actions">
-                                <span class="view-results-cta">View Results <i class="fa-solid fa-arrow-right"></i></span>
-                                </a>
-                            </div>
+                            <p>Our classic brawl. Revisit the raw energy of the original rumble.</p>
+                            <!-- Empty card-actions since we removed view results and there is no Watch link -->
+                            <div class="card-actions"></div>
                         </div>
-                        <!-- This link covers the entire card -->
                         <a href="/tournaments/jungle-rumble.html" class="card-link-cover" aria-label="View results for Jungle Rumble"></a>
                     </div>
+
                 </div>
             </div>
         </section>
