@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Ape Squad Esports | Battle for Break Point</title>
+    <meta name="description" content="Follow the Ape Squad Worlds tournament with our live, dynamic bracket.">
+
+    <!-- Fonts and Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&family=Bebas+Neue&family=Orbitron:wght@700;800;900&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- INLINE STYLES TO FIX SPACING/LAYOUT -->
+    <style>
+        /* Container for the specific rounds */
+        .rounds-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 80px; /* Horizontal space for connector lines */
+            position: relative;
+            padding: 40px 20px;
+        }
+
+        /* Individual Round Column */
+        .round {
+            display: flex;
+            flex-direction: column;
+            width: 220px; /* Fixed width for consistency */
+            position: relative;
+        }
+
+        .round-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .round-content {
+            position: relative;
+            flex-grow: 1;
+            /* Height must be large enough to contain the absolute positioned matches */
+            min-height: 1000px; 
+        }
+
+        /* The Matchup Box */
+        .matchup {
+            position: absolute; /* Crucial for the JS positioning */
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            left: 0;
+            z-index: 2;
+        }
+
+        .team {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 10px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .team.winner {
+            background-color: #2a2a2a;
+            color: #ffbf00; /* Gold for winner */
+            font-weight: bold;
+        }
+
+        /* SVG Overlay for Lines */
+        .connector-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Connector from Grand Final to Winner */
+        #final-matchup::after {
+            content: '';
+            position: absolute;
+            right: -82px; /* Reaches across the gap */
+            top: 50%;
+            width: 82px;
+            height: 2px;
+            background: #555;
+            z-index: 1;
+        }
+
+        /* Winner Section Styles (Moved inside bracket) */
+        .tournament-winner {
+            text-align: center;
+            /* Positioned manually to align with Grand Final center (approx 500px down) */
+            margin-top: 380px; 
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .winner-logo-container {
+            width: 120px; 
+            height: 120px; 
+            margin: 0 auto; 
+            background: #222; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 2px solid #ffbf00;
+            box-shadow: 0 0 15px rgba(255, 191, 0, 0.3);
+        }
+    </style>
+
+</head>
+<body>
+
+    <header class="navbar"></header>
+
+    <main id="bracket-page-main">
+        <div class="overlay-background"></div>
+        <h1 class="page-title" style="text-align: center; margin: 20px 0; font-family: 'Anton', sans-serif; color: white;">Battle for Break Point</h1>
+        
+        <div class="bracket-wrapper" style="display: flex; flex-direction: column; align-items: center; width: 100%; overflow-x: auto;">
+            
+            <div class="bracket-container single-elimination">
+                <div class="main-brackets-column">
+                    <section class="bracket-section">
+                        <!-- ID added to container for positioning logic -->
+                        <div class="rounds-container" id="main-bracket-rounds">
+                            
+                            <!-- Round 1 -->
+                            <div class="round">
+                                <div class="round-title">Round of 16</div>
+                                <div class="round-content">
+                                    <!-- 8 Matches -->
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                </div>
+                            </div>
+
+                            <!-- Quarter Finals -->
+                            <div class="round">
+                                <div class="round-title">Quarter-Finals</div>
+                                <div class="round-content">
+                                    <!-- 4 Matches -->
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                </div>
+                            </div>
+
+                            <!-- Semi Finals -->
+                            <div class="round">
+                                <div class="round-title">Semi-Finals</div>
+                                <div class="round-content">
+                                    <!-- 2 Matches -->
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                    <div class="matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                </div>
+                            </div>
+
+                            <!-- Grand Final -->
+                            <div class="round">
+                                <div class="round-title">Grand Final</div>
+                                <div class="round-content">
+                                    <!-- 1 Match -->
+                                    <div class="matchup" id="final-matchup"><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div><div class="team"><span class="team-name">TBD</span><span class="team-score">0</span></div></div>
+                                </div>
+                            </div>
+
+                            <!-- CHAMPION (Moved to Right Side) -->
+                            <div class="round">
+                                <div class="round-title">Champion</div>
+                                <div class="round-content">
+                                    <div class="tournament-winner">
+                                        <div class="winner-logo-container">
+                                            <span style="color: #555;">TBD</span>
+                                        </div>
+                                        <div class="winner-team-name" style="font-size: 1.8em; font-family: 'Anton', sans-serif; margin-top: 15px; color: white;">TBD</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer"></footer>
+    
+    <script src="js/main.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(initializeBracket, 100);
+    });
+
+    function initializeBracket() {
+        
+        // 1. Initial Seeding Logic
+        function populateInitialSeeding() {
+            const seedingData = {
+                eu: { 1: ['Team Secret', 'Spacestation Gaming'], 2: ['Saints One', 'Five Fears'], 3: ['BEAMERS', 'Pulsar Esports'], 4: ['Gamblers', 'Vatican eSports'] },
+                na: { 1: ['NTMR', 'ENVY'], 2: ['Ape Aura', 'FYR'], 3: ['VAIYA', 'Make A Wish'], 4: ['KCP', 'We Have No Plan'] }
+            };
+            const finalMatchups = [
+                [seedingData.eu[1][0], seedingData.na[4][1]], [seedingData.na[2][0], seedingData.eu[3][1]],
+                [seedingData.eu[2][0], seedingData.na[3][0]], [seedingData.na[1][0], seedingData.eu[4][1]],
+                [seedingData.na[1][1], seedingData.eu[4][0]], [seedingData.eu[2][1], seedingData.na[3][1]],
+                [seedingData.na[2][1], seedingData.eu[3][0]], [seedingData.eu[1][1], seedingData.na[4][0]]
+            ];
+            const round1Container = document.querySelector('#main-bracket-rounds .round:first-child .round-content');
+            if (!round1Container) { return; }
+            const matchupElements = round1Container.querySelectorAll('.matchup');
+            matchupElements.forEach((element, index) => {
+                const matchupPair = finalMatchups[index];
+                if (matchupPair) {
+                    const teamNameSpans = element.querySelectorAll('.team-name');
+                    teamNameSpans[0].textContent = matchupPair[0];
+                    teamNameSpans[1].textContent = matchupPair[1];
+                }
+            });
+        }
+
+        /* 
+           2. BRACKET CONFIGURATION (SPACING FIX)
+           - Match Height: 60px
+           - Base Gap (R1): 60px between matches (Top-to-top diff: 120px)
+           - Math: Next Round Position = (Match A + Match B) / 2
+        */
+        const H = 60; // Height of a match box
+        const BRACKET_CONFIG = {
+            main: { 
+                rounds: [
+                    // Round 1 (8 matches) - Spaced 120px apart
+                    { matchups: [
+                        { top: 50, height: H }, 
+                        { top: 170, height: H }, 
+                        { top: 290, height: H }, 
+                        { top: 410, height: H }, 
+                        { top: 530, height: H }, 
+                        { top: 650, height: H }, 
+                        { top: 770, height: H }, 
+                        { top: 890, height: H }
+                    ]},
+                    // Quarter Finals (4 matches) - Centered to R1
+                    { matchups: [
+                        { top: 110, height: H },  // (50+170)/2
+                        { top: 350, height: H },  // (290+410)/2
+                        { top: 590, height: H },  // (530+650)/2
+                        { top: 830, height: H }   // (770+890)/2
+                    ]},
+                    // Semi Finals (2 matches) - Centered to QF
+                    { matchups: [
+                        { top: 230, height: H },  // (110+350)/2
+                        { top: 710, height: H }   // (590+830)/2
+                    ]}, 
+                    // Grand Final (1 match) - Centered to SF
+                    { matchups: [
+                        { top: 470, height: H }   // (230+710)/2
+                    ]}
+                ] 
+            }
+        };
+
+        function drawAllBrackets() {
+            const mainRules = [
+                { from: 0, to: 1, type: '2-to-1' },
+                { from: 1, to: 2, type: '2-to-1' },
+                { from: 2, to: 3, type: '2-to-1' }
+            ];
+            drawBracket('main-bracket-rounds', mainRules, BRACKET_CONFIG.main);
+        }
+
+        function drawBracket(containerId, rules, positionConfig) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            positionMatchupsFromConfig(container, positionConfig);
+            
+            let svg = container.querySelector('.connector-svg');
+            if (svg) { svg.innerHTML = ''; } 
+            else { 
+                svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); 
+                svg.classList.add('connector-svg'); 
+                container.prepend(svg); 
+            }
+            
+            // Recalculate dimensions for SVG
+            const containerRect = container.getBoundingClientRect();
+            // Ensure SVG matches container scroll dimensions
+            svg.style.width = container.scrollWidth + 'px';
+            svg.style.height = container.scrollHeight + 'px';
+
+            const rounds = Array.from(container.querySelectorAll('.round'));
+            
+            rules.forEach(rule => {
+                const fromRoundEl = rounds[rule.from], toRoundEl = rounds[rule.to];
+                if (!fromRoundEl || !toRoundEl) return;
+                
+                const fromMatches = Array.from(fromRoundEl.querySelectorAll('.matchup'));
+                const toMatches = Array.from(toRoundEl.querySelectorAll('.matchup'));
+                
+                if (rule.type === '2-to-1') { 
+                    for (let i = 0; i < toMatches.length; i++) {
+                        if(fromMatches[i * 2] && fromMatches[i * 2 + 1]) {
+                            draw2to1Connection(svg, fromMatches[i * 2], fromMatches[i * 2 + 1], toMatches[i], containerRect); 
+                        }
+                    }
+                }
+            });
+        }
+
+        function positionMatchupsFromConfig(container, positionConfig) {
+            const rounds = Array.from(container.querySelectorAll('.round'));
+            rounds.forEach((roundEl, roundIndex) => {
+                const matchups = roundEl.querySelectorAll('.matchup');
+                matchups.forEach((matchup, matchupIndex) => {
+                    const matchupConfig = positionConfig.rounds[roundIndex]?.matchups[matchupIndex];
+                    if (matchupConfig) {
+                        matchup.style.top = `${matchupConfig.top}px`;
+                        if (matchupConfig.height) matchup.style.height = `${matchupConfig.height}px`;
+                    }
+                });
+            });
+        }
+
+        // Draws the lines between matches
+        function draw2to1Connection(svg, s1, s2, t, contRect) {
+            if (!s1 || !s2 || !t) return;
+            
+            // Get positions relative to the container
+            const getRelPos = (el) => {
+                const rect = el.getBoundingClientRect();
+                return {
+                    left: el.offsetLeft, // Use offset for accuracy within scrolled relative parents
+                    top: el.offsetTop,
+                    width: rect.width,
+                    height: rect.height
+                };
+            };
+
+            const s1Pos = getRelPos(s1);
+            const s2Pos = getRelPos(s2);
+            const tPos = getRelPos(t);
+
+            // Starting points (Right side of source matches)
+            const s1x = s1Pos.left + s1Pos.width;
+            const s1y = s1Pos.top + (s1Pos.height / 2);
+            const s2x = s2Pos.left + s2Pos.width; // Should be same as s1x
+            const s2y = s2Pos.top + (s2Pos.height / 2);
+
+            // Ending point (Left side of target match)
+            const tx = tPos.left;
+            const ty = tPos.top + (tPos.height / 2);
+
+            // Midpoint for the elbow
+            const midX = s1x + (tx - s1x) / 2;
+
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            // Move to S1, Line to Mid, Line down to S2Y, Line back to S2, Move to Mid/Ty intersection, Line to Target
+            const d = `
+                M ${s1x} ${s1y} 
+                L ${midX} ${s1y} 
+                L ${midX} ${s2y} 
+                L ${s2x} ${s2y} 
+                M ${midX} ${ty} 
+                L ${tx} ${ty}
+            `;
+            
+            path.setAttribute('d', d);
+            path.setAttribute('stroke', '#555'); // Darker grey for subtler lines
+            path.setAttribute('stroke-width', '2'); 
+            path.setAttribute('fill', 'none');
+            svg.appendChild(path);
+        }
+
+        // Google Sheets API Configuration
+        const SPREADSHEET_ID = '10ZmWteGljWdAu4TIMMkKkt23jFSuuKlTtqc-bxpVvN4';
+        const SHEET_GID = '1899569192';
+        const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET_GID}`;
+        
+        function getCellValue(row, colIndex) { return (row?.c?.[colIndex]?.v) ?? ''; }
+        function getTeamLogoPath(teamName) {
+            if (!teamName || teamName.trim().toLowerCase() === 'tbd') return '';
+            const fileName = teamName.trim().toLowerCase().replace(/\s+/g, '-');
+            return `/images/worlds/logos/${fileName}.png`;
+        }
+
+        async function updateBracketData() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const text = await response.text();
+                const json = JSON.parse(text.substring(47, text.length - 2));
+                const rows = json.table.rows;
+                
+                const bracketMatchups = document.querySelectorAll('#main-bracket-rounds .matchup');
+                const tournamentWinnerSection = document.querySelector('.tournament-winner');
+                
+                let match_idx = 0;
+
+                for (const row of rows) {
+                    const roundName = getCellValue(row, 0).toLowerCase();
+                    if (roundName.includes("losers'") || roundName.includes('reset')) continue;
+
+                    const team1Name = getCellValue(row, 1) || 'TBD';
+                    const team1Score = getCellValue(row, 2) || 0;
+                    const team2Name = getCellValue(row, 3) || 'TBD';
+                    const team2Score = getCellValue(row, 4) || 0;
+                    const winnerName = getCellValue(row, 5);
+                    
+                    let currentMatchup = null;
+
+                    if (roundName.includes("winners'") || roundName.includes("grand final")) {
+                         if (match_idx < bracketMatchups.length) {
+                             currentMatchup = bracketMatchups[match_idx++];
+                         }
+                    }
+
+                    if (currentMatchup) {
+                        const teams = currentMatchup.querySelectorAll('.team');
+                        teams[0].querySelector('.team-name').textContent = team1Name; 
+                        teams[0].querySelector('.team-score').textContent = team1Score;
+                        teams[1].querySelector('.team-name').textContent = team2Name; 
+                        teams[1].querySelector('.team-score').textContent = team2Score;
+                        
+                        teams.forEach(t => t.classList.remove('winner'));
+                        if (winnerName && winnerName.trim().toLowerCase() !== 'tbd') {
+                            if (winnerName.trim().toLowerCase() === team1Name.trim().toLowerCase()) teams[0].classList.add('winner');
+                            else if (winnerName.trim().toLowerCase() === team2Name.trim().toLowerCase()) teams[1].classList.add('winner');
+                        }
+
+                        if (roundName.includes("grand final") || roundName.includes("winners' final")) {
+                            if (winnerName && winnerName.trim().toLowerCase() !== 'tbd') {
+                                tournamentWinnerSection.querySelector('.winner-team-name').textContent = winnerName;
+                                const logoHtml = getTeamLogoPath(winnerName) ? `<img src="${getTeamLogoPath(winnerName)}" alt="${winnerName} Logo" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">` : '<span>LOGO</span>';
+                                tournamentWinnerSection.querySelector('.winner-logo-container').innerHTML = logoHtml;
+                            }
+                        }
+                    }
+                }
+                requestAnimationFrame(drawAllBrackets);
+            } catch (error) { console.error("Error fetching or updating bracket data:", error); }
+        }
+
+        function debounce(func, wait = 10) { let timeout; return function(...args) { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), wait); }; }
+
+        document.fonts.ready.then(() => {
+            populateInitialSeeding();
+            drawAllBrackets();
+            updateBracketData();
+            setInterval(updateBracketData, 5000);
+        });
+
+        window.addEventListener('resize', debounce(() => { requestAnimationFrame(drawAllBrackets); }, 100));
+    }
+    </script>
+</body>
+</html>
