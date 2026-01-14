@@ -11,8 +11,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Vote for your favorite creators in The Finals Community Creator Awards 2025.">
-    <title>Contestant Choice Awards | Ape Squad x The Burrow</title>
+    <meta name="description" content="See the winners of The Finals Community Creator Awards 2025.">
+    <title>Winners | Contestant Choice Awards | Ape Squad x The Burrow</title>
 
         <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
@@ -32,7 +32,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile-card.css">
-    <!-- CSS Adjustments for Voting Phase -->
+    <!-- CSS Adjustments for Winners Phase -->
     <style>
         /* Center the Main Grand Prize Text */
         .grand-prize-card {
@@ -51,22 +51,46 @@
             width: 100%;
         }
 
-        /* Specific styles for the Single Mystery Card to ensure text is centered */
+        /* Specific styles for the Single Winner Card (Grand Prize) */
         .single-nominee-wrapper .nominee-card {
             width: 100%;
             max-width: 300px;
-            transform: scale(1.1); /* Slight zoom for emphasis */
-            text-align: center;    /* FORCE TEXT CENTER */
+            transform: scale(1.1); 
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            border: 2px solid #d4af37; /* Gold border for winner */
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
         }
         
         .single-nominee-wrapper .nominee-card h4 {
             margin-top: 15px;
             width: 100%;
             text-align: center;
+            color: #d4af37; 
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Winner Highlight Styles for the Lists */
+        li.winner-highlight {
+            color: #d4af37 !important; /* Force Gold Color */
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+            transform: scale(1.05); /* Make winner slightly larger */
+            transform-origin: left;
+            transition: all 0.3s ease;
+        }
+
+        /* Add Trophy Icon next to winner */
+        li.winner-highlight::after {
+            content: '\f091'; /* FontAwesome Trophy Unicode */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-left: 10px;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -80,7 +104,7 @@
             <div class="awards-hero-bg"></div>
             <div class="container hero-content">
                 
-                <!-- UPDATED JOINT HEADER -->
+                <!-- JOINT HEADER -->
                 <div class="joint-header">
                     <span class="joint-brand">APE SQUAD</span>
                     <span class="joint-x"><i class="fa-solid fa-xmark"></i></span>
@@ -90,26 +114,26 @@
                 <h1>The Finals<br><span class="text-gold">Contestant Choice Awards</span></h1>
                 <p class="hero-subtitle">Celebrating the streamers, casters, and community builders who shaped the arena.</p>
                 <div class="hero-actions">
-                    <a href="https://forms.gle/8DmyQgj3tHjre2fR7" target="_blank" class="btn btn-hero-special">
-                        <i class="fa-solid fa-check-to-slot"></i> Vote Here
+                    <!-- Button pointing to winners -->
+                    <a href="#grand-award" class="btn btn-hero-special">
+                        <i class="fa-solid fa-trophy"></i> View Winners
                     </a>
                 </div>
             </div>
         </section>
-<!-- DATE ANNOUNCEMENT SECTION -->
+<!-- DATE ANNOUNCEMENT SECTION (KEPT FOR ARCHIVE/CONTEXT) -->
         <section id="date-announcement" style="background-color: #0d0d0d; padding: 3rem 0; border-bottom: 1px solid #333;">
-            <!-- Added flexbox styles here to FORCE centering -->
             <div class="container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
                 
-                <!-- Date Text -->
+                <!-- Updated Date Text -->
                 <h2 style="font-family: 'Anton', sans-serif; color: #fff; font-size: 3.5rem; margin: 0 0 1.5rem 0; text-transform: uppercase; line-height: 1;">
-                    Jan 11th <span style="color: #d4af37;">1pm EST</span>
+                    Winners <span style="color: #d4af37;">Revealed</span>
                 </h2>
 
                 <!-- Twitch Link Button -->
                 <a href="https://www.twitch.tv/apesquadorg" target="_blank" style="text-decoration: none;">
                     <div style="background-color: #9146FF; color: #fff; padding: 12px 30px; border-radius: 4px; font-family: 'Ayuthaya', monospace; font-size: 1.1rem; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 10px; border: 1px solid #9146FF;">
-                        <i class="fa-brands fa-twitch" style="font-size: 1.3em;"></i> <span>WATCH LIVE</span>
+                        <i class="fa-brands fa-twitch" style="font-size: 1.3em;"></i> <span>WATCH REPLAY</span>
                     </div>
                 </a>
 
@@ -172,7 +196,7 @@
             </div>
         </section>
 
-        <!-- TIMELINE SECTION (Voting Active) -->
+        <!-- TIMELINE SECTION -->
         <section id="awards-timeline">
             <div class="container">
                 <div class="timeline-wrapper">
@@ -180,11 +204,11 @@
                         <div class="phase-dot"></div>
                         <h3>Nominations</h3>
                     </div>
-                    <div class="phase active">
+                    <div class="phase">
                         <div class="phase-dot"></div>
                         <h3>Voting</h3>
                     </div>
-                    <div class="phase">
+                    <div class="phase active">
                         <div class="phase-dot"></div>
                         <h3>Reveal</h3>
                     </div>
@@ -192,29 +216,30 @@
             </div>
         </section>
 
-        <!-- GRAND AWARD SECTION (Centered) -->
+        <!-- GRAND AWARD SECTION (Updated with Winner) -->
         <section id="grand-award">
             <div class="container">
                 <h2 class="section-title">Grand Award</h2>
                 <div class="grand-prize-card">
                     <div class="trophy-icon"><i class="fa-solid fa-trophy"></i></div>
                     <h3>Creator of the Year</h3>
-                    <p>The ultimate recognition. Who will take the crown?</p>
+                    <p>The ultimate recognition.</p>
                     
-                    <!-- Single Centered Mystery Card -->
+                    <!-- Winner Revealed -->
                     <div class="single-nominee-wrapper">
                         <div class="nominee-card">
-                            <div class="nominee-placeholder">
+                            <div class="nominee-placeholder" style="color: #d4af37;">
                                 <i class="fa-solid fa-crown"></i>
                             </div>
-                            <h4>Winner Revealed Soon</h4>
+                            <h4>NeonGutz</h4>
                         </div>
                     </div>
 
                 </div>
             </div>
         </section>
-        <!-- CATEGORIES SECTION -->
+        
+        <!-- CATEGORIES SECTION - WINNERS HIGHLIGHTED -->
         <section id="nominees" class="awards-categories">
             <div class="container">
                 
@@ -226,7 +251,7 @@
                             <div class="award-header"><h3>Streamer of the Year</h3></div>
                             <ul class="nominee-list">
                                 <li>NeonGutz</li>
-                                <li>Lycommit</li>
+                                <li class="winner-highlight">Lycommit</li>
                                 <li>AloneInParis</li>
                                 <li>Lamp</li>
                             </ul>
@@ -234,7 +259,7 @@
                         <div class="award-card">
                             <div class="award-header"><h3>YouTuber of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>Appoh</li>
+                                <li class="winner-highlight">Appoh</li>
                                 <li>Yung</li>
                                 <li>NeonGutz</li>
                                 <li>Ronin</li>
@@ -243,7 +268,7 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Most Entertaining Creator</h3></div>
                             <ul class="nominee-list">
-                                <li>NeonGutz</li>
+                                <li class="winner-highlight">NeonGutz</li>
                                 <li>AloneInParis</li>
                                 <li>Yung</li>
                                 <li>Lycommit</li>
@@ -252,7 +277,7 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Best Informative/ Educational</h3></div>
                             <ul class="nominee-list">
-                                <li>Appoh</li>
+                                <li class="winner-highlight">Appoh</li>
                                 <li>Ronin</li>
                                 <li>Ardy</li>
                                 <li>Jinko</li>
@@ -262,7 +287,7 @@
                             <div class="award-header"><h3>Best Female Content Creator</h3></div>
                             <ul class="nominee-list">
                                 <li>Waterdance</li>
-                                <li>Onyxgraves</li>
+                                <li class="winner-highlight">Onyxgraves</li>
                                 <li>HotCrossBun</li>
                                 <li>Roo404</li>
                             </ul>
@@ -270,7 +295,7 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Rising Star Award</h3></div>
                             <ul class="nominee-list">
-                                <li>LuiBoolin</li>
+                                <li class="winner-highlight">LuiBoolin</li>
                                 <li>Splashhh006</li>
                                 <li>Lostboykaleido</li>
                                 <li>Kellymilkies</li>
@@ -286,7 +311,7 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Caster of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>Ardy</li>
+                                <li class="winner-highlight">Ardy</li>
                                 <li>Sonsoyo</li>
                                 <li>Waltz</li>
                                 <li>Gerry</li>
@@ -295,7 +320,7 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Artist of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>CartoonChaser</li>
+                                <li class="winner-highlight">CartoonChaser</li>
                                 <li>Wirt</li>
                                 <li>Droowings</li>
                                 <li>Psychic Wolfe</li>
@@ -304,7 +329,7 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Best Community Event</h3></div>
                             <ul class="nominee-list">
-                                <li>PHL</li>
+                                <li class="winner-highlight">PHL</li>
                                 <li>Yung's PVA Tour</li>
                                 <li>Etelcup</li>
                                 <li>WaltzCups</li>
@@ -314,7 +339,7 @@
                             <div class="award-header"><h3>Best Discord Community</h3></div>
                             <ul class="nominee-list">
                                 <li>PHL</li>
-                                <li>The Finals Official</li>
+                                <li class="winner-highlight">The Finals Official</li>
                                 <li>The Finals | RU</li>
                                 <li>Ruby Grind</li>
                             </ul>
@@ -323,7 +348,7 @@
                             <div class="award-header"><h3>Community MVP<br><span style="font-size:0.8em; opacity:0.7">(Mods/Non-Creators)</span></h3></div>
                             <ul class="nominee-list">
                                 <li>BurritahSupreme</li>
-                                <li>LilyLegend</li>
+                                <li class="winner-highlight">LilyLegend</li>
                                 <li>Wirt</li>
                                 <li>Gofer</li>
                             </ul>
@@ -338,7 +363,7 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Player of the Year</h3></div>
                             <ul class="nominee-list">
-                                <li>Uni</li>
+                                <li class="winner-highlight">Uni</li>
                                 <li>Oji</li>
                                 <li>Lasagna</li>
                                 <li>Grad</li>
@@ -348,7 +373,7 @@
                             <div class="award-header"><h3>Coach of the Year</h3></div>
                             <ul class="nominee-list">
                                 <li>Yung</li>
-                                <li>Appoh</li>
+                                <li class="winner-highlight">Appoh</li>
                                 <li>Ardy</li>
                                 <li>MouzerOG</li>
                             </ul>
@@ -356,7 +381,7 @@
                         <div class="award-card">
                             <div class="award-header"><h3>Most Improved Team</h3></div>
                             <ul class="nominee-list">
-                                <li>TSM</li>
+                                <li class="winner-highlight">TSM</li>
                                 <li>Team Secret</li>
                                 <li>NTMR</li>
                                 <li>Fnatic</li>
@@ -368,7 +393,7 @@
                                 <li>Oji</li>
                                 <li>Arko</li>
                                 <li>Uni</li>
-                                <li>Gremlin</li>
+                                <li class="winner-highlight">Gremlin</li>
                             </ul>
                         </div>
                     </div>
