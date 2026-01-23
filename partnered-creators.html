@@ -11,8 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Discover the content creators of Ape Squad. Streamers, YouTubers, and entertainers pushing the boundaries of The Finals community.">
-    <meta name="keywords" content="Ape Squad Creators, The Finals Streamers, Partnered Creators, Esports Content">
+    <meta name="description" content="Watch the official Ape Squad partnered creators live.">
     <title>Creator Hub | Ape Squad Esports</title>
 
     <!-- Favicon -->
@@ -21,209 +20,224 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
     <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
-    <meta name="msapplication-TileColor" content="#0a0a0a">
     <meta name="theme-color" content="#0a0a0a">
 
-    <!-- Google Fonts -->
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Your Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile-card.css">
 
-    <!-- === PAGE SPECIFIC STYLES === -->
+    <!-- PAGE SPECIFIC STYLES -->
     <style>
-        /* Reusing staff-hero styles for consistency */
+        /* --- FIXING THE DIMMED TOP --- */
+        /* Overriding the default opacity from style.css to make the image brighter */
+        #creators-hero .hero-background-image img {
+            opacity: 0.6 !important; /* Increased from 0.3 to 0.6 */
+        }
+        
+        /* Making the black gradient overlay lighter so the image shows through */
+        #creators-hero .hero-background-image::after {
+            background: linear-gradient(to top, rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0.4) 50%, rgba(10, 10, 10, 0.4) 100%) !important;
+        }
+
         #creators-hero {
             position: relative;
             text-align: center;
-            padding: 6rem 0;
+            padding: 8rem 0 4rem 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 60vh;
+            min-height: 50vh;
             overflow: hidden;
         }
 
-        /* Live Indicator Badge */
-        .live-badge {
-            display: inline-block;
-            background-color: #ff0000;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 8px;
-            vertical-align: middle;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-            animation: pulse-red 2s infinite;
-        }
-
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
-            70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
-        }
-
-        /* Socials Styling Override for Creators */
-        .profile-card__socials {
+        /* --- STREAM SHOWCASE LAYOUT --- */
+        .showcase-wrapper {
             display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            margin-top: 2rem;
+        }
+
+        .creator-section {
+            background: var(--midnight-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 992px) {
+            .creator-section {
+                grid-template-columns: 350px 1fr; /* Sidebar info + Main Video */
+            }
+        }
+
+        /* Creator Sidebar Info */
+        .creator-info {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-            padding-bottom: 10px;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: radial-gradient(circle at top right, rgba(1, 163, 235, 0.1), transparent 70%);
         }
 
-        .profile-card__socials a {
+        @media (min-width: 992px) {
+            .creator-info {
+                border-bottom: none;
+                border-right: 1px solid rgba(255,255,255,0.1);
+            }
+        }
+
+        .creator-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid var(--electric-blue);
+            box-shadow: 0 0 20px rgba(1, 163, 235, 0.3);
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+        }
+
+        .creator-name {
+            font-family: var(--font-headline);
+            font-size: 2.2rem;
+            color: var(--off-white);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .creator-bio {
             color: #ccc;
-            font-size: 1.4rem;
-            transition: color 0.3s ease, transform 0.3s ease;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
         }
 
-        .profile-card__socials a:hover {
+        .social-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-row a {
+            font-size: 1.5rem;
+            color: var(--light-grey);
+            transition: 0.3s;
+        }
+
+        .social-row a:hover {
             color: var(--electric-blue);
-            transform: scale(1.1);
-            text-shadow: 0 0 8px var(--electric-blue);
+            transform: translateY(-3px);
         }
 
-        /* Creator CTA Button */
-        .creator-cta {
-            margin-top: 1rem;
+        /* Stream Container (Responsive 16:9) */
+        .stream-container {
+            position: relative;
             width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            background: #000;
         }
 
-        /* Partner Application Section */
+        .stream-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Application Section */
         #partner-application {
             background: linear-gradient(145deg, var(--midnight-black), #1a1a1a);
             text-align: center;
             padding: 5rem 0;
+            margin-top: 4rem;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
     </style>
 </head>
 <body>
 
-    <header class="navbar"></header> <!-- Populated by main.js -->
+    <header class="navbar"></header> 
 
 <main>
 
     <!-- HERO SECTION -->
     <section id="creators-hero">
         <div class="hero-background-image">
-            <!-- Replace this image with a collage of your creators or a cool game background -->
-            <img src="/images/backgrounds/cis-apes-bg.jpg" alt="Ape Squad Creators Background">
+            <!-- Used generic background, feel free to swap -->
+            <img src="/images/backgrounds/cis-apes-bg.jpg" alt="Ape Squad Content">
         </div>
         <div class="container hero-content">
-            <h2>Creator Hub</h2>
-            <p class="staff-intro">The voices, the entertainers, and the content machines. Meet the partnered creators who represent Ape Squad across the metaverse.</p>
-            <div style="margin-top: 2rem;">
-                <a href="#partner-grid" class="btn btn-primary">Browse Creators</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- INTRO / BENEFITS SECTION -->
-    <section id="our-mission" style="background-color: var(--midnight-black);">
-        <div class="container">
-            <h2>The Squad Content</h2>
-            <div class="about-grid">
-                <div class="about-column">
-                    <h3>Entertainment</h3>
-                    <p>From high-octane competitive gameplay to hilarious community moments, our creators bring the energy. They are the frontline of the Ape Squad brand, interacting with fans daily.</p>
-                </div>
-                <div class="about-column">
-                    <h3>Community First</h3>
-                    <p>Our partners aren't just streamers; they are community leaders. They host watch parties, run community lobbies, and help us build the definitive home for The Finals.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PARTNER GRID SECTION -->
-    <section id="partner-grid" class="staff-section" style="background-color: var(--near-black);">
-        <div class="container">
             <h2>Partnered Creators</h2>
-            <p class="squad-intro">Check out who is live and drop a follow.</p>
-            
-            <div class="team-grid">
-                
-                <!-- CREATOR 1 -->
-                <div class="profile-card" data-tilt>
-                    <div class="profile-card__image-container">
-                        <!-- Replace with actual creator image -->
-                        <img src="/images/creators/creator1.png" alt="Creator Name">
+            <p class="staff-intro">Watch the official voices of Ape Squad live. Top-tier gameplay, community events, and pure entertainment.</p>
+        </div>
+    </section>
+
+    <!-- CREATORS SHOWCASE -->
+    <section id="stream-showcase" style="background-color: var(--near-black); padding: 2rem 0;">
+        <div class="container">
+            <div class="showcase-wrapper">
+
+                <!-- === CREATOR 1 === -->
+                <div class="creator-section">
+                    <!-- Info Side -->
+                    <div class="creator-info">
+                        <img src="/images/creators/creator1.png" alt="Creator 1 Avatar" class="creator-avatar">
+                        <h3 class="creator-name">Dread</h3>
+                        <p class="creator-bio">Pro Esports Caster for The Finals // Host of Sunday Pugday on @apesquadorg // Variety streamer and Embark fanboy</p>
+                        
+                        <div class="social-row">
+                            <a href="https://www.twitch.tv/dreadalicious" target="_blank"><i class="fab fa-twitch"></i></a>
+                            <a href="https://www.youtube.com/@dreadalicious" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="https://x.com/Dreadalicious_" target="_blank"><i class="fab fa-twitter"></i></a>
+                        </div>
+                        
+                        <a href="https://www.twitch.tv/dreadalicious" target="_blank" class="btn btn-primary">Go to Channel</a>
                     </div>
-                    <div class="profile-card__info">
-                        <h3 class="profile-card__name">Creator Name <span class="live-badge">LIVE</span></h3>
-                        <p class="profile-card__title">FPS Specialist</p>
-                    </div>
-                    <div class="profile-card__socials">
-                        <a href="#" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                    <div class="creator-cta">
-                        <a href="#" class="btn btn-primary" style="width: 100%; padding: 0.5rem;">Watch Stream</a>
+
+                    <!-- Stream Side -->
+                    <div class="stream-container"
+                        <iframe
+                            src="https://player.twitch.tv/?channel=dreadalicious&parent=www.example.com"
+                            height="100%"
+                            width="100%"
+                            allowfullscreen>
+                        </iframe>
                     </div>
                 </div>
 
-                <!-- CREATOR 2 -->
-                <div class="profile-card" data-tilt>
-                    <div class="profile-card__image-container">
-                        <img src="/images/creators/creator2.png" alt="Creator Name">
-                    </div>
-                    <div class="profile-card__info">
-                        <h3 class="profile-card__name">Creator Name</h3>
-                        <p class="profile-card__title">Variety Streamer</p>
-                    </div>
-                    <div class="profile-card__socials">
-                        <a href="#" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                    <div class="creator-cta">
-                        <a href="#" class="btn btn-secondary" style="width: 100%; padding: 0.5rem;">View Profile</a>
-                    </div>
-                </div>
+                <!-- === CREATOR 2 === -->
+                <div class="creator-section">
+                    <!-- Info Side -->
+                    <div class="creator-info">
+                        <img src="/images/creators/creator2.png" alt="Creator 2 Avatar" class="creator-avatar" style="border-color: var(--neon-pink);">
+                        <h3 class="creator-name">Merch</h3>
+                        <p class="creator-bio">#1 Worldwide TDM The Finals S7, Embark Creator, tryhard, washed. Professional Caster!</p>
+                        
+                        <div class="social-row">
+                            <a href="https://www.twitch.tv/onlymerch" target="_blank"><i class="fab fa-twitch"></i></a>
+                            <a href="https://www.youtube.com/@OnlyMerchTV" target="_blank"><i class="fab fa-youtube"></i></a>
+                        </div>
+                        
 
-                <!-- CREATOR 3 -->
-                <div class="profile-card" data-tilt>
-                    <div class="profile-card__image-container">
-                        <img src="/images/creators/creator3.png" alt="Creator Name">
-                    </div>
-                    <div class="profile-card__info">
-                        <h3 class="profile-card__name">Creator Name</h3>
-                        <p class="profile-card__title">Content Creator</p>
-                    </div>
-                    <div class="profile-card__socials">
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    </div>
-                    <div class="creator-cta">
-                        <a href="#" class="btn btn-secondary" style="width: 100%; padding: 0.5rem;">Latest Video</a>
-                    </div>
-                </div>
-
-                <!-- CREATOR 4 -->
-                <div class="profile-card" data-tilt>
-                    <div class="profile-card__image-container">
-                        <img src="/images/creators/creator4.png" alt="Creator Name">
-                    </div>
-                    <div class="profile-card__info">
-                        <h3 class="profile-card__name">Creator Name</h3>
-                        <p class="profile-card__title">Caster & Host</p>
-                    </div>
-                    <div class="profile-card__socials">
-                        <a href="#" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
-                    </div>
-                    <div class="creator-cta">
-                        <a href="#" class="btn btn-secondary" style="width: 100%; padding: 0.5rem;">Follow</a>
+                    <!-- Stream Side -->
+                    <div class="stream-container">
+                        <iframe
+                            src="https://player.twitch.tv/?channel=onlymerch&parent=www.example.com"
+                            height="100%"
+                            width="100%"
+                            allowfullscreen>
+                        </iframe>
                     </div>
                 </div>
 
@@ -231,27 +245,11 @@
         </div>
     </section>
 
-    <!-- APPLICATION CTA SECTION -->
-    <section id="partner-application">
-        <div class="container">
-            <h2>Join the Squad</h2>
-            <p style="margin: 0 auto 2rem auto; max-width: 60ch; color: #bbb;">
-                Do you create content for The Finals? Are you looking for a supportive community to help you grow? We are always looking for new talent to join our partner program.
-            </p>
-            <!-- Using your animated gradient button style -->
-            <a href="https://discord.gg/apesquad" target="_blank" class="btn-hero-special">
-                <i class="fab fa-discord" style="margin-right: 10px;"></i> Apply on Discord
-            </a>
-        </div>
-    </section>
 
 </main>
 
-    <footer class="site-footer"></footer> <!-- Populated by main.js -->
+    <footer class="site-footer"></footer> 
 
-    <!-- Scripts -->
-    <!-- Assuming you have vanilla-tilt.js linked in profile-card.js or separately for the tilt effect -->
-    <script src="js/profile-card.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
