@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -59,7 +59,6 @@
         .tournament-card-overlay .card-actions {
             display: flex;
             align-items: center;
-            /* Since we removed the text, this will align the Watch button to the left (or center if you prefer) */
             justify-content: flex-start; 
             width: 100%;
         }
@@ -76,113 +75,126 @@
 </head>
 <body>
 
-    <header class="navbar"></header> <!-- Populated by main.js -->
+<header class="navbar"></header> <!-- Populated by main.js -->
 
-    <main>
-        <section id="tournaments-hub">
-            <div class="container">
-                <div class="tournaments-intro">
-                    <h2>Tournament Archives</h2>
-                    <p>
-                        Relive the hype and explore the results from our past and ongoing competitions.
-                        Click on any tournament to view the detailed bracket and final standings.
-                    </p>
-                    <a href="/rules" class="btn btn-primary">
-                        <i class="fa-solid fa-scroll"></i> View Tournament Rules
-                    </a>
-                </div>
+<main>
+    <section id="tournaments-hub">
+        <div class="container">
+            <div class="tournaments-intro">
+                <h2>Tournament Archives</h2>
+                <p>
+                    Relive the hype and explore the results from our past and ongoing competitions.
+                    Click on any tournament to view the detailed bracket and final standings.
+                </p>
+                <a href="/rules" class="btn btn-primary">
+                    <i class="fa-solid fa-scroll"></i> View Tournament Rules
+                </a>
+            </div>
 
-                <!-- Showcase Section - Battle for Break Point -->
-                <div class="showcase-container">
-                    <div class="tournament-showcase">
-                        <img src="/images/tournament/battleforbreakpoint.png" alt="Battle for Break Point tournament">
-                        <div class="showcase-badge">Featured Event</div>
-                        <div class="showcase-overlay">
-                            <div>
-                                <h3>Battle for Break Point</h3>
-                                <p>The ultimate showdown is here. New legends will rise as the squad fights to survive the breaking point.</p>
-                            </div>
-                            <div class="card-actions">
-                                <span class="showcase-cta">View Details <i class="fa-solid fa-arrow-right"></i></span>
-                                <a href="https://twitch.tv/apesquadorg" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
-                                    <i class="fa-brands fa-twitch"></i> Watch
-                                </a>
-                            </div>
+            <!-- Showcase Section - NEWEST EVENT GOES HERE -->
+            <div class="showcase-container">
+                <div class="tournament-showcase">
+                    <img src="/images/tournament/contestantchoiceawardsbanner.png" alt="The Finals Contestant Choice Awards">
+                    <div class="showcase-badge">Featured Event</div>
+                    <div class="showcase-overlay">
+                        <div>
+                            <h3>Contestant Choice Awards</h3>
+                            <p>Celebrating the streamers, casters, and community builders who shaped the arena.</p>
                         </div>
-                        <a href="/tournaments/battle-for-break-point.html" class="card-link-cover" aria-label="View details for Battle for Break Point"></a>
-                    </div>
-                </div>
-
-                <!-- Tournaments Grid -->
-                <div class="tournaments-grid">
-                    
-                    <!-- Holiday Snowdown -->
-                    <div class="tournament-card">
-                        <img src="/images/tournament/holidaysnowdown.png" alt="Holiday Snowdown tournament">
-                        <div class="tournament-card-overlay">
-                            <h3>Holiday Snowdown</h3>
-                            <p>December 21st. The frost bites back in our festive end-of-year winter spectacle.</p>
-                             <div class="card-actions">
-                                <!-- View Bracket text removed -->
-                                <a href="https://twitch.tv/apesquadorg" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
-                                    <i class="fa-brands fa-twitch"></i> Watch VOD
-                                </a>
-                            </div>
+                        <div class="card-actions">
+                            <span class="showcase-cta">View Winners <i class="fa-solid fa-arrow-right"></i></span>
+                       
+                            <a href="https://youtu.be/BoIug33NCK4?si=XKkIEWAe2_akAXDU" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
+                                <i class="fa-solid fa-play"></i> Watch Replay
+                            </a>
                         </div>
-                        <a href="/tournaments/holiday-snowdown.html" class="card-link-cover" aria-label="View details for Holiday Snowdown"></a>
                     </div>
-
-                    <!-- Ape Squad Worlds: Tidal Survival -->
-                    <div class="tournament-card">
-                        <img src="/images/tournament/WORLDS.png" alt="Ape Squad Worlds: Tidal Survival tournament">
-                        <div class="tournament-card-overlay">
-                            <h3>Ape Squad Worlds</h3>
-                            <p>The thrilling conclusion of our oceanic world championship. See who survived the tide!</p>
-                             <div class="card-actions">
-                                <!-- View Bracket text removed -->
-                                <a href="https://youtube.com/playlist?list=PL1bwu__yJTKFbe2cKee6o80LZRyoAoeDn&si=qQJT2i6crMNva-qe" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
-                                    <i class="fa-solid fa-play"></i> Watch Here
-                                </a>
-                            </div>
-                        </div>
-                        <a href="/tournaments/tidal-survival.html" class="card-link-cover" aria-label="View details for Tidal Survival"></a>
-                    </div>
-
-                    <!-- Volcanic Panic -->
-                    <div class="tournament-card">
-                        <img src="/images/tournament/volcanicpanic.png" alt="Volcanic Panic tournament">
-                        <div class="tournament-card-overlay">
-                            <h3>Volcanic Panic</h3>
-                            <p>The heat was on in this explosive invitational where legends were forged in fire.</p>
-                             <div class="card-actions">
-                                <!-- View Results text removed -->
-                                <a href="https://www.youtube.com/watch?v=JGXmDkka-vw&t=401s" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
-                                    <i class="fa-solid fa-play"></i> Watch Here
-                                </a>
-                            </div>
-                        </div>
-                        <a href="/tournaments/volcanic-panic.html" class="card-link-cover" aria-label="View results for Volcanic Panic"></a>
-                    </div>
-
-                    <!-- Jungle Rumble -->
-                    <div class="tournament-card">
-                        <img src="/images/tournament/junglerumble.png" alt="Jungle Rumble tournament">
-                        <div class="tournament-card-overlay">
-                            <h3>Jungle Rumble</h3>
-                            <p>Our classic brawl. Revisit the raw energy of the original rumble.</p>
-                            <!-- Empty card-actions since we removed view results and there is no Watch link -->
-                            <div class="card-actions"></div>
-                        </div>
-                        <a href="/tournaments/jungle-rumble.html" class="card-link-cover" aria-label="View results for Jungle Rumble"></a>
-                    </div>
-
+                    <!-- This links to the page where you list the winners (NeonGutz, etc.) -->
+                    <a href="/awards.html" class="card-link-cover" aria-label="View winners for Contestant Choice Awards"></a>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <footer class="site-footer"></footer> <!-- Populated by main.js -->
+            <!-- Tournaments Grid - OLDER EVENTS MOVE HERE -->
+            <div class="tournaments-grid">
+                
+                <!-- Battle for Break Point (Moved from Showcase to Grid) -->
+                <div class="tournament-card">
+                    <img src="/images/tournament/battleforbreakpoint.png" alt="Battle for Break Point tournament">
+                    <div class="tournament-card-overlay">
+                        <h3>Battle for Break Point</h3>
+                        <p>The ultimate showdown. New legends rose as the squad fought to survive the breaking point.</p>
+                         <div class="card-actions">
+                            <a href="https://twitch.tv/apesquadorg" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
+                                <i class="fa-brands fa-twitch"></i> Watch VOD
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/tournaments/battle-for-break-point.html" class="card-link-cover" aria-label="View details for Battle for Break Point"></a>
+                </div>
 
-    <script src="js/main.js"></script>
+                <!-- Holiday Snowdown -->
+                <div class="tournament-card">
+                    <img src="/images/tournament/holidaysnowdown.png" alt="Holiday Snowdown tournament">
+                    <div class="tournament-card-overlay">
+                        <h3>Holiday Snowdown</h3>
+                        <p>December 21st. The frost bites back in our festive end-of-year winter spectacle.</p>
+                         <div class="card-actions">
+                            <a href="https://twitch.tv/apesquadorg" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
+                                <i class="fa-brands fa-twitch"></i> Watch VOD
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/tournaments/holiday-snowdown.html" class="card-link-cover" aria-label="View details for Holiday Snowdown"></a>
+                </div>
+
+                <!-- Ape Squad Worlds: Tidal Survival -->
+                <div class="tournament-card">
+                    <img src="/images/tournament/WORLDS.png" alt="Ape Squad Worlds: Tidal Survival tournament">
+                    <div class="tournament-card-overlay">
+                        <h3>Ape Squad Worlds</h3>
+                        <p>The thrilling conclusion of our oceanic world championship. See who survived the tide!</p>
+                         <div class="card-actions">
+                            <a href="https://youtube.com/playlist?list=PL1bwu__yJTKFbe2cKee6o80LZRyoAoeDn&si=qQJT2i6crMNva-qe" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
+                                <i class="fa-solid fa-play"></i> Watch Here
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/tournaments/tidal-survival.html" class="card-link-cover" aria-label="View details for Tidal Survival"></a>
+                </div>
+
+                <!-- Volcanic Panic -->
+                <div class="tournament-card">
+                    <img src="/images/tournament/volcanicpanic.png" alt="Volcanic Panic tournament">
+                    <div class="tournament-card-overlay">
+                        <h3>Volcanic Panic</h3>
+                        <p>The heat was on in this explosive invitational where legends were forged in fire.</p>
+                         <div class="card-actions">
+                            <a href="#" class="btn btn-secondary card-action-button" target="_blank" rel="noopener noreferrer">
+                                <i class="fa-solid fa-play"></i> Watch Here
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/tournaments/volcanic-panic.html" class="card-link-cover" aria-label="View results for Volcanic Panic"></a>
+                </div>
+
+                <!-- Jungle Rumble -->
+                <div class="tournament-card">
+                    <img src="/images/tournament/junglerumble.png" alt="Jungle Rumble tournament">
+                    <div class="tournament-card-overlay">
+                        <h3>Jungle Rumble</h3>
+                        <p>Our classic brawl. Revisit the raw energy of the original rumble.</p>
+                        <div class="card-actions"></div>
+                    </div>
+                    <a href="/tournaments/jungle-rumble.html" class="card-link-cover" aria-label="View results for Jungle Rumble"></a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer"></footer> <!-- Populated by main.js -->
+
+<script src="js/main.js"></script>
 </body>
 </html>
