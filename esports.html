@@ -35,6 +35,50 @@
     <!-- Your Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile-card.css">
+    <!-- NEW STYLES SPECIFIC TO HISTORY CARDS -->
+    <style>
+        .legacy-card {
+            background: rgba(255, 255, 255, 0.03); /* Very subtle dark background */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Thin border */
+            border-radius: 8px; /* Slight rounded corners */
+            padding: 2rem 1rem;
+            text-align: center;
+            height: 100%; /* Force it to fill the grid slot */
+            min-height: 180px; /* Ensure they are all at least this tall */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center content */
+            align-items: center;     /* Horizontally center content */
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hover effect */
+        .legacy-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--main-blue, #01a3eb); /* Uses your main blue if defined, else fallback */
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .legacy-card h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 1.5px;
+            margin: 0 0 0.5rem 0;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .legacy-card p {
+            font-family: 'Ayuthaya', monospace;
+            color: #01a3eb; /* Manual blue fallback */
+            margin: 0;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
@@ -128,7 +172,7 @@
             </div>
         </section>
 
-         <!-- ====================================================== -->
+        <!-- ====================================================== -->
         <!-- ERA 2: EMERALD APES (The Origins)                      -->
         <!-- ====================================================== -->
         <section id="emerald-apes-team" style="padding-top: 2rem; padding-bottom: 4rem;">
@@ -143,33 +187,33 @@
                     
                     <!-- Donkrage -->
                     <div class="squad-member-container">
-                        <div style="text-align: center; padding: 2rem 1rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 4px;">
-                            <h3 style="font-family: 'Anton', sans-serif; letter-spacing: 1px; color: #fff; margin-bottom: 5px; font-size: 1.5rem; margin-top: 0;">DONKRAGE</h3>
-                            <p style="font-family: 'Ayuthaya', monospace; color: var(--main-blue, #01a3eb); margin-bottom: 0;">Light</p>
+                        <div class="legacy-card">
+                            <h3>Donkrage</h3>
+                            <p>Light</p>
                         </div>
                     </div>
 
                     <!-- Nuok -->
                     <div class="squad-member-container">
-                        <div style="text-align: center; padding: 2rem 1rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 4px;">
-                            <h3 style="font-family: 'Anton', sans-serif; letter-spacing: 1px; color: #fff; margin-bottom: 5px; font-size: 1.5rem; margin-top: 0;">NUOK</h3>
-                            <p style="font-family: 'Ayuthaya', monospace; color: var(--main-blue, #01a3eb); margin-bottom: 0;">Heavy</p>
+                        <div class="legacy-card">
+                            <h3>Nuok</h3>
+                            <p>Heavy</p>
                         </div>
                     </div>
 
                     <!-- Aloneinparis -->
                     <div class="squad-member-container">
-                        <div style="text-align: center; padding: 2rem 1rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 4px;">
-                            <h3 style="font-family: 'Anton', sans-serif; letter-spacing: 1px; color: #fff; margin-bottom: 5px; font-size: 1.5rem; margin-top: 0;">ALONEINPARIS</h3>
-                            <p style="font-family: 'Ayuthaya', monospace; color: var(--main-blue, #01a3eb); margin-bottom: 0;">Medium</p>
+                        <div class="legacy-card">
+                            <h3>Aloneinparis</h3>
+                            <p>Medium</p>
                         </div>
                     </div>
 
                     <!-- Mouzer -->
                     <div class="squad-member-container">
-                        <div style="text-align: center; padding: 2rem 1rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 4px;">
-                            <h3 style="font-family: 'Anton', sans-serif; letter-spacing: 1px; color: #fff; margin-bottom: 5px; font-size: 1.5rem; margin-top: 0;">MOUZER</h3>
-                            <p style="font-family: 'Ayuthaya', monospace; color: var(--main-blue, #01a3eb); margin-bottom: 0;">Coach</p>
+                        <div class="legacy-card">
+                            <h3>Mouzer</h3>
+                            <p>Coach</p>
                         </div>
                     </div>
 
