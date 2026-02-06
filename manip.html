@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strat Planner | Ape Squad Esports</title>
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- MAP PLANNER STYLES --- */
+        main { padding-top: 80px; height: 100vh; overflow: hidden; display: flex; user-select: none; }
+
+        /* Sidebar Styles */
+        #planner-sidebar {
+            width: 300px; background: var(--near-black);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            display: flex; flex-direction: column; z-index: 100;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.5); flex-shrink: 0;
+        }
+        .sidebar-header { padding: 1.5rem; background: var(--midnight-black); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-header h2 { font-size: 1.2rem; margin: 0; color: var(--electric-blue); }
+        .sidebar-header p { font-size: 0.8rem; margin: 0; opacity: 0.7; }
+        .sidebar-content { padding: 1.5rem; flex: 1; overflow-y: auto; }
+
+        /* Controls */
+        .control-group { margin-bottom: 1.5rem; }
+        .control-label { display: block; color: var(--neon-pink); font-family: var(--font-headline); letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .planner-select {
+            width: 100%; padding: 10px; background: var(--midnight-black); color: white;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; font-family: var(--font-body); cursor: pointer;
+        }
+        
+        .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .tool-btn {
+            background: var(--midnight-black); border: 1px solid rgba(255,255,255,0.2);
+            color: var(--light-grey); padding: 12px; border-radius: 8px; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; gap: 5px; transition: all 0.2s ease;
+        }
+        .tool-btn:hover { background: rgba(255,255,255,0.05); color: white; }
+        .tool-btn.active {
+            background: rgba(1, 163, 235, 0.15); border-color: var(--electric-blue);
+            color: var(--electric-blue); box-shadow: 0 0 10px rgba(1, 163, 235, 0.2);
+        }
+
+        /* Brush Settings */
+        .brush-settings { 
+            display: flex; gap: 10px; align-items: center; 
+            background: #222; padding: 10px; border-radius: 6px;
+        }
+        input[type="color"] {
+            border: none; width: 40px; height: 30px; cursor: pointer; background: none;
+        }
+        input[type="range"] { flex: 1; cursor: pointer; accent-color: var(--electric-blue); }
+
+        .action-btn {
+            width: 100%; padding: 10px; margin-top: 10px; background: #333; border: none;
+            color: white; border-radius: 4px; cursor: pointer; text-transform: uppercase;
+            font-weight: bold; font-size: 0.8rem; transition: 0.2s;
+        }
+        .action-btn:hover { background: #444; }
+        .action-btn.danger { background: rgba(255, 68, 148, 0.2); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
+        .action-btn.danger:hover { background: var(--neon-pink); color: white; }
+        
+        .action-btn.secondary { background: transparent; border: 1px solid #555; color: #aaa; }
+        .action-btn.secondary:hover { border-color: white; color: white; }
+
+        /* --- MAP VIEWPORT --- */
+        #planner-viewport {
+            flex: 1; position: relative; background-color: #111;
+            background-image: radial-gradient(#222 1px, transparent 1px);
+            background-size: 20px 20px; overflow: hidden; cursor: default;
+        }
+
+        .map-wrapper {
+            position: absolute; transform-origin: 0 0; will-change: transform;
+            width: auto; height: auto; display: inline-block; 
+        }
+
+        .map-image { 
+            display: block; pointer-events: none; width: auto; height: auto; z-index: 1;
+        }
+
+        /* --- DRAWING CANVAS --- */
+        #drawing-canvas {
+            position: absolute; top: 0; left: 0;
+            z-index: 5; /* Above map, below tokens */
+            pointer-events: none; /* Allows panning through it unless drawing */
+        }
+        /* When drawing, canvas captures events */
+        #drawing-canvas.active { pointer-events: auto; }
+
+        /* --- TOKEN LAYERS --- */
+        #token-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10; pointer-events: none; 
+        }
+
+        /* Hitbox Container */
+        .token-wrapper {
+            position: absolute; width: 250px; height: 250px; border-radius: 50%;
+            transform: translate(-50%, -50%); cursor: grab;
+            pointer-events: auto; z-index: 100;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .token-wrapper img {
+            width: auto; height: auto; pointer-events: none;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.8)); transition: filter 0.2s;
+        }
+        .token-wrapper:hover img { filter: drop-shadow(0 0 15px var(--electric-blue)) brightness(1.2); }
+        .token-wrapper.dragging img { filter: drop-shadow(0 0 25px var(--electric-blue)) brightness(1.3); opacity: 0.9; }
+        .token-wrapper:hover { z-index: 101; }
+        .token-wrapper.dragging { cursor: grabbing; z-index: 102; }
+
+        /* Placement Mode CSS */
+        #token-layer.placement-active .token-wrapper { pointer-events: none; opacity: 0.6; }
+
+        /* Ghost Token */
+        #ghost-token {
+            position: absolute; pointer-events: none; opacity: 0.6; z-index: 200;
+            transform: translate(-50%, -50%); display: none; filter: sepia(1) hue-rotate(180deg);
+        }
+
+        .key-binds { margin-top: auto; padding: 1.5rem; background: rgba(0,0,0,0.3); font-size: 0.8rem; color: #aaa; }
+        .key-code { background: #444; padding: 2px 6px; border-radius: 4px; color: white; font-family: monospace; }
+        
+        .map-loader {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: var(--electric-blue); font-family: var(--font-headline); font-size: 2rem;
+            text-shadow: 0 0 15px var(--electric-blue); z-index: 50; display: none;
+        }
+
+        #context-menu {
+            position: fixed; background: var(--near-black); border: 1px solid var(--electric-blue);
+            border-radius: 4px; padding: 5px 0; min-width: 150px; z-index: 9999; display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        #context-menu button {
+            display: block; width: 100%; background: none; border: none; padding: 8px 15px;
+            color: white; text-align: left; cursor: pointer; font-family: var(--font-body); font-size: 0.9rem;
+        }
+        #context-menu button:hover { background: var(--electric-blue); }
+
+        @media (max-width: 991px) {
+            #planner-sidebar { width: 100%; height: 250px; position: fixed; bottom: 0; left: 0; border-top: 1px solid #333; z-index: 1000; }
+            main { flex-direction: column; }
+            #planner-viewport { height: calc(100vh - 330px); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar"></header>
+
+    <main>
+        <div id="planner-sidebar">
+            <div class="sidebar-header">
+                <h2>The Finals Spawns</h2>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="control-group">
+                    <label class="control-label">SELECT MAP</label>
+                    <select id="mapSelect" class="planner-select">
+                        <option value="Bernal">Bernal</option>
+                        <option value="Citadel">Citadel</option>
+                        <option value="Fortune">Fortune</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Seoul">Seoul</option>
+                        <option value="Skyway">Skyway</option>
+                        <option value="SysHorizon">SysHorizon</option>
+                        <option value="Vegas">Vegas</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">TOOLKIT</label>
+                    <div class="tool-grid">
+                        <div class="tool-btn active" data-tool="cursor" title="Pan & Select">
+                            <i class="fa-solid fa-arrow-pointer"></i>
+                            <span>Cursor</span>
+                        </div>
+                        <div class="tool-btn" data-tool="draw" title="Freehand Draw">
+                            <i class="fa-solid fa-paintbrush"></i>
+                            <span>Draw</span>
+                        </div>
+                        <div class="tool-btn" data-tool="player" title="Place Player">
+                            <i class="fa-solid fa-user-astronaut"></i>
+                            <span>Player</span>
+                        </div>
+                        <div class="tool-btn" data-tool="cashbox" title="Place Objective">
+                            <i class="fa-solid fa-box-open"></i>
+                            <span>Cashbox</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group" id="brush-controls" style="display:none;">
+                    <label class="control-label">BRUSH SETTINGS</label>
+                    <div class="brush-settings">
+                        <input type="color" id="brush-color" value="#01a3eb" title="Color">
+                        <input type="range" id="brush-size" min="5" max="50" value="10" title="Size">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div style="display:flex; justify-content:space-between; color:#888; margin-bottom:10px;">
+                        <span>Zoom: <b id="zoom-level">100%</b></span>
+                        <span>Items: <b id="item-count">0</b></span>
+                    </div>
+                    <button id="reset-view" class="action-btn">Reset View</button>
+                    <button id="clear-all" class="action-btn danger">Clear Board</button>
+                    <button id="clear-drawings" class="action-btn secondary" style="margin-top:5px;">Clear Drawings</button>
+                </div>
+            </div>
+
+            <div class="key-binds">
+                <div><span class="key-code">Hold Space</span> Pan Map</div>
+                <div><span class="key-code">L-Click</span> Use Tool</div>
+                <div><span class="key-code">R-Click</span> Delete Item</div>
+            </div>
+        </div>
+
+        <div id="planner-viewport">
+            <div class="map-loader" id="loader">LOADING INTEL...</div>
+            <div class="map-wrapper" id="mapWrapper">
+                <img class="map-image" id="mapImage" src="" alt="Map Layer">
+                <!-- Canvas Layer -->
+                <canvas id="drawing-canvas"></canvas>
+                <!-- Token Layer -->
+                <div id="token-layer"></div>
+            </div>
+            <img id="ghost-token" src="" alt="">
+        </div>
+    </main>
+    
+    <div id="context-menu">
+        <button id="ctx-delete">Delete Item</button>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        class TacticalMap {
+            constructor() {
+                // DOM
+                this.viewport = document.getElementById('planner-viewport');
+                this.wrapper = document.getElementById('mapWrapper');
+                this.mapImage = document.getElementById('mapImage');
+                this.drawingCanvas = document.getElementById('drawing-canvas');
+                this.ctx = this.drawingCanvas.getContext('2d');
+                
+                this.tokenLayer = document.getElementById('token-layer');
+                this.ghostToken = document.getElementById('ghost-token');
+                this.loader = document.getElementById('loader');
+                this.zoomDisplay = document.getElementById('zoom-level');
+                this.countDisplay = document.getElementById('item-count');
+                this.ctxMenu = document.getElementById('context-menu');
+                this.brushControls = document.getElementById('brush-controls');
+
+                // View State
+                this.scale = 0.2;
+                this.pointX = 0;
+                this.pointY = 0;
+                
+                // Interaction State
+                this.isPanning = false;
+                this.isDrawing = false;
+                this.isSpacePressed = false;
+                this.startX = 0;
+                this.startY = 0;
+                
+                this.currentTool = 'cursor';
+                this.tokens = [];
+                this.contextTarget = null;
+
+                // Drawing Settings
+                this.brushColor = '#01a3eb';
+                this.brushSize = 10;
+
+                this.assets = {
+                    player: 'images/mapsmanip/Player.png',
+                    cashbox: 'images/mapsmanip/Cashbox.png'
+                };
+
+                this.init();
+            }
+
+            init() {
+                this.loadMap('Bernal');
+                this.bindControls();
+                this.bindKeyboard();
+                this.bindMapInteractions();
+                this.updateTransform();
+            }
+
+            loadMap(mapName) {
+                this.loader.style.display = 'block';
+                this.mapImage.style.opacity = '0';
+                
+                const img = new Image();
+                img.onload = () => {
+                    this.mapImage.src = img.src;
+                    this.mapImage.style.opacity = '1';
+                    this.loader.style.display = 'none';
+                    
+                    // Resize Canvas to match map native size
+                    this.drawingCanvas.width = img.naturalWidth;
+                    this.drawingCanvas.height = img.naturalHeight;
+                    // Clear canvas on map load
+                    this.clearDrawings();
+
+                    this.resetView();
+                };
+                img.src = `images/mapsmanip/${mapName}.png`;
+            }
+
+            bindControls() {
+                document.getElementById('mapSelect').addEventListener('change', (e) => {
+                    this.clearTokens();
+                    this.loadMap(e.target.value);
+                });
+
+                document.querySelectorAll('.tool-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.currentTool = btn.dataset.tool;
+                        
+                        // Handle Token Layer Interactions
+                        if (this.currentTool === 'cursor') {
+                            this.tokenLayer.classList.remove('placement-active');
+                            this.ghostToken.style.display = 'none';
+                            this.drawingCanvas.classList.remove('active');
+                            this.brushControls.style.display = 'none';
+                        } 
+                        else if (this.currentTool === 'draw') {
+                            this.tokenLayer.classList.add('placement-active'); // Passthrough tokens
+                            this.ghostToken.style.display = 'none';
+                            this.drawingCanvas.classList.add('active');
+                            this.brushControls.style.display = 'block';
+                        }
+                        else {
+                            // Placement Tools
+                            this.tokenLayer.classList.add('placement-active');
+                            this.ghostToken.src = this.assets[this.currentTool];
+                            this.ghostToken.style.display = 'block';
+                            this.drawingCanvas.classList.remove('active');
+                            this.brushControls.style.display = 'none';
+                        }
+                        this.updateCursor();
+                    });
+                });
+
+                // Brush Inputs
+                document.getElementById('brush-color').addEventListener('input', (e) => this.brushColor = e.target.value);
+                document.getElementById('brush-size').addEventListener('input', (e) => this.brushSize = e.target.value);
+
+                document.getElementById('reset-view').addEventListener('click', () => this.resetView());
+                
+                document.getElementById('clear-all').addEventListener('click', () => {
+                    this.clearTokens();
+                    this.clearDrawings();
+                });
+
+                document.getElementById('clear-drawings').addEventListener('click', () => {
+                    this.clearDrawings();
+                });
+                
+                document.getElementById('ctx-delete').addEventListener('click', () => {
+                    if(this.contextTarget) {
+                        this.contextTarget.remove();
+                        this.tokens = this.tokens.filter(t => t !== this.contextTarget);
+                        this.updateCount();
+                        this.ctxMenu.style.display = 'none';
+                    }
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!this.ctxMenu.contains(e.target)) this.ctxMenu.style.display = 'none';
+                });
+            }
+
+            bindKeyboard() {
+                window.addEventListener('keydown', (e) => {
+                    if (e.code === 'Space' && !this.isSpacePressed) {
+                        this.isSpacePressed = true;
+                        this.updateCursor();
+                    }
+                });
+                window.addEventListener('keyup', (e) => {
+                    if (e.code === 'Space') {
+                        this.isSpacePressed = false;
+                        this.isPanning = false;
+                        this.isDrawing = false; // Stop drawing if space acts up
+                        this.updateCursor();
+                    }
+                });
+            }
+
+            bindMapInteractions() {
+                this.viewport.addEventListener('mousedown', (e) => {
+                    if (this.isSpacePressed || e.button === 1) {
+                        e.preventDefault();
+                        this.startPan(e);
+                        return;
+                    }
+
+                    if (e.button === 0) {
+                        // Drawing Logic
+                        if (this.currentTool === 'draw') {
+                            this.isDrawing = true;
+                            this.draw(e); 
+                            return;
+                        }
+
+                        // Placement Logic
+                        if (['player', 'cashbox'].includes(this.currentTool)) {
+                            this.placeToken(e);
+                            return;
+                        }
+
+                        // Cursor/Pan Logic
+                        if (this.currentTool === 'cursor') {
+                            if (e.target === this.viewport || e.target === this.mapImage || e.target.id === 'token-layer') {
+                                this.startPan(e);
+                            }
+                        }
+                    }
+                });
+
+                document.addEventListener('mouseup', () => {
+                    this.isPanning = false;
+                    this.isDrawing = false;
+                    this.ctx.beginPath(); // Reset drawing path
+                    this.updateCursor();
+                });
+
+                this.viewport.addEventListener('mousemove', (e) => {
+                    // Update Ghost
+                    if (['player', 'cashbox'].includes(this.currentTool) && !this.isPanning) {
+                        const rect = this.viewport.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        this.ghostToken.style.transform = `translate(-50%, -50%) scale(${this.scale})`;
+                        this.ghostToken.style.left = `${x}px`;
+                        this.ghostToken.style.top = `${y}px`;
+                    }
+
+                    if (this.isDrawing) {
+                        this.draw(e);
+                    }
+
+                    if (this.isPanning) {
+                        e.preventDefault();
+                        this.pointX = e.clientX - this.startX;
+                        this.pointY = e.clientY - this.startY;
+                        this.updateTransform();
+                    }
+                });
+
+                this.viewport.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const xs = (e.clientX - this.pointX) / this.scale;
+                    const ys = (e.clientY - this.pointY) / this.scale;
+                    
+                    const delta = -Math.sign(e.deltaY);
+                    const zoomStep = 0.1;
+                    
+                    if (delta > 0) this.scale *= (1 + zoomStep);
+                    else this.scale /= (1 + zoomStep);
+                    
+                    this.scale = Math.min(Math.max(0.05, this.scale), 4);
+                    this.pointX = e.clientX - xs * this.scale;
+                    this.pointY = e.clientY - ys * this.scale;
+                    this.updateTransform();
+                    
+                    if(this.ghostToken.style.display === 'block') {
+                         this.ghostToken.style.transform = `translate(-50%, -50%) scale(${this.scale})`;
+                    }
+                });
+            }
+
+            draw(e) {
+                if (!this.isDrawing) return;
+
+                const rect = this.wrapper.getBoundingClientRect();
+                // Calculate map-relative coordinates
+                const x = (e.clientX - rect.left) / this.scale;
+                const y = (e.clientY - rect.top) / this.scale;
+
+                this.ctx.lineWidth = this.brushSize;
+                this.ctx.lineCap = 'round';
+                this.ctx.lineJoin = 'round';
+
+                this.ctx.globalCompositeOperation = 'source-over';
+                this.ctx.strokeStyle = this.brushColor;
+
+                this.ctx.lineTo(x, y);
+                this.ctx.stroke();
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, y);
+            }
+
+            startPan(e) {
+                this.startX = e.clientX - this.pointX;
+                this.startY = e.clientY - this.pointY;
+                this.isPanning = true;
+                this.viewport.style.cursor = 'grabbing';
+            }
+
+            placeToken(e) {
+                if (!this.assets[this.currentTool]) return;
+
+                const rect = this.wrapper.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / this.scale;
+                const y = (e.clientY - rect.top) / this.scale;
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'token-wrapper';
+                wrapper.style.left = `${x}px`;
+                wrapper.style.top = `${y}px`;
+
+                const img = document.createElement('img');
+                img.src = this.assets[this.currentTool];
+                wrapper.appendChild(img);
+
+                this.makeTokenDraggable(wrapper);
+
+                wrapper.addEventListener('contextmenu', (ev) => {
+                    ev.preventDefault();
+                    ev.stopPropagation(); 
+                    this.contextTarget = wrapper;
+                    this.ctxMenu.style.display = 'block';
+                    this.ctxMenu.style.left = `${ev.clientX}px`;
+                    this.ctxMenu.style.top = `${ev.clientY}px`;
+                });
+
+                this.tokenLayer.appendChild(wrapper);
+                this.tokens.push(wrapper);
+                this.updateCount();
+            }
+
+            makeTokenDraggable(wrapper) {
+                let isDragging = false;
+                
+                wrapper.addEventListener('mousedown', (e) => {
+                    if (e.button !== 0) return; 
+                    if (this.isSpacePressed) return; 
+                    if (this.currentTool !== 'cursor') return; 
+                    
+                    e.stopPropagation(); 
+                    isDragging = true;
+                    wrapper.classList.add('dragging');
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    const rect = this.wrapper.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / this.scale;
+                    const y = (e.clientY - rect.top) / this.scale;
+                    wrapper.style.left = `${x}px`;
+                    wrapper.style.top = `${y}px`;
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if(isDragging) {
+                        isDragging = false;
+                        wrapper.classList.remove('dragging');
+                    }
+                });
+            }
+
+            updateCursor() {
+                if (this.isSpacePressed || this.isPanning) {
+                    this.viewport.style.cursor = this.isPanning ? 'grabbing' : 'grab';
+                } else if (this.currentTool === 'cursor') {
+                    this.viewport.style.cursor = 'default';
+                } else if (this.currentTool === 'draw') {
+                    this.viewport.style.cursor = 'crosshair';
+                } else {
+                    this.viewport.style.cursor = 'none';
+                }
+            }
+
+            updateTransform() {
+                this.wrapper.style.transform = `translate(${this.pointX}px, ${this.pointY}px) scale(${this.scale})`;
+                this.zoomDisplay.textContent = `${Math.round(this.scale * 100)}%`;
+            }
+
+            resetView() {
+                if (this.mapImage.naturalWidth === 0) return;
+                const containerW = this.viewport.clientWidth;
+                const containerH = this.viewport.clientHeight;
+                const mapW = this.mapImage.naturalWidth;
+                const mapH = this.mapImage.naturalHeight;
+
+                this.scale = Math.min(containerW / mapW, containerH / mapH) * 0.9; 
+                this.pointX = (containerW - (mapW * this.scale)) / 2;
+                this.pointY = (containerH - (mapH * this.scale)) / 2;
+                this.updateTransform();
+            }
+
+            clearTokens() {
+                this.tokenLayer.innerHTML = '';
+                this.tokens = [];
+                this.updateCount();
+            }
+
+            clearDrawings() {
+                this.ctx.clearRect(0, 0, this.drawingCanvas.width, this.drawingCanvas.height);
+            }
+
+            updateCount() {
+                this.countDisplay.textContent = this.tokens.length;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new TacticalMap();
+        });
+    </script>
+</body>
+</html>
