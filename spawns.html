@@ -58,87 +58,153 @@
 
         /* --- SIDEBAR --- */
         #planner-sidebar {
-            width: 300px; background: var(--near-black);
+            width: 320px; /* Slightly wider to accommodate side-by-side buttons */
+            background: var(--near-black);
             border-right: 1px solid #333; z-index: 100;
             display: flex; flex-direction: column; flex-shrink: 0;
             box-shadow: 5px 0 20px rgba(0,0,0,0.5);
+            height: 100vh;
         }
         
-        /* Navigation Styles */
+        /* Navigation - 2x2 Grid for space efficiency */
         .sidebar-nav {
             background: #000;
-            padding: 15px 20px;
+            padding: 10px;
             border-bottom: 1px solid #222;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
+            flex-shrink: 0;
         }
         .nav-link {
-            color: #888;
-            text-decoration: none;
-            font-size: 0.8rem;
-            text-align: center;
-            padding: 5px;
-            border: 1px solid #333;
-            border-radius: 4px;
-            transition: 0.2s;
+            color: #888; text-decoration: none; font-size: 0.75rem;
+            text-align: center; padding: 6px; border: 1px solid #333;
+            border-radius: 4px; transition: 0.2s;
         }
         .nav-link:hover {
-            color: var(--electric-blue);
-            border-color: var(--electric-blue);
+            color: var(--electric-blue); border-color: var(--electric-blue);
             background: rgba(1, 163, 235, 0.1);
         }
 
-        .sidebar-header { padding: 20px; background: var(--midnight-black); border-bottom: 1px solid #333; }
-        .sidebar-header h2 { margin: 0; color: var(--electric-blue); font-family: var(--font-headline); letter-spacing: 1px; }
-        .sidebar-content { padding: 20px; flex: 1; overflow-y: auto; }
+        .sidebar-header { 
+            padding: 15px 20px; 
+            background: var(--midnight-black); 
+            border-bottom: 1px solid #333; 
+            flex-shrink: 0;
+        }
+        .sidebar-header h2 { margin: 0; color: var(--electric-blue); font-family: var(--font-headline); letter-spacing: 1px; font-size: 1.4rem; }
         
-        .control-group { margin-bottom: 25px; }
-        .control-label { display: block; color: var(--neon-pink); font-family: var(--font-headline); margin-bottom: 8px; }
+        /* --- CONTENT AREA (NO SCROLL) --- */
+        .sidebar-content { 
+            padding: 15px; 
+            flex: 1; 
+            overflow: hidden; /* No scrollbar */
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Space between groups */
+        }
         
+        .control-group { flex-shrink: 0; }
+        .control-label { display: block; color: var(--neon-pink); font-family: var(--font-headline); margin-bottom: 5px; font-size: 0.9rem; }
+        
+        /* Map Select */
         .planner-select {
-            width: 100%; padding: 10px; background: #222; color: white;
+            width: 100%; padding: 8px; background: #222; color: white;
             border: 1px solid #444; border-radius: 4px; cursor: pointer;
+            font-size: 0.9rem;
         }
 
-        /* Tool Grid */
-        .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        /* Map Key (Legend) - 2 Columns to save height */
+        .legend-list {
+            list-style: none; padding: 0; margin: 0;
+            font-size: 0.75rem; color: #ccc;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Split into 2 cols */
+            gap: 6px 10px;
+        }
+        .legend-list li {
+            display: flex; align-items: center; gap: 8px;
+            line-height: 1.1;
+        }
+        .legend-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Tools - 1 Row to save vertical space */
+        .tool-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
         .tool-btn {
             background: #222; border: 1px solid #444; color: #888;
-            padding: 15px; border-radius: 6px; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center; gap: 5px;
-            transition: 0.2s; user-select: none;
+            padding: 10px 5px; /* Decent click height */
+            border-radius: 6px; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            transition: 0.2s; user-select: none; font-size: 0.7rem;
         }
+        .tool-btn i { font-size: 1.1rem; }
         .tool-btn:hover { background: #333; color: white; }
         .tool-btn.active {
             background: rgba(1, 163, 235, 0.15); border-color: var(--electric-blue);
             color: var(--electric-blue);
         }
 
-        /* Buttons */
-        .btn-group { display: flex; flex-direction: column; gap: 8px; }
+        /* Action Buttons - 1 Row */
+        .btn-group { display: flex; flex-direction: row; gap: 8px; }
         .action-btn {
-            width: 100%; padding: 10px; background: #333; border: none;
+            flex: 1; padding: 10px 5px; background: #333; border: none;
             color: white; cursor: pointer; font-weight: bold; border-radius: 4px;
-            transition: 0.2s;
+            transition: 0.2s; font-size: 0.75rem;
         }
         .action-btn:hover { background: #444; }
         .action-btn.danger { background: rgba(255, 68, 148, 0.1); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
         .action-btn.danger:hover { background: rgba(255, 68, 148, 0.3); }
 
-        /* Legend Styles */
-        .legend-list {
-            list-style: none; padding: 0; margin: 0;
-            font-size: 0.85rem; color: #ccc;
+        /* --- FLEXIBLE BOTTOM SECTION --- */
+        /* This pushes the logo to fill remaining space */
+        .spacer-div { flex-grow: 1; min-height: 10px; }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center; justify-content: center;
+            flex-grow: 1; /* Grow to fill space */
+            min-height: 50px; /* Minimum size */
+            max-height: 150px; /* Cap size so it doesn't get absurd */
+            padding: 10px 0;
+            overflow: hidden;
         }
-        .legend-list li {
-            display: flex; align-items: center; gap: 10px;
-            margin-bottom: 8px; line-height: 1.2;
+
+        .sidebar-logo img {
+            max-width: 100%;
+            max-height: 100%; /* Fit within container */
+            width: auto;
+            object-fit: contain;
+            opacity: 0.85;
+            transition: 0.2s ease;
         }
-        .legend-dot {
-            width: 12px; height: 12px; border-radius: 50%;
-            flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2);
+        .sidebar-logo:hover img { opacity: 1; transform: scale(1.03); }
+
+        .bottom-actions { flex-shrink: 0; padding-bottom: 5px; }
+
+        /* YouTube CTA */
+        .youtube-cta {
+            width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 10px;
+            background: #ff0000; color: white; text-decoration: none;
+            font-family: var(--font-headline); letter-spacing: 1px;
+            font-size: 0.8rem; border-radius: 6px;
+            transition: 0.2s ease; box-shadow: 0 0 14px rgba(255, 0, 0, 0.45);
+            box-sizing: border-box;
         }
+        .youtube-cta i { font-size: 1.1rem; }
+        .youtube-cta:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 0 18px rgba(255, 0, 0, 0.65); }
+        
+        /* Socials */
+        .sidebar-socials {
+            margin-top: 10px;
+            display: flex; justify-content: center; gap: 15px;
+        }
+        .sidebar-socials a { color: #888; font-size: 1.2rem; transition: 0.2s ease; }
+        .sidebar-socials a:hover { color: var(--electric-blue); transform: translateY(-2px); }
 
         /* --- MAP VIEWPORT --- */
         #planner-viewport {
@@ -167,7 +233,7 @@
             z-index: 20; pointer-events: none;
         }
 
-        /* --- TOKEN STYLES --- */
+        /* Token Styles */
         .token-wrapper {
             position: absolute; 
             width: 40px; height: 40px; 
@@ -192,7 +258,6 @@
         }
         .token-wrapper.dragging { cursor: grabbing; z-index: 999; }
         
-        /* Ghost Preview */
         #ghost-token {
             position: fixed; pointer-events: none; opacity: 0.6; z-index: 9999;
             transform: translate(-50%, -50%); display: none;
@@ -213,76 +278,6 @@
             background: none; border: none; color: white; padding: 8px 15px;
             width: 100%; text-align: left; cursor: pointer;
         }
-/* --- SIDEBAR LOGO (CENTERED) --- */
-.sidebar-logo {
-    display: flex;
-    justify-content: center;   /* center horizontally */
-    padding: 15px 0;
-}
-
-.sidebar-logo img {
-    max-width: 85%;
-    height: auto;
-    opacity: 0.85;
-    transition: 0.2s ease;
-}
-
-.sidebar-logo:hover img {
-    opacity: 1;
-    transform: scale(1.03);
-}
-/* --- YOUTUBE CTA BUTTON --- */
-.youtube-cta {
-    margin: 15px auto 0;
-    width: 90%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    padding: 12px;
-    background: #ff0000;
-    color: white;
-    text-decoration: none;
-
-    font-family: var(--font-headline);
-    letter-spacing: 1px;
-    font-size: 0.8rem;
-
-    border-radius: 6px;
-    transition: 0.2s ease;
-    box-shadow: 0 0 14px rgba(255, 0, 0, 0.45);
-}
-
-.youtube-cta i {
-    font-size: 1.2rem;
-}
-
-.youtube-cta:hover {
-    background: #cc0000;
-    transform: translateY(-2px);
-    box-shadow: 0 0 18px rgba(255, 0, 0, 0.65);
-}
-/* --- SIDEBAR SOCIALS --- */
-.sidebar-socials {
-    margin-top: 12px;
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-}
-
-.sidebar-socials a {
-    color: #888;
-    font-size: 1.2rem;
-    transition: 0.2s ease;
-}
-
-.sidebar-socials a:hover {
-    color: var(--electric-blue);
-    transform: translateY(-2px);
-}
-
-
         #context-menu button:hover { background: var(--electric-blue); }
     </style>
 </head>
@@ -295,7 +290,7 @@
                 <a href="/" class="nav-link">HOME</a>
                 <a href="/tournaments" class="nav-link">TOURNAMENTS</a>
                 <a href="/merch" class="nav-link">MERCH</a>
-                <a href="/support" class="nav-link">Support</a>
+                <a href="/donate" class="nav-link">DONATE</a>
             </div>
 
             <div class="sidebar-header">
@@ -698,4 +693,3 @@
     </script>
 </body>
 </html>
-
