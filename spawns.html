@@ -18,16 +18,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- ========================================= -->
-    <!-- 2. TITLE & SEO (Merged)                   -->
+    <!-- 2. TITLE & SEO                            -->
     <!-- ========================================= -->
-    <!-- I kept "Strat Planner" as the title so users know they are on the tool page -->
     <title>Strat Planner | Ape Squad Esports</title>
     
     <meta name="description" content="Join the Ape Squad community. Meet our players, view their highlights, and see our live club leaderboard rankings in The Finals.">
     <meta name="keywords" content="Ape Squad, esports, The Finals, gaming community, pro players, live stream, discord, twitch">
 
     <!-- ========================================= -->
-    <!-- 3. FAVICONS (From Source)                 -->
+    <!-- 3. FAVICONS                               -->
     <!-- ========================================= -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
@@ -64,6 +63,32 @@
             display: flex; flex-direction: column; flex-shrink: 0;
             box-shadow: 5px 0 20px rgba(0,0,0,0.5);
         }
+        
+        /* Navigation Styles */
+        .sidebar-nav {
+            background: #000;
+            padding: 15px 20px;
+            border-bottom: 1px solid #222;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .nav-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+        .nav-link:hover {
+            color: var(--electric-blue);
+            border-color: var(--electric-blue);
+            background: rgba(1, 163, 235, 0.1);
+        }
+
         .sidebar-header { padding: 20px; background: var(--midnight-black); border-bottom: 1px solid #333; }
         .sidebar-header h2 { margin: 0; color: var(--electric-blue); font-family: var(--font-headline); letter-spacing: 1px; }
         .sidebar-content { padding: 20px; flex: 1; overflow-y: auto; }
@@ -76,6 +101,7 @@
             border: 1px solid #444; border-radius: 4px; cursor: pointer;
         }
 
+        /* Tool Grid */
         .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .tool-btn {
             background: #222; border: 1px solid #444; color: #888;
@@ -89,12 +115,30 @@
             color: var(--electric-blue);
         }
 
+        /* Buttons */
+        .btn-group { display: flex; flex-direction: column; gap: 8px; }
         .action-btn {
-            width: 100%; padding: 10px; margin-top: 10px; background: #333; border: none;
+            width: 100%; padding: 10px; background: #333; border: none;
             color: white; cursor: pointer; font-weight: bold; border-radius: 4px;
+            transition: 0.2s;
         }
         .action-btn:hover { background: #444; }
-        .action-btn.danger { background: rgba(255, 68, 148, 0.2); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
+        .action-btn.danger { background: rgba(255, 68, 148, 0.1); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
+        .action-btn.danger:hover { background: rgba(255, 68, 148, 0.3); }
+
+        /* Legend Styles */
+        .legend-list {
+            list-style: none; padding: 0; margin: 0;
+            font-size: 0.85rem; color: #ccc;
+        }
+        .legend-list li {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 8px; line-height: 1.2;
+        }
+        .legend-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2);
+        }
 
         /* --- MAP VIEWPORT --- */
         #planner-viewport {
@@ -124,43 +168,28 @@
         }
 
         /* --- TOKEN STYLES --- */
-        
-        /* 1. The Wrapper is now just the small "Handle" in the center */
         .token-wrapper {
             position: absolute; 
-            width: 40px; height: 40px; /* Small Hitbox Size */
+            width: 40px; height: 40px; 
             transform: translate(-50%, -50%);
-            
-            /* Visual indicator for the handle (optional, helps you see where to grab) */
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            
             cursor: grab; z-index: 100;
             pointer-events: auto; touch-action: none; user-select: none;
         }
-
         .token-wrapper:hover {
-            background: rgba(1, 163, 235, 0.4); /* Highlight handle on hover */
+            background: rgba(1, 163, 235, 0.4); 
             border-color: var(--electric-blue);
         }
-
-        /* 2. The Image hangs off the handle but is native size */
         .token-wrapper img {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%); /* Centers image on the handle */
-            
-            /* Native Resolution */
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); 
             width: auto; height: auto; 
-            
-            /* IMPORTANT: Image ignores clicks, so you don't grab by the giant image */
             pointer-events: none;
-            
             filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
             -webkit-user-drag: none; user-drag: none;
         }
-        
         .token-wrapper.dragging { cursor: grabbing; z-index: 999; }
         
         /* Ghost Preview */
@@ -184,6 +213,76 @@
             background: none; border: none; color: white; padding: 8px 15px;
             width: 100%; text-align: left; cursor: pointer;
         }
+/* --- SIDEBAR LOGO (CENTERED) --- */
+.sidebar-logo {
+    display: flex;
+    justify-content: center;   /* center horizontally */
+    padding: 15px 0;
+}
+
+.sidebar-logo img {
+    max-width: 85%;
+    height: auto;
+    opacity: 0.85;
+    transition: 0.2s ease;
+}
+
+.sidebar-logo:hover img {
+    opacity: 1;
+    transform: scale(1.03);
+}
+/* --- YOUTUBE CTA BUTTON --- */
+.youtube-cta {
+    margin: 15px auto 0;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px;
+    background: #ff0000;
+    color: white;
+    text-decoration: none;
+
+    font-family: var(--font-headline);
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+
+    border-radius: 6px;
+    transition: 0.2s ease;
+    box-shadow: 0 0 14px rgba(255, 0, 0, 0.45);
+}
+
+.youtube-cta i {
+    font-size: 1.2rem;
+}
+
+.youtube-cta:hover {
+    background: #cc0000;
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(255, 0, 0, 0.65);
+}
+/* --- SIDEBAR SOCIALS --- */
+.sidebar-socials {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+}
+
+.sidebar-socials a {
+    color: #888;
+    font-size: 1.2rem;
+    transition: 0.2s ease;
+}
+
+.sidebar-socials a:hover {
+    color: var(--electric-blue);
+    transform: translateY(-2px);
+}
+
+
         #context-menu button:hover { background: var(--electric-blue); }
     </style>
 </head>
@@ -191,8 +290,16 @@
 
     <main>
         <div id="planner-sidebar">
+            <!-- Navigation -->
+            <div class="sidebar-nav">
+                <a href="/" class="nav-link">HOME</a>
+                <a href="/tournaments" class="nav-link">TOURNAMENTS</a>
+                <a href="/merch" class="nav-link">MERCH</a>
+                <a href="/donate" class="nav-link">DONATE</a>
+            </div>
+
             <div class="sidebar-header">
-                <h2>TACTICAL BOARD</h2>
+                <h2>Spawn Manipulation</h2>
             </div>
             
             <div class="sidebar-content">
@@ -207,8 +314,35 @@
                         <option value="Skyway">Skyway</option>
                         <option value="SysHorizon">SysHorizon</option>
                         <option value="Vegas">Vegas</option>
-			<option value="Fangwai">Fangwai</option>
+                        <option value="Fangwai">Fangwai</option>
                     </select>
+                </div>
+
+                <!-- NEW LEGEND SECTION -->
+                <div class="control-group">
+                    <label class="control-label">MAP KEY</label>
+                    <ul class="legend-list">
+                        <li>
+                            <div class="legend-dot" style="background: white;"></div>
+                            <span>Dot: Spawn Points</span>
+                        </li>
+                        <li>
+                            <div class="legend-dot" style="background: #122eff;"></div>
+                            <span>Player Block Radius</span>
+                        </li>
+                        <li>
+                            <div class="legend-dot" style="background: #d60000;"></div>
+                            <span>Objective Block Radius</span>
+                        </li>
+                        <li>
+                            <div class="legend-dot" style="background: #fff712;"></div>
+                            <span>2 Objective Overlap</span>
+                        </li>
+                        <li>
+                            <div class="legend-dot" style="background: #036d06;"></div>
+                            <span>Objective Max Range</span>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="control-group">
@@ -237,10 +371,35 @@
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <button id="reset-view" class="action-btn">Reset View</button>
-                    <button id="clear-all" class="action-btn danger">Clear All</button>
+                <div class="control-group btn-group">
+                    <button id="reset-view" class="action-btn">Reset Camera</button>
+                    <!-- NEW CLEAR DRAWINGS BUTTON -->
+                    <button id="clear-drawings" class="action-btn">Clear Drawings</button>
+                    <button id="clear-all" class="action-btn danger">Clear Everything</button>
                 </div>
+<a href="/" class="sidebar-logo">
+    <img src="images/logo.png" alt="Ape Squad Home">
+</a>
+
+<!-- VIDEO -->
+<!-- YOUTUBE CTA BUTTON -->
+<a 
+    href="https://www.youtube.com/watch?v=o1xsuZBKz-g" 
+    target="_blank" 
+    class="youtube-cta">
+    <i class="fa-brands fa-youtube"></i>
+    WATCH TUTORIAL ON YOUTUBE
+</a>
+
+
+<!-- SOCIAL LINKS -->
+<div class="sidebar-socials">
+    <a href="https://x.com/apesquadorg" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+    <a href="https://twitch.tv/apesquadorg" target="_blank"><i class="fa-brands fa-twitch"></i></a>
+    <a href="https://www.youtube.com/@ApeSquadOrg" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    <a href="https://www.linkedin.com/company/ape-squad-org" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+</div>
+
             </div>
         </div>
 
@@ -365,8 +524,16 @@
                     }
                 });
 
+                // Clear Everything (Drawings + Tokens)
                 document.getElementById('clear-all').onclick = () => {
-                    this.tokenLayer.innerHTML = '';
+                    if(confirm("Clear everything (Tokens and Drawings)?")) {
+                        this.tokenLayer.innerHTML = '';
+                        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+                    }
+                };
+
+                // Clear Drawings Only
+                document.getElementById('clear-drawings').onclick = () => {
                     this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
                 };
                 
@@ -531,4 +698,3 @@
     </script>
 </body>
 </html>
-
