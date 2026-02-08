@@ -95,35 +95,13 @@
                 0 0 150px rgba(1, 163, 235, 0.2),
                 0 0 250px rgba(255, 0, 76, 0.15),
                 inset 0 -100px 100px rgba(0,0,0,0.3);
-
-
-            }
         }
 
         /* Size adjustments for different screens */
-        @media (min-width: 1400px) {
-            .main-banner-img {
-                min-height: 550px;
-            }
-        }
-
-        @media (min-width: 1920px) {
-            .main-banner-img {
-                min-height: 650px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-banner-img {
-                min-height: 300px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-banner-img {
-                min-height: 200px;
-            }
-        }
+        @media (min-width: 1400px) { .main-banner-img { min-height: 550px; } }
+        @media (min-width: 1920px) { .main-banner-img { min-height: 650px; } }
+        @media (max-width: 768px) { .main-banner-img { min-height: 300px; } }
+        @media (max-width: 480px) { .main-banner-img { min-height: 200px; } }
 
         /* 3. Text Content Below Banner */
         .hero-text-content {
@@ -149,9 +127,7 @@
             backdrop-filter: blur(5px);
         }
 
-        .partnership-badge strong {
-            color: #ff004c; 
-        }
+        .partnership-badge strong { color: #ff004c; }
 
         .hero-description {
             font-size: 1.15rem;
@@ -226,14 +202,85 @@
             padding-bottom: 0.5rem;
         }
 
-        .schedule-list strong {
-            color: #fff;
-            margin-right: 8px;
-        }
+        .schedule-list strong { color: #fff; margin-right: 8px; }
 
         @media (max-width: 768px) {
             .region-grid { grid-template-columns: 1fr; }
             .hero-cta-group { flex-direction: column; gap: 1rem; }
+        }
+
+        /* --- NEW STYLES FOR ROSTER GRID --- */
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .roster-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: 0.2s;
+        }
+        
+        .roster-card:hover {
+            border-color: #01a3eb;
+            transform: translateY(-3px);
+        }
+
+        .roster-header h3 {
+            margin: 0 0 15px 0;
+            color: #fff;
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        /* Container for the profile pictures */
+        .roster-faces {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* The Avatar Circle */
+        .player-avatar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .discord-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            object-fit: cover;
+            transition: transform 0.2s;
+            background-color: #222; /* Loading placeholder color */
+        }
+        
+        .discord-avatar:hover {
+            transform: scale(1.1);
+            border-color: #01a3eb;
+            box-shadow: 0 0 15px rgba(1, 163, 235, 0.4);
+        }
+
+        /* Sub Badge */
+        .sub-badge {
+            position: absolute;
+            bottom: -5px;
+            background: #ff004c;
+            color: white;
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Ayuthaya', monospace;
         }
     </style>
 </head>
@@ -242,63 +289,37 @@
     <header class="navbar"></header> <!-- Populated by main.js -->
 
     <main>
-        <!-- ======================= -->
-        <!-- TOURNAMENT HERO SECTION -->
-        <!-- ======================= -->
+        <!-- HERO SECTION -->
         <section id="tournament-hero">
-            
-            <!-- Ambient Background (Blurred) -->
             <div class="hero-backdrop">
                 <img src="/images/tournament/horizons-banner.png" alt="">
             </div>
-
-            <!-- 1. The Banner (DRAMATIC FULL-STRETCH) -->
             <div class="banner-container">
-                <img src="/images/tournament/horizons-banner.png" 
-                     alt="Ape Squad Horizons" 
-                     class="main-banner-img">
+                <img src="/images/tournament/horizons-banner.png" alt="Ape Squad Horizons" class="main-banner-img">
             </div>
-
-            <!-- 2. The Text Details (Centered Below) -->
             <div class="hero-text-content">
-                
-                <div class="partnership-badge">
-                    In Partnership with <strong>Embark</strong>
-                </div>
-                
+                <div class="partnership-badge">In Partnership with <strong>Embark</strong></div>
                 <p class="hero-description">
                     Gather your squad, prepare your loadouts, and look toward the horizon.<br>
                     We are bringing you a <strong>Premier RFI Tournament</strong> for THE FINALS.
                 </p>
-
                 <div class="hero-cta-group">
                     <button class="btn btn-secondary" style="opacity: 0.6; cursor: not-allowed;">
                         <i class="fa-solid fa-clock"></i> Registration Opens Soon
                     </button>
-                    
-                    <a href="/rules" class="btn btn-hero-special">
-                        <i class="fa-solid fa-scroll"></i> Read Rules
-                    </a>
+                    <a href="/rules" class="btn btn-hero-special"><i class="fa-solid fa-scroll"></i> Read Rules</a>
                 </div>
-
             </div>
         </section>
 
-        <!-- ======================= -->
-        <!-- SCHEDULE SECTION        -->
-        <!-- ======================= -->
+        <!-- SCHEDULE SECTION -->
         <section id="tournament-details">
             <div class="container">
-                
-                <!-- Centered Header Wrapper -->
                 <div class="centered-header">
                     <h2 style="margin-bottom: 0.5rem; color: #fff;">Regional Schedule</h2>
                     <p style="color: #888; font-family: 'Ayuthaya', monospace; margin: 0;">Save the Dates</p>
                 </div>
-                
                 <div class="region-grid">
-                    
-                    <!-- EMEA CARD -->
                     <div class="region-card">
                         <h3 class="region-title emea-title">EMEA</h3>
                         <ul class="schedule-list">
@@ -306,8 +327,6 @@
                             <li><strong>Top 16:</strong> March 29th</li>
                         </ul>
                     </div>
-
-                    <!-- AMERICAS CARD -->
                     <div class="region-card">
                         <h3 class="region-title americas-title">AMERICAS</h3>
                         <ul class="schedule-list">
@@ -315,14 +334,11 @@
                             <li><strong>Top 16:</strong> April 19th</li>
                         </ul>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- ======================= -->
-        <!-- REGISTERED TEAMS        -->
-        <!-- ======================= -->
+        <!-- REGISTERED TEAMS -->
         <section id="rosters-section">
             <div class="container">
                 <h2 style="text-align: center; margin-bottom: 0.5rem;">Registered Teams</h2>
@@ -330,9 +346,8 @@
                     Rosters will appear here once registration opens.
                 </p>
                 
-                <!-- Loading State -->
                 <div id="roster-loading" style="text-align: center; padding: 2rem; display: none;">
-                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: var(--electric-blue); margin-bottom: 1rem;"></i>
+                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: #01a3eb; margin-bottom: 1rem;"></i>
                 </div>
 
                 <!-- Grid Container -->
@@ -342,7 +357,7 @@
 
     </main>
 
-    <footer class="site-footer"></footer> <!-- Populated by main.js -->
+    <footer class="site-footer"></footer>
     
     <script src="/js/main.js"></script>
 
@@ -373,7 +388,26 @@
             return arr;
         }
 
-        // 3. Fetch and Render
+        // 3. Helper to generate Avatar Image Tag
+        function getAvatarHtml(id, isSub = false) {
+            if (!id || id.trim() === "") return ""; // Skip if empty
+            
+            // Clean the ID (remove spaces)
+            const cleanId = id.trim();
+            const subBadge = isSub ? '<span class="sub-badge">SUB</span>' : '';
+
+            return `
+                <div class="player-avatar-container">
+                    <img class="discord-avatar" 
+                         src="https://unavatar.io/discord/${cleanId}" 
+                         onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'" 
+                         title="Discord ID: ${cleanId}">
+                    ${subBadge}
+                </div>
+            `;
+        }
+
+        // 4. Fetch and Render
         async function loadRosters() {
             const grid = document.getElementById('roster-grid');
             const loader = document.getElementById('roster-loading');
@@ -390,6 +424,8 @@
                 
                 const text = await response.text();
                 const data = parseCSV(text);
+                
+                // Remove header row
                 const rows = data.slice(1);
 
                 if (rows.length === 0) {
@@ -398,32 +434,43 @@
                 }
 
                 loader.style.display = 'none';
-                grid.style.display = 'grid';
+                grid.style.display = 'grid'; // Enable the Grid layout
 
                 rows.forEach(row => {
-                    const teamName = row[0];
-                    const p1 = row[1];
-                    const p2 = row[3];
-                    const p3 = row[5];
-                    const sub = row[7];
+                    // EXPECTED COLUMNS:
+                    // 0: Team Name
+                    // 1: Player 1 ID
+                    // 2: Player 2 ID
+                    // 3: Player 3 ID
+                    // 4: Sub ID (Optional)
 
-                    if (!teamName) return;
+                    const teamName = row[0];
+                    const id1 = row[1];
+                    const id2 = row[2];
+                    const id3 = row[3];
+                    const idSub = row[4]; 
+
+                    if (!teamName) return; // Skip empty rows
 
                     const card = document.createElement('div');
                     card.className = 'roster-card';
-                    
-                    let subHtml = sub ? `<li class="sub-player"><i class="fa-solid fa-user-plus"></i> ${sub} <span class="role-badge">SUB</span></li>` : '';
+
+                    // Generate HTML for faces
+                    const p1Html = getAvatarHtml(id1);
+                    const p2Html = getAvatarHtml(id2);
+                    const p3Html = getAvatarHtml(id3);
+                    const subHtml = getAvatarHtml(idSub, true); // true = add sub badge
 
                     card.innerHTML = `
                         <div class="roster-header">
                             <h3>${teamName}</h3>
                         </div>
-                        <ul class="roster-list">
-                            <li><i class="fa-solid fa-crown"></i> ${p1}</li>
-                            <li><i class="fa-solid fa-user"></i> ${p2}</li>
-                            <li><i class="fa-solid fa-user"></i> ${p3}</li>
+                        <div class="roster-faces">
+                            ${p1Html}
+                            ${p2Html}
+                            ${p3Html}
                             ${subHtml}
-                        </ul>
+                        </div>
                     `;
                     grid.appendChild(card);
                 });
