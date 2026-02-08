@@ -68,22 +68,61 @@
             transform: scale(1.1);
         }
 
-        /* 2. Full Width Banner Image */
+        /* 2. DRAMATIC FULL-STRETCH Banner */
         .banner-container {
             position: relative;
             z-index: 2;
-            width: 100%;
+            width: 100vw; /* Full viewport width */
+            margin-left: calc(-50vw + 50%); /* Break out of any container */
+            margin-right: calc(-50vw + 50%);
+            margin-bottom: 3rem;
+            padding: 0;
             display: flex;
             justify-content: center;
-            margin-bottom: 2rem;
-            padding: 0; /* Full stretch */
+            overflow: hidden;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
         }
 
         .main-banner-img {
             width: 100%;
-            max-width: 100%; /* Ensures full width */
             height: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            min-height: 450px;
+            object-fit: cover;
+            display: block;
+            /* Dramatic shadow effects */
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.9),
+                0 0 150px rgba(1, 163, 235, 0.2),
+                0 0 250px rgba(255, 0, 76, 0.15),
+                inset 0 -100px 100px rgba(0,0,0,0.3);
+
+
+            }
+        }
+
+        /* Size adjustments for different screens */
+        @media (min-width: 1400px) {
+            .main-banner-img {
+                min-height: 550px;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .main-banner-img {
+                min-height: 650px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-banner-img {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-banner-img {
+                min-height: 200px;
+            }
         }
 
         /* 3. Text Content Below Banner */
@@ -213,7 +252,7 @@
                 <img src="/images/tournament/horizons-banner.png" alt="">
             </div>
 
-            <!-- 1. The Banner (Full Width) -->
+            <!-- 1. The Banner (DRAMATIC FULL-STRETCH) -->
             <div class="banner-container">
                 <img src="/images/tournament/horizons-banner.png" 
                      alt="Ape Squad Horizons" 
