@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ape Squad Horizons: A Premier RFI Tournament for THE FINALS in partnership with Embark. EMEA & Americas brackets.">
+    <meta name="keywords" content="Horizons, Ape Squad, Embark Studios, The Finals, Esports Tournament, RFI, EMEA, Americas">
+    <title>Horizons | Ape Squad Esports</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Your Stylesheets -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Internal Styles for Cinematic Layout -->
+    <style>
+        /* 1. Hero Wrapper */
+        #tournament-hero {
+            position: relative;
+            min-height: auto; 
+            padding-top: 80px; 
+            padding-bottom: 4rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Ambient Background (Blurred) */
+        .hero-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-backdrop img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(40px) brightness(0.3);
+            transform: scale(1.1);
+        }
+
+        /* 2. Full Width Banner Image */
+        .banner-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 0; /* Full stretch */
+        }
+
+        .main-banner-img {
+            width: 100%;
+            max-width: 100%; /* Ensures full width */
+            height: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        /* 3. Text Content Below Banner */
+        .hero-text-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .partnership-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: #d1d5db;
+            font-family: 'Ayuthaya', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
+        }
+
+        .partnership-badge strong {
+            color: #ff004c; 
+        }
+
+        .hero-description {
+            font-size: 1.15rem;
+            color: #e5e5e5;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* 4. Schedule Cards */
+        .centered-header {
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .region-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .region-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .region-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .region-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .emea-title { color: #01a3eb; text-shadow: 0 0 15px rgba(1, 163, 235, 0.3); }
+        .americas-title { color: #ff004c; text-shadow: 0 0 15px rgba(255, 0, 76, 0.3); }
+
+        .schedule-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-family: 'Ayuthaya', monospace;
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        .schedule-list li {
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 0.5rem;
+        }
+
+        .schedule-list strong {
+            color: #fff;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .region-grid { grid-template-columns: 1fr; }
+            .hero-cta-group { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar"></header> <!-- Populated by main.js -->
+
+    <main>
+        <!-- ======================= -->
+        <!-- TOURNAMENT HERO SECTION -->
+        <!-- ======================= -->
+        <section id="tournament-hero">
+            
+            <!-- Ambient Background (Blurred) -->
+            <div class="hero-backdrop">
+                <img src="/images/tournament/horizons-banner.png" alt="">
+            </div>
+
+            <!-- 1. The Banner (Full Width) -->
+            <div class="banner-container">
+                <img src="/images/tournament/horizons-banner.png" 
+                     alt="Ape Squad Horizons" 
+                     class="main-banner-img">
+            </div>
+
+            <!-- 2. The Text Details (Centered Below) -->
+            <div class="hero-text-content">
+                
+                <div class="partnership-badge">
+                    In Partnership with <strong>Embark</strong>
+                </div>
+                
+                <p class="hero-description">
+                    Gather your squad, prepare your loadouts, and look toward the horizon.<br>
+                    We are bringing you a <strong>Premier RFI Tournament</strong> for THE FINALS.
+                </p>
+
+                <div class="hero-cta-group">
+                    <button class="btn btn-secondary" style="opacity: 0.6; cursor: not-allowed;">
+                        <i class="fa-solid fa-clock"></i> Registration Opens Soon
+                    </button>
+                    
+                    <a href="/rules" class="btn btn-hero-special">
+                        <i class="fa-solid fa-scroll"></i> Read Rules
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ======================= -->
+        <!-- SCHEDULE SECTION        -->
+        <!-- ======================= -->
+        <section id="tournament-details">
+            <div class="container">
+                
+                <!-- Centered Header Wrapper -->
+                <div class="centered-header">
+                    <h2 style="margin-bottom: 0.5rem; color: #fff;">Regional Schedule</h2>
+                    <p style="color: #888; font-family: 'Ayuthaya', monospace; margin: 0;">Save the Dates</p>
+                </div>
+                
+                <div class="region-grid">
+                    
+                    <!-- EMEA CARD -->
+                    <div class="region-card">
+                        <h3 class="region-title emea-title">EMEA</h3>
+                        <ul class="schedule-list">
+                            <li><strong>Day 1:</strong> March 22nd</li>
+                            <li><strong>Top 16:</strong> March 29th</li>
+                        </ul>
+                    </div>
+
+                    <!-- AMERICAS CARD -->
+                    <div class="region-card">
+                        <h3 class="region-title americas-title">AMERICAS</h3>
+                        <ul class="schedule-list">
+                            <li><strong>Day 1:</strong> April 12th</li>
+                            <li><strong>Top 16:</strong> April 19th</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= -->
+        <!-- REGISTERED TEAMS        -->
+        <!-- ======================= -->
+        <section id="rosters-section">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 0.5rem;">Registered Teams</h2>
+                <p class="section-subtitle" style="text-align: center; color: var(--light-grey); margin-bottom: 2rem;">
+                    Rosters will appear here once registration opens.
+                </p>
+                
+                <!-- Loading State -->
+                <div id="roster-loading" style="text-align: center; padding: 2rem; display: none;">
+                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: var(--electric-blue); margin-bottom: 1rem;"></i>
+                </div>
+
+                <!-- Grid Container -->
+                <div id="roster-grid" class="roster-grid" style="display: none;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer"></footer> <!-- Populated by main.js -->
+    
+    <script src="/js/main.js"></script>
+
+    <!-- GOOGLE SHEET FETCHER SCRIPT -->
+    <script>
+        // 1. configuration
+        const SHEET_ID = 'INSERT_YOUR_NEW_HORIZONS_SHEET_ID_HERE'; 
+        const GID = '0'; 
+        const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+
+        // 2. CSV Parser
+        function parseCSV(str) {
+            const arr = [];
+            let quote = false;
+            let col, c;
+            for (let row = col = c = 0; c < str.length; c++) {
+                let cc = str[c], nc = str[c+1];
+                arr[row] = arr[row] || [];
+                arr[row][col] = arr[row][col] || '';
+                
+                if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; }
+                else if (cc == '"') { quote = !quote; }
+                else if (cc == ',' && !quote) { ++col; }
+                else if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; }
+                else if (cc == '\n' && !quote) { ++row; col = 0; }
+                else { arr[row][col] += cc; }
+            }
+            return arr;
+        }
+
+        // 3. Fetch and Render
+        async function loadRosters() {
+            const grid = document.getElementById('roster-grid');
+            const loader = document.getElementById('roster-loading');
+
+            if (SHEET_ID === 'INSERT_YOUR_NEW_HORIZONS_SHEET_ID_HERE') {
+                return;
+            }
+
+            loader.style.display = 'block';
+
+            try {
+                const response = await fetch(CSV_URL);
+                if (!response.ok) throw new Error("Sheet not found");
+                
+                const text = await response.text();
+                const data = parseCSV(text);
+                const rows = data.slice(1);
+
+                if (rows.length === 0) {
+                    loader.innerHTML = '<p>No teams registered yet.</p>';
+                    return;
+                }
+
+                loader.style.display = 'none';
+                grid.style.display = 'grid';
+
+                rows.forEach(row => {
+                    const teamName = row[0];
+                    const p1 = row[1];
+                    const p2 = row[3];
+                    const p3 = row[5];
+                    const sub = row[7];
+
+                    if (!teamName) return;
+
+                    const card = document.createElement('div');
+                    card.className = 'roster-card';
+                    
+                    let subHtml = sub ? `<li class="sub-player"><i class="fa-solid fa-user-plus"></i> ${sub} <span class="role-badge">SUB</span></li>` : '';
+
+                    card.innerHTML = `
+                        <div class="roster-header">
+                            <h3>${teamName}</h3>
+                        </div>
+                        <ul class="roster-list">
+                            <li><i class="fa-solid fa-crown"></i> ${p1}</li>
+                            <li><i class="fa-solid fa-user"></i> ${p2}</li>
+                            <li><i class="fa-solid fa-user"></i> ${p3}</li>
+                            ${subHtml}
+                        </ul>
+                    `;
+                    grid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading sheet:', error);
+                loader.innerHTML = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadRosters);
+    </script>
+</body>
+</html>
