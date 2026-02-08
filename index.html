@@ -39,7 +39,7 @@
 
     <header class="navbar"></header> <!-- Populated by main.js -->
 
-       <main>
+             <main>
         <section id="hero">
             <video autoplay loop muted playsinline id="hero-video" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
                 <source src="images/LOOP.mp4" type="video/mp4">
@@ -70,18 +70,37 @@
             <h2 class="glitch" data-text="UPCOMING EVENTS">UPCOMING EVENTS</h2>
         </div>
 
-        <!-- PLACEHOLDER FOR NO UPCOMING EVENTS -->
-        <div class="placeholder-container" style="text-align: center; border: 2px dashed #01a3eb; padding: 4rem 2rem; border-radius: 15px; background: rgba(1, 163, 235, 0.05); margin-bottom: 3rem;">
-            <i class="fas fa-calendar-day" style="font-size: 3rem; color: #01a3eb; margin-bottom: 1.5rem;"></i>
-            <h3 style="color: #FFFFFF; font-family: 'Anton', sans-serif; letter-spacing: 2px;">THE ARENA IS PREPARING...</h3>
-            <p style="color: #FFFFFF; opacity: 0.8; max-width: 600px; margin: 0 auto 2rem auto;">We are currently fueling up for the next season of competition. Stay tuned to our socials for upcoming tournament announcements.</p>
-            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn btn-primary">FOLLOW ON TWITCH</a>
-                <a href="https://x.com/apesquadorg" target="_blank" class="btn">FOLLOW ON X</a>
+        <!-- FEATURED EVENT: HORIZONS -->
+        <div class="featured-event-container" style="margin-bottom: 4rem; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; overflow: hidden; background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);">
+            
+            <!-- Banner Image Link -->
+            <a href="/horizons-i-2026.html" style="display: block; position: relative;">
+                <img src="/images/tournament/horizons-banner.png" alt="Ape Squad Horizons" style="width: 100%; height: auto; display: block; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <!-- RFI TAG (TOP LEFT) -->
+                <div style="position: absolute; top: 10px; left: 10px; background: #01a3eb; color: white; padding: 5px 10px; font-family: 'Ayuthaya', monospace; font-size: 0.8rem; border-radius: 4px; letter-spacing: 1px;">RFI</div>
+                <!-- EMBARK TAG (TOP RIGHT) -->
+                <div style="position: absolute; top: 10px; right: 10px; background: #ff004c; color: white; padding: 5px 10px; font-family: 'Ayuthaya', monospace; font-size: 0.8rem; border-radius: 4px;">PARTNERED WITH EMBARK</div>
+            </a>
+
+            <!-- Event Text/Details -->
+            <div style="padding: 2rem; text-align: center;">
+                <h3 style="font-family: 'Anton', sans-serif; font-size: 2rem; margin: 0 0 0.5rem 0; text-transform: uppercase;">Ape Squad Horizons</h3>
+                <!-- BIGGER SUBTITLE -->
+        <div style="color: #e5e5e5; font-size: 1.2rem; font-weight: bold; margin-bottom: 1.5rem; font-family: 'Ayuthaya', monospace; text-align: center;">Premier RFI Tournament</div>
+                
+                <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; color: #ccc;">
+                    <div><i class="fa-solid fa-earth-europe"></i> EMEA Day 1: <strong style="color: white;">Mar 22</strong></div>
+<div> EMEA Top 16: <strong style="color: white;">Mar 29</strong></div>
+                    <div><i class="fa-solid fa-earth-americas"></i> AMERICAS Day 1: <strong style="color: white;">Apr 12</strong></div>
+<div> AMERICAS Top 16: <strong style="color: white;">Apr 19</strong></div>                
+</div>
+
+                <a href="/horizons-i-2026.html" class="btn btn-primary">VIEW FULL DETAILS</a>
             </div>
         </div>
+        <!-- END FEATURED EVENT -->
 
-                     <!-- RECENT RESULTS GRID -->
+        <!-- RECENT RESULTS GRID -->
         <div class="past-events-header" style="text-align: center; margin: 5rem 0 2rem 0;">
             <h2 class="glitch" data-text="RECENT RESULTS" style="font-size: 2rem;">RECENT RESULTS</h2>
             <p style="margin: 0 auto;">History made in the jungle.</p>
@@ -89,7 +108,7 @@
 
         <div class="schedule-container"> 
             
-<!-- 2025 Contestant Choice Awards -->
+            <!-- 2025 Contestant Choice Awards -->
             <div class="match-card">
                 <div class="match-info">
                     <h4>2025 Contestant Choice Awards</h4>
@@ -100,7 +119,7 @@
                     <a href="https://youtu.be/BoIug33NCK4?si=j8J32j6r3tk1NLhn" target="_blank" class="btn">WATCH CEREMONY</a>
                 </div>
             </div>
-            <!-- NEW: Battle For Break Point -->
+            <!-- Battle For Break Point -->
             <div class="match-card">
                 <div class="match-info">
                     <h4>Battle For Break Point</h4>
@@ -110,7 +129,7 @@
                 <a href="https://youtube.com/playlist?list=PL1bwu__yJTKHvJJo7OhfzoGrA27UhK2MA&si=es2cNv7KcpulZO0D" target="_blank" class="btn">WATCH MATCHES</a>
             </div>
 
-            <!-- NEW: Holiday Snowdown -->
+            <!-- Holiday Snowdown -->
             <div class="match-card">
                 <div class="match-info">
                     <h4>Holiday Snowdown</h4>
@@ -120,38 +139,38 @@
                 <a href="https://youtube.com/playlist?list=PL1bwu__yJTKEATbXdzPoFQD1UNoEMBPos&si=z4uCBRfi1Npe4sNt" target="_blank" class="btn">WATCH MATCHES</a>
             </div>
                     
-                    <!-- Worlds -->
-                    <div class="match-card">
-                        <div class="match-info">
-                            <h4>Ape Squad Worlds: Championship</h4>
-                            <p>September 13th 2025</p>
-                        </div>
-                        <div class="match-time">WINNERS: ENVY</div>
-                        <a href="https://youtube.com/playlist?list=PL1bwu__yJTKFbe2cKee6o80LZRyoAoeDn&si=NCu0dE5nfI21ZEeM" target="_blank" class="btn">WATCH MATCHES</a>
-                    </div>
-
-                    <!-- Volcanic Panic -->
-                    <div class="match-card">
-                        <div class="match-info">
-                            <h4>VOLCANIC PANIC</h4>
-                            <p>June 14th 2025</p>
-                        </div>
-                        <div class="match-time">WINNERS: BRICKED</div>
-                        <a href="https://youtu.be/JGXmDkka-vw?si=qjhvWt6HSJQgB94U" target="_blank" class="btn">WATCH MATCHES</a>
-                    </div>
-
-                    <!-- Jungle Rumble -->
-                    <div class="match-card">
-                        <div class="match-info">
-                            <h4>JUNGLE RUMBLE</h4>
-                            <p>February 22nd 2025</p>
-                        </div>
-                        <div class="match-time">WINNERS: NOODS</div>
-                    </div>
-
+            <!-- Worlds -->
+            <div class="match-card">
+                <div class="match-info">
+                    <h4>Ape Squad Worlds: Championship</h4>
+                    <p>September 13th 2025</p>
                 </div>
+                <div class="match-time">WINNERS: ENVY</div>
+                <a href="https://youtube.com/playlist?list=PL1bwu__yJTKFbe2cKee6o80LZRyoAoeDn&si=NCu0dE5nfI21ZEeM" target="_blank" class="btn">WATCH MATCHES</a>
             </div>
-       </section>
+
+            <!-- Volcanic Panic -->
+            <div class="match-card">
+                <div class="match-info">
+                    <h4>VOLCANIC PANIC</h4>
+                    <p>June 14th 2025</p>
+                </div>
+                <div class="match-time">WINNERS: BRICKED</div>
+                <a href="https://youtu.be/JGXmDkka-vw?si=qjhvWt6HSJQgB94U" target="_blank" class="btn">WATCH MATCHES</a>
+            </div>
+
+            <!-- Jungle Rumble -->
+            <div class="match-card">
+                <div class="match-info">
+                    <h4>JUNGLE RUMBLE</h4>
+                    <p>February 22nd 2025</p>
+                </div>
+                <div class="match-time">WINNERS: NOODS</div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
         <section id="mentality">
             <div class="container">
