@@ -493,8 +493,43 @@
     <!-- End of unique page content -->
 </main>
 
-<footer class="site-footer"></footer>
+<!-- This footer is populated by js/main.js -->
+<footer></footer>
 
+<!-- Global script for header/footer loading -->
 <script src="/js/main.js"></script>
+
+<!-- TAB SWITCHING SCRIPT -->
+<script>
+    function openRules(evt, ruleName) {
+        var i, tabcontent, tablinks;
+
+        // 1. Hide all elements with class="tab-content"
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
+        }
+
+        // 2. Remove the class "active" from all elements with class="tab-btn"
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // 3. Show the specific tab content
+        var selectedTab = document.getElementById(ruleName);
+        selectedTab.style.display = "block";
+        
+        // Small timeout to allow the display:block to apply before adding opacity class for animation
+        setTimeout(() => {
+            selectedTab.classList.add("active");
+        }, 10);
+
+        // 4. Add the class "active" to the button that opened the tab
+        evt.currentTarget.className += " active";
+    }
+</script>
+
 </body>
 </html>
