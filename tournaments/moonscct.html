@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Moon De Lune's Content Creator Cup in partnership with Ape Squad.">
+    <meta name="keywords" content="Moon De Lune, Content Creator Cup, Ape Squad, The Finals, Esports Tournament">
+    <title>Moon's Content Creator Cup | Ape Squad Esports</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Your Stylesheets -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Internal Styles for Cinematic Layout -->
+    <style>
+        /* 1. Hero Wrapper */
+        #tournament-hero {
+            position: relative;
+            min-height: auto; 
+            padding-top: 80px; 
+            padding-bottom: 4rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Ambient Background (Blurred) */
+        .hero-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-backdrop img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(40px) brightness(0.3);
+            transform: scale(1.1);
+        }
+
+        /* 2. DRAMATIC FULL-STRETCH Banner */
+        .banner-container {
+            position: relative;
+            z-index: 2;
+            width: 100vw; 
+            margin-left: calc(-50vw + 50%); 
+            margin-right: calc(-50vw + 50%);
+            margin-bottom: 3rem;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+        }
+
+        .main-banner-img {
+            width: 100%;
+            height: auto;
+            min-height: 450px;
+            object-fit: cover;
+            display: block;
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.9),
+                0 0 150px rgba(255, 255, 255, 0.1),
+                0 0 250px rgba(1, 163, 235, 0.15),
+                inset 0 -100px 100px rgba(0,0,0,0.3);
+        }
+
+        /* Size adjustments for different screens */
+        @media (min-width: 1400px) { .main-banner-img { min-height: 550px; } }
+        @media (min-width: 1920px) { .main-banner-img { min-height: 650px; } }
+        @media (max-width: 768px) { .main-banner-img { min-height: 300px; } }
+        @media (max-width: 480px) { .main-banner-img { min-height: 200px; } }
+
+        /* 3. Text Content Below Banner */
+        .hero-text-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .partnership-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: #d1d5db;
+            font-family: 'Ayuthaya', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
+        }
+
+        .partnership-badge strong { color: #01a3eb; }
+
+        .hero-description {
+            font-size: 1.15rem;
+            color: #e5e5e5;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* 4. Formatting and Schedule Sections */
+        .centered-header {
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .info-panel {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .info-panel h3 {
+            color: #fff;
+            font-family: 'Anton', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .info-panel h3 i { margin-right: 10px; color: #fff; }
+
+        .info-panel p, .info-panel ul {
+            color: #ccc;
+            line-height: 1.6;
+            font-family: 'Ayuthaya', monospace;
+            font-size: 0.95rem;
+        }
+
+        .info-panel ul { margin-left: 1.5rem; margin-top: 1rem; }
+        .info-panel ul li { margin-bottom: 0.8rem; }
+        .info-panel strong { color: #fff; }
+
+        .region-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .region-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: left;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .region-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .region-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .info-title { color: #01a3eb; text-shadow: 0 0 15px rgba(1, 163, 235, 0.3); }
+        .broadcast-title { color: #9146FF; text-shadow: 0 0 15px rgba(145, 70, 255, 0.3); } /* Twitch Purple */
+
+        .schedule-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-family: 'Ayuthaya', monospace;
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        .schedule-list li {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 0.8rem;
+        }
+
+        .schedule-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .schedule-meta {
+            display: block;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .schedule-list strong { color: #fff; margin-right: 8px; }
+
+        @media (max-width: 768px) {
+            .region-grid { grid-template-columns: 1fr; }
+            .hero-cta-group { flex-direction: column; gap: 1rem; }
+        }
+
+        /* --- STYLES FOR ROSTER GRID --- */
+        .group-header {
+            text-align: center;
+            font-family: 'Anton', sans-serif;
+            font-size: 2rem;
+            color: #fff;
+            margin: 3rem 0 1.5rem 0;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .roster-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: 0.2s;
+        }
+        
+        .roster-card:hover {
+            border-color: #01a3eb;
+            transform: translateY(-3px);
+        }
+
+        .roster-header h3 {
+            margin: 0 0 15px 0;
+            color: #fff;
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .roster-faces {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .player-avatar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 70px; /* fixed width to keep names aligned */
+        }
+
+        .discord-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            object-fit: cover;
+            transition: transform 0.2s;
+            background-color: #222;
+        }
+        
+        .discord-avatar:hover {
+            transform: scale(1.1);
+            border-color: #01a3eb;
+            box-shadow: 0 0 15px rgba(1, 163, 235, 0.4);
+        }
+
+        .player-name {
+            color: #ccc;
+            font-family: 'Ayuthaya', monospace;
+            font-size: 0.7rem;
+            margin-top: 8px;
+            text-align: center;
+            word-break: break-word;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="navbar"></header> <!-- Populated by main.js -->
+
+    <main>
+        <!-- HERO SECTION -->
+        <section id="tournament-hero">
+            <div class="hero-backdrop">
+                <!-- Fallback Banner. Update path as needed -->
+                <img src="/images/tournament/classics-banner.png" alt="">
+            </div>
+            <div class="banner-container">
+                <!-- You can update this to Moon's Cup specific banner -->
+                <img src="/images/tournament/classics-banner.png" alt="Moon De Lune's Content Creator Cup" class="main-banner-img">
+            </div>
+            <div class="hero-text-content">
+                <div class="partnership-badge">Moon De Lune <strong>x</strong> Ape Squad</div>
+                <h1 style="color:#fff; font-family:'Anton', sans-serif; font-size:3rem; margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">CONTENT CREATOR CUP</h1>
+                <p class="hero-description">
+                    For the second year, @🤍M O O N🤍 hosts a fun-filled event where Content Creators from the community come together to show off their quick thinking, silly habits, and outrageous comps!
+                </p>
+                <div class="hero-cta-group">
+                    <a href="https://forms.gle/hRtHizd9f1DqVX88A" target="_blank" class="btn btn-primary" style="background: #fff; color: #000; border: none;">
+                        <i class="fa-solid fa-pen-to-square"></i> Sign Up Here
+                    </a>
+                    <a href="https://discord.gg/apesquad" target="_blank" class="btn btn-hero-special" style="border-color: #5865F2; color: #5865F2;">
+                        <i class="fa-brands fa-discord"></i> Ape Squad Discord
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORMAT & THE RULES SECTION -->
+        <section id="tournament-format" style="padding-top: 2rem;">
+            <div class="container">
+                <div class="centered-header">
+                    <h2 style="margin-bottom: 0.5rem; color: #fff; font-family: 'Anton', sans-serif; font-size: 2.5rem;">Tournament Rules</h2>
+                    <p style="color: #888; font-family: 'Ayuthaya', monospace; margin: 0;">Battle of Wits, Bans, and Chaos</p>
+                </div>
+
+                <div class="region-grid">
+                    <div class="info-panel" style="margin-bottom:0;">
+                        <h3><i class="fa-solid fa-clipboard-check" style="color:#01a3eb;"></i> EVENT FORMAT</h3>
+                        <p><strong>Total Teams:</strong> 8 Teams total, split into Two Groups of (4).<br>
+                        <strong>Rounds:</strong> 4 Cashout rounds per group.<br>
+                        <strong>The Objective:</strong> The team with the most points at the end of the day wins!</p>
+                        
+                        <p style="margin-top: 1.5rem; color: #fff;"><strong>Earning Points:</strong></p>
+                        <ul>
+                            <li><strong>1st Place:</strong> 50 points</li>
+                            <li><strong>2nd Place:</strong> 30 points</li>
+                            <li><strong>3rd Place:</strong> 20 points</li>
+                            <li><strong>4th Place:</strong> 10 points</li>
+                        </ul>
+                        <p style="font-size: 0.8rem; color: #ff004c; margin-top: 1.5rem;"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Tiebreakers:</strong> Decided with a best-of-three, head-to-head.</p>
+                    </div>
+                    
+                    <div class="info-panel" style="margin-bottom:0;">
+                        <h3><i class="fa-solid fa-clone" style="color:#FFD700;"></i> WILD CARDS</h3>
+                        <p>Contestants will battle to the end equipped with Wild Cards! Each team receives <strong>3 wild cards</strong> to use during the event. You may use <strong>only one</strong> card per round:</p>
+                        <ul>
+                            <li><strong style="color:#FFD700;"><i class="fa-solid fa-bolt"></i> 3x Points:</strong> Points earned this round are tripled.</li>
+                            <li><strong style="color:#4CAF50;"><i class="fa-solid fa-money-bill-wave"></i> Heist Card:</strong> Every $10,000 cashed out during this round = +10 points.</li>
+                            <li><strong style="color:#ff004c;"><i class="fa-solid fa-ban"></i> Ban Card:</strong> You may ban one Weapon, Gadget, and Specialization. Your team must abide by the same bans. <em>Note: There may be multiple bans in a single round if multiple teams play this card.</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCHEDULE / WATCH SECTION -->
+        <section id="tournament-details">
+            <div class="container">
+                <div class="centered-header">
+                    <h2 style="margin-bottom: 0.5rem; color: #fff; font-family: 'Anton', sans-serif; font-size: 2.5rem;">Event Details</h2>
+                </div>
+                
+                <div class="region-grid">
+                    <!-- DATE/TIME -->
+                    <div class="region-card">
+                        <h3 class="region-title info-title"><i class="fa-solid fa-calendar-day"></i> DATE & TIME</h3>
+                        <p style="text-align: center; color: #fff; font-family: 'Ayuthaya', monospace; margin-bottom: 1.5rem;">March 22, 2026</p>
+                        <ul class="schedule-list">
+                            <li><strong>Start Time:</strong> 12:00 PM</li>
+                            <li><strong>Event Type:</strong> 4 Cashout Rounds per Group</li>
+                            <li style="border-top: 2px dashed rgba(255,255,255,0.2); margin-top: 10px; padding-top: 15px; text-align:center;">
+                                <strong style="color: #fff; font-size: 1.1rem;">Be there or be square!</strong>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- WHERE TO WATCH -->
+                    <div class="region-card">
+                        <h3 class="region-title broadcast-title"><i class="fa-solid fa-video"></i> WHERE TO WATCH</h3>
+                        <p style="text-align: center; color: #fff; font-family: 'Ayuthaya', monospace; margin-bottom: 1.5rem;">Live Broadcast Channels</p>
+                        <ul class="schedule-list">
+                            <li>
+                                <a href="https://twitch.tv/MoonDeLune" target="_blank" style="color:#ccc; text-decoration:none; display:flex; align-items:center; gap: 10px;">
+                                    <i class="fa-brands fa-twitch" style="color:#9146FF; font-size: 1.2rem;"></i> <strong>MoonDeLune</strong> on Twitch
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://twitch.tv/ApeSquad" target="_blank" style="color:#ccc; text-decoration:none; display:flex; align-items:center; gap: 10px;">
+                                    <i class="fa-brands fa-twitch" style="color:#9146FF; font-size: 1.2rem;"></i> <strong>Ape Squad</strong> on Twitch
+                                </a>
+                            </li>
+                            <li style="border-top: 2px dashed rgba(255,255,255,0.2); margin-top: 10px; padding-top: 15px; text-align:center;">
+                                <span class="schedule-meta" style="color: #fff;">Everyone come together with us to enjoy this incredible battle!</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REGISTERED TEAMS -->
+        <section id="rosters-section" style="padding-bottom: 4rem;">
+            <div class="container">
+                <div class="centered-header">
+                    <h2 style="margin-bottom: 0.5rem; font-family: 'Anton', sans-serif; font-size: 2.5rem; color: #fff;">Contestants</h2>
+                    <p style="color: #888; font-family: 'Ayuthaya', monospace; margin: 0;">The 8 Invited Squads</p>
+                </div>
+
+                <!-- GROUP 1 -->
+                <div class="group-header">GROUP 1</div>
+                <div class="roster-grid">
+                    
+                    <!-- Team: Big Guys -->
+                    <div class="roster-card">
+                        <div class="roster-header"><h3>Big Guys</h3></div>
+                        <div class="roster-faces">
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Andrewstown" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Andrewstown</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/UN1" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">UN1</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Appoh" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Appoh</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team: Triple Threat -->
+                    <div class="roster-card">
+                        <div class="roster-header"><h3>Triple Threat</h3></div>
+                        <div class="roster-faces">
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Agent_Penguin" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Agent_Penguin</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Swiftcheetah" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Swiftcheetah</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Viome" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Viome</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team: Burrow-ish -->
+                    <div class="roster-card">
+                        <div class="roster-header"><h3>Burrow-ish</h3></div>
+                        <div class="roster-faces">
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Maddiebaddy" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Maddiebaddy</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Calcifer" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Calcifer</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Momma Gerbil" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Momma Gerbil</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team: The Factory -->
+                    <div class="roster-card">
+                        <div class="roster-header"><h3>The Factory</h3></div>
+                        <div class="roster-faces">
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Ichyper" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Ichyper</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Riotking" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Riotking</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Ayokoy" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Ayokoy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End Group 1 Grid -->
+
+                <!-- GROUP 2 -->
+                <div class="group-header">GROUP 2</div>
+                <div class="roster-grid">
+                    
+                    <!-- Team: Knives and Hammered -->
+                    <div class="roster-card">
+                        <div class="roster-header"><h3>Knives & Hammered</h3></div>
+                        <div class="roster-faces">
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Roo" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Roo</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Kikowanitv" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Kikowanitv</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Average Man" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Average Man</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team: Gambling Addicts -->
+                    <div class="roster-card">
+                        <div class="roster-header"><h3>Gambling Addicts</h3></div>
+                        <div class="roster-faces">
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Shaunie" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Shaunie</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Brisket" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Brisket</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Typo" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Typo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team: Team SWS -->
+                    <div class="roster-card">
+                        <div class="roster-header"><h3>Team SWS</h3></div>
+                        <div class="roster-faces">
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Sanguine" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Sanguine</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/BottledWater" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">BottledWater</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Sophia" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Sophia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team: Norns -->
+                    <div class="roster-card">
+                        <div class="roster-header"><h3>Norns</h3></div>
+                        <div class="roster-faces">
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Lieptr" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Lieptr</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Yeahhealthy" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Yeahhealthy</span>
+                            </div>
+                            <div class="player-avatar-container">
+                                <img class="discord-avatar" src="https://unavatar.io/discord/Let_Em_Know" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                                <span class="player-name">Let_Em_Know</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End Group 2 Grid -->
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer"></footer>
+    
+    <script src="/js/main.js"></script>
+
+</body>
+</html>
