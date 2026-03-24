@@ -4430,3 +4430,55 @@ header .social-links a:hover i {
         display: none; 
     }
 }
+/* ==========================================
+   SIDE ADS (LEFT & RIGHT)
+   ========================================== */
+.side-ad {
+    position: fixed;
+    top: 150px; /* Space below navbar */
+    width: 160px; /* Standard skyscraper ad width */
+    height: 600px; /* Standard skyscraper ad height */
+    z-index: 10;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.side-ad:hover {
+    transform: translateY(-5px);
+    border-color: #01a3eb;
+    box-shadow: 0 15px 40px rgba(1, 163, 235, 0.2);
+}
+
+.side-ad.left { left: 20px; }
+.side-ad.right { right: 20px; }
+
+.side-ad .ad-placeholder-text {
+    color: #fff;
+    font-family: 'Anton', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+}
+
+.side-ad img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hide ads on smaller screens so they don't overlap the main site */
+@media (max-width: 1400px) {
+    .side-ad { display: none !important; }
+}
