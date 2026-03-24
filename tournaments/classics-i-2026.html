@@ -72,8 +72,8 @@
         .banner-container {
             position: relative;
             z-index: 2;
-            width: 100vw; /* Full viewport width */
-            margin-left: calc(-50vw + 50%); /* Break out of any container */
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
             margin-right: calc(-50vw + 50%);
             margin-bottom: 3rem;
             padding: 0;
@@ -89,7 +89,6 @@
             min-height: 450px;
             object-fit: cover;
             display: block;
-            /* Dramatic shadow effects */
             box-shadow: 
                 0 30px 80px rgba(0,0,0,0.9),
                 0 0 150px rgba(1, 163, 235, 0.2),
@@ -97,7 +96,6 @@
                 inset 0 -100px 100px rgba(0,0,0,0.3);
         }
 
-        /* Size adjustments for different screens */
         @media (min-width: 1400px) { .main-banner-img { min-height: 550px; } }
         @media (min-width: 1920px) { .main-banner-img { min-height: 650px; } }
         @media (max-width: 768px) { .main-banner-img { min-height: 300px; } }
@@ -192,7 +190,7 @@
             margin-bottom: 3rem;
         }
 
-        .region-card {
+        .region-card-info {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
@@ -201,7 +199,7 @@
             transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
-        .region-card:hover {
+        .region-card-info:hover {
             transform: translateY(-5px);
             border-color: rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.06);
@@ -265,14 +263,16 @@
             border: 1px solid #333;
             border-radius: 12px;
             padding: 20px;
-            text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             transition: 0.2s;
+            display: flex;
+            flex-direction: column;
         }
         
         .roster-card:hover {
             border-color: #01a3eb;
             transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(1, 163, 235, 0.15);
         }
 
         .roster-header h3 {
@@ -281,47 +281,53 @@
             font-family: 'Anton', sans-serif;
             font-size: 1.5rem;
             letter-spacing: 1px;
+            text-align: center;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            padding-bottom: 10px;
         }
 
-        .roster-faces {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .player-avatar-container {
+        /* Embark ID Player Row Styles */
+        .roster-players {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            position: relative;
+            gap: 10px;
+            flex-grow: 1;
         }
 
-        .discord-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid #333;
-            object-fit: cover;
-            transition: transform 0.2s;
-            background-color: #222;
+        .player-row {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Ayuthaya', monospace;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            transition: background 0.2s;
         }
-        
-        .discord-avatar:hover {
-            transform: scale(1.1);
-            border-color: #01a3eb;
-            box-shadow: 0 0 15px rgba(1, 163, 235, 0.4);
+
+        .player-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .player-icon {
+            color: #01a3eb;
+            margin-right: 8px;
+            font-size: 0.9rem;
         }
 
         .sub-badge {
-            position: absolute;
-            bottom: -5px;
             background: #ff004c;
             color: white;
-            font-size: 0.6rem;
-            padding: 2px 6px;
+            font-size: 0.65rem;
+            padding: 3px 6px;
             border-radius: 4px;
-            font-family: 'Ayuthaya', monospace;
+            font-weight: bold;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -333,11 +339,11 @@
         <!-- HERO SECTION -->
         <section id="tournament-hero">
             <div class="hero-backdrop">
-                <!-- IMPORTANT: Update this image path to your new Classics banner -->
+                <!-- Update this image path to your new Classics banner -->
                 <img src="/images/tournament/classics-banner.png" alt="">
             </div>
             <div class="banner-container">
-                <!-- IMPORTANT: Update this image path to your new Classics banner -->
+                <!-- Update this image path to your new Classics banner -->
                 <img src="/images/tournament/classics-banner.png" alt="Ape Squad Classics" class="main-banner-img">
             </div>
             <div class="hero-text-content">
@@ -408,7 +414,7 @@
                 
                 <div class="region-grid">
                     <!-- EMEA SCHEDULE -->
-                    <div class="region-card">
+                    <div class="region-card-info">
                         <h3 class="region-title emea-title">EMEA</h3>
                         <p style="text-align: center; color: #fff; font-family: 'Ayuthaya', monospace; margin-bottom: 1.5rem;">Sundays @ 1PM ET</p>
                         <ul class="schedule-list">
@@ -432,7 +438,7 @@
                     </div>
                     
                     <!-- AMERICAS SCHEDULE -->
-                    <div class="region-card">
+                    <div class="region-card-info">
                         <h3 class="region-title americas-title">AMERICAS</h3>
                         <p style="text-align: center; color: #fff; font-family: 'Ayuthaya', monospace; margin-bottom: 1.5rem;">Thursdays @ 8PM ET</p>
                         <ul class="schedule-list">
@@ -463,15 +469,24 @@
             <div class="container">
                 <h2 style="text-align: center; margin-bottom: 0.5rem; font-family: 'Anton', sans-serif; font-size: 2.5rem; color: #fff;">Registered Teams</h2>
                 <p class="section-subtitle" style="text-align: center; color: #888; font-family: 'Ayuthaya', monospace; margin-bottom: 2rem;">
-                    Rosters will appear here once registration opens.
+                    The arena is filling up. Secure your spot before brackets finalize.
                 </p>
                 
-                <div id="roster-loading" style="text-align: center; padding: 2rem; display: none;">
+                <div id="roster-loading" style="text-align: center; padding: 2rem;">
                     <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: #01a3eb; margin-bottom: 1rem;"></i>
+                    <p style="color: #888; font-family: monospace;">Loading live rosters...</p>
                 </div>
 
-                <!-- Grid Container -->
-                <div id="roster-grid" class="roster-grid" style="display: none;"></div>
+                <!-- Dynamic Container populated by JS -->
+                <div id="rosters-container" style="display: none;">
+                    <!-- AMERICAS Section -->
+                    <h3 class="region-title americas-title" style="margin-top: 1rem; border-bottom: 2px solid #ff004c; display: inline-block; padding-bottom: 5px;">AMERICAS</h3>
+                    <div id="roster-grid-americas" class="roster-grid" style="margin-bottom: 4rem;"></div>
+
+                    <!-- EMEA Section -->
+                    <h3 class="region-title emea-title" style="margin-top: 1rem; border-bottom: 2px solid #01a3eb; display: inline-block; padding-bottom: 5px;">EMEA</h3>
+                    <div id="roster-grid-emea" class="roster-grid" style="margin-bottom: 2rem;"></div>
+                </div>
             </div>
         </section>
 
@@ -481,15 +496,14 @@
     
     <script src="/js/main.js"></script>
 
-    <!-- GOOGLE SHEET FETCHER SCRIPT -->
+    <!-- LIVE ROSTER FETCH -->
     <script>
-        // 1. configuration
-        const SHEET_ID = 'INSERT_YOUR_CLASSICS_SHEET_ID_HERE'; 
-        const GID = '0'; 
-        const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+        // Obscured configuration 
+        const endpointInfo = 'aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvMWxyZF9vTVdnSlhJUWEwRkNoZFJfWXBRVTJlTGpHX1E2SFNPTjduSzVaZjgvZXhwb3J0P2Zvcm1hdD1jc3YmZ2lkPTE3OTkzNTkzOTQ='; 
+        const fetchTarget = atob(endpointInfo);
 
-        // 2. CSV Parser
-        function parseCSV(str) {
+        // CSV Parser
+        function parseDataStream(str) {
             const arr = [];
             let quote = false;
             let col, c;
@@ -508,42 +522,42 @@
             return arr;
         }
 
-        // 3. Helper to generate Avatar Image Tag
-        function getAvatarHtml(id, isSub = false) {
-            if (!id || id.trim() === "") return ""; // Skip if empty
+        // Helper to format Embark ID text display
+        function getPlayerHtml(embarkId, isSub = false) {
+            if (!embarkId) return "";
             
-            // Clean the ID (remove spaces)
-            const cleanId = id.trim();
-            const subBadge = isSub ? '<span class="sub-badge">SUB</span>' : '';
+            const cleanId = embarkId.trim();
+            const lowerId = cleanId.toLowerCase();
+            
+            // Filter out placeholder text
+            if (cleanId === "" || ["none", "na", "n/a", "tbc", "tbd", "unknown"].includes(lowerId) || cleanId.length > 35) {
+                return ""; 
+            }
+
+            const badgeHtml = isSub ? '<span class="sub-badge">SUB</span>' : '';
+            const iconColor = isSub ? '#ff004c' : '#01a3eb';
 
             return `
-                <div class="player-avatar-container">
-                    <img class="discord-avatar" 
-                         src="https://unavatar.io/discord/${cleanId}" 
-                         onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'" 
-                         title="Discord ID: ${cleanId}">
-                    ${subBadge}
+                <div class="player-row">
+                    <span><i class="fa-solid fa-user player-icon" style="color: ${iconColor};"></i> ${cleanId}</span>
+                    ${badgeHtml}
                 </div>
             `;
         }
 
-        // 4. Fetch and Render
+        // Fetch and Render
         async function loadRosters() {
-            const grid = document.getElementById('roster-grid');
+            const container = document.getElementById('rosters-container');
+            const gridAmericas = document.getElementById('roster-grid-americas');
+            const gridEmea = document.getElementById('roster-grid-emea');
             const loader = document.getElementById('roster-loading');
 
-            if (SHEET_ID === 'INSERT_YOUR_CLASSICS_SHEET_ID_HERE') {
-                return;
-            }
-
-            loader.style.display = 'block';
-
             try {
-                const response = await fetch(CSV_URL);
-                if (!response.ok) throw new Error("Sheet not found");
+                const response = await fetch(fetchTarget);
+                if (!response.ok) throw new Error("Connection failed");
                 
                 const text = await response.text();
-                const data = parseCSV(text);
+                const data = parseDataStream(text);
                 
                 // Remove header row
                 const rows = data.slice(1);
@@ -554,50 +568,64 @@
                 }
 
                 loader.style.display = 'none';
-                grid.style.display = 'grid'; // Enable the Grid layout
+                container.style.display = 'block'; 
+
+                let americasCount = 0;
+                let emeaCount = 0;
 
                 rows.forEach(row => {
-                    // EXPECTED COLUMNS:
-                    // 0: Team Name
-                    // 1: Player 1 ID
-                    // 2: Player 2 ID
-                    // 3: Player 3 ID
-                    // 4: Sub ID (Optional)
+                    if (row.length < 11) return;
 
-                    const teamName = row[0];
-                    const id1 = row[1];
-                    const id2 = row[2];
-                    const id3 = row[3];
-                    const idSub = row[4]; 
+                    const region = (row[2] || "").trim().toUpperCase();
+                    const teamName = row[3];
+                    const id1 = row[6];
+                    const id2 = row[8];
+                    const id3 = row[10];
+                    const idSub = row[12]; 
 
-                    if (!teamName) return; // Skip empty rows
+                    if (!teamName || teamName.trim() === "") return;
 
                     const card = document.createElement('div');
                     card.className = 'roster-card';
 
-                    // Generate HTML for faces
-                    const p1Html = getAvatarHtml(id1);
-                    const p2Html = getAvatarHtml(id2);
-                    const p3Html = getAvatarHtml(id3);
-                    const subHtml = getAvatarHtml(idSub, true); // true = add sub badge
+                    const p1Html = getPlayerHtml(id1);
+                    const p2Html = getPlayerHtml(id2);
+                    const p3Html = getPlayerHtml(id3);
+                    const subHtml = getPlayerHtml(idSub, true);
 
                     card.innerHTML = `
                         <div class="roster-header">
                             <h3>${teamName}</h3>
                         </div>
-                        <div class="roster-faces">
+                        <div class="roster-players">
                             ${p1Html}
                             ${p2Html}
                             ${p3Html}
                             ${subHtml}
                         </div>
                     `;
-                    grid.appendChild(card);
+
+                    if (region.includes("AMERICAS")) {
+                        gridAmericas.appendChild(card);
+                        americasCount++;
+                    } else if (region.includes("EMEA")) {
+                        gridEmea.appendChild(card);
+                        emeaCount++;
+                    }
                 });
 
+                if(americasCount === 0) {
+                    gridAmericas.innerHTML = '<p style="color: #888; font-family: monospace;">No AMERICAS teams registered yet.</p>';
+                    gridAmericas.style.display = "block";
+                }
+                if(emeaCount === 0) {
+                    gridEmea.innerHTML = '<p style="color: #888; font-family: monospace;">No EMEA teams registered yet.</p>';
+                    gridEmea.style.display = "block";
+                }
+
             } catch (error) {
-                console.error('Error loading sheet:', error);
-                loader.innerHTML = '';
+                console.error('Data error:', error);
+                loader.innerHTML = '<p style="color: #ff004c; font-family: monospace;"><i class="fa-solid fa-triangle-exclamation"></i> Error loading rosters.</p>';
             }
         }
 
