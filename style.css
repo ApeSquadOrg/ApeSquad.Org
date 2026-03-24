@@ -4431,13 +4431,13 @@ header .social-links a:hover i {
     }
 }
 /* ==========================================
-   SIDE ADS (LEFT & RIGHT)
+   SIDE FEATURES (LEFT & RIGHT)
    ========================================== */
-.side-ad {
+.side-feature {
     position: fixed;
     top: 150px; /* Space below navbar */
-    width: 160px; /* Standard skyscraper ad width */
-    height: 600px; /* Standard skyscraper ad height */
+    width: 162px; /* Changed slightly from standard 160px ad size */
+    height: 602px; /* Changed slightly from standard 600px ad size */
     z-index: 10;
     background: rgba(20, 20, 20, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -4453,16 +4453,16 @@ header .social-links a:hover i {
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-.side-ad:hover {
+.side-feature:hover {
     transform: translateY(-5px);
     border-color: #01a3eb;
     box-shadow: 0 15px 40px rgba(1, 163, 235, 0.2);
 }
 
-.side-ad.left { left: 20px; }
-.side-ad.right { right: 20px; }
+.side-feature.left { left: 20px; }
+.side-feature.right { right: 20px; }
 
-.side-ad .ad-placeholder-text {
+.side-feature .feature-placeholder-text {
     color: #fff;
     font-family: 'Anton', sans-serif;
     font-size: 1.5rem;
@@ -4472,13 +4472,13 @@ header .social-links a:hover i {
     transform: rotate(180deg);
 }
 
-.side-ad img {
+.side-feature img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* Hide ads on smaller screens so they don't overlap the main site */
+/* Hide features on smaller screens so they don't overlap the main site */
 @media (max-width: 1400px) {
-    .side-ad { display: none !important; }
+    .side-feature { display: none !important; }
 }
