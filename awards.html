@@ -14,7 +14,7 @@
     <meta name="description" content="See the winners of The Finals Community Creator Awards 2025.">
     <title>Winners | Contestant Choice Awards | Ape Squad x The Burrow</title>
 
-        <!-- Favicon -->
+    <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
@@ -32,6 +32,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile-card.css">
+    
     <!-- CSS Adjustments for Winners Phase -->
     <style>
         /* Center the Main Grand Prize Text */
@@ -92,6 +93,41 @@
             margin-left: 10px;
             font-size: 0.9em;
         }
+
+        /* --- Trophy Showcase Image --- */
+        .trophy-showcase-img {
+            width: 100%;
+            max-width: 350px; /* Adjust size as needed */
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4)); /* Optional subtle golden glow */
+        }
+
+        /* --- Centered Panelist & Voting Text Box --- */
+        .voting-disclaimer {
+            text-align: center;
+            font-family: 'Ayuthaya', monospace;
+            font-size: 0.85rem;
+            color: #cccccc;
+            max-width: 650px; /* Keeps the box from stretching too wide */
+            margin: 4rem auto 2rem auto; /* Centers the box perfectly */
+            padding: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.05); /* Gives it a faint box to stand out */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            line-height: 1.5;
+        }
+        
+        .voting-disclaimer i {
+            color: #d4af37; /* Gold icon */
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+
+        .voting-disclaimer strong {
+            color: #ffffff; /* Highlights the key groups in pure white */
+        }
     </style>
 </head>
 <body>
@@ -104,7 +140,6 @@
             <div class="awards-hero-bg"></div>
             <div class="container hero-content">
                 
-
                 <h1>The Finals<br><span class="text-gold">Contestant Choice Awards</span></h1>
                 <p class="hero-subtitle">Celebrating the streamers, casters, and community builders who shaped the arena.</p>
                 <div class="hero-actions">
@@ -115,7 +150,8 @@
                 </div>
             </div>
         </section>
-<!-- DATE ANNOUNCEMENT SECTION (KEPT FOR ARCHIVE/CONTEXT) -->
+
+        <!-- DATE ANNOUNCEMENT SECTION (KEPT FOR ARCHIVE/CONTEXT) -->
         <section id="date-announcement" style="background-color: #0d0d0d; padding: 3rem 0; border-bottom: 1px solid #333;">
             <div class="container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
                 
@@ -133,6 +169,7 @@
 
             </div>
         </section>
+
         <!-- EVENT ORGANIZERS / HOSTS SECTION -->
         <section id="event-hosts">
             <div class="container">
@@ -171,8 +208,6 @@
                             </div>
                         </div>
                     </div>
-                
-
                 </div>
             </div>
         </section>
@@ -197,7 +232,7 @@
             </div>
         </section>
 
-        <!-- GRAND AWARD SECTION (Updated with Winner) -->
+        <!-- GRAND AWARD SECTION -->
         <section id="grand-award">
             <div class="container">
                 <h2 class="section-title">Grand Award</h2>
@@ -205,6 +240,10 @@
                     <div class="trophy-icon"><i class="fa-solid fa-trophy"></i></div>
                     <h3>Creator of the Year</h3>
                     <p>The ultimate recognition.</p>
+                    
+                    <!-- TROPHY SHOWCASE IMAGE -->
+                    <!-- Change the 'src' to wherever your actual trophy image is stored -->
+                    <img src="images/trophy.jpg" alt="Trophy Showcase" class="trophy-showcase-img">
                     
                     <!-- Winner Revealed -->
                     <div class="single-nominee-wrapper">
@@ -381,6 +420,15 @@
                 </div>
 
             </div>
+            
+            <!-- UPDATED DISCLAIMER (Algorithm Focus, Panelists Downplayed) -->
+            <div class="container">
+                <p class="voting-disclaimer">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Final results are determined by passing <strong>community votes</strong> through an algorithm, with final verification by the organizing panel The Burrow and Ape Squad.
+                </p>
+            </div>
+
         </section>
 
     </main>
