@@ -15,481 +15,430 @@
     <meta name="keywords" content="Classics, Ape Squad, The Finals, Esports Tournament, League Series, EMEA, Americas">
     <title>Ape Squad Classics | Ape Squad Esports</title>
 
-    <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
-    <meta name="msapplication-TileColor" content="#0a0a0a">
     <meta name="theme-color" content="#0a0a0a">
 
-    <!-- Google Fonts -->
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Your Stylesheets -->
     <link rel="stylesheet" href="/style.css">
 
-    <!-- Internal Styles for Cinematic Layout -->
     <style>
-        /* 1. Hero Wrapper */
-        #tournament-hero {
-            position: relative;
-            min-height: auto; 
-            padding-top: 80px; 
-            padding-bottom: 4rem;
-            overflow: hidden;
-            display: flex;
+        /* ========================================= */
+        /* HERO SECTION - MASSIVE WIDESCREEN         */
+        /* ========================================= */
+        #tournament-hero { 
+            position: relative; 
+            display: flex; 
             flex-direction: column;
-            align-items: center;
+            align-items: center; 
+            background-color: #000000; /* Deep black to match edge-to-edge */
+            padding: 0 0 5rem 0; /* Removed top padding to make it touch the navbar */
+            margin: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .hero-image-wrapper {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            line-height: 0; /* Removes default image bottom spacing */
         }
 
-        /* Ambient Background (Blurred) */
-        .hero-backdrop {
+        /* The main banner image acting as the massive title */
+        .hero-banner-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            animation: softFadeIn 1s ease-out forwards;
+        }
+
+        /* Seamless blend from the bottom of the image into the page background */
+        .hero-bottom-fade {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            z-index: 1;
+            height: 300px;
+            background: linear-gradient(to bottom, transparent 0%, #000000 100%);
             pointer-events: none;
         }
 
-        .hero-backdrop img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: blur(40px) brightness(0.3);
-            transform: scale(1.1);
+        /* Keep SEO happy by having an H1, but hide it visually */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
         }
 
-        /* 2. DRAMATIC FULL-STRETCH Banner */
-        .banner-container {
-            position: relative;
-            z-index: 2;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-right: calc(-50vw + 50%);
-            margin-bottom: 3rem;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            overflow: hidden;
-            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
-        }
-
-        .main-banner-img {
-            width: 100%;
-            height: auto;
-            min-height: 450px;
-            object-fit: cover;
-            display: block;
-            box-shadow: 
-                0 30px 80px rgba(0,0,0,0.9),
-                0 0 150px rgba(1, 163, 235, 0.2),
-                0 0 250px rgba(255, 0, 76, 0.15),
-                inset 0 -100px 100px rgba(0,0,0,0.3);
-        }
-
-        @media (min-width: 1400px) { .main-banner-img { min-height: 550px; } }
-        @media (min-width: 1920px) { .main-banner-img { min-height: 650px; } }
-        @media (max-width: 768px) { .main-banner-img { min-height: 300px; } }
-        @media (max-width: 480px) { .main-banner-img { min-height: 200px; } }
-
-        /* 3. Text Content Below Banner */
         .hero-text-content {
             position: relative;
             z-index: 2;
-            text-align: center;
             max-width: 800px;
             padding: 0 20px;
+            margin-top: -6rem; /* Pulls text up into the fade overlay */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            animation: softFadeUp 1s ease-out forwards;
+            animation-delay: 0.3s;
+            opacity: 0;
         }
 
-        .partnership-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 10px 20px;
-            border-radius: 50px;
-            color: #d1d5db;
-            font-family: 'Ayuthaya', monospace;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            backdrop-filter: blur(5px);
+        @keyframes softFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .partnership-badge strong { color: #ff004c; }
+        @keyframes softFadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        .hero-description {
-            font-size: 1.15rem;
-            color: #e5e5e5;
-            line-height: 1.6;
-            margin-bottom: 2rem;
+        .hero-description { 
+            font-family: 'Ayuthaya', monospace; 
+            font-size: 1.15rem; 
+            color: #ccc; 
+            line-height: 1.6; 
+            margin-bottom: 2rem; 
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
-        .hero-cta-group {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
+        /* Quick Stats Bar */
+        .hero-quick-stats {
+            display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; justify-content: center;
         }
-
-        /* 4. Formatting and Schedule Sections */
-        .centered-header {
-            width: 100%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-
-        .info-panel {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .info-panel h3 {
-            color: #fff;
+        .hero-quick-stats .stat {
+            display: flex; align-items: center; gap: 8px;
             font-family: 'Anton', sans-serif;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
+            color: #fff; font-size: 1.1rem; letter-spacing: 1px;
+            background: rgba(25, 25, 25, 0.6);
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
+        .hero-quick-stats .stat i { color: #01a3eb; font-size: 1rem; }
+        .hero-quick-stats .stat:nth-child(2) i { color: #ff004c; }
 
-        .info-panel h3 i { margin-right: 10px; color: #01a3eb; }
-
-        .info-panel p, .info-panel ul {
-            color: #ccc;
-            line-height: 1.6;
-            font-family: 'Ayuthaya', monospace;
-            font-size: 0.95rem;
+        .hero-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        
+        .pulse-btn {
+            animation: heroPulse 2s infinite;
+            box-shadow: 0 0 0 0 rgba(1, 163, 235, 0.7);
         }
-
-        .info-panel ul { margin-left: 1.5rem; margin-top: 1rem; }
-        .info-panel ul li { margin-bottom: 0.5rem; }
-        .info-panel strong { color: #fff; }
-
-        .region-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
+        @keyframes heroPulse {
+            0% { box-shadow: 0 0 0 0 rgba(1, 163, 235, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(1, 163, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(1, 163, 235, 0); }
         }
-
-        .region-card-info {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: left;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .region-card-info:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .region-title {
-            font-family: 'Anton', sans-serif;
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .emea-title { color: #01a3eb; text-shadow: 0 0 15px rgba(1, 163, 235, 0.3); }
-        .americas-title { color: #ff004c; text-shadow: 0 0 15px rgba(255, 0, 76, 0.3); }
-
-        .schedule-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-family: 'Ayuthaya', monospace;
-            font-size: 1rem;
-            color: #ccc;
-        }
-
-        .schedule-list li {
-            margin-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 0.8rem;
-        }
-
-        .schedule-list li:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .schedule-meta {
-            display: block;
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 4px;
-        }
-
-        .schedule-list strong { color: #fff; margin-right: 8px; }
 
         @media (max-width: 768px) {
-            .region-grid { grid-template-columns: 1fr; }
-            .hero-cta-group { flex-direction: column; gap: 1rem; }
+            .hero-bottom-fade { height: 150px; }
+            .hero-text-content { margin-top: -2rem; }
         }
 
-        /* --- STYLES FOR ROSTER GRID --- */
-        .roster-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
+        /* ========================================= */
+        /* TAB NAVIGATION                            */
+        /* ========================================= */
+        .tournament-nav-wrapper { background: rgba(10, 10, 10, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 1rem 0; }
+        .tournament-tabs { display: flex; justify-content: center; gap: 1rem; list-style: none; padding: 0; margin: 0; overflow-x: auto; scrollbar-width: none; }
+        .tournament-tabs::-webkit-scrollbar { display: none; }
+        .tab-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #aaa; font-family: 'Anton', sans-serif; font-size: 1.2rem; padding: 0.75rem 1.5rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.2s ease; white-space: nowrap; }
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+        .tab-btn.active { background: var(--electric-blue); color: #fff; border-color: var(--electric-blue); box-shadow: 0 0 15px rgba(1, 163, 235, 0.4); }
 
-        .roster-card {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            transition: 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; padding: 3rem 0; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ========================================= */
+        /* GENERAL UI PANELS & GRIDS                 */
+        /* ========================================= */
+        .region-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        @media (max-width: 992px) { .region-grid { grid-template-columns: 1fr; } }
         
-        .roster-card:hover {
-            border-color: #01a3eb;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(1, 163, 235, 0.15);
+        .emea-title { color: #01a3eb; border-bottom: 2px solid #01a3eb; display: inline-block; padding-bottom: 5px; margin-bottom: 1rem; }
+        .americas-title { color: #ff004c; border-bottom: 2px solid #ff004c; display: inline-block; padding-bottom: 5px; margin-bottom: 1rem; }
+        
+        .info-panel { background: rgba(25, 25, 25, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
+        .info-panel h3 { font-family: 'Anton', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; color: #fff; }
+        .info-panel p, .info-panel ul { color: #ccc; font-family: 'Ayuthaya', monospace; font-size: 0.95rem; line-height: 1.6; }
+        .info-panel ul { margin-left: 1.5rem; margin-top: 1rem; }
+        
+        .schedule-list { list-style: none; padding: 0; margin: 0; font-family: 'Ayuthaya', monospace; font-size: 1rem; color: #ccc; }
+        .schedule-list li { margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
+        .schedule-list li:last-child { border-bottom: none; }
+        .schedule-meta { display: block; font-size: 0.85rem; color: #888; margin-top: 6px; }
+
+        /* ========================================= */
+        /* COMPACT SCHEDULE UI                       */
+        /* ========================================= */
+        .schedule-wrapper { max-width: 1000px; margin: 0 auto; }
+        
+        .round-block { background: #111; border: 1px solid #333; border-radius: 8px; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .round-header { background: #1a1a1a; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .round-header h3 { font-family: 'Anton', sans-serif; font-size: 1.8rem; margin: 0; letter-spacing: 1px; color: #fff; }
+        .round-map { font-family: 'Ayuthaya', monospace; font-size: 0.85rem; color: #aaa; background: #000; padding: 4px 10px; border-radius: 4px; border: 1px solid #333; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .match-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 15px 20px; border-bottom: 1px solid #222; position: relative; align-items: center; transition: background 0.2s; }
+        .match-row:last-child { border-bottom: none; }
+        .match-row:hover { background: #151515; }
+        
+        .t { font-family: 'Anton', sans-serif; font-size: 1.2rem; color: #ccc; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; }
+        
+        /* Live Match Highlight */
+        .live-match { background: linear-gradient(90deg, rgba(255, 68, 148, 0.08), transparent); }
+        .live-tag { position: absolute; top: -10px; left: -1px; font-family: 'Ayuthaya', monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 0 0 4px 0; font-weight: bold; color: #fff; animation: pulse 2s infinite; border-right: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2); z-index: 10;}
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* Break Divider between .0 and .5 */
+        .break-divider { text-align: center; background: #080808; padding: 6px 0; border-bottom: 1px solid #222; color: #666; font-family: 'Ayuthaya', monospace; font-size: 0.75rem; letter-spacing: 3px; }
+
+        /* Completed Match Results */
+        .match-completed .t { color: #888; }
+        .pos { font-family: 'Ayuthaya', monospace; font-size: 0.7rem; font-weight: bold; width: 22px; text-align: center; border-radius: 3px; padding: 2px 0; margin-right: 8px; }
+        .pos-1 { background: rgba(255, 215, 0, 0.15); color: #FFD700; border: 1px solid rgba(255, 215, 0, 0.3); }
+        .pos-2 { background: rgba(224, 224, 224, 0.15); color: #E0E0E0; border: 1px solid rgba(224, 224, 224, 0.3); }
+        .pos-3 { background: rgba(205, 127, 50, 0.15); color: #CD7F32; border: 1px solid rgba(205, 127, 50, 0.3); }
+        .pos-4 { background: rgba(136, 136, 136, 0.15); color: #888; border: 1px solid rgba(136, 136, 136, 0.3); }
+        .match-completed .t:nth-child(1) { color: #fff; }
+
+        @media (max-width: 768px) {
+            .match-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .live-tag { position: relative; display: inline-block; top: 0; left: 0; margin-bottom: 10px; grid-column: 1 / -1; width: fit-content; border-radius: 3px; }
         }
 
-        .roster-header h3 {
-            margin: 0 0 15px 0;
-            color: #fff;
-            font-family: 'Anton', sans-serif;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
-            text-align: center;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-            padding-bottom: 10px;
-        }
+        /* ========================================= */
+        /* LEADERBOARD (TABLE UI)                    */
+        /* ========================================= */
+        .lb-container { background: #111; border: 1px solid #333; border-radius: 8px; overflow: hidden; }
+        .lb-header { display: grid; grid-template-columns: 50px 1fr 80px; padding: 12px 15px; background: #1a1a1a; border-bottom: 1px solid #333; font-family: 'Ayuthaya', monospace; font-size: 0.85rem; color: #888; font-weight: bold; }
+        .lb-row { display: grid; grid-template-columns: 50px 1fr 80px; padding: 12px 15px; border-bottom: 1px solid #1a1a1a; align-items: center; transition: background 0.2s; }
+        .lb-row:hover { background: #1a1a1a; }
+        .lb-row:last-child { border-bottom: none; }
+        .lb-rank { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: #666; }
+        .lb-team { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .lb-pts { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: var(--electric-blue); text-align: right; }
+        .lb-row.rank-1 .lb-rank { color: #FFD700; text-shadow: 0 0 10px rgba(255,215,0,0.5); }
+        .lb-row.rank-2 .lb-rank { color: #E0E0E0; text-shadow: 0 0 10px rgba(224,224,224,0.5); }
+        .lb-row.rank-3 .lb-rank { color: #CD7F32; text-shadow: 0 0 10px rgba(205,127,50,0.5); }
+        .lb-row.eliminated { opacity: 0.4; filter: grayscale(100%); }
+        .lb-row.eliminated .lb-pts { color: #888; }
 
-        /* Embark ID Player Row Styles */
-        .roster-players {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            flex-grow: 1;
-        }
+        /* ========================================= */
+        /* ROSTERS GRID                              */
+        /* ========================================= */
+        .roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .roster-card { background: #111; border: 1px solid #333; border-radius: 8px; padding: 1.5rem; transition: transform 0.2s; }
+        .roster-card:hover { transform: translateY(-3px); border-color: var(--electric-blue); box-shadow: 0 5px 15px rgba(1, 163, 235, 0.1); }
+        .roster-header h3 { font-family: 'Anton', sans-serif; font-size: 1.5rem; color: #fff; margin: 0 0 15px 0; text-align: center; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .player-row { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 4px; margin-bottom: 6px; display: flex; justify-content: space-between; font-family: 'Ayuthaya', monospace; font-size: 0.85rem; color: #ccc; }
+        .sub-badge { background: #ff004c; color: white; font-size: 0.65rem; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
 
-        .player-row {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 6px;
-            padding: 10px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Ayuthaya', monospace;
-            font-size: 0.85rem;
-            color: #d1d5db;
-            transition: background 0.2s;
-        }
-
-        .player-row:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: #fff;
-        }
-
-        .player-icon {
-            color: #01a3eb;
-            margin-right: 8px;
-            font-size: 0.9rem;
-        }
-
-        .sub-badge {
-            background: #ff004c;
-            color: white;
-            font-size: 0.65rem;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
     </style>
 </head>
 <body>
 
-    <header class="navbar"></header> <!-- Populated by main.js -->
+    <header class="navbar"></header>
 
     <main>
-        <!-- HERO SECTION -->
+        <!-- MASSIVE WIDESCREEN HERO SECTION -->
         <section id="tournament-hero">
-            <div class="hero-backdrop">
-                <!-- Update this image path to your new Classics banner -->
-                <img src="/images/tournament/classics-banner.png" alt="">
+            
+            <!-- SEO Hidden Title -->
+            <h1 class="sr-only">Ape Squad Classics League Series</h1>
+
+            <!-- Massive Edge-to-Edge Image (No Padding) -->
+            <div class="hero-image-wrapper">
+                <img src="/images/tournament/classics-banner.png" alt="Ape Squad Classics League Series" class="hero-banner-image">
+                <div class="hero-bottom-fade"></div>
             </div>
-            <div class="banner-container">
-                <!-- Update this image path to your new Classics banner -->
-                <img src="/images/tournament/classics-banner.png" alt="Ape Squad Classics" class="main-banner-img">
-            </div>
+
+            <!-- Content & Call to Actions positioned below -->
             <div class="hero-text-content">
-                <div class="partnership-badge">Premier League Series</div>
                 <p class="hero-description">
-                    Gather your squad and prepare your loadouts. The arena is waiting.<br>
-                    We are bringing you a <strong>Premier Tournament League Series</strong> for THE FINALS, spanning across both EMEA and the AMERICAS.
+                    Accumulate points. Survive the weekly cuts. Secure your spot in the Top 16. Welcome to the ultimate test of endurance and skill in THE FINALS.
                 </p>
+                
+                <div class="hero-quick-stats">
+                    <div class="stat"><i class="fa-solid fa-earth-americas"></i> EMEA & NA</div>
+                    <div class="stat"><i class="fa-solid fa-calendar-week"></i> 4 WEEKS</div>
+                    <div class="stat"><i class="fa-solid fa-skull"></i> WEEKLY CUTS</div>
+                </div>
+
                 <div class="hero-cta-group">
-                    <a href="https://forms.gle/ZGb4kSdHRVUM7hWdA" target="_blank" class="btn btn-primary">
+                    <a href="https://forms.gle/ZGb4kSdHRVUM7hWdA" target="_blank" class="btn btn-primary pulse-btn">
                         <i class="fa-solid fa-pen-to-square"></i> Register Now
                     </a>
                     <a href="https://discord.gg/apesquad" target="_blank" class="btn btn-hero-special" style="border-color: #5865F2; color: #5865F2;">
-                        <i class="fa-brands fa-discord"></i> Join Discord
+                        <i class="fa-brands fa-discord"></i> Discord
                     </a>
                 </div>
             </div>
+
         </section>
 
-        <!-- FORMAT & THE LEAGUE SECTION -->
-        <section id="tournament-format" style="padding-top: 2rem;">
-            <div class="container">
-                <div class="centered-header">
-                    <h2 style="margin-bottom: 0.5rem; color: #fff; font-family: 'Anton', sans-serif; font-size: 2.5rem;">The Format</h2>
-                    <p style="color: #888; font-family: 'Ayuthaya', monospace; margin: 0;">Survive the Weekly Cuts</p>
-                </div>
-                
-                <div class="info-panel">
-                    <h3><i class="fa-solid fa-trophy" style="color:#FFD700;"></i> APE SQUAD CLASSICS</h3>
-                    <p><strong>Format:</strong> Cashout<br>
-                    <strong>The Objective:</strong> Accumulate points and survive the weekly "Cuts." The number of teams eliminated per playday scales based on the total number of starting teams.</p>
-                </div>
+        <!-- MODERN TAB NAVIGATION -->
+        <div class="tournament-nav-wrapper">
+            <ul class="tournament-tabs container">
+                <li><button class="tab-btn active" data-tab="overview"><i class="fa-solid fa-circle-info" style="margin-right:8px;"></i> Overview</button></li>
+                <li><button class="tab-btn" data-tab="sched-emea"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> EMEA Schedule</button></li>
+                <li><button class="tab-btn" data-tab="sched-na"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> NA Schedule</button></li>
+                <li><button class="tab-btn" data-tab="standings"><i class="fa-solid fa-list-ol" style="margin-right:8px;"></i> Standings</button></li>
+                <li><button class="tab-btn" data-tab="teams"><i class="fa-solid fa-users" style="margin-right:8px;"></i> Teams</button></li>
+            </ul>
+        </div>
 
+        <div style="background-color: var(--midnight-black); min-height: 50vh;">
+            
+            <!-- TAB 1: OVERVIEW -->
+            <section id="overview" class="tab-content active container">
                 <div class="region-grid">
-                    <div class="info-panel" style="margin-bottom:0;">
-                        <h3><i class="fa-solid fa-shield-halved"></i> THE LEAGUE</h3>
-                        <p>Because registration is open, the elimination math will be finalized once signups close. The goal remains the same: Narrow the field down to the <strong>Top 16</strong> for Championship Sunday.</p>
-                        <ul>
-                              <p style="font-size: 0.8rem; color: #ff004c; margin-top: 1.5rem;"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Round Robin Format:</strong> For the Playdays the schedule will be to play as many unique teams as possible to ensure fairness and that consistency is king!</p>
-        
-                            <li><strong>Play Days 1 & 2:</strong> Ranking and initial positioning. The first cut occurs at the end of Day 2.</li>
-                            <li><strong>Play Day 3:</strong> Mid-tier survival. The field is narrowed further.</li>
-                            <li><strong>Play Day 4:</strong> The Final Push. Only the Top 16 overall point-earners qualify for the Finals.</li>
-                        </ul>
-                        <p style="font-size: 0.8rem; color: #ff004c; margin-top: 1.5rem;"><i class="fa-solid fa-triangle-exclamation"></i> <strong>FLEXIBLE CUT NOTICE:</strong> The exact number of teams eliminated each night is subject to change based on registered teams. The exact "Cut Line" will be announced before each League Day.</p>
+                    <!-- Format Info & Twitch Box -->
+                    <div>
+                        <h2 style="font-family:'Anton', sans-serif; font-size:2.5rem; margin-bottom:1rem;">The Format</h2>
+                        
+                        <!-- Format Panel -->
+                        <div class="info-panel">
+                            <h3><i class="fa-solid fa-shield-halved" style="color:var(--electric-blue);"></i> THE LEAGUE</h3>
+                            <p>Play matches in a round-robin style lobby system. Accumulate points over 4 weeks. Teams at the bottom of the leaderboard will be eliminated ("Cut") each week.</p>
+                            <ul>
+                                <li><strong>Days 1 & 2:</strong> Ranking and initial positioning.</li>
+                                <li><strong>Day 3:</strong> Mid-tier survival. The field narrows.</li>
+                                <li><strong>Day 4:</strong> The Final Push. Top 16 qualify for finals.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Grand Championship Panel -->
+                        <div class="info-panel">
+                            <h3><i class="fa-solid fa-crown" style="color:#FFD700;"></i> GRAND CHAMPIONSHIP</h3>
+                            <p><strong>Sunday, May 10</strong></p>
+                            <ul>
+                                <li><strong>Top 16:</strong> 3v3 Bracket (Double Elimination).</li>
+                                <li><strong>Top 4:</strong> Single Cashout Lobby (Best-of-3).</li>
+                                <li><strong>Top 2:</strong> 3v3 Grand Finals (Best-of-3).</li>
+                            </ul>
+                        </div>
+
+                        <!-- NEW: Watch Live Panel -->
+                        <div class="info-panel" style="margin-bottom:0; background: rgba(145, 70, 255, 0.05); border-color: rgba(145, 70, 255, 0.2);">
+                            <h3 style="color:#9146FF; margin:0 0 10px 0; text-shadow: 0 0 15px rgba(145, 70, 255, 0.3);">
+                                <i class="fa-brands fa-twitch"></i> WATCH LIVE
+                            </h3>
+                            <p style="color: #ccc; margin-bottom: 1.5rem;">Catch all the tournament action, live commentary, and highlights on our official broadcast channel.</p>
+                            <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn" style="background: #9146FF; color: #fff; box-shadow: 0 0 15px rgba(145, 70, 255, 0.4); display: inline-flex; align-items: center; gap: 8px;">
+                                <i class="fa-brands fa-twitch"></i> Twitch.tv/ApeSquadOrg
+                            </a>
+                        </div>
                     </div>
-                    
-                    <div class="info-panel" style="margin-bottom:0;">
-                        <h3><i class="fa-solid fa-crown" style="color:#FFD700;"></i> GRAND CHAMPIONSHIP</h3>
-                        <p><strong>Date:</strong> Sunday, May 10<br>
-                        <strong>Format:</strong> Hybrid (3v3 Bracket &rarr; Cashout Top 4 &rarr; 3v3 Grand Finals)</p>
-                        <ul>
-                            <li><strong>The 3v3 Bracket (Top 16):</strong> Teams seeded 1–16 based on total League Points. Double Elimination (Lose twice and you are out). Played until 4 teams remain.</li>
-                            <li><strong>The Cashout Finals (Top 4):</strong> Single Cashout Lobby. Best-of-3 Series. Winners side teams enter with a 3-point advantage. Highest two cumulative scores advance.</li>
-                            <li><strong>Grand Finals:</strong> Top 2 Teams fight it out in one final best-of-3! The winner is crowned League Champion.</li>
-                        </ul>
+
+                    <!-- Roadmap Dates -->
+                    <div>
+                        <h2 style="font-family:'Anton', sans-serif; font-size:2.5rem; margin-bottom:1rem;">The Roadmap</h2>
+                        
+                        <div class="info-panel" style="background: rgba(1, 163, 235, 0.05); border-color: rgba(1, 163, 235, 0.2);">
+                            <h3 class="emea-title" style="border:none; margin:0;">EMEA DATES</h3>
+                            <p style="color:var(--electric-blue); font-weight:bold; margin-bottom:1rem;">Sundays @ 1PM ET</p>
+                            <ul class="schedule-list">
+                                <li><strong>April 12:</strong> League Day 1 <span class="schedule-meta">Pool: All Teams | Cut: None</span></li>
+                                <li><strong>April 19:</strong> League Day 2 <span class="schedule-meta">Pool: All Teams | Cut: Initial Cut 4</span></li>
+                                <li><strong>April 26:</strong> League Day 3 <span class="schedule-meta">Pool: Top X | Cut: Secondary Cut 4</span></li>
+                                <li><strong>May 3:</strong> League Day 4 <span class="schedule-meta">Pool: Top Y | Cut: Final Cut 8</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="info-panel" style="background: rgba(255, 0, 76, 0.05); border-color: rgba(255, 0, 76, 0.2); margin-bottom:0;">
+                            <h3 class="americas-title" style="border:none; margin:0;">AMERICAS DATES</h3>
+                            <p style="color:var(--neon-pink); font-weight:bold; margin-bottom:1rem;">Thursdays @ 8PM ET</p>
+                            <ul class="schedule-list">
+                                <li><strong>April 9:</strong> League Day 1 <span class="schedule-meta">Pool: All Teams | Cut: None</span></li>
+                                <li><strong>April 16:</strong> League Day 2 <span class="schedule-meta">Pool: All Teams | Cut: Initial Cut 16</span></li>
+                                <li><strong>April 23:</strong> League Day 3 <span class="schedule-meta">Pool: Top X | Cut: Secondary Cut 8</span></li>
+                                <li><strong>April 30:</strong> League Day 4 <span class="schedule-meta">Pool: Top Y | Cut: Final Cut 8</span></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- SCHEDULE SECTION -->
-        <section id="tournament-details">
-            <div class="container">
-                <div class="centered-header">
-                    <h2 style="margin-bottom: 0.5rem; color: #fff; font-family: 'Anton', sans-serif; font-size: 2.5rem;">Regional Schedule</h2>
+            <!-- TAB 2: EMEA SCHEDULE -->
+            <section id="sched-emea" class="tab-content container">
+                <div style="text-align:center; margin-bottom: 2rem;">
+                    <h2 style="font-family:'Anton', sans-serif; font-size:3rem; margin-bottom:0; color:#01a3eb;">EMEA MATCH SCHEDULE</h2>
+                    <p style="color:#888; font-family:'Ayuthaya', monospace; text-align:center; margin: 0 auto; display: block; width: 100%;" id="day-display-eu">Loading schedule...</p>
+                </div>
+                
+                <div class="schedule-wrapper">
+                    <div id="schedule-loading-eu" style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #01a3eb;"></i></div>
+                    <div id="schedule-grid-eu"></div>
+                </div>
+            </section>
+
+            <!-- TAB 3: NA SCHEDULE -->
+            <section id="sched-na" class="tab-content container">
+                <div style="text-align:center; margin-bottom: 2rem;">
+                    <h2 style="font-family:'Anton', sans-serif; font-size:3rem; margin-bottom:0; color:#ff004c;">AMERICAS MATCH SCHEDULE</h2>
+                    <p style="color:#888; font-family:'Ayuthaya', monospace; text-align:center; margin: 0 auto; display: block; width: 100%;" id="day-display-na">Loading schedule...</p>
+                </div>
+                
+                <div class="schedule-wrapper">
+                    <div id="schedule-loading-na" style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #ff004c;"></i></div>
+                    <div id="schedule-grid-na"></div>
+                </div>
+            </section>
+
+            <!-- TAB 4: STANDINGS -->
+            <section id="standings" class="tab-content container">
+                <div style="text-align:center; margin-bottom: 2rem;">
+                    <h2 style="font-family:'Anton', sans-serif; font-size:3rem; margin-bottom:0;">Live Standings</h2>
+                    <p style="color:#888; font-family:'Ayuthaya', monospace; text-align:center; margin: 0 auto; display: block; width: 100%;">Global League Progression</p>
                 </div>
                 
                 <div class="region-grid">
-                    <!-- EMEA SCHEDULE -->
-                    <div class="region-card-info">
-                        <h3 class="region-title emea-title">EMEA</h3>
-                        <p style="text-align: center; color: #fff; font-family: 'Ayuthaya', monospace; margin-bottom: 1.5rem;">Sundays @ 1PM ET</p>
-                        <ul class="schedule-list">
-                            <li><strong>April 12:</strong> League Day 1 
-                                <span class="schedule-meta">Pool: Total Signups | Cut: None (Placement Only)</span>
-                            </li>
-                            <li><strong>April 19:</strong> League Day 2 
-                                <span class="schedule-meta">Pool: Total Signups | Cut: Initial Cut (TBA)</span>
-                            </li>
-                            <li><strong>April 26:</strong> League Day 3 
-                                <span class="schedule-meta">Pool: Top X | Cut: Secondary Cut (TBA)</span>
-                            </li>
-                            <li><strong>May 3:</strong> League Day 4 
-                                <span class="schedule-meta">Pool: Top Y | Cut: Final Cut (Until 16 remain)</span>
-                            </li>
-                            <li style="border-top: 2px dashed rgba(255,255,255,0.2); margin-top: 10px; padding-top: 15px;">
-                                <strong style="color: #01a3eb; font-size: 1.1rem;"><i class="fa-solid fa-trophy"></i> May 10: EMEA FINALS</strong>
-                                <span class="schedule-meta" style="color: #fff;">Top 16 Teams | <strong>10AM ET</strong></span>
-                            </li>
-                        </ul>
+                    <div>
+                        <h3 class="emea-title" style="font-family:'Anton', sans-serif; font-size:1.8rem;">EMEA LEADERBOARD</h3>
+                        <div class="lb-container">
+                            <div class="lb-header"><div>#</div><div>TEAM</div><div style="text-align:right;">PTS</div></div>
+                            <div id="lb-emea"><div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #01a3eb;"></i></div></div>
+                        </div>
                     </div>
-                    
-                    <!-- AMERICAS SCHEDULE -->
-                    <div class="region-card-info">
-                        <h3 class="region-title americas-title">AMERICAS</h3>
-                        <p style="text-align: center; color: #fff; font-family: 'Ayuthaya', monospace; margin-bottom: 1.5rem;">Thursdays @ 8PM ET</p>
-                        <ul class="schedule-list">
-                            <li><strong>April 9:</strong> League Day 1 
-                                <span class="schedule-meta">Pool: Total Signups | Cut: None (Placement Only)</span>
-                            </li>
-                            <li><strong>April 16:</strong> League Day 2 
-                                <span class="schedule-meta">Pool: Total Signups | Cut: Initial Cut (TBA)</span>
-                            </li>
-                            <li><strong>April 23:</strong> League Day 3 
-                                <span class="schedule-meta">Pool: Top X | Cut: Secondary Cut (TBA)</span>
-                            </li>
-                            <li><strong>April 30:</strong> League Day 4 
-                                <span class="schedule-meta">Pool: Top Y | Cut: Final Cut (Until 16 remain)</span>
-                            </li>
-                            <li style="border-top: 2px dashed rgba(255,255,255,0.2); margin-top: 10px; padding-top: 15px;">
-                                <strong style="color: #ff004c; font-size: 1.1rem;"><i class="fa-solid fa-trophy"></i> May 10: NA FINALS</strong>
-                                <span class="schedule-meta" style="color: #fff;">Top 16 Teams | <strong>5PM ET</strong></span>
-                            </li>
-                        </ul>
+                    <div>
+                        <h3 class="americas-title" style="font-family:'Anton', sans-serif; font-size:1.8rem;">AMERICAS LEADERBOARD</h3>
+                        <div class="lb-container">
+                            <div class="lb-header"><div>#</div><div>TEAM</div><div style="text-align:right;">PTS</div></div>
+                            <div id="lb-americas"><div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #ff004c;"></i></div></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- REGISTERED TEAMS -->
-        <section id="rosters-section">
-            <div class="container">
-                <h2 style="text-align: center; margin-bottom: 0.5rem; font-family: 'Anton', sans-serif; font-size: 2.5rem; color: #fff;">Registered Teams</h2>
-                <p class="section-subtitle" style="text-align: center; color: #888; font-family: 'Ayuthaya', monospace; margin-bottom: 2rem;">
-                    The arena is filling up. Secure your spot before brackets finalize.
-                </p>
+            <!-- TAB 5: TEAMS -->
+            <section id="teams" class="tab-content container">
+                <div style="text-align:center; margin-bottom: 2rem;">
+                    <h2 style="font-family:'Anton', sans-serif; font-size:3rem; margin-bottom:0;">Registered Teams</h2>
+                    <p style="color:#888; font-family:'Ayuthaya', monospace; text-align:center; margin: 0 auto; display: block; width: 100%;">The arena is filling up.</p>
+                </div>
                 
-                <div id="roster-loading" style="text-align: center; padding: 2rem;">
-                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: #01a3eb; margin-bottom: 1rem;"></i>
-                    <p style="color: #888; font-family: monospace;">Loading live rosters...</p>
-                </div>
+                <div id="roster-loading" style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 3rem; color: #01a3eb;"></i></div>
 
-                <!-- Dynamic Container populated by JS -->
                 <div id="rosters-container" style="display: none;">
-                    <!-- AMERICAS Section -->
-                    <h3 class="region-title americas-title" style="margin-top: 1rem; border-bottom: 2px solid #ff004c; display: inline-block; padding-bottom: 5px;">AMERICAS</h3>
-                    <div id="roster-grid-americas" class="roster-grid" style="margin-bottom: 4rem;"></div>
-
-                    <!-- EMEA Section -->
-                    <h3 class="region-title emea-title" style="margin-top: 1rem; border-bottom: 2px solid #01a3eb; display: inline-block; padding-bottom: 5px;">EMEA</h3>
-                    <div id="roster-grid-emea" class="roster-grid" style="margin-bottom: 2rem;"></div>
+                    <h3 class="emea-title" style="font-family:'Anton', sans-serif; font-size:1.8rem;">EMEA ROSTERS</h3>
+                    <div id="roster-grid-emea" class="roster-grid" style="margin-bottom: 4rem;"></div>
+                    
+                    <h3 class="americas-title" style="font-family:'Anton', sans-serif; font-size:1.8rem;">AMERICAS ROSTERS</h3>
+                    <div id="roster-grid-americas" class="roster-grid"></div>
                 </div>
-            </div>
-        </section>
+            </section>
 
+        </div>
     </main>
 
     <footer class="site-footer"></footer>
@@ -497,22 +446,222 @@
     <script src="/js/main.js"></script>
     <script src="/js/features.js"></script>
 
-    <!-- LIVE ROSTER FETCH -->
+    <!-- LOGIC SCRIPT -->
     <script>
-        // Obscured configuration 
+        // --- CONFIG ---
+        const SHEET_ID = '10ZmWteGljWdAu4TIMMkKkt23jFSuuKlTtqc-bxpVvN4';
+        const GID_LB_NA = '1919570457', GID_LB_EU = '1077898392';
+        const GID_SCHED_NA = '1721197050', GID_SCHED_EU = '154618935';
+        
         const endpointInfo = 'aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvMTNsNWV4M1FTa29ZVEpkQWZpeDZtc1FKZWdMUHNiUTZSMUlCdndOb0lFZlkvZXhwb3J0P2Zvcm1hdD1jc3YmZ2lkPTA=';
-        const fetchTarget = atob(endpointInfo);
+        const fetchTargetRosters = atob(endpointInfo);
 
-        // CSV Parser
-        function parseDataStream(str) {
-            const arr = [];
-            let quote = false;
-            let col, c;
+        // --- TAB SWITCHER ---
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                button.classList.add('active');
+                document.getElementById(button.getAttribute('data-tab')).classList.add('active');
+            });
+        });
+
+        // --- UTILS ---
+        function getCellValue(row, colIndex) {
+            return (row && row.c && row.c[colIndex] && row.c[colIndex].v !== null) ? row.c[colIndex].v.toString() : '';
+        }
+
+        // --- TRANSLATE A50 COLUMN HEADERS TO "Day X" ---
+        function translateDateToDay(dateString) {
+            if (!dateString) return "Day 1";
+            const val = dateString.toLowerCase().trim();
+            
+            // NA Translators
+            if (val === "april 9 pts" || val === "apr 9 pts") return "Day 1";
+            if (val === "apr 16 pts" || val === "april 16 pts") return "Day 2";
+            if (val === "apr 23 pts" || val === "april 23 pts") return "Day 3";
+            if (val === "apr 30 pts" || val === "april 30 pts") return "Day 4";
+            
+            // EMEA Translators
+            if (val === "april 12 pts" || val === "apr 12 pts") return "Day 1";
+            if (val === "apr 19 pts" || val === "april 19 pts") return "Day 2";
+            if (val === "apr 26 pts" || val === "april 26 pts") return "Day 3";
+            if (val === "may 3 pts") return "Day 4";
+
+            return "Day 1"; // Default Fallback
+        }
+
+        async function fetchTargetDay(gid) {
+            const apiUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}&range=A50:A50`;
+            try {
+                const response = await fetch(apiUrl);
+                const text = await response.text();
+                const json = JSON.parse(text.substring(47, text.length - 2));
+                if (json.table.rows && json.table.rows.length > 0 && json.table.rows[0].c && json.table.rows[0].c[0]) {
+                    const rawValue = json.table.rows[0].c[0].v;
+                    return translateDateToDay(rawValue);
+                }
+            } catch (e) { console.error("Failed to fetch target day", e); }
+            return "Day 1"; // Fallback
+        }
+
+        // --- 1. COMPACT LOBBIES / SCHEDULE FETCH ---
+        async function loadLobbies(gid, containerId, loadingId, displayDayId, targetDay, themeColor) {
+            const query = encodeURIComponent("SELECT A, B, C, D, E, F, G, H, I, J, K, L, M WHERE A IS NOT NULL");
+            const apiUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}&tq=${query}`;
+            const container = document.getElementById(containerId);
+            const loader = document.getElementById(loadingId);
+            document.getElementById(displayDayId).textContent = "Showing matches for " + targetDay.toUpperCase();
+
+            try {
+                const response = await fetch(apiUrl);
+                const text = await response.text();
+                const rows = JSON.parse(text.substring(47, text.length - 2)).table.rows;
+
+                // Group by base round number
+                const roundsData = {};
+                
+                rows.forEach(row => {
+                    const day = getCellValue(row, 0).trim();
+                    const roundStr = getCellValue(row, 1).toString();
+                    
+                    if (!day || !roundStr || day.toLowerCase() !== targetDay.toLowerCase()) return;
+
+                    const baseRoundNum = parseInt(roundStr);
+                    const isHalfRound = roundStr.includes('.5');
+                    const map = getCellValue(row, 11);
+
+                    if (!roundsData[baseRoundNum]) {
+                        roundsData[baseRoundNum] = { main: [], half: [], map: map };
+                    }
+                    if(!roundsData[baseRoundNum].map && map) roundsData[baseRoundNum].map = map;
+
+                    const matchObj = {
+                        teams: [getCellValue(row, 3), getCellValue(row, 4), getCellValue(row, 5), getCellValue(row, 6)],
+                        results: [getCellValue(row, 7), getCellValue(row, 8), getCellValue(row, 9), getCellValue(row, 10)],
+                        isLive: getCellValue(row, 12).toLowerCase().includes('stream')
+                    };
+
+                    if (isHalfRound) roundsData[baseRoundNum].half.push(matchObj);
+                    else roundsData[baseRoundNum].main.push(matchObj);
+                });
+
+                loader.style.display = 'none';
+
+                if (Object.keys(roundsData).length === 0) {
+                    container.innerHTML = `<p style="color:#888; font-family:monospace; text-align:center;">No matches scheduled for ${targetDay.toUpperCase()} yet.</p>`;
+                    return;
+                }
+
+                let html = '';
+                const roundKeys = Object.keys(roundsData).sort((a, b) => parseInt(a) - parseInt(b));
+
+                roundKeys.forEach(baseRoundNum => {
+                    const rData = roundsData[baseRoundNum];
+                    
+                    html += `
+                        <div class="round-block" style="border-top: 3px solid ${themeColor};">
+                            <div class="round-header" style="border-bottom-color: ${themeColor};">
+                                <h3>ROUND ${baseRoundNum}</h3>
+                                <div class="round-map">${rData.map || 'TBD'}</div>
+                            </div>
+                    `;
+
+                    // Render Main Matches
+                    rData.main.forEach(match => { html += buildMatchRow(match, themeColor); });
+
+                    // Render Halftime break & .5 matches
+                    if (rData.half.length > 0) {
+                        html += `<div class="break-divider">HALFTIME / LOBBY SWAP</div>`;
+                        rData.half.forEach(match => { html += buildMatchRow(match, themeColor); });
+                    }
+
+                    html += `</div>`;
+                });
+
+                container.innerHTML = html;
+
+            } catch (error) {
+                loader.innerHTML = `<p style="color:#ff004c; font-family:monospace; text-align:center;">Error loading lobbies.</p>`;
+            }
+        }
+
+        function buildMatchRow(match, themeColor) {
+            let isCompleted = match.results[0] !== '';
+            let rowClass = isCompleted ? 'match-completed' : (match.isLive ? 'live-match' : '');
+            let liveTag = (match.isLive && !isCompleted) ? `<div class="live-tag" style="background:${themeColor};">LIVE MATCH</div>` : '';
+            let inlineStyle = (match.isLive && !isCompleted) ? `border-left-color: ${themeColor}; border-left-width: 4px;` : '';
+
+            let teamsHtml = '';
+            for(let i=0; i<4; i++) {
+                let tName = isCompleted ? (match.results[i] || '-') : match.teams[i];
+                let posHtml = isCompleted ? `<span class="pos pos-${i+1}">${i+1}</span>` : '';
+                teamsHtml += `<div class="t">${posHtml}${tName}</div>`;
+            }
+
+            return `<div class="match-row ${rowClass}" style="${inlineStyle}">${liveTag}${teamsHtml}</div>`;
+        }
+
+        // --- 2. LEADERBOARD FETCH ---
+        async function loadLeaderboard(gid, containerId, highlightColor) {
+            const query = encodeURIComponent("SELECT M, N, O, P WHERE M IS NOT NULL");
+            const apiUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}&tq=${query}`;
+            const container = document.getElementById(containerId);
+
+            try {
+                const response = await fetch(apiUrl);
+                const text = await response.text();
+                const rows = JSON.parse(text.substring(47, text.length - 2)).table.rows;
+
+                const teams = [];
+                let startIndex = getCellValue(rows[0], 0).toLowerCase() === 'rank' ? 1 : 0;
+
+                for(let i = startIndex; i < rows.length; i++) {
+                    const row = rows[i];
+                    const rank = parseInt(getCellValue(row, 0));
+                    if(isNaN(rank)) continue;
+
+                    teams.push({
+                        rank: rank,
+                        name: getCellValue(row, 1),
+                        points: Math.floor(Number(getCellValue(row, 2)) || 0),
+                        status: getCellValue(row, 3).toUpperCase()
+                    });
+                }
+
+                teams.sort((a, b) => a.rank - b.rank);
+                container.innerHTML = ''; 
+
+                if(teams.length === 0) {
+                    container.innerHTML = '<div style="padding: 2rem; text-align:center; color:#888; font-family:monospace;">Standings pending...</div>';
+                    return;
+                }
+
+                teams.forEach(team => {
+                    let isElim = (team.status === 'ELIMINATED' || team.status === '-');
+                    let rowClass = isElim ? 'eliminated' : (team.rank <= 3 ? `rank-${team.rank}` : '');
+                    let ptsColor = isElim ? '#888' : highlightColor;
+
+                    container.innerHTML += `
+                        <div class="lb-row ${rowClass}">
+                            <div class="lb-rank">${team.rank}</div>
+                            <div class="lb-team">${team.name}</div>
+                            <div class="lb-pts" style="color: ${ptsColor};">${team.points}</div>
+                        </div>
+                    `;
+                });
+
+            } catch (error) {
+                container.innerHTML = '<div style="padding: 2rem; text-align:center; color:#ff004c; font-family:monospace;">Error loading data.</div>';
+            }
+        }
+
+        // --- 3. ROSTERS FETCH ---
+        function parseCSV(str) {
+            const arr = []; let quote = false; let col, c;
             for (let row = col = c = 0; c < str.length; c++) {
                 let cc = str[c], nc = str[c+1];
-                arr[row] = arr[row] || [];
-                arr[row][col] = arr[row][col] || '';
-                
+                arr[row] = arr[row] || []; arr[row][col] = arr[row][col] || '';
                 if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; }
                 else if (cc == '"') { quote = !quote; }
                 else if (cc == ',' && !quote) { ++col; }
@@ -523,114 +672,63 @@
             return arr;
         }
 
-        // Helper to format Embark ID text display
         function getPlayerHtml(embarkId, isSub = false) {
-            if (!embarkId) return "";
-            
-            const cleanId = embarkId.trim();
-            const lowerId = cleanId.toLowerCase();
-            
-            // Filter out placeholder text
-            if (cleanId === "" || ["none", "na", "n/a", "tbc", "tbd", "unknown"].includes(lowerId) || cleanId.length > 35) {
-                return ""; 
-            }
-
-            const badgeHtml = isSub ? '<span class="sub-badge">SUB</span>' : '';
-            const iconColor = isSub ? '#ff004c' : '#01a3eb';
-
-            return `
-                <div class="player-row">
-                    <span><i class="fa-solid fa-user player-icon" style="color: ${iconColor};"></i> ${cleanId}</span>
-                    ${badgeHtml}
-                </div>
-            `;
+            const cleanId = (embarkId || "").trim();
+            if (cleanId === "" || ["none", "na", "n/a", "tbc", "tbd"].includes(cleanId.toLowerCase())) return ""; 
+            return `<div class="player-row"><span><i class="fa-solid fa-user" style="color: ${isSub ? '#ff004c' : '#01a3eb'}; margin-right:8px;"></i> ${cleanId}</span>${isSub ? '<span class="sub-badge">SUB</span>' : ''}</div>`;
         }
 
-        // Fetch and Render
         async function loadRosters() {
             const container = document.getElementById('rosters-container');
-            const gridAmericas = document.getElementById('roster-grid-americas');
-            const gridEmea = document.getElementById('roster-grid-emea');
+            const gridNa = document.getElementById('roster-grid-americas');
+            const gridEu = document.getElementById('roster-grid-emea');
             const loader = document.getElementById('roster-loading');
 
             try {
-                const response = await fetch(fetchTarget);
-                if (!response.ok) throw new Error("Connection failed");
-                
-                const text = await response.text();
-                const data = parseDataStream(text);
-                
-                // Remove header row
-                const rows = data.slice(1);
-
-                if (rows.length === 0) {
-                    loader.innerHTML = '<p style="color: #888; font-family: monospace;">No teams registered yet.</p>';
-                    return;
-                }
+                const response = await fetch(fetchTargetRosters);
+                const rows = parseCSV(await response.text()).slice(1);
 
                 loader.style.display = 'none';
                 container.style.display = 'block'; 
 
-                let americasCount = 0;
-                let emeaCount = 0;
+                let naCount = 0, euCount = 0;
 
                 rows.forEach(row => {
-                    if (row.length < 11) return;
-
+                    if (row.length < 11 || !row[3] || row[3].trim() === "") return;
                     const region = (row[2] || "").trim().toUpperCase();
-                    const teamName = row[3];
-                    const id1 = row[6];
-                    const id2 = row[8];
-                    const id3 = row[10];
-                    const idSub = row[12]; 
-
-                    if (!teamName || teamName.trim() === "") return;
-
+                    
                     const card = document.createElement('div');
                     card.className = 'roster-card';
+                    card.innerHTML = `<div class="roster-header"><h3>${row[3]}</h3></div><div>${getPlayerHtml(row[6])}${getPlayerHtml(row[8])}${getPlayerHtml(row[10])}${getPlayerHtml(row[12], true)}</div>`;
 
-                    const p1Html = getPlayerHtml(id1);
-                    const p2Html = getPlayerHtml(id2);
-                    const p3Html = getPlayerHtml(id3);
-                    const subHtml = getPlayerHtml(idSub, true);
-
-                    card.innerHTML = `
-                        <div class="roster-header">
-                            <h3>${teamName}</h3>
-                        </div>
-                        <div class="roster-players">
-                            ${p1Html}
-                            ${p2Html}
-                            ${p3Html}
-                            ${subHtml}
-                        </div>
-                    `;
-
-                    if (region.includes("AMERICAS")) {
-                        gridAmericas.appendChild(card);
-                        americasCount++;
-                    } else if (region.includes("EMEA")) {
-                        gridEmea.appendChild(card);
-                        emeaCount++;
-                    }
+                    if (region.includes("AMERICAS")) { gridNa.appendChild(card); naCount++; } 
+                    else if (region.includes("EMEA")) { gridEu.appendChild(card); euCount++; }
                 });
 
-                if(americasCount === 0) {
-                    gridAmericas.innerHTML = '<p style="color: #888; font-family: monospace;">No AMERICAS teams registered yet.</p>';
-                    gridAmericas.style.display = "block";
-                }
-                if(emeaCount === 0) {
-                    gridEmea.innerHTML = '<p style="color: #888; font-family: monospace;">No EMEA teams registered yet.</p>';
-                    gridEmea.style.display = "block";
-                }
+                if(naCount === 0) gridNa.innerHTML = '<p style="color:#888; font-family:monospace;">No AMERICAS teams registered.</p>';
+                if(euCount === 0) gridEu.innerHTML = '<p style="color:#888; font-family:monospace;">No EMEA teams registered.</p>';
 
             } catch (error) {
-                console.error('Data error:', error);
-                loader.innerHTML = '<p style="color: #ff004c; font-family: monospace;"><i class="fa-solid fa-triangle-exclamation"></i> Error loading rosters.</p>';
+                loader.innerHTML = '<p style="color:#ff004c; font-family:monospace;">Error loading rosters.</p>';
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadRosters);
+        // --- 4. INITIALIZE EVERYTHING ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            
+            // 1. Fetch Target Days using the built-in translator for Cell A50
+            const targetDayEU = await fetchTargetDay(GID_LB_EU);
+            const targetDayNA = await fetchTargetDay(GID_LB_NA);
+
+            // 2. Load the schedules 
+            loadLobbies(GID_SCHED_EU, 'schedule-grid-eu', 'schedule-loading-eu', 'day-display-eu', targetDayEU, '#01a3eb');
+            loadLobbies(GID_SCHED_NA, 'schedule-grid-na', 'schedule-loading-na', 'day-display-na', targetDayNA, '#ff004c');
+            
+            // 3. Load Leaderboards & Rosters
+            loadLeaderboard(GID_LB_EU, 'lb-emea', '#01a3eb');
+            loadLeaderboard(GID_LB_NA, 'lb-americas', '#ff004c'); 
+            loadRosters();
+        });
     </script>
 </body>
 </html>
