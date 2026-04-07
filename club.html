@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <p class="club-intro" style="color: var(--light-grey);">The arena is where we compete, but the community is where we connect. Follow the action live, discuss strategies, and join exclusive events.</p>
                 <div class="community-links">
                     <a href="https://discord.gg/apesquad" class="btn btn-primary" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i> Join our Discord</a>
-                    <a href="https://twitch.tv/apesquadorg" class="btn btn-primary" style="background: linear-gradient(90deg, var(--laser-purple) 0%, var(--neon-pink) 100%);" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitch"></i> Follow on Twitch</a>
+                    <a href="https://twitch.tv/apesquadorg" class="btn btn-primary" style="background: linear-gradient(0deg, var(--laser-purple) 0%, var(--neon-pink) 100%);" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitch"></i> Follow on Twitch</a>
                 </div>
             </div>
         </section>
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.addEventListener("DOMContentLoaded", function() {
             // --- LEADERBOARD LOGIC ---
             const platform = 'crossplay';
-            const apiUrl = `https://api.the-finals-leaderboard.com/v1/leaderboard/s9/${platform}`;
+            const apiUrl = `https://api.the-finals-leaderboard.com/v1/leaderboard/s10/${platform}`;
             const targetClubTags = ['LDFS'];
 
             async function fetchAndDisplayMembers(clubTag, container) {
