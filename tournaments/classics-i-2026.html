@@ -149,7 +149,7 @@
         /* TAB NAVIGATION                            */
         /* ========================================= */
         .tournament-nav-wrapper { background: rgba(10, 10, 10, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 1rem 0; }
-        .tournament-tabs { display: flex; justify-content: center; gap: 1rem; list-style: none; padding: 0; margin: 0; overflow-x: auto; scrollbar-width: none; }
+        .tournament-tabs { display: flex !important; justify-content: center !important; flex-wrap: wrap; align-items: center; gap: 1rem; list-style: none; padding: 0; margin: 0; width: auto; }
         .tournament-tabs::-webkit-scrollbar { display: none; }
         .tab-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #aaa; font-family: 'Anton', sans-serif; font-size: 1.2rem; padding: 0.75rem 1.5rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.2s ease; white-space: nowrap; }
         .tab-btn:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
@@ -291,15 +291,17 @@
 
         </section>
 
-        <!-- MODERN TAB NAVIGATION -->
+<!-- MODERN TAB NAVIGATION -->
         <div class="tournament-nav-wrapper">
-            <ul class="tournament-tabs container">
-                <li><button class="tab-btn active" data-tab="overview"><i class="fa-solid fa-circle-info" style="margin-right:8px;"></i> Overview</button></li>
-                <li><button class="tab-btn" data-tab="sched-emea"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> EMEA Schedule</button></li>
-                <li><button class="tab-btn" data-tab="sched-na"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> NA Schedule</button></li>
-                <li><button class="tab-btn" data-tab="standings"><i class="fa-solid fa-list-ol" style="margin-right:8px;"></i> Standings</button></li>
-                <li><button class="tab-btn" data-tab="teams"><i class="fa-solid fa-users" style="margin-right:8px;"></i> Teams</button></li>
-            </ul>
+            <div class="container" style="display: flex; justify-content: center; width: 100%;">
+                <ul class="tournament-tabs">
+                    <li><button class="tab-btn active" data-tab="overview"><i class="fa-solid fa-circle-info" style="margin-right:8px;"></i> Overview</button></li>
+                    <li><button class="tab-btn" data-tab="sched-emea"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> EMEA Schedule</button></li>
+                    <li><button class="tab-btn" data-tab="sched-na"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> NA Schedule</button></li>
+                    <li><button class="tab-btn" data-tab="standings"><i class="fa-solid fa-list-ol" style="margin-right:8px;"></i> Standings</button></li>
+                    <li><button class="tab-btn" data-tab="teams"><i class="fa-solid fa-users" style="margin-right:8px;"></i> Teams</button></li>
+                </ul>
+            </div>
         </div>
 
         <div style="background-color: var(--midnight-black); min-height: 50vh;">
