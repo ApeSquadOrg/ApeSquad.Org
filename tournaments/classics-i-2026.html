@@ -211,6 +211,11 @@
         .pos-4 { background: rgba(136, 136, 136, 0.15); color: #888; border: 1px solid rgba(136, 136, 136, 0.3); }
         .match-completed .t:nth-child(1) { color: #fff; }
 
+        /* Points System Legend Styles */
+        .points-legend { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; background: rgba(10, 10, 10, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 12px 20px; font-family: 'Anton', sans-serif; font-size: 1.2rem; color: #fff; }
+        .points-legend-item { display: flex; align-items: center; gap: 8px; }
+        .points-legend-item .pos { width: 32px; font-size: 0.85rem; padding: 4px 0; border-radius: 4px; display: inline-block; }
+
         @media (max-width: 768px) {
             .match-row { grid-template-columns: 1fr 1fr; gap: 10px; }
             .live-tag { position: relative; display: inline-block; top: 0; left: 0; margin-bottom: 10px; grid-column: 1 / -1; width: fit-content; border-radius: 3px; }
@@ -316,6 +321,18 @@
                                 <li><strong>Day 4:</strong> The Final Push. Top 16 qualify for finals.</li>
                             </ul>
                         </div>
+
+<!-- Points System Panel -->
+                        <div class="info-panel">
+                            <h3><i class="fa-solid fa-calculator" style="color:#01a3eb;"></i> POINTS SYSTEM</h3>
+                            <p style="margin-bottom: 1rem;">Points are awarded based on placement at the end of each respective match lobby:</p>
+                            <div class="points-legend" style="margin-bottom: 0;">
+                                <div class="points-legend-item"><span class="pos pos-1">1ST</span> 6 PTS</div>
+                                <div class="points-legend-item"><span class="pos pos-2">2ND</span> 4 PTS</div>
+                                <div class="points-legend-item"><span class="pos pos-3">3RD</span> 2 PTS</div>
+                                <div class="points-legend-item"><span class="pos pos-4">4TH</span> 1 PT</div>
+                            </div>
+                        </div>
                         
                         <!-- Grand Championship Panel -->
                         <div class="info-panel">
@@ -395,11 +412,19 @@
                 </div>
             </section>
 
-            <!-- TAB 4: STANDINGS -->
+<!-- TAB 4: STANDINGS -->
             <section id="standings" class="tab-content container">
-                <div style="text-align:center; margin-bottom: 2rem;">
+                <div style="text-align:center; margin-bottom: 3rem;">
                     <h2 style="font-family:'Anton', sans-serif; font-size:3rem; margin-bottom:0;">Live Standings</h2>
-                    <p style="color:#888; font-family:'Ayuthaya', monospace; text-align:center; margin: 0 auto; display: block; width: 100%;">Global League Progression</p>
+                    <p style="color:#888; font-family:'Ayuthaya', monospace; text-align:center; margin: 0 auto 1.5rem auto; display: block; width: 100%;">Global League Progression</p>
+                    
+                    <!-- Points Legend Banner for Standings -->
+                    <div class="points-legend" style="display: inline-flex; margin-bottom: 0; background: transparent;">
+                        <div class="points-legend-item"><span class="pos pos-1">1ST</span> 6 PTS</div>
+                        <div class="points-legend-item"><span class="pos pos-2">2ND</span> 4 PTS</div>
+                        <div class="points-legend-item"><span class="pos pos-3">3RD</span> 2 PTS</div>
+                        <div class="points-legend-item"><span class="pos pos-4">4TH</span> 1 PT</div>
+                    </div>
                 </div>
                 
                 <div class="region-grid">
