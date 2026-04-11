@@ -38,107 +38,42 @@
             display: flex; 
             flex-direction: column;
             align-items: center; 
-            background-color: #000000; /* Deep black to match edge-to-edge */
-            padding: 0 0 5rem 0; /* Removed top padding to make it touch the navbar */
+            background-color: #000000; 
+            padding: 0 0 5rem 0; 
             margin: 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         
-        .hero-image-wrapper {
-            position: relative;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            line-height: 0; /* Removes default image bottom spacing */
-        }
-
-        /* The main banner image acting as the massive title */
-        .hero-banner-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            animation: softFadeIn 1s ease-out forwards;
-        }
-
-        /* Seamless blend from the bottom of the image into the page background */
-        .hero-bottom-fade {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(to bottom, transparent 0%, #000000 100%);
-            pointer-events: none;
-        }
-
-        /* Keep SEO happy by having an H1, but hide it visually */
-        .sr-only {
-            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
-        }
+        .hero-image-wrapper { position: relative; width: 100%; margin: 0; padding: 0; line-height: 0; }
+        .hero-banner-image { width: 100%; height: auto; display: block; animation: softFadeIn 1s ease-out forwards; }
+        .hero-bottom-fade { position: absolute; bottom: 0; left: 0; width: 100%; height: 300px; background: linear-gradient(to bottom, transparent 0%, #000000 100%); pointer-events: none; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
         .hero-text-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 20px;
-            margin-top: -6rem; /* Pulls text up into the fade overlay */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            animation: softFadeUp 1s ease-out forwards;
-            animation-delay: 0.3s;
-            opacity: 0;
+            position: relative; z-index: 2; max-width: 800px; padding: 0 20px;
+            margin-top: -6rem; display: flex; flex-direction: column; align-items: center;
+            text-align: center; animation: softFadeUp 1s ease-out forwards; animation-delay: 0.3s; opacity: 0;
         }
 
-        @keyframes softFadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes softFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes softFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes softFadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .hero-description { font-family: 'Ayuthaya', monospace; font-size: 1.15rem; color: #ccc; line-height: 1.6; margin-bottom: 2rem; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
-        .hero-description { 
-            font-family: 'Ayuthaya', monospace; 
-            font-size: 1.15rem; 
-            color: #ccc; 
-            line-height: 1.6; 
-            margin-bottom: 2rem; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-
-        /* Quick Stats Bar */
-        .hero-quick-stats {
-            display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; justify-content: center;
-        }
+        .hero-quick-stats { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; justify-content: center; }
         .hero-quick-stats .stat {
-            display: flex; align-items: center; gap: 8px;
-            font-family: 'Anton', sans-serif;
-            color: #fff; font-size: 1.1rem; letter-spacing: 1px;
-            background: rgba(25, 25, 25, 0.6);
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            display: flex; align-items: center; gap: 8px; font-family: 'Anton', sans-serif;
+            color: #fff; font-size: 1.1rem; letter-spacing: 1px; background: rgba(25, 25, 25, 0.6);
+            padding: 8px 16px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
         .hero-quick-stats .stat i { color: #01a3eb; font-size: 1rem; }
         .hero-quick-stats .stat:nth-child(2) i { color: #ff004c; }
 
         .hero-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
         
-        .pulse-btn {
-            animation: heroPulse 2s infinite;
-            box-shadow: 0 0 0 0 rgba(1, 163, 235, 0.7);
-        }
-        @keyframes heroPulse {
-            0% { box-shadow: 0 0 0 0 rgba(1, 163, 235, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(1, 163, 235, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(1, 163, 235, 0); }
-        }
+        .pulse-btn { animation: heroPulse 2s infinite; box-shadow: 0 0 0 0 rgba(1, 163, 235, 0.7); }
+        @keyframes heroPulse { 0% { box-shadow: 0 0 0 0 rgba(1, 163, 235, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(1, 163, 235, 0); } 100% { box-shadow: 0 0 0 0 rgba(1, 163, 235, 0); } }
 
         @media (max-width: 768px) {
             .hero-bottom-fade { height: 150px; }
@@ -188,9 +123,10 @@
         .round-header h3 { font-family: 'Anton', sans-serif; font-size: 1.8rem; margin: 0; letter-spacing: 1px; color: #fff; }
         .round-map { font-family: 'Ayuthaya', monospace; font-size: 0.85rem; color: #aaa; background: #000; padding: 4px 10px; border-radius: 4px; border: 1px solid #333; text-transform: uppercase; letter-spacing: 1px; }
         
-        .match-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 15px 20px; border-bottom: 1px solid #222; position: relative; align-items: center; transition: background 0.2s; }
+        .match-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 15px 20px; border-bottom: 1px solid #222; position: relative; align-items: start; transition: background 0.2s; cursor: pointer; }
         .match-row:last-child { border-bottom: none; }
         .match-row:hover { background: #151515; }
+        .match-row.expanded-row { background: #151515; }
         
         .t { font-family: 'Anton', sans-serif; font-size: 1.2rem; color: #ccc; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; }
         
@@ -204,7 +140,7 @@
 
         /* Completed Match Results */
         .match-completed .t { color: #888; }
-        .pos { font-family: 'Ayuthaya', monospace; font-size: 0.7rem; font-weight: bold; width: 22px; text-align: center; border-radius: 3px; padding: 2px 0; margin-right: 8px; }
+        .pos { font-family: 'Ayuthaya', monospace; font-size: 0.7rem; font-weight: bold; width: 22px; text-align: center; border-radius: 3px; padding: 2px 0; margin-right: 8px; flex-shrink: 0; }
         .pos-1 { background: rgba(255, 215, 0, 0.15); color: #FFD700; border: 1px solid rgba(255, 215, 0, 0.3); }
         .pos-2 { background: rgba(224, 224, 224, 0.15); color: #E0E0E0; border: 1px solid rgba(224, 224, 224, 0.3); }
         .pos-3 { background: rgba(205, 127, 50, 0.15); color: #CD7F32; border: 1px solid rgba(205, 127, 50, 0.3); }
@@ -226,12 +162,12 @@
         /* ========================================= */
         .lb-container { background: #111; border: 1px solid #333; border-radius: 8px; overflow: hidden; }
         .lb-header { display: grid; grid-template-columns: 50px 1fr 80px; padding: 12px 15px; background: #1a1a1a; border-bottom: 1px solid #333; font-family: 'Ayuthaya', monospace; font-size: 0.85rem; color: #888; font-weight: bold; }
-        .lb-row { display: grid; grid-template-columns: 50px 1fr 80px; padding: 12px 15px; border-bottom: 1px solid #1a1a1a; align-items: center; transition: background 0.2s; }
+        .lb-row { display: grid; grid-template-columns: 50px 1fr 80px; padding: 12px 15px; border-bottom: 1px solid #1a1a1a; align-items: start; transition: background 0.2s; }
         .lb-row:hover { background: #1a1a1a; }
         .lb-row:last-child { border-bottom: none; }
-        .lb-rank { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: #666; }
-        .lb-team { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .lb-pts { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: var(--electric-blue); text-align: right; }
+        .lb-rank { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: #666; padding-top: 2px;}
+        .lb-team { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; }
+        .lb-pts { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: var(--electric-blue); text-align: right; padding-top: 2px;}
         .lb-row.rank-1 .lb-rank { color: #FFD700; text-shadow: 0 0 10px rgba(255,215,0,0.5); }
         .lb-row.rank-2 .lb-rank { color: #E0E0E0; text-shadow: 0 0 10px rgba(224,224,224,0.5); }
         .lb-row.rank-3 .lb-rank { color: #CD7F32; text-shadow: 0 0 10px rgba(205,127,50,0.5); }
@@ -247,6 +183,40 @@
         .roster-header h3 { font-family: 'Anton', sans-serif; font-size: 1.5rem; color: #fff; margin: 0 0 15px 0; text-align: center; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 10px; }
         .player-row { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 4px; margin-bottom: 6px; display: flex; justify-content: space-between; font-family: 'Ayuthaya', monospace; font-size: 0.85rem; color: #ccc; }
         .sub-badge { background: #ff004c; color: white; font-size: 0.65rem; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+
+        /* ========================================= */
+        /* INLINE ROSTER ACCORDION                   */
+        /* ========================================= */
+        .team-col { display: flex; flex-direction: column; width: 100%; overflow: hidden; }
+        .lb-row .team-link { cursor: pointer; transition: opacity 0.2s; }
+        .lb-row .team-link:hover .team-name-text { text-decoration: underline; text-underline-offset: 4px; }
+        
+        .team-dropdown { 
+            display: none; 
+            margin-top: 8px; 
+            font-family: 'Ayuthaya', monospace; 
+            font-size: 0.75rem; 
+            color: #aaa;
+            background: rgba(0,0,0,0.4);
+            padding: 8px;
+            border-radius: 6px;
+            border-left: 2px solid var(--electric-blue);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .team-col.expanded .team-dropdown { 
+            display: block; 
+            animation: slideDown 0.2s ease-out forwards; 
+        }
+
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-5px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .player-mini { display: block; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ddd; }
+        .player-mini:last-child { margin-bottom: 0; }
+        .player-mini i { width: 14px; text-align: center; }
+        .sub-mini { color: #ff004c; font-size: 0.6rem; font-weight: bold; margin-left: 6px; border: 1px solid #ff004c; padding: 1px 4px; border-radius: 3px;}
 
     </style>
 </head>
@@ -279,9 +249,13 @@
                     <div class="stat"><i class="fa-solid fa-skull"></i> WEEKLY CUTS</div>
                 </div>
 
+                <!-- ADDED WATCH LIVE BUTTON HERE -->
                 <div class="hero-cta-group">
                     <a href="https://forms.gle/ZGb4kSdHRVUM7hWdA" target="_blank" class="btn btn-primary pulse-btn">
                         <i class="fa-solid fa-pen-to-square"></i> Register Now
+                    </a>
+                    <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn btn-hero-special" style="border-color: #9146FF; color: #9146FF; box-shadow: 0 0 10px rgba(145, 70, 255, 0.2);">
+                        <i class="fa-brands fa-twitch"></i> Watch Live
                     </a>
                     <a href="https://discord.gg/apesquad" target="_blank" class="btn btn-hero-special" style="border-color: #5865F2; color: #5865F2;">
                         <i class="fa-brands fa-discord"></i> Discord
@@ -291,7 +265,7 @@
 
         </section>
 
-<!-- MODERN TAB NAVIGATION -->
+        <!-- MODERN TAB NAVIGATION -->
         <div class="tournament-nav-wrapper">
             <div class="container" style="display: flex; justify-content: center; width: 100%;">
                 <ul class="tournament-tabs">
@@ -324,7 +298,7 @@
                             </ul>
                         </div>
 
-<!-- Points System Panel -->
+                        <!-- Points System Panel -->
                         <div class="info-panel">
                             <h3><i class="fa-solid fa-calculator" style="color:#01a3eb;"></i> POINTS SYSTEM</h3>
                             <p style="margin-bottom: 1rem;">Points are awarded based on placement at the end of each respective match lobby:</p>
@@ -347,7 +321,7 @@
                             </ul>
                         </div>
 
-                        <!-- NEW: Watch Live Panel -->
+                        <!-- Watch Live Panel -->
                         <div class="info-panel" style="margin-bottom:0; background: rgba(145, 70, 255, 0.05); border-color: rgba(145, 70, 255, 0.2);">
                             <h3 style="color:#9146FF; margin:0 0 10px 0; text-shadow: 0 0 15px rgba(145, 70, 255, 0.3);">
                                 <i class="fa-brands fa-twitch"></i> WATCH LIVE
@@ -414,7 +388,7 @@
                 </div>
             </section>
 
-<!-- TAB 4: STANDINGS -->
+            <!-- TAB 4: STANDINGS -->
             <section id="standings" class="tab-content container">
                 <div style="text-align:center; margin-bottom: 3rem;">
                     <h2 style="font-family:'Anton', sans-serif; font-size:3rem; margin-bottom:0;">Live Standings</h2>
@@ -483,6 +457,9 @@
         const endpointInfo = 'aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvMTNsNWV4M1FTa29ZVEpkQWZpeDZtc1FKZWdMUHNiUTZSMUlCdndOb0lFZlkvZXhwb3J0P2Zvcm1hdD1jc3YmZ2lkPTA=';
         const fetchTargetRosters = atob(endpointInfo);
 
+        // Global object to store roster data for the dropdowns
+        window.teamRosters = {};
+
         // --- TAB SWITCHER ---
         document.querySelectorAll('.tab-btn').forEach(button => {
             button.addEventListener('click', () => {
@@ -494,8 +471,23 @@
         });
 
         // --- UTILS ---
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')           
+                .replace(/[^\w\-]+/g, '')       
+                .replace(/\-\-+/g, '-')         
+                .replace(/^-+/, '')             
+                .replace(/-+$/, '');            
+        }
+
         function getCellValue(row, colIndex) {
             return (row && row.c && row.c[colIndex] && row.c[colIndex].v !== null) ? row.c[colIndex].v.toString() : '';
+        }
+
+        function getPlayerHtml(embarkId, isSub = false) {
+            const cleanId = (embarkId || "").trim();
+            if (cleanId === "" || ["none", "na", "n/a", "tbc", "tbd"].includes(cleanId.toLowerCase())) return ""; 
+            return `<div class="player-row"><span><i class="fa-solid fa-user" style="color: ${isSub ? '#ff004c' : '#01a3eb'}; margin-right:8px;"></i> ${cleanId}</span>${isSub ? '<span class="sub-badge">SUB</span>' : ''}</div>`;
         }
 
         // --- TRANSLATE A50 COLUMN HEADERS TO "Day X" ---
@@ -623,10 +615,20 @@
             for(let i=0; i<4; i++) {
                 let tName = isCompleted ? (match.results[i] || '-') : match.teams[i];
                 let posHtml = isCompleted ? `<span class="pos pos-${i+1}">${i+1}</span>` : '';
-                teamsHtml += `<div class="t">${posHtml}${tName}</div>`;
+                
+                if (tName && tName !== '-') {
+                    teamsHtml += `
+                        <div class="team-col team-link" data-team="${tName}">
+                            <div class="t">${posHtml}<span class="team-name-text">${tName}</span></div>
+                            <div class="team-dropdown"></div>
+                        </div>
+                    `;
+                } else {
+                    teamsHtml += `<div class="team-col"><div class="t">${posHtml}${tName}</div></div>`;
+                }
             }
 
-            return `<div class="match-row ${rowClass}" style="${inlineStyle}">${liveTag}${teamsHtml}</div>`;
+            return `<div class="match-row ${rowClass}" style="${inlineStyle}" title="Click to show/hide all rosters in this lobby">${liveTag}${teamsHtml}</div>`;
         }
 
         // --- 2. LEADERBOARD FETCH ---
@@ -672,7 +674,10 @@
                     container.innerHTML += `
                         <div class="lb-row ${rowClass}">
                             <div class="lb-rank">${team.rank}</div>
-                            <div class="lb-team">${team.name}</div>
+                            <div class="team-col team-link" data-team="${team.name}" title="Click to view roster">
+                                <div class="lb-team"><span class="team-name-text">${team.name}</span></div>
+                                <div class="team-dropdown" style="border-left-color:${highlightColor}"></div>
+                            </div>
                             <div class="lb-pts" style="color: ${ptsColor};">${team.points}</div>
                         </div>
                     `;
@@ -699,12 +704,6 @@
             return arr;
         }
 
-        function getPlayerHtml(embarkId, isSub = false) {
-            const cleanId = (embarkId || "").trim();
-            if (cleanId === "" || ["none", "na", "n/a", "tbc", "tbd"].includes(cleanId.toLowerCase())) return ""; 
-            return `<div class="player-row"><span><i class="fa-solid fa-user" style="color: ${isSub ? '#ff004c' : '#01a3eb'}; margin-right:8px;"></i> ${cleanId}</span>${isSub ? '<span class="sub-badge">SUB</span>' : ''}</div>`;
-        }
-
         async function loadRosters() {
             const container = document.getElementById('rosters-container');
             const gridNa = document.getElementById('roster-grid-americas');
@@ -723,10 +722,21 @@
                 rows.forEach(row => {
                     if (row.length < 11 || !row[3] || row[3].trim() === "") return;
                     const region = (row[2] || "").trim().toUpperCase();
+                    const teamName = row[3].trim();
+                    const slug = slugify(teamName);
+                    
+                    // Save to global object for the accordion drop-downs
+                    window.teamRosters[slug] = {
+                        name: teamName,
+                        p1: row[6],
+                        p2: row[8],
+                        p3: row[10],
+                        sub: row[12]
+                    };
                     
                     const card = document.createElement('div');
                     card.className = 'roster-card';
-                    card.innerHTML = `<div class="roster-header"><h3>${row[3]}</h3></div><div>${getPlayerHtml(row[6])}${getPlayerHtml(row[8])}${getPlayerHtml(row[10])}${getPlayerHtml(row[12], true)}</div>`;
+                    card.innerHTML = `<div class="roster-header"><h3>${teamName}</h3></div><div>${getPlayerHtml(row[6])}${getPlayerHtml(row[8])}${getPlayerHtml(row[10])}${getPlayerHtml(row[12], true)}</div>`;
 
                     if (region.includes("AMERICAS")) { gridNa.appendChild(card); naCount++; } 
                     else if (region.includes("EMEA")) { gridEu.appendChild(card); euCount++; }
@@ -739,6 +749,69 @@
                 loader.innerHTML = '<p style="color:#ff004c; font-family:monospace;">Error loading rosters.</p>';
             }
         }
+
+        // --- ACCORDION CLICK LOGIC ---
+        function populateDropdown(teamCol) {
+            const dropdown = teamCol.querySelector('.team-dropdown');
+            if (!dropdown || dropdown.innerHTML.trim() !== '') return;
+
+            const teamName = teamCol.getAttribute('data-team');
+            const slug = slugify(teamName);
+            const teamData = window.teamRosters[slug];
+            
+            if (teamData) {
+                let html = '';
+                [teamData.p1, teamData.p2, teamData.p3].forEach(p => {
+                    if(p && p.trim() !== '' && !['none','na','n/a','tbc','tbd'].includes(p.toLowerCase())) {
+                        html += `<div class="player-mini"><i class="fa-solid fa-user" style="color:#01a3eb;"></i> ${p}</div>`;
+                    }
+                });
+                if(teamData.sub && teamData.sub.trim() !== '' && !['none','na','n/a','tbc','tbd'].includes(teamData.sub.toLowerCase())) {
+                    html += `<div class="player-mini"><i class="fa-solid fa-user" style="color:#ff004c;"></i> ${teamData.sub}<span class="sub-mini">SUB</span></div>`;
+                }
+                dropdown.innerHTML = html || '<div class="player-mini" style="color:#888;">No players listed</div>';
+            } else {
+                dropdown.innerHTML = '<div class="player-mini" style="color:#888;">Roster loading...</div>';
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            
+            // 1. Check if user clicked anywhere inside a Schedule Match Row
+            const matchRow = e.target.closest('.match-row');
+            if (matchRow) {
+                // Find all valid team columns in this specific row
+                const teamCols = matchRow.querySelectorAll('.team-col.team-link');
+                if (teamCols.length === 0) return;
+
+                const isExpanded = matchRow.classList.contains('expanded-row');
+                
+                if (isExpanded) {
+                    // Collapse all
+                    matchRow.classList.remove('expanded-row');
+                    teamCols.forEach(col => col.classList.remove('expanded'));
+                } else {
+                    // Expand all
+                    matchRow.classList.add('expanded-row');
+                    teamCols.forEach(col => {
+                        populateDropdown(col);
+                        col.classList.add('expanded');
+                    });
+                }
+                return; // Stop here, we handled the schedule click
+            }
+
+            // 2. Fallback for Leaderboard clicks (since it isn't inside a .match-row)
+            const teamCol = e.target.closest('.lb-row .team-link');
+            if (teamCol) {
+                if (teamCol.classList.contains('expanded')) {
+                    teamCol.classList.remove('expanded');
+                } else {
+                    populateDropdown(teamCol);
+                    teamCol.classList.add('expanded');
+                }
+            }
+        });
 
         // --- 4. INITIALIZE EVERYTHING ---
         document.addEventListener('DOMContentLoaded', async () => {
