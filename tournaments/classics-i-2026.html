@@ -218,6 +218,12 @@
         .player-mini i { width: 14px; text-align: center; }
         .sub-mini { color: #ff004c; font-size: 0.6rem; font-weight: bold; margin-left: 6px; border: 1px solid #ff004c; padding: 1px 4px; border-radius: 3px;}
 
+        /* Ensure external link buttons match the tab buttons */
+.tournament-tabs a.tab-btn {
+    display: inline-block;
+    line-height: normal; /* Fixes alignment for <a> tags */
+}
+
     </style>
 </head>
 <body>
@@ -268,13 +274,18 @@
         <!-- MODERN TAB NAVIGATION -->
         <div class="tournament-nav-wrapper">
             <div class="container" style="display: flex; justify-content: center; width: 100%;">
-                <ul class="tournament-tabs">
-                    <li><button class="tab-btn active" data-tab="overview"><i class="fa-solid fa-circle-info" style="margin-right:8px;"></i> Overview</button></li>
-                    <li><button class="tab-btn" data-tab="sched-emea"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> EMEA Schedule</button></li>
-                    <li><button class="tab-btn" data-tab="sched-na"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> NA Schedule</button></li>
-                    <li><button class="tab-btn" data-tab="standings"><i class="fa-solid fa-list-ol" style="margin-right:8px;"></i> Standings</button></li>
-                    <li><button class="tab-btn" data-tab="teams"><i class="fa-solid fa-users" style="margin-right:8px;"></i> Teams</button></li>
-                </ul>
+<ul class="tournament-tabs">
+    <li><button class="tab-btn active" data-tab="overview"><i class="fa-solid fa-circle-info" style="margin-right:8px;"></i> Overview</button></li>
+    <li><button class="tab-btn" data-tab="sched-emea"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> EMEA Schedule</button></li>
+    <li><button class="tab-btn" data-tab="sched-na"><i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> NA Schedule</button></li>
+    
+    <!-- NEW EXTERNAL LINKS -->
+    <li><a href="/tournaments/classics-i-2026-eu-bracket" target="_blank" rel="noopener" class="tab-btn" style="text-decoration:none;"><i class="fa-solid fa-link" style="margin-right:8px;"></i> EMEA Bracket</a></li>
+    <li><a href="/tournaments/classics-i-2026-na-bracket" target="_blank" rel="noopener" class="tab-btn" style="text-decoration:none;"><i class="fa-solid fa-link" style="margin-right:8px;"></i> NA Bracket</a></li>
+    
+    <li><button class="tab-btn" data-tab="standings"><i class="fa-solid fa-list-ol" style="margin-right:8px;"></i> Standings</button></li>
+    <li><button class="tab-btn" data-tab="teams"><i class="fa-solid fa-users" style="margin-right:8px;"></i> Teams</button></li>
+</ul>
             </div>
         </div>
 
