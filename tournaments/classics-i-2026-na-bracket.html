@@ -153,6 +153,38 @@
         }
         
         .bk-matchup { position: relative; width: 100%; z-index: 5; }
+
+        /* --- NEW: MATCH NUMBER BADGE --- */
+        .bk-match-number {
+            position: absolute;
+            top: 50%;
+            left: -12px;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--bk-team-border);
+            border-radius: 50%;
+            font-family: var(--bk-font-tech);
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 15;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+            background-color: var(--bk-darker-bg-color);
+        }
+        .bk-winners .bk-match-number {
+            border-color: var(--bk-accent-orange);
+            color: var(--bk-accent-orange);
+            background-color: #170d05; /* Solid dark orange/brown background */
+        }
+        .bk-losers .bk-match-number {
+            border-color: var(--bk-primary-purple);
+            color: var(--bk-primary-purple);
+            background-color: #14081c; /* Solid dark purple background */
+        }
+
         .bk-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; opacity: 0; transition: opacity 0.5s ease-in; }
         
         /* Team & Score Styling */
@@ -258,24 +290,64 @@
         <div class="bk-container">
             <div class="bk-main-column">
                 
-                <!-- Winners Bracket (3 Rounds) -->
+                <!-- Winners Bracket (3 Rounds - Matches 1 to 14) -->
                 <section class="bk-section bk-winners">
                     <h2>Winners Bracket</h2>
                     <div class="bk-rounds-container" id="winners-rounds">
-                        <div class="bk-round"><div class="bk-round-title">Round 1</div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div></div>
-                        <div class="bk-round"><div class="bk-round-title">Quarter-Finals</div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div></div>
-                        <div class="bk-round"><div class="bk-round-title">Semi-Finals</div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div></div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Round 1</div>
+                            <div class="bk-matchup"><div class="bk-match-number">1</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">2</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">3</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">4</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">5</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">6</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">7</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">8</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Quarter-Finals</div>
+                            <div class="bk-matchup"><div class="bk-match-number">9</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">10</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">11</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">12</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Semi-Finals</div>
+                            <div class="bk-matchup"><div class="bk-match-number">13</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">14</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
                     </div>
                 </section>
                 
-                <!-- Losers Bracket (4 Rounds) -->
+                <!-- Losers Bracket (4 Rounds - Matches 15 to 26) -->
                 <section class="bk-section bk-losers">
                     <h2>Losers Bracket</h2>
                     <div class="bk-rounds-container" id="losers-rounds">
-                        <div class="bk-round"><div class="bk-round-title">Losers R1</div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div></div>
-                        <div class="bk-round"><div class="bk-round-title">Losers R2</div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div></div>
-                        <div class="bk-round"><div class="bk-round-title">Losers R3</div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div></div>
-                        <div class="bk-round"><div class="bk-round-title">Losers Quarter-Final</div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div><div class="bk-matchup"><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div></div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Losers R1</div>
+                            <div class="bk-matchup"><div class="bk-match-number">15</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">16</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">17</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">18</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Losers R2</div>
+                            <div class="bk-matchup"><div class="bk-match-number">19</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">20</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">21</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">22</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Losers R3</div>
+                            <div class="bk-matchup"><div class="bk-match-number">23</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">24</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Losers Quarter-Final</div>
+                            <div class="bk-matchup"><div class="bk-match-number">25</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">26</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
                     </div>
                 </section>
             </div>
