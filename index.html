@@ -7,7 +7,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-8868N4WQZJ');
 </script>
     <meta charset="UTF-8">
@@ -16,219 +15,119 @@
     <meta name="keywords" content="Ape Squad, esports, The Finals, gaming, pro team, competitive gaming">
     <title>Ape Squad Esports | Dominating The Finals</title>
 
-    <!-- Google Fonts -->
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+<link rel="manifest" href="/favicons/site.webmanifest">
+<link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
+<meta name="msapplication-TileColor" content="#0a0a0a">
+<meta name="theme-color" content="#0a0a0a">
+
+    <!-- NEW Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Social Media Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Your Stylesheet -->
+    <!-- Your Stylesheets -->
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
-    <!-- ==================== -->
-    <!--   Header Starts Here   -->
-    <!-- ==================== -->
-    <header></header>
+    <header class="navbar"></header> <!-- Populated by main.js -->
 
-    <main>
-        <!-- ==================== -->
-        <!--    Hero Section      -->
-        <!-- ==================== -->
-        
-        <section id="hero" style="background: none;"> 
+             <main>
+<section id="hero">
             <video autoplay loop muted playsinline id="hero-video" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
                 <source src="images/LOOP.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
+            <!-- Added padding-top: 100px below to clear the navbar -->
+            <div class="hero-content" style="display: flex; flex-direction: column; align-items: center; gap: 2.5rem; padding-top: 100px;">
+                <img src="images/welcome.png" alt="Welcome to the Jungle">
+                <a href="https://store.steampowered.com/app/4124660/THE_FINALS__APE_SQUAD_TGM25/?curator_clanid=42849803" class="btn btn-primary btn-hero-special" target="_blank" rel="noopener noreferrer">
+                   Check Out the Bundle
+                </a>
+            </div>
+        </section> <!-- End of Hero Section -->
+<!-- ========================================= -->
+        <!-- PREMIUM SCROLLING NEWS CAROUSEL           -->
+        <!-- ========================================= -->
+        <div class="news-carousel-wrapper">
+            <!-- Left Arrow -->
+            <button class="news-arrow prev"><i class="fa-solid fa-chevron-left"></i></button>
+            
+            <div id="news-carousel-track" class="news-carousel-track">
+                <!-- JS will inject news slides here -->
+            </div>
+            
+            <!-- Right Arrow -->
+            <button class="news-arrow next"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
 
-            <div class="hero-content">
-                <h2>Welcome to the Jungle</h2>
-                <p>Ape Squad signs a NEW team for the 100k Embark Major!
-                    <br>Check them out below!</p>
+        <section id="events-hub">
+            <div class="container">
+                <!-- RECENT RESULTS HEADER -->
+                <div class="past-events-header" style="text-align: center; margin: 0rem 0;">
+                    <h2 class="glitch" data-text="RECENT RESULTS" style="font-size: 4rem; margin: 0rem 0rem;">RECENT RESULTS</h2>
+                    <p style="margin: 1rem auto;">History made in the jungle.</p>
+                </div>
+
+                <!-- JS will inject the .match-card elements here -->
+                <div id="home-recent-container"></div>
 
             </div>
         </section>
 
-<!-- ================================== -->
-<!--    UPDATED MEET THE SQUAD SECTION    -->
-<!-- ================================== -->
-<section id="meet-the-squad">
-    <div class="container">
-        <h2 class="glitch" data-text="MEET THE SQUAD">MEET THE SQUAD</h2>
-        <p class="squad-intro">Introducing Ape Squad, ready to dominate the arena. Hover over a player to see their official jersey.</p>
+       
 
-        <div class="team-grid">
-            <!-- Team Member Card 1 -->
-            <div class="team-member-card">
-                <!-- This part flips -->
-                <div class="card-inner">
-                    <!-- FRONT OF THE CARD -->
-                    <div class="card-front">
-                        <div class="member-image">
-                            <img src="images/team/aloneinparis.png" alt="Profile picture of ALONEINPARIS">
-                        </div>
-                        <h3 class="member-name">ALONEINPARIS</h3>
-                        <p class="member-role">Medium</p>
+        <section id="mentality">
+            <div class="container">
+                <h2 class="glitch" data-text="OUR THREE PILLARS">OUR THREE PILLARS</h2>
+                <div class="mentality-grid">
+                    <div class="mentality-card">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Forged in Competition</h3>
+                        <p>From community tournaments to the professional stage, our core is built on the drive to win. We support our esports teams and thrive under pressure.</p>
                     </div>
-                    <!-- BACK OF THE CARD -->
-                    <div class="card-back">
-                        <img src="images/team/jersey.png" alt="ALONEINPARIS Jersey" class="jersey-image">
-                        <div class="card-back-content">
-                            <h3 class="member-name">ALONEINPARIS</h3>
-                        </div>
+                    <div class="mentality-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Community Driven</h3>
+                        <p>We are more than an org, we're a jungle. We believe in creating a welcoming space for everyone to connect, share their passion, and be a part of the Squad.</p>
                     </div>
-                </div>
-                <!-- Social links are now here, always visible -->
-                <div class="social-links">
-                    <a href="https://www.twitch.tv/aloneinparistf" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
-                    <a href="https://x.com/aloneinparistf?s=21" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.youtube.com/@aloneinparisTF" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <div class="mentality-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Commitment to Growth</h3>
+                        <p>We are dedicated to helping our players, creators, and community members level up. We are always striving to improve and reach new heights.</p>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Team Member Card 2 -->
-            <div class="team-member-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <div class="member-image">
-                            <img src="images/team/donkrage.png" alt="Profile picture of DONKRAGE">
-                        </div>
-                        <h3 class="member-name">DONKRAGE</h3>
-                        <p class="member-role">Light</p>
-                    </div>
-                     <div class="card-back">
-                        <img src="images/team/jersey.png" alt="DONKRAGE Jersey" class="jersey-image">
-                        <div class="card-back-content">
-                            <h3 class="member-name">DONKRAGE</h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- Social links are now here, always visible -->
-                <div class="social-links">
-                    <a href="https://x.com/donkragetf?s=21" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-
-            <!-- Team Member Card 3 -->
-            <div class="team-member-card">
-                 <div class="card-inner">
-                    <div class="card-front">
-                        <div class="member-image">
-                            <img src="images/team/nuok.png" alt="Profile picture of NUOK">
-                        </div>
-                        <h3 class="member-name">NUOK</h3>
-                        <p class="member-role">Heavy</p>
-                    </div>
-                     <div class="card-back">
-                        <img src="images/team/jersey.png" alt="NUOK Jersey" class="jersey-image">
-                        <div class="card-back-content">
-                           <h3 class="member-name">NUOK</h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- Social links are now here, always visible -->
-                <div class="social-links">
-                    <a href="https://x.com/nuok1234?s=21" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-
-            <!-- Team Member Card 4 (Coach) -->
-            <div class="team-member-card">
-                 <div class="card-inner">
-                    <div class="card-front">
-                        <div class="member-image">
-                            <img src="images/team/mouzer.png" alt="Profile picture of Coach">
-                        </div>
-                        <h3 class="member-name">Mouzer</h3>
-                        <p class="member-role">Head Coach</p>
-                    </div>
-                     <div class="card-back">
-                        <img src="images/team/jersey.png" alt="Mouzer Coach Polo" class="jersey-image">
-                        <div class="card-back-content">
-                            <h3 class="member-name">Mouzer</h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- Social links are now here, always visible -->
-                <div class="social-links">
-                    <a href="https://www.twitch.tv/mouzerog" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
-                    <a href="https://x.com/mouzerog?s=21" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-        <!-- ==================== -->
-        <!--  Support Section -->
-        <!-- ==================== -->
-        <section id="team">
-            <div class="container" style="text-align: center;">
-            <h2>Support the Squad</h2>
-                <p>Love what we're building? Help fuel Ape Squad by tipping, subbing, or grabbing some gear. Every dollar keeps the arena alive.</p>
-                <br>
+        <section id="support">
+            <div class="container">
+                <h2>Support the Squad</h2>
+                <p>Love what we're building? Help fuel Ape Squad by subbing, tipping, or grabbing some gear. Every contribution keeps the arena alive and helps us stay on top.</p>
                 <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">Subscribe on Twitch</a>
                 <a href="https://youtube.com/@apesquadorg" target="_blank" class="btn">Check out our Youtube</a>
                 <a href="/merch" target="_blank" class="btn">Shop Our Merch</a>
             </div>
         </section>
-
-       <!-- ==================== -->
-       <!--   Schedule Section   -->
-       <!-- ==================== -->
-       <section id="schedule">
-            <div class="container">
-                <h2 class="glitch" data-text="MATCH SCHEDULE">MATCH SCHEDULE</h2>
-                
-                <div class="schedule-container">
-               
-                 <div class="match-card">
-                        <div class="match-info">
-                            <h4>Ape Squad Worlds: Championship</h4>
-                            <p>September 13th 2025</p>
-                        </div>
-                        <div class="match-time">WINNERS: ENVY</div>
-                        <a href="https://youtube.com/playlist?list=PL1bwu__yJTKFbe2cKee6o80LZRyoAoeDn&si=NCu0dE5nfI21ZEeM" target="_blank" class="btn">WATCH MATCHES</a>
-                    </div>
-               
-                    <!-- Match Card 2 -->
-                    <div class="match-card">
-                        <div class="match-info">
-                            <h4>VOLCANIC PANIC</h4>
-                            <p>June 14th 2025</p>
-                        </div>
-                        <div class="match-time">WINNERS:BRICKED</div>
-                        <div class="match-status upcoming">FINISHED</div>
-                    </div>
-
-                    <!-- Match Card 3 -->
-                    <div class="match-card">
-                        <div class="match-info">
-                            <h4>JUNGLE RUMBLE</h4>
-                            <p>February 22nd 2025</p>
-                        </div>
-                        <div class="match-time">WINNERS: NOODS</div>
-                        <div class="match-status upcoming">FINISHED</div>
-                    </div>
-                </div>
-            </div>
-       </section>
     </main>
-    <!-- ==================== -->
-    <!--   Footer Starts Here   -->
-    <!-- ==================== -->
-    <footer></footer>
 
-    <!-- SCRIPT TO LOAD HEADER AND FOOTER -->
+    <footer class="site-footer"></footer> <!-- Populated by main.js -->
+
     <script src="js/main.js"></script>
 </body>
+
 </html>
+
+
+
+
 
 
 

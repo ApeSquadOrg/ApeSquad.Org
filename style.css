@@ -209,8 +209,154 @@ footer.site-footer {
     position: fixed;
     /* FIX: Start the menu below the 80px header and stretch to the bottom */
     top: 80px;
+
+/* ========================================= */
+/* --- UNIVERSAL SPOTLIGHT BANNER (HOME) --- */
+/* ========================================= */
+.spotlight-banner {
+    position: relative;
+    width: 100%;
+    /* Sleek, wide cinematic ratio so it doesn't take up the whole screen */
+    aspect-ratio: 21 / 7; 
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center; /* Centers content vertically */
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 4rem;
+    text-decoration: none;
+}
+
+.spotlight-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;
+    transition: transform 0.5s ease;
+}
+
+.spotlight-banner:hover .spotlight-bg { 
+    transform: scale(1.03); 
+}
+
+.spotlight-tags {
+    position: absolute; top: 15px; left: 15px; z-index: 5;
+}
+
+.tag-blue {
+    background: var(--electric-blue); color: white; padding: 6px 16px;
+    font-family: var(--font-body); font-size: 0.85rem; font-weight: bold;
+    border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    display: inline-block;
+}
+
+/* Frosted glass box for readability over any image */
+.spotlight-content {
+    position: relative; z-index: 5;
+    background: rgba(10, 10, 10, 0.85); 
+    padding: 2rem 4rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    max-width: 700px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.spotlight-banner:hover .spotlight-content {
+    transform: translateY(-5px);
+    border-color: rgba(1, 163, 235, 0.3);
+}
+
+.spotlight-content h3 {
+    font-family: var(--font-headline); font-size: 2.8rem; margin-bottom: 0.5rem;
+    color: var(--off-white); text-shadow: 0 0 15px rgba(1, 163, 235, 0.5);
+    text-transform: uppercase;
+}
+
+.spotlight-content p {
+    font-family: var(--font-body); font-size: 1.1rem; color: #ccc; margin: 0 auto 1.5rem auto;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .spotlight-banner { aspect-ratio: 16 / 9; } /* Taller on mobile so text fits */
+    .spotlight-content { margin: 1rem; padding: 1.5rem; }
+    .spotlight-content h3 { font-size: 1.8rem; }
+}
     left: 30%;
     right: 0;
+
+/* ========================================= */
+/* --- SINGLE ARTICLE PAGE CMS STYLES ---    */
+/* ========================================= */
+
+.article-hero {
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end; /* Text at bottom */
+}
+
+.article-hero-overlay {
+    width: 100%;
+    padding: 6rem 10% 4rem 10%;
+    background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.8) 50%, transparent 100%);
+}
+
+.article-hero-overlay h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--off-white);
+    margin: 1rem 0;
+    line-height: 1.1;
+    text-shadow: 0 0 20px rgba(1, 163, 235, 0.5);
+    max-width: 1000px;
+}
+
+.article-meta {
+    display: flex;
+    gap: 20px;
+    color: var(--electric-blue);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.article-body {
+    max-width: 900px; /* Keep reading width comfortable */
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif; /* Standard readable font for long text */
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #ddd;
+    padding-bottom: 6rem;
+}
+
+.article-body h3 {
+    font-family: var(--font-headline);
+    color: var(--electric-blue);
+    font-size: 2rem;
+    margin: 2.5rem 0 1rem 0;
+}
+
+.article-body p {
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+}
+
+.article-body ul {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+}
+
+.article-body ul li {
+    margin-bottom: 0.5rem;
+    color: #ddd;
+}
  height: calc(100vh - 80px);
 
     flex-direction: column;
@@ -3932,7 +4078,7 @@ header .social-links a:hover i {
 /* --- EVENTS HUB SECTION --- */
 #events-hub {
     background-color: var(--near-black);
-    padding: 4rem 0;
+    padding: 2rem 0;
 }
 
 /* Banner Container (1600x400px Aspect Ratio) */
@@ -4039,7 +4185,7 @@ header .social-links a:hover i {
 
 #events-hub {
     background-color: var(--near-black);
-    padding: 4rem 0;
+    padding: 0rem 0;
 }
 
 /* --- Banner Container (1600x400px Aspect Ratio) --- */
@@ -4683,4 +4829,457 @@ header .social-links a:hover i {
 .res-4 { color: #888; }
 .res-4 .pos { background: rgba(136, 136, 136, 0.2); border: 1px solid rgba(136, 136, 136, 0.4); color: #888; }
 
+/* ================================================================== */
+/* --- WIDEN THE CONTAINERS FOR GRIDS ---                             */
+/* ================================================================== */
+/* Expands the usable screen width from 1200px to 1500px so cards have room to breathe */
+#events-hub .container,
+#tournaments-hub .container {
+    max-width: 1500px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
 
+/* ================================================================== */
+/* --- TOURNAMENTS & HOME PAGE: UNIFIED GRID SYSTEM ---               */
+/* ================================================================== */
+
+/* 1. SHARED 3-COLUMN GRID LAYOUT */
+.tournaments-grid,
+#home-recent-container {
+    display: grid;
+    /* Forces exactly 3 columns on standard desktop screens */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Tablet: Drop to 2 wide */
+@media (max-width: 1024px) {
+    .tournaments-grid,
+    #home-recent-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile: Drop to 1 wide */
+@media (max-width: 768px) {
+    .tournaments-grid,
+    #home-recent-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================= */
+/* 2. CARD TYPE: HOVER REVEAL CARDS (HOME)   */
+/* ========================================= */
+.hover-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 16 / 9; /* Strictly 16:9 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--laser-purple);
+    box-shadow: 0 10px 30px rgba(99, 63, 220, 0.3);
+}
+
+.hover-card img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease; z-index: 1;
+}
+.hover-card:hover img { transform: scale(1.08); }
+
+.hc-overlay {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    padding: 1.25rem; 
+    /* Darkened gradient so white text pops perfectly */
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+    transition: background 0.4s ease; pointer-events: none;
+    overflow-y: auto; scrollbar-width: none;
+}
+.hc-overlay::-webkit-scrollbar { display: none; }
+.hover-card:hover .hc-overlay { background: rgba(10, 10, 10, 0.95); }
+
+.hc-content-wrapper {
+    margin-top: auto; display: flex; flex-direction: column; pointer-events: none;
+    text-align: left; /* Keeps text anchored cleanly to the left */
+}
+
+.hc-title {
+    font-size: clamp(1.3rem, 3vw, 1.5rem); color: var(--off-white); margin-bottom: 0;
+    line-height: 1.15; text-shadow: 0 2px 8px rgba(0,0,0,1);
+    /* THE FIX: Allows titles to wrap cleanly to 2 lines! */
+    white-space: normal; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
+}
+
+.hc-hover-content {
+    display: grid; grid-template-rows: 0fr; opacity: 0;
+    transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
+}
+.hover-card:hover .hc-hover-content { grid-template-rows: 1fr; opacity: 1; }
+
+.hc-hover-inner { overflow: hidden; display: flex; flex-direction: column; gap: 0.35rem; padding-top: 0.4rem; }
+.hc-meta { display: flex; flex-wrap: wrap; gap: 8px; color: var(--electric-blue); font-size: 0.8rem; font-weight: bold; }
+.hc-desc { font-size: 0.85rem; color: #ccc; margin: 0; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ========================================= */
+/* 3. CARD TYPE: PREMIUM STATS (TOURNAMENTS) */
+/* ========================================= */
+.stats-card {
+    background: var(--midnight-black);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--awards-gold, #FFD700);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15);
+}
+
+.sc-image {
+    width: 100%; aspect-ratio: 16 / 9; overflow: hidden; position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.sc-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.stats-card:hover .sc-image img { transform: scale(1.05); }
+
+.sc-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+
+.sc-title {
+    font-family: var(--font-headline); font-size: 1.6rem; color: var(--off-white);
+    margin-bottom: 0.5rem; line-height: 1.1; text-transform: uppercase; letter-spacing: 1px;
+    /* THE FIX: Allows titles to wrap cleanly to 2 lines! */
+    white-space: normal; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
+}
+
+.sc-meta { display: flex; gap: 15px; color: var(--light-grey); font-size: 0.85rem; margin-bottom: 1.5rem; font-family: var(--font-body); }
+.sc-meta i { color: var(--electric-blue); }
+
+.sc-winners-box {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(20, 20, 20, 0.5) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 8px; padding: 1rem;
+    margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;
+}
+
+.sc-winners-label {
+    font-size: 0.75rem; color: rgba(255, 215, 0, 0.8); text-transform: uppercase;
+    font-weight: bold; letter-spacing: 2px; margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1); padding-bottom: 0.25rem;
+}
+
+.sc-winner-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.sc-winner-row.justify-center { justify-content: center; }
+
+.sc-region {
+    font-family: var(--font-body); font-size: 0.75rem; color: var(--off-white);
+    background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 4px;
+    font-weight: bold; letter-spacing: 1px;
+}
+
+.sc-team {
+    font-family: var(--font-headline); font-size: 1.2rem; color: var(--awards-gold, #FFD700);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.2); display: flex; align-items: center; gap: 8px;
+    text-align: right;
+}
+
+/* ========================================= */
+/* 4. SHOWCASE & HIGHLIGHTED EVENTS          */
+/* ========================================= */
+.tournament-showcase {
+    position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 9;
+    border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: block;
+}
+.tournament-showcase .showcase-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; z-index: 1; }
+.tournament-showcase:hover .showcase-bg { transform: scale(1.03); }
+
+.showcase-badge {
+    position: absolute; top: 1.5rem; right: 1.5rem; z-index: 10; background: var(--electric-blue); color: white;
+    padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.showcase-overlay {
+    position: absolute; inset: 0; z-index: 10; padding: 2.5rem; display: flex; flex-direction: column;
+    justify-content: flex-start; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%);
+    pointer-events: none; transition: background 0.3s ease; overflow-y: auto; scrollbar-width: none;
+}
+.showcase-overlay::-webkit-scrollbar { display: none; }
+.tournament-showcase:hover .showcase-overlay { background: rgba(10, 10, 10, 0.85); }
+
+/* STRICT 1-LINE TITLE */
+.showcase-content {
+    font-size: clamp(1.8rem, 3.5vw, 3rem); color: white; margin-bottom: 0; line-height: 1; 
+    text-shadow: 0 0 15px rgba(1, 163, 255, 0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.showcase-hover-content { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.4s ease, opacity 0.4s ease; }
+.tournament-showcase:hover .showcase-hover-content { grid-template-rows: 1fr; opacity: 1; }
+.showcase-hover-inner { overflow: hidden; display: flex; flex-direction: column; gap: 0.5rem; padding-top: 0.5rem; }
+.showcase-meta { display: flex; flex-wrap: wrap; gap: 12px; color: var(--electric-blue); font-weight: bold; font-size: 1rem; }
+.showcase-desc { font-size: 1rem; color: #ccc; margin: 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+.featured-event-container { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+.featured-event-container:hover { transform: translateY(-5px); border-color: var(--electric-blue); box-shadow: 0 15px 50px rgba(1, 163, 235, 0.3) !important; }
+
+/* ========================================= */
+/* 5. CLICK LAYERS, BUTTONS, & ICONS         */
+/* ========================================= */
+.card-link-cover { position: absolute; inset: 0; z-index: 5; }
+
+.hc-actions, .sc-actions, .card-actions {
+    position: relative; z-index: 50 !important; pointer-events: auto !important;
+    display: flex; gap: 10px; flex-wrap: wrap; margin-top: 0.5rem; width: 100%;
+}
+.hc-actions a, .sc-actions a, .card-actions a {
+    margin: 0 !important; flex: 1; text-align: center; display: flex; justify-content: center; align-items: center;
+}
+
+.icon-twitch { color: #9146FF; }
+.icon-youtube { color: #FF0000; }
+.icon-info { color: var(--electric-blue); }
+
+@media (max-width: 768px) {
+    .tournament-showcase { aspect-ratio: 16 / 9; }
+    .showcase-overlay { padding: 1.5rem; }
+}
+
+/* ========================================= */
+/* --- PREMIUM INTEGRATED NEWS BAR       --- */
+/* ========================================= */
+.news-carousel-wrapper {
+    width: 100%; 
+    height: 6rem;
+    background: var(--midnight-black);
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+}
+
+/* --- NAVIGATION ARROWS --- */
+.news-arrow {
+    position: absolute;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--light-grey);
+    border: 1px solid rgba(255,255,255,0.1);
+    width: 40px;
+    height: 100%; /* Stretches top to bottom */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    backdrop-filter: blur(4px);
+}
+.news-arrow.prev { left: 0; border-left: none; }
+.news-arrow.next { right: 0; border-right: none; }
+.news-arrow:hover { background: var(--electric-blue); color: white; border-color: var(--electric-blue); }
+
+/* --- TRACK & SLIDES --- */
+.news-carousel-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.news-slide-premium {
+    flex: 0 0 100%; 
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 130px; /* Thick enough for presence */
+    text-decoration: none;
+    overflow: hidden;
+}
+
+/* Background Image with Parallax-style scaling */
+.news-slide-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;
+    transition: transform 3s ease-out;
+}
+.news-slide-premium:hover .news-slide-bg { transform: scale(1.05); }
+
+/* Gradient Overlay - Dark on the left, fades into the image on the right */
+.news-slide-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(90deg, rgba(10,10,10,1) 0%, rgba(10,10,10,0.85) 40%, rgba(10,10,10,0.2) 100%);
+    transition: background 0.3s ease;
+}
+.news-slide-premium:hover .news-slide-overlay {
+    background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.9) 60%, rgba(10,10,10,0.5) 100%);
+}
+
+.news-slide-content {
+    position: relative; z-index: 5;
+    display: flex; align-items: center; gap: 2rem;
+    width: 100%; max-width: 1300px;
+    padding: 1.5rem 4rem; /* Keeps content away from the arrows */
+}
+
+/* --- THE DATE BADGE --- */
+.news-date-badge {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-top: 3px solid var(--electric-blue);
+    border-radius: 6px;
+    min-width: 70px; height: 75px;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    transition: border-color 0.3s ease;
+}
+.news-slide-premium:hover .news-date-badge { border-top-color: var(--neon-pink); }
+.news-date-month { font-family: var(--font-body); font-size: 0.8rem; font-weight: bold; color: var(--electric-blue); text-transform: uppercase; letter-spacing: 1px; }
+.news-date-day { font-family: var(--font-headline); font-size: 2rem; color: white; line-height: 1; }
+
+/* --- TEXT & BUTTON --- */
+.news-text-group { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; flex-grow: 1; overflow: hidden; }
+.news-mini-tag { color: var(--neon-pink); font-family: var(--font-body); font-size: 0.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+.news-mini-title { font-family: var(--font-headline); font-size: 1.8rem; color: var(--off-white); margin: 0; letter-spacing: 1px; line-height: 1.1; text-shadow: 0 2px 4px rgba(0,0,0,0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.news-mini-desc { font-family: var(--font-body); font-size: 0.95rem; color: #bbb; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+.news-mini-cta {
+    font-family: var(--font-body); font-size: 0.9rem; font-weight: bold; color: var(--off-white);
+    background: rgba(1, 163, 235, 0.15); border: 1px solid var(--electric-blue); padding: 0.75rem 1.5rem;
+    border-radius: 8px; text-transform: uppercase; white-space: nowrap;
+    display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; flex-shrink: 0;
+}
+.news-slide-premium:hover .news-mini-cta { background: var(--electric-blue); box-shadow: 0 0 15px rgba(1, 163, 235, 0.4); transform: scale(1.05); }
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .news-mini-desc { display: none; }
+}
+@media (max-width: 768px) {
+    .news-slide-content { flex-direction: column; text-align: center; gap: 1rem; padding: 1.5rem 3rem; }
+    .news-date-badge { display: none; }
+    .news-text-group { align-items: center; }
+    .news-mini-title { font-size: 1.4rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .news-mini-cta { width: 100%; justify-content: center; }
+}
+
+/* ========================================= */
+/* --- SINGLE ARTICLE PAGE CMS STYLES ---    */
+/* ========================================= */
+
+.article-hero {
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end; /* Text at bottom */
+}
+
+.article-hero-overlay {
+    width: 100%;
+    padding: 6rem 10% 4rem 10%;
+    background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.8) 50%, transparent 100%);
+}
+
+.article-hero-overlay h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--off-white);
+    margin: 1rem 0;
+    line-height: 1.1;
+    text-shadow: 0 0 20px rgba(1, 163, 235, 0.5);
+    max-width: 1000px;
+}
+
+.article-meta {
+    display: flex;
+    gap: 20px;
+    color: var(--electric-blue);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.article-body {
+    max-width: 900px; /* Keep reading width comfortable */
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif; /* Standard readable font for long text */
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #ddd;
+    padding-bottom: 6rem;
+}
+
+.article-body h3 {
+    font-family: var(--font-headline);
+    color: var(--electric-blue);
+    font-size: 2rem;
+    margin: 2.5rem 0 1rem 0;
+}
+
+.article-body p {
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+}
+
+.article-body ul {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+}
+
+.article-body ul li {
+    margin-bottom: 0.5rem;
+    color: #ddd;
+}
+
+/* Inline Article Images */
+.article-inline-image {
+    margin: 3rem 0; /* Huge breathing room above and below the image */
+    text-align: center;
+    width: 100%;
+}
+
+.article-inline-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.article-inline-image img:hover {
+    border-color: var(--electric-blue);
+    transform: translateY(-5px);
+}
+
+.article-inline-image figcaption {
+    margin-top: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--light-grey);
+    font-style: italic;
+    letter-spacing: 0.5px;
+}

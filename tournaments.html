@@ -1,412 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-8868N4WQZJ');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ape Squad Esports - Tournament history, results, and upcoming events.">
-    <title>Ape Squad | Tournaments</title>
+    <meta name="description" content="Explore the Ape Squad Esports tournament archives. Find brackets, results, and official rules for all our competitive events.">
+    <meta name="keywords" content="Ape Squad, esports tournaments, tournament results, tournament rules, competitive gaming">
+    <title>Tournaments/Events | Ape Squad Esports</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
 
-    <!-- Link to your external stylesheet -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Your Stylesheets -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- STYLES FOR PAGE FEATURES -->
+    <!-- Internal Style Patch for Layout Issues -->
     <style>
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: #000;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .tournament-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px; /* Adds space between buttons */
-        }
-        .staff-list {
-            text-align: left;
-        }
-        .staff-role-group {
-            margin-bottom: 25px;
-        }
-        .staff-role-group h3 {
-            border-bottom: 2px solid #ffc107;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-            color: #ffc107;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 1.5px;
-        }
-        .staff-role-group ul {
-            list-style-type: none;
-            padding-left: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px 12px;
-        }
-        .staff-role-group ul li {
-            background-color: #333;
-            padding: 5px 12px;
-            border-radius: 5px;
-            font-size: 0.9em;
+        /* 1. Fix Title Sizing */
+        .tournament-card-overlay h3 {
+            font-size: 1.4rem !important; 
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            white-space: normal;
         }
 
-        /* --- ADDED: Styles for At a Glance Stats --- */
-        .tournament-stats {
-            margin: 15px 0;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-left: 3px solid #ffc107; /* Accent color */
+        /* 2. Prevent Description Overflow */
+        .tournament-card-overlay p {
+            font-size: 0.9rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limit description to 3 lines */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 1rem; /* Space between text and buttons */
         }
-        .tournament-stats h4 {
-            margin: 0 0 5px 0;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.2rem;
-            color: #ccc;
+
+        /* 3. Button Layout */
+        .tournament-card-overlay .card-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; 
+            width: 100%;
         }
-        .tournament-stats p {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #fff;
-        }
-        
-        /* --- ADDED: Styles for Hall of Fame --- */
-        #hall-of-fame {
-            padding: 50px 0;
-            text-align: center;
-        }
-        .champions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        .champion-card {
-            background: #222; /* Slightly different background */
-            border: 1px solid #ffc107; /* Gold border */
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .champion-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(255, 193, 7, 0.4);
-        }
-        .champion-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            margin-top: 0;
-            color: #ffc107; /* Gold color for the team name */
-        }
-        .champion-card h4 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            border-top: 1px solid #444;
-            padding-top: 15px;
-            margin-top: 15px;
-        }
-        .champion-card ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        .champion-card ul li {
-            background-color: #333;
-            padding: 8px;
-            margin-bottom: 5px;
-            border-radius: 4px;
-        }
-        .champion-card ul li::before {
-            content: '🏆'; /* Trophy emoji */
-            margin-right: 10px;
+
+        /* Shrink the button inside cards slightly so it fits nicely */
+        .tournament-card-overlay .btn {
+            font-size: 0.75rem !important;
+            padding: 5px 15px !important;
+            line-height: 1.2;
+            height: auto;
+            min-height: unset;
         }
     </style>
-
 </head>
 <body>
 
-    <header></header>
+<header class="navbar"></header> <!-- Populated by main.js -->
 
-    <main>
-      <section id="tournaments-page">
-          <div class="container">
-              <h2>Tournament Showcase</h2>
-
-              <!-- UPCOMING TOURNAMENTS SECTION -->
-              <h3 class="section-title">Upcoming Events</h3>
-              <div class="tournaments-grid">
-                <div class="tournament-card upcoming">
-                  <div class="tournament-graphic"><img src="images/tournament/WORLDS.png" alt="Ape Squad"></div>
-                  <div class="tournament-info">
-                    <h3>Ape Squad Worlds</h3><p class="date">September 11th + 13th</p>
-                    <div class="status-info"><h4>Status</h4><p>Registration Open</p></div>
-                     <!-- ADDED: At a Glance Stats for Upcoming -->
-                    <div class="tournament-stats">
-                        <h4>Prize Pool</h4>
-                        <p>Current Prizepool over $2500</p>
-                    </div>
-                  </div>
-                  <div class="tournament-links">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdGzI7uqrx1bFpPKRJwM1RnHKx83qAJuGJ-kku14E8386Wflw/viewform?usp=header" class="btn">Register Your Team</a>
-                    <a href="https://docs.google.com/document/d/1kQt6nEsXj5wj1FiaQbp7qr5_i8LgRsB8YmPvy8uQmB8/edit?tab=t.0" class="btn btn-secondary">View Rules</a>
-                    <a href="https://www.youtube.com/watch?v=2WwsuV1C7aA" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Watch Promo Video</a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- PAST TOURNAMENTS SECTION -->
-              <h3 class="section-title">Past Events</h3>
-              <div class="tournaments-grid">
-
-                <!-- VOLCANIC PANIC CARD -->
-                <div class="tournament-card">
-                  <div class="tournament-graphic"><img src="/images/tournament/volcanicpanic.png" alt="Volcanic Panic Graphic"></div>
-                  <div class="tournament-info">
-                    <h3>Volcanic Panic</h3><p class="date">June 14th, 2025</p>
-                     <!-- ADDED: At a Glance Stats -->
-                    <div class="tournament-stats">
-                        <h4>Prize Pool</h4>
-                        <p>$730</p> <!-- **EDIT THIS VALUE** -->
-                    </div>
-                    <div class="winners-podium">
-                      <h4>Winners</h4><ol><li>BRICKED</li><li>Make a Wish Foundation</li><li>Scallywags</li></ol>
-                    </div>
-                  </div>
-                  <div class="tournament-links">
-                    <button class="btn" id="volcanic-placements-btn">View Placements & Teams</button>
-                    <button class="btn btn-secondary" id="volcanic-promo-btn" data-video-id="https://www.youtube.com/watch?v=M6ePAoBSREM&ab_channel=ApeSquad">Watch Promo</button>
-                    <button class="btn btn-secondary" id="volcanic-staff-btn">Staff Honor Roll</button>
-                  </div>
-                </div>
-
-                <!-- JUNGLE RUMBLE CARD -->
-                <div class="tournament-card">
-                    <div class="tournament-graphic"><img src="images/tournament/junglerumble.png" alt="Jungle Rumble Graphic"></div>
-                    <div class="tournament-info">
-                      <h3>Jungle Rumble</h3><p class="date">February 22nd, 2025</p>
-                       <!-- ADDED: At a Glance Stats -->
-                      <div class="tournament-stats">
-                        <h4>Prize Pool</h4>
-                        <p>$1800</p> <!-- **EDIT THIS VALUE** -->
-                      </div>
-                      <div class="winners-podium">
-                        <h4>Winners</h4><ol><li>Noods</li><li>Holtows Finest</li><li>Cathedral</li></ol>
-                      </div>
-                    </div>
-                    <div class="tournament-links">
-                       <button class="btn" id="jungle-rumble-placements-btn">View Placements & Teams</button>
-                       <button class="btn btn-secondary" id="jungle-rumble-promo-btn" data-video-id="https://www.youtube.com/watch?v=3xXFhbyyKcY&ab_channel=ApeSquad">Watch Promo</button>
-                       <button class="btn btn-secondary" id="jungle-rumble-staff-btn">Staff Honor Roll</button>
-                    </div>
-                  </div>
-              </div>
-          </div>
-      </section>
-
-      <!-- ADDED: HALL OF FAME SECTION -->
-      <section id="hall-of-fame">
+<main>
+    <section id="tournaments-hub">
         <div class="container">
-            <h2 class="section-title">Hall of Fame</h2>
-            <div class="champions-grid">
-                <!-- Add a new champion-card for each winning team -->
-                <div class="champion-card">
-                    <h3>BRICKED</h3>
-                    <h4>Championships Won</h4>
-                    <ul>
-                        <li>Volcanic Panic</li>
-                    </ul>
-                </div>
-                <div class="champion-card">
-                    <h3>Noods</h3>
-                    <h4>Championships Won</h4>
-                    <ul>
-                        <li>Jungle Rumble</li>
-                    </ul>
-                </div>
-                 <!-- Add more cards here as you get more champions! -->
-                 <!-- Example for a multi-win team:
-                 <div class="champion-card">
-                    <h3>Future Champions</h3>
-                    <h4>Championships Won</h4>
-                    <ul>
-                        <li>Ape Squad Worlds</li>
-                        <li>Tidal Survival</li>
-                    </ul>
-                </div> 
-                -->
+            <div class="tournaments-intro">
+                <h2>Event Archives</h2>
+                <p>
+                    Relive the hype and explore the results from our past and ongoing competitions.
+                    Click on any tournament to view the detailed bracket and final standings.
+                </p>
+                <a href="/rules" class="btn btn-primary">
+                    <i class="fa-solid fa-scroll"></i> View Tournament Rules
+                </a>
             </div>
+
+        <!-- Showcase Section - HORIZONS (NEW) -->
+       <!-- Showcase Section - HORIZONS / CLASSICS (Populated by JS) -->
+        <div class="showcase-container">
+            <!-- JS will inject .tournament-showcase here -->
         </div>
-      </section>
-    </main>
 
-    <footer></footer>
+        <!-- Tournaments Grid - PREVIOUS EVENTS (Populated by JS) -->
+        <div class="tournaments-grid">
+            <!-- JS will inject .tournament-card elements here -->
+        </div>
 
-    <!-- MODAL HTML STRUCTURE -->
-    <div id="modal-overlay" class="modal-overlay">
-        <div id="modal-content" class="modal-content">
-            <button id="modal-close-btn" class="modal-close-btn">×</button>
-            <div id="modal-body">
-                <!-- Content will be loaded here by JavaScript -->
-            </div>
         </div>
     </div>
-    
-    <!-- SCRIPT FOR ALL MODAL LOGIC -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modalOverlay = document.getElementById('modal-overlay');
-        const modalBody = document.getElementById('modal-body');
-        const closeBtn = document.getElementById('modal-close-btn');
+</section>
+</main>
 
-        // --- Data for Modals ---
-        const volcanicPanicData = [
-            { placement: '1st Place', rankClass: 'gold', team: 'BRICKED', players: ['stn2k', 'bizzyow', 'stewj1', 'NA'] },
-            { placement: '2nd Place', rankClass: 'silver', team: 'Make A Wish Foundation', players: ['Viper', 'Varien', 'Derp', 'Kafeneio'] },
-            { placement: '3rd Place', rankClass: 'bronze', team: 'Scallywags', players: ['Wallyo', 'Balise', 'Gremlin', 'Zuki'] },
-            { placement: '4th Place', team: 'tuffologists', players: ['n0rmalize', 'aerroc', 'purestrafez'] },
-            { placement: '5th-6th Place', team: '4th Party Cashbox', players: ['Brutal Logic', 'Tmills', 'Appoh'] },
-            { placement: '5th-6th Place', team: 'AHS', players: ['Lasagna', 'UNI', 'Sloth'] },
-            { placement: '7th-8th Place', team: 'DIH Reincarnated', players: ['hdsponz', 'brendyz', 'ethano1', 'none'] },
-            { placement: '7th-8th Place', team: 'SupportLight.OL', players: ['calcifer.io', 'kaelwhale', 'Troop', 'jussangell'] },
-            { placement: '9th-12th Place', team: '200ms', players: ['wolfx.exe', 'bransyah_', '6rooty'] },
-            { placement: '9th-12th Place', team: 'Aura corp', players: ['elspuzeman', 'Demo', 'Ink', 'Udrakoni'] },
-            { placement: '9th-12th Place', team: 'Big Bewdie Warriors', players: ['ekazo', 'zenworldo', 'sloth'] },
-            { placement: '9th-12th Place', team: 'SlaHMH', players: ['.lqtus', 'Rottxnx', 'Evsitn', 'Theretardo'] },
-            { placement: '13th-16th Place', team: 'Cool Kidz With a Z', players: ['fairwhisper11', 'p4yd1rt', 'ghost_bulb', 'texaspride1'] },
-            { placement: '13th-16th Place', team: 'Day One Crashouts', players: ['mrboomnzoom', 'wittyprop', 'bootyconnoisseur8777', 'simplisss'] },
-            { placement: '13th-16th Place', team: 'Freaks', players: ['Crimson', 'r0ck5l1d3', 'fana3436'] },
-            { placement: '13th-16th Place', team: 'MUNTLINGS', players: ['epi9798', 'honor_the_pure', 'tiger5016', 'oreyos'] }
-        ];
-        const jungleRumbleData = [
-            { placement: '1st Place', rankClass: 'gold', team: 'Noods', players: ['Lasanga12', 'A1r-forrce', 'Uni'] },
-            { placement: '2nd Place', rankClass: 'silver', team: 'Holtows finest', players: ['Brendy', 'Lamp', 'Lycommit', 'Springhour'] },
-            { placement: '3rd Place', rankClass: 'bronze', team: 'Cathedral', players: ['MrDerp', 'FiestPackMule91', 'Mvches', 'Zee', 'Villa'] },
-            { placement: '4th Place', team: 'Bricked', players: ['stn2k', 'bizzyow', 'slxth.', 'balise'] },
-            { placement: '5th-6th Place', team: 'THE SMALL SPLASH', players: ['n0rmalize', 'stewj', 'ethano7417', 'zuki0238'] },
-            { placement: '5th-6th Place', team: 'Aura LLC', players: ['Udrakoni', 'F1reRise', 'Joffery', 'Ink'] },
-            { placement: '7th-8th Place', team: 'Disaster Stack', players: ['impieux.', 'peppajakzo', 'fatzive'] },
-            { placement: '7th-8th Place', team: 'Warriors of Chaac (WOC)', players: ['lettherebecarnxge', 'Carnxge', 'Ket', 'B0oboo', 'Asixcy'] },
-            { placement: '9th-12th Place', team: 'Ape Squad', players: ['Rippie', 'Beam0', 'Hashi'] },
-            { placement: '9th-12th Place', team: '4th Party Cashbox', players: ['brutallogic', 'Kazi', 'Sirgnal', 'Kafeneio (Maybe)'] },
-            { placement: '9th-12th Place', team: 'Kyoto Haters 3', players: ['ekazo', 'slvth_', 'clarifyyy', 'pullkia'] },
-            { placement: '9th-12th Place', team: 'Aped On', players: ['TTK_Controlla', 'baliselikesdudes', 'torio0325'] },
-            { placement: '13th-16th Place', team: 'SPACESHООВS', players: ['bongo', 'Contestant Beetz', 'Pinhead'] },
-            { placement: '13th-16th Place', team: 'DIFF', players: ['bucketshoe', 'sterling', 'Pouff', 'Realcornguy'] },
-            { placement: '13th-16th Place', team: 'RAH', players: ['tbovvy', 'chunkmaster8734', 'numb', '!', 'Pearl'] },
-            { placement: '13th-16th Place', team: 'The Oatreals', players: ['calcifer.io', 'denyalol', 'kaelwhale'] }
-        ];
-        const volcanicStaffData = [
-            { role: 'Casters', names: ['Rio', 'Yung', 'whysatanwhy', 'Sonsoyo'] },
-            { role: 'Tournament Coordinator', names: ['Burritahsupreme'] },
-            { role: 'Camera Operator', names: ['Sonsoyo', 'Justin'] },
-            { role: 'Social Media & Graphics', names: ['Justin'] },
-            { role: 'Director', names: ['Justin'] }
-        ];
-        const jungleRumbleStaffData = [
-            { role: 'Casters', names: ['Waltzcast', 'Sonsoyo'] },
-            { role: 'Tournament Coordinator', names: ['Burritahsupreme'] },
-            { role: 'Camera Operator', names: ['Seal', 'Justin'] },
-            { role: 'Social Media & Graphics', names: ['Justin'] },
-            { role: 'Director', names: ['Justin'] }
+<footer class="site-footer"></footer> <!-- Populated by main.js -->
 
-        ];
-
-        // --- Modal Control Functions & Builders ---
-        function openModal() {
-            modalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeModal() {
-            modalOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-            setTimeout(() => { modalBody.innerHTML = ''; }, 300);
-        }
-        function buildPlacementModalContent(title, data) {
-            let content = `<h1>${title}</h1><div class="modal-controls"><button id="expand-all-btn" class="btn" data-state="collapsed">Expand All</button></div>`;
-            data.forEach(teamData => {
-                const playerListItems = teamData.players.map(player => `<li>${player}</li>`).join('');
-                content += `<details class="placement-accordion"><summary><span class="placement-rank ${teamData.rankClass || ''}">${teamData.placement}</span><span class="team-name">${teamData.team}</span></summary><ul class="player-list">${playerListItems}</ul></details>`;
-            });
-            modalBody.innerHTML = content;
-            document.getElementById('expand-all-btn')?.addEventListener('click', function() {
-                const accordions = modalBody.querySelectorAll('.placement-accordion');
-                const isCollapsed = this.dataset.state === 'collapsed';
-                accordions.forEach(acc => { acc.open = isCollapsed; });
-                this.dataset.state = isCollapsed ? 'expanded' : 'collapsed';
-                this.textContent = isCollapsed ? 'Collapse All' : 'Expand All';
-            });
-            openModal();
-        }
-        function buildStaffModalContent(title, staffData) {
-            let content = `<h1>${title}</h1><div class="staff-list">`;
-            staffData.forEach(roleData => {
-                const staffMembers = roleData.names.map(name => `<li>${name}</li>`).join('');
-                content += `<div class="staff-role-group"><h3>${roleData.role}</h3><ul>${staffMembers}</ul></div>`;
-            });
-            content += '</div>';
-            modalBody.innerHTML = content;
-            openModal();
-        }
-        function extractVideoId(url) {
-            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-            const match = url.match(regex);
-            return match ? match[1] : url;
-        }
-        function buildVideoModalContent(videoIdentifier) {
-            const youtubeId = extractVideoId(videoIdentifier);
-            if (!youtubeId) {
-                modalBody.innerHTML = `<h1>Invalid YouTube Link or ID</h1><p>Please check the link provided in the button's data-video-id attribute.</p>`;
-                openModal(); return;
-            }
-            modalBody.innerHTML = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&showinfo=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
-            openModal();
-        }
-
-        // --- Event Listeners ---
-        document.getElementById('volcanic-placements-btn')?.addEventListener('click', () => buildPlacementModalContent('Volcanic Panic Placements', volcanicPanicData));
-        document.getElementById('jungle-rumble-placements-btn')?.addEventListener('click', () => buildPlacementModalContent('Jungle Rumble Placements', jungleRumbleData));
-        document.getElementById('volcanic-promo-btn')?.addEventListener('click', (e) => buildVideoModalContent(e.currentTarget.dataset.videoId));
-        document.getElementById('jungle-rumble-promo-btn')?.addEventListener('click', (e) => buildVideoModalContent(e.currentTarget.dataset.videoId));
-        document.getElementById('volcanic-staff-btn')?.addEventListener('click', () => buildStaffModalContent('Volcanic Panic Staff Honor Roll', volcanicStaffData));
-        document.getElementById('jungle-rumble-staff-btn')?.addEventListener('click', () => buildStaffModalContent('Jungle Rumble Staff Honor Roll', jungleRumbleStaffData));
-        
-        closeBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal(); });
-    });
-    </script>
-    
-    <script src="js/main.js"></script>
-
+<script src="js/main.js"></script>
+    <script src="js/features.js"></script>
 </body>
 </html>
-
-
 
 
 

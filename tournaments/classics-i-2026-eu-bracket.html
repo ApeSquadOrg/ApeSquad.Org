@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classics Bracket EU | Ape Squad Esports</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <meta name="theme-color" content="#050505">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&family=Bebas+Neue&family=Orbitron:wght@700;800;900&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Global Site Styles (Header/Footer) -->
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        /* ================================================== */
+        /*      ISOLATED BRACKET STYLESHEET                   */
+        /* ================================================== */
+
+        :root {
+            --bk-primary-purple: #e75a7c;
+            --bk-secondary-purple: #b549c6;
+            --bk-accent-orange: #FFC837;
+            --bk-standout-blue: #03b7fa;
+            --bk-light-text: #f4f4f4;
+            --bk-darker-bg-color: #050505;
+            --bk-font-tech: 'Orbitron', sans-serif;
+            --bk-dark-purple-bg: #1a0924;
+            --bk-connector-color: rgba(255, 255, 255, 0.4);
+            --bk-team-bg: #0c0c0c;
+            --bk-team-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Wrapper that protects the global website structure --- */
+        .bk-page-wrapper {
+            background-color: var(--bk-darker-bg-color);
+            width: 100%; 
+            min-height: calc(100vh - 70px); 
+            overflow-x: auto;
+            overflow-y: auto;
+            font-family: var(--bk-font-tech);
+            color: var(--bk-light-text);
+            position: relative;
+            cursor: grab;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            
+            /* PREVENTS TEXT HIGHLIGHTING WHEN DRAGGING */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .bk-page-wrapper:active { cursor: grabbing; }
+
+        .bk-overlay-background {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none;
+            background-color: var(--bk-darker-bg-color);
+            background-image: radial-gradient(ellipse at center, var(--bk-dark-purple-bg) 0%, var(--bk-darker-bg-color) 70%);
+        }
+        
+        .bk-overlay-background::before {
+            content: ''; position: absolute; inset: 0; z-index: 1;
+            background-image: 
+                repeating-linear-gradient(to right, transparent, transparent 49px, rgba(3, 183, 250, 0.15) 50px),
+                repeating-linear-gradient(to bottom, transparent, transparent 49px, rgba(3, 183, 250, 0.15) 50px);
+            background-size: 50px 50px; animation: moveGrid 20s linear infinite;
+        }
+        @keyframes moveGrid { to { background-position: -50px -50px; } }
+        @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+        /* --- Floating Instruction Pill --- */
+        .bk-drag-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #aaa;
+            font-family: 'Ayuthaya', monospace;
+            font-size: 0.85rem;
+            padding: 10px 20px;
+            border-radius: 50px;
+            z-index: 1000;
+            pointer-events: none; /* Let clicks pass right through it */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            white-space: nowrap;
+        }
+
+        /* --- Main Layout Containers --- */
+        .bk-container {
+            min-width: 1700px; /* Prevents mobile squishing */
+            min-height: 900px; /* Prevents vertical overlap */
+            padding: 40px;
+            display: flex;
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .bk-main-column {
+            display: flex; flex-direction: column; gap: 30px; flex-grow: 1; min-width: 0;
+        }
+
+        /* Bracket Sections */
+        .bk-section {
+            background-color: rgba(10, 10, 15, 0.7);
+            border: 2px solid var(--bk-team-border); border-radius: 10px;
+            padding: 25px; display: flex; flex-direction: column; position: relative;
+        }
+        
+        .bk-winners { flex: 1.6 1 0; }
+        .bk-winners .bk-rounds-container { min-height: 650px; } 
+        .bk-losers { flex: 1 1 0; }
+        .bk-losers .bk-rounds-container { min-height: 380px; }
+        
+        .bk-section > h2 {
+            font-size: 1.8rem; margin-bottom: 20px; text-transform: uppercase; color: var(--bk-accent-orange);
+            text-align: center; flex-shrink: 0; font-family: var(--bk-font-tech); margin-top: 0;
+        }
+        .bk-losers > h2 { color: var(--bk-primary-purple); }
+
+        /* Flexbox Connector System */
+        .bk-rounds-container { display: flex; gap: 60px; flex-grow: 1; position: relative; }
+        .bk-losers .bk-rounds-container { gap: 50px; }
+
+        .bk-round {
+            display: flex; flex-direction: column; 
+            justify-content: space-around; gap: 10px; /* Gap ensures matches NEVER overlap */
+            flex-grow: 1; min-width: 220px; position: relative; z-index: 2;
+        }
+        
+        .bk-round-title {
+            font-size: 1.1rem; text-align: center; color: var(--bk-light-text); margin-bottom: 10px;
+            font-weight: 700; flex-shrink: 0; position: absolute; top: -20px; width: 100%;
+        }
+        
+        .bk-matchup { position: relative; width: 100%; z-index: 5; }
+
+        /* --- NEW: MATCH NUMBER BADGE --- */
+        .bk-match-number {
+            position: absolute;
+            top: 50%;
+            left: -12px;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--bk-team-border);
+            border-radius: 50%;
+            font-family: var(--bk-font-tech);
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 15;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+            background-color: var(--bk-darker-bg-color);
+        }
+        .bk-winners .bk-match-number {
+            border-color: var(--bk-accent-orange);
+            color: var(--bk-accent-orange);
+            background-color: #170d05; /* Solid dark orange/brown background */
+        }
+        .bk-losers .bk-match-number {
+            border-color: var(--bk-primary-purple);
+            color: var(--bk-primary-purple);
+            background-color: #14081c; /* Solid dark purple background */
+        }
+
+        .bk-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; opacity: 0; transition: opacity 0.5s ease-in; }
+        
+        /* Team & Score Styling */
+        .bk-team {
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 15px;
+            background-color: var(--bk-team-bg); border: 1px solid var(--bk-team-border); position: relative;
+            margin: 0;
+        }
+        .bk-team:first-of-type { border-top-left-radius: 6px; border-top-right-radius: 6px; }
+        .bk-team:last-of-type { border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; margin-top: -1px; }
+        
+        .bk-name { font-size: 1.1rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color:#fff; font-family: var(--bk-font-tech); margin: 0;}
+        .bk-score { font-size: 1.2rem; font-weight: 900; min-width: 30px; text-align: center; color:#fff; font-family: var(--bk-font-tech); margin: 0;}
+
+        /* Highlights */
+        .bk-team.bk-winner { background-color: #1a1a1a; z-index: 10; }
+        .bk-winners .bk-team.bk-winner { border-color: var(--bk-accent-orange); }
+        .bk-losers .bk-team.bk-winner { border-color: var(--bk-primary-purple); }
+        
+        .bk-winners .bk-team.bk-winner .bk-name, .bk-winners .bk-team.bk-winner .bk-score {
+            background: linear-gradient(90deg, var(--bk-accent-orange), var(--bk-standout-blue)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; background-size: 250% 250%; animation: gradientShift 3s ease-in-out infinite alternate;
+        }
+        .bk-losers .bk-team.bk-winner .bk-name, .bk-losers .bk-team.bk-winner .bk-score {
+            background: linear-gradient(90deg, var(--bk-primary-purple), var(--bk-secondary-purple)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; background-size: 250% 250%; animation: gradientShift 3s ease-in-out infinite alternate;
+        }
+
+        /* --- Grand Finals Column Layout --- */
+        .bk-gf-column {
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center; gap: 25px; width: 680px; flex-shrink: 0; padding-top: 10px;
+        }
+        .bk-title {
+            text-align: center; font-size: 2.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; margin: 0 0 10px 0; background: linear-gradient(90deg, var(--bk-accent-orange), var(--bk-primary-purple), var(--bk-standout-blue)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; background-size: 300% 300%; animation: gradientShift 4s ease-in-out infinite; font-family: var(--bk-font-tech);
+        }
+        .bk-gf-column > h2 { font-size: 2rem; text-transform: uppercase; color: var(--bk-light-text); text-shadow: 0 0 15px rgba(0,0,0,0.8); font-family: var(--bk-font-tech); margin: 0; }
+        
+        /* --- Final Four Lobby Styling --- */
+        .bk-lobby {
+            width: 100%; background-color: rgba(10, 10, 15, 0.7); border: 2px solid var(--bk-standout-blue); border-radius: 15px; padding: 20px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 0 25px rgba(3, 183, 250, 0.2);
+        }
+        .bk-lobby-header { display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr 1fr 1.2fr; text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.6); text-transform: uppercase; font-weight: 700; padding: 0 10px; font-family: var(--bk-font-tech);}
+        .bk-lobby-row { display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr 1fr 1.2fr; background-color: var(--bk-team-bg); border: 1px solid var(--bk-team-border); border-radius: 8px; align-items: center; text-align: center; padding: 10px; color:#fff; font-family: var(--bk-font-tech);}
+        .bk-lobby-info { display: flex; align-items: center; gap: 15px; text-align: left; padding-left: 10px; }
+        .bk-lobby-stat { font-size: 1.1rem; font-weight: 700; }
+        .bk-lobby-pts { font-size: 1.5rem; font-weight: 900; color: var(--bk-accent-orange); }
+
+        /* --- Grand Final Showdown --- */
+        .bk-showdown { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px; }
+        .bk-pod { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; padding: 30px 20px; border-radius: 15px; background-color: rgba(10, 10, 15, 0.7); border: 2px solid var(--bk-team-border); transition: all 0.3s ease; min-width: 0; }
+        .bk-pod.bk-winner { border-color: var(--bk-accent-orange); box-shadow: 0 0 25px rgba(255, 200, 55, 0.4); background-color: rgba(30, 20, 10, 0.7); }
+        .bk-pod-name { font-size: 1.8rem; font-weight: 800; text-align: center; width: 100%; color:#fff; font-family: var(--bk-font-tech); margin:0;}
+
+        .bk-centerpiece { display: flex; align-items: center; gap: 20px; }
+        .bk-score-large { font-size: 4rem; font-weight: 900; color:#fff; font-family: var(--bk-font-tech); margin:0;}
+        .bk-vs { font-size: 2rem; font-weight: 900; color: var(--bk-primary-purple); font-family: var(--bk-font-tech); margin:0;}
+        
+        /* --- Tournament Winner Section --- */
+        .bk-champ { width: 100%; background-color: rgba(10, 10, 15, 0.7); border: 2px solid var(--bk-accent-orange); border-radius: 15px; padding: 30px 20px; display: flex; flex-direction: column; align-items: center; gap: 15px; box-shadow: 0 0 25px rgba(255, 200, 55, 0.4); }
+        .bk-champ-title { font-size: 1.5rem; text-transform: uppercase; color: var(--bk-light-text); font-weight: 700; font-family: var(--bk-font-tech); margin:0;}
+        .bk-champ-name { font-size: 2.8rem; font-weight: 900; text-transform: uppercase; background: linear-gradient(90deg, var(--bk-accent-orange), var(--bk-standout-blue)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; background-size: 250% 250%; animation: gradientShift 3s ease-in-out infinite alternate; width: 100%; text-align: center; font-family: var(--bk-font-tech); margin:0;}
+
+        /* ============================================= */
+        /* ==== INTRO ANIMATIONS ==== */
+        /* ============================================= */
+        .bk-particle { position: absolute; width: 2px; height: 2px; background: radial-gradient(circle, var(--bk-standout-blue), transparent); border-radius: 50%; pointer-events: none; z-index: 0; }
+        .bk-main-column, .bk-gf-column, .bk-section, .bk-gf-column > *, .bk-round { opacity: 0; transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        .bk-main-column { transform: translateX(-50px) scale(0.95); }
+        .bk-gf-column { transform: translateX(50px) scale(0.95); }
+
+        .animate-in .bk-main-column, .animate-in .bk-gf-column { opacity: 1; transform: translateX(0) scale(1); transition-delay: 0.2s; transition-duration: 1s; }
+        .animate-in .bk-section { opacity: 1; }
+        .animate-in .bk-title { opacity: 1; transition-delay: 0.6s; }
+        .animate-in .bk-lobby { opacity: 1; transition-delay: 0.8s; }
+        .animate-in .bk-gf-column > h2 { opacity: 1; transition-delay: 1.0s; }
+        .animate-in .bk-showdown { opacity: 1; transition-delay: 1.2s; }
+        .animate-in .bk-champ { opacity: 1; transition-delay: 1.4s; }
+
+        .animate-in .bk-round { opacity: 1; transition-delay: 0.8s; }
+
+        @keyframes bkPulseGlow { 0% { box-shadow: 0 0 5px rgba(255, 200, 55, 0.2); } 50% { box-shadow: 0 0 40px rgba(255, 200, 55, 0.6), 0 0 80px rgba(3, 183, 250, 0.3); } 100% { box-shadow: 0 0 5px rgba(255, 200, 55, 0.2); } }
+        .animate-in .bk-champ { animation: bkPulseGlow 4s ease-in-out 2.4s infinite; }
+        
+        @media (max-width: 768px) {
+            .bk-drag-hint { font-size: 0.75rem; bottom: 20px; padding: 8px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR INCLUDED -->
+<header class="navbar"></header>
+
+<main style="position: relative;">
+    
+    <!-- Floating Instruction Pill -->
+    <div class="bk-drag-hint">
+        <i class="fa-solid fa-arrows-up-down-left-right"></i> Desktop: Click and drag • Mobile: Swipe
+    </div>
+
+    <!-- The adaptive wrapper that allows scrolling without breaking the global site layout -->
+    <div class="bk-page-wrapper" id="bracket-scroll-area">
+        <div class="bk-overlay-background"></div>
+        <div class="bk-container">
+            <div class="bk-main-column">
+                
+                <!-- Winners Bracket (3 Rounds - Matches 1 to 14) -->
+                <section class="bk-section bk-winners">
+                    <h2>Winners Bracket</h2>
+                    <div class="bk-rounds-container" id="winners-rounds">
+                        <div class="bk-round">
+                            <div class="bk-round-title">Round 1</div>
+                            <div class="bk-matchup"><div class="bk-match-number">1</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">2</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">3</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">4</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">5</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">6</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">7</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">8</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Quarter-Finals</div>
+                            <div class="bk-matchup"><div class="bk-match-number">9</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">10</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">11</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">12</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Semi-Finals</div>
+                            <div class="bk-matchup"><div class="bk-match-number">13</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">14</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Losers Bracket (4 Rounds - Matches 15 to 26) -->
+                <section class="bk-section bk-losers">
+                    <h2>Losers Bracket</h2>
+                    <div class="bk-rounds-container" id="losers-rounds">
+                        <div class="bk-round">
+                            <div class="bk-round-title">Losers R1</div>
+                            <div class="bk-matchup"><div class="bk-match-number">15</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">16</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">17</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">18</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Losers R2</div>
+                            <div class="bk-matchup"><div class="bk-match-number">19</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">20</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">21</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">22</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Losers R3</div>
+                            <div class="bk-matchup"><div class="bk-match-number">23</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">24</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                        <div class="bk-round">
+                            <div class="bk-round-title">Losers Quarter-Final</div>
+                            <div class="bk-matchup"><div class="bk-match-number">25</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                            <div class="bk-matchup"><div class="bk-match-number">26</div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div><div class="bk-team"><span class="bk-name">TBD</span><span class="bk-score">0</span></div></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Grand Finals Column -->
+            <div class="bk-gf-column">
+                
+                <div class="bk-title">Ape Squad Classics Bracket EU</div>
+
+                <div class="bk-lobby">
+                    <h2 style="text-align: center; color: var(--bk-accent-orange); text-transform: uppercase; font-size: 1.5rem; margin-bottom: 5px; margin-top:0; font-family: var(--bk-font-tech);">Final 4 Lobby Leaderboard</h2>
+                    <div class="bk-lobby-header"><div style="text-align: left; padding-left: 15px;">Team Name</div><div>Start</div><div>Game 1</div><div>Game 2</div><div>Game 3</div><div style="color: var(--bk-accent-orange);">Total</div></div>
+                    <div class="bk-lobby-row"><div class="bk-lobby-info"><span class="bk-name">TBD</span></div><div class="bk-lobby-stat bk-start-pts">-</div><div class="bk-lobby-stat bk-g1-rank">-</div><div class="bk-lobby-stat bk-g2-rank">-</div><div class="bk-lobby-stat bk-g3-rank">-</div><div class="bk-lobby-pts bk-total-pts">0</div></div>
+                    <div class="bk-lobby-row"><div class="bk-lobby-info"><span class="bk-name">TBD</span></div><div class="bk-lobby-stat bk-start-pts">-</div><div class="bk-lobby-stat bk-g1-rank">-</div><div class="bk-lobby-stat bk-g2-rank">-</div><div class="bk-lobby-stat bk-g3-rank">-</div><div class="bk-lobby-pts bk-total-pts">0</div></div>
+                    <div class="bk-lobby-row"><div class="bk-lobby-info"><span class="bk-name">TBD</span></div><div class="bk-lobby-stat bk-start-pts">-</div><div class="bk-lobby-stat bk-g1-rank">-</div><div class="bk-lobby-stat bk-g2-rank">-</div><div class="bk-lobby-stat bk-g3-rank">-</div><div class="bk-lobby-pts bk-total-pts">0</div></div>
+                    <div class="bk-lobby-row"><div class="bk-lobby-info"><span class="bk-name">TBD</span></div><div class="bk-lobby-stat bk-start-pts">-</div><div class="bk-lobby-stat bk-g1-rank">-</div><div class="bk-lobby-stat bk-g2-rank">-</div><div class="bk-lobby-stat bk-g3-rank">-</div><div class="bk-lobby-pts bk-total-pts">0</div></div>
+                </div>
+
+                <h2>Grand Final (BO3)</h2>
+
+                <div class="bk-showdown" id="grand-final-match">
+                    <div class="bk-pod bk-left-team"><div class="bk-pod-name">TBD</div></div>
+                    <div class="bk-centerpiece"><div class="bk-score-large">0</div><div class="bk-vs">VS</div><div class="bk-score-large">0</div></div>
+                    <div class="bk-pod bk-right-team"><div class="bk-pod-name">TBD</div></div>
+                </div>
+
+                <div class="bk-champ">
+                    <h3 class="bk-champ-title">TOURNAMENT CHAMPIONS</h3>
+                    <div class="bk-champ-name">TBD</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- FOOTER INCLUDED -->
+<footer class="site-footer"></footer>
+
+<!-- MAIN SITE JS (Navbar/Footer logic) -->
+<script src="/js/main.js"></script>
+
+<script>
+// ========================================================
+// SCRIPT 1: DRAG TO SCROLL (DESKTOP)
+// ========================================================
+const slider = document.getElementById('bracket-scroll-area');
+let isDown = false;
+let startX;
+let scrollLeft;
+
+slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    slider.style.cursor = 'grabbing';
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener('mouseleave', () => { isDown = false; slider.style.cursor = 'grab'; });
+slider.addEventListener('mouseup', () => { isDown = false; slider.style.cursor = 'grab'; });
+
+slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.5; 
+    slider.scrollLeft = scrollLeft - walk;
+});
+
+
+// ========================================================
+// SCRIPT 2: BRACKET DRAWING (FLEXBOX ADAPTIVE)
+// ========================================================
+
+function debounce(func, wait = 50) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+function drawAllBrackets() {
+    const winnersRules = [{ from: 0, to: 1, type: '2-to-1' }, { from: 1, to: 2, type: '2-to-1' }];
+    const losersRules = [{ from: 0, to: 1, type: '1-to-1' }, { from: 1, to: 2, type: '2-to-1' }, { from: 2, to: 3, type: '1-to-1' }];
+
+    drawBracket('winners-rounds', winnersRules);
+    drawBracket('losers-rounds', losersRules);
+}
+
+function drawBracket(containerId, rules) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    let svg = container.querySelector('.bk-svg');
+    if (svg) {
+        svg.innerHTML = '';
+    } else {
+        svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.classList.add('bk-svg');
+        container.prepend(svg);
+    }
+
+    const containerRect = container.getBoundingClientRect();
+    const rounds = Array.from(container.querySelectorAll('.bk-round'));
+
+    rules.forEach(rule => {
+        const fromRoundEl = rounds[rule.from];
+        const toRoundEl = rounds[rule.to];
+        if (!fromRoundEl || !toRoundEl) return;
+
+        const fromMatches = Array.from(fromRoundEl.querySelectorAll('.bk-matchup'));
+        const toMatches = Array.from(toRoundEl.querySelectorAll('.bk-matchup'));
+
+        if (rule.type === '2-to-1') {
+            for (let i = 0; i < toMatches.length; i++) draw2to1Connection(svg, fromMatches[i * 2], fromMatches[i * 2 + 1], toMatches[i], containerRect);
+        } else if (rule.type === '1-to-1') {
+            for (let i = 0; i < toMatches.length; i++) if (fromMatches[i] && toMatches[i]) draw1to1Connection(svg, fromMatches[i], toMatches[i], containerRect);
+        }
+    });
+}
+
+function draw2to1Connection(svg, source1, source2, target, containerRect) {
+    if(!source1 || !source2 || !target) return;
+    const s1Rect = source1.getBoundingClientRect();
+    const s2Rect = source2.getBoundingClientRect();
+    const tRect = target.getBoundingClientRect();
+
+    const s1_x = s1Rect.right - containerRect.left;
+    const s1_y = s1Rect.top + s1Rect.height / 2 - containerRect.top;
+    const s2_y = s2Rect.top + s2Rect.height / 2 - containerRect.top;
+    const t_x = tRect.left - containerRect.left;
+    const t_y = tRect.top + tRect.height / 2 - containerRect.top;
+    const midX = s1_x + (t_x - s1_x) / 2;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const d = `M ${s1_x} ${s1_y} L ${midX} ${s1_y} L ${midX} ${s2_y} L ${s1_x} ${s2_y} M ${midX} ${t_y} L ${t_x} ${t_y}`;
+    path.setAttribute('d', d); path.setAttribute('stroke', 'var(--bk-connector-color)'); path.setAttribute('stroke-width', '2'); path.setAttribute('fill', 'none');
+    svg.appendChild(path);
+}
+
+function draw1to1Connection(svg, source, target, containerRect) {
+    if(!source || !target) return;
+    const sRect = source.getBoundingClientRect();
+    const tRect = target.getBoundingClientRect();
+    const s_x = sRect.right - containerRect.left;
+    const s_y = sRect.top + sRect.height / 2 - containerRect.top;
+    const t_x = tRect.left - containerRect.left;
+    const t_y = tRect.top + tRect.height / 2 - containerRect.top;
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', s_x); line.setAttribute('y1', s_y); line.setAttribute('x2', t_x); line.setAttribute('y2', t_y);
+    line.setAttribute('stroke', 'var(--bk-connector-color)'); line.setAttribute('stroke-width', '2');
+    svg.appendChild(line);
+}
+
+// ========================================================
+// SCRIPT 3: GOOGLE SHEETS API INTEGRATION
+// ========================================================
+
+function adjustFontSizes() {
+    const elementsToAdjust = document.querySelectorAll('.bk-name, .bk-pod-name, .bk-champ-name');
+    elementsToAdjust.forEach(el => {
+        el.style.fontSize = '';
+        const originalWhiteSpace = el.style.whiteSpace;
+        el.style.whiteSpace = 'nowrap';
+        
+        let container = el.parentElement;
+        let availableWidth;
+
+        if (el.classList.contains('bk-name') && !container.classList.contains('bk-lobby-info')) {
+            const scoreEl = container.querySelector('.bk-score');
+            const containerStyles = getComputedStyle(container);
+            const containerPadding = parseFloat(containerStyles.paddingLeft) + parseFloat(containerStyles.paddingRight);
+            availableWidth = container.clientWidth - scoreEl.offsetWidth - containerPadding - 10; 
+        } else {
+            const containerStyles = getComputedStyle(container);
+            const containerPadding = parseFloat(containerStyles.paddingLeft) + parseFloat(containerStyles.paddingRight);
+            availableWidth = container.clientWidth - containerPadding;
+        }
+
+        if (el.scrollWidth > availableWidth) {
+            let currentSize = parseFloat(window.getComputedStyle(el).fontSize);
+            while (el.scrollWidth > availableWidth && currentSize > 8) {
+                currentSize -= 1;
+                el.style.fontSize = currentSize + 'px';
+            }
+        }
+        el.style.whiteSpace = originalWhiteSpace;
+    });
+}
+
+// UPDATE THESE WITH YOUR SHEET INFO
+const SPREADSHEET_ID = '10ZmWteGljWdAu4TIMMkKkt23jFSuuKlTtqc-bxpVvN4';
+const SHEET_GID = '1093653325';
+const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${SHEET_GID}`;
+
+async function updateBracketData() {
+    try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const text = await response.text();
+        const json = JSON.parse(text.substring(47, text.length - 2));
+        const rows = json.table.rows;
+
+        const getVal = (exRow, colIndex) => {
+            const r = rows[exRow - 2]; 
+            if (!r || !r.c || !r.c[colIndex]) return '';
+            const val = r.c[colIndex].v;
+            if (val === null || val === undefined || val === "Blank" || val === "x" || val.toString().trim().toLowerCase() === "tbd") return '';
+            return val.toString();
+        };
+
+        const winnersMatchups = document.querySelectorAll('.bk-winners .bk-matchup');
+        const losersMatchups = document.querySelectorAll('.bk-losers .bk-matchup');
+        
+        // 1. WINNERS MAPPING
+        const w_Map = [
+            [{r1: 2, c: 0}, {r2: 3, c: 0}], [{r1: 4, c: 0}, {r2: 5, c: 0}], [{r1: 6, c: 0}, {r2: 7, c: 0}], [{r1: 8, c: 0}, {r2: 9, c: 0}],
+            [{r1: 10, c: 0}, {r2: 11, c: 0}], [{r1: 12, c: 0}, {r2: 13, c: 0}], [{r1: 14, c: 0}, {r2: 15, c: 0}], [{r1: 16, c: 0}, {r2: 17, c: 0}],
+            [{r1: 3, c: 3}, {r2: 5, c: 3}], [{r1: 7, c: 3}, {r2: 9, c: 3}], [{r1: 11, c: 3}, {r2: 13, c: 3}], [{r1: 15, c: 3}, {r2: 17, c: 3}],
+            [{r1: 4, c: 6}, {r2: 8, c: 6}], [{r1: 12, c: 6}, {r2: 16, c: 6}]
+        ];
+
+        w_Map.forEach((coords, idx) => {
+            if(!winnersMatchups[idx]) return;
+            const t1Name = getVal(coords[0].r1, coords[0].c) || 'TBD';
+            const t1Score = getVal(coords[0].r1, coords[0].c + 1) || '0';
+            const t2Name = getVal(coords[1].r2, coords[1].c) || 'TBD';
+            const t2Score = getVal(coords[1].r2, coords[1].c + 1) || '0';
+
+            const domTeams = winnersMatchups[idx].querySelectorAll('.bk-team');
+            domTeams[0].querySelector('.bk-name').textContent = t1Name;
+            domTeams[0].querySelector('.bk-score').textContent = t1Score;
+            domTeams[1].querySelector('.bk-name').textContent = t2Name;
+            domTeams[1].querySelector('.bk-score').textContent = t2Score;
+
+            domTeams[0].classList.remove('bk-winner');
+            domTeams[1].classList.remove('bk-winner');
+            if (t1Score === '2') domTeams[0].classList.add('bk-winner');
+            if (t2Score === '2') domTeams[1].classList.add('bk-winner');
+        });
+
+        // 2. LOSERS MAPPING
+        const l_Map = [
+            [{r1: 20, c: 0}, {r2: 21, c: 0}], [{r1: 22, c: 0}, {r2: 23, c: 0}], [{r1: 24, c: 0}, {r2: 25, c: 0}], [{r1: 26, c: 0}, {r2: 27, c: 0}],
+            [{r1: 20, c: 3}, {r2: 21, c: 3}], [{r1: 22, c: 3}, {r2: 23, c: 3}], [{r1: 24, c: 3}, {r2: 25, c: 3}], [{r1: 26, c: 3}, {r2: 27, c: 3}],
+            [{r1: 21, c: 6}, {r2: 22, c: 6}], [{r1: 25, c: 6}, {r2: 26, c: 6}],
+            [{r1: 21, c: 9}, {r2: 22, c: 9}], [{r1: 25, c: 9}, {r2: 26, c: 9}]
+        ];
+
+        l_Map.forEach((coords, idx) => {
+            if(!losersMatchups[idx]) return;
+            const t1Name = getVal(coords[0].r1, coords[0].c) || 'TBD';
+            const t1Score = getVal(coords[0].r1, coords[0].c + 1) || '0';
+            const t2Name = getVal(coords[1].r2, coords[1].c) || 'TBD';
+            const t2Score = getVal(coords[1].r2, coords[1].c + 1) || '0';
+
+            const domTeams = losersMatchups[idx].querySelectorAll('.bk-team');
+            domTeams[0].querySelector('.bk-name').textContent = t1Name;
+            domTeams[0].querySelector('.bk-score').textContent = t1Score;
+            domTeams[1].querySelector('.bk-name').textContent = t2Name;
+            domTeams[1].querySelector('.bk-score').textContent = t2Score;
+
+            domTeams[0].classList.remove('bk-winner');
+            domTeams[1].classList.remove('bk-winner');
+            if (t1Score === '2') domTeams[0].classList.add('bk-winner');
+            if (t2Score === '2') domTeams[1].classList.add('bk-winner');
+        });
+
+        // 3. FINAL 4 LOBBY MAPPING
+        const lobbyRows = document.querySelectorAll('.bk-lobby-row');
+        for(let i=0; i<4; i++) {
+            let rowIdx = 30 + i;
+            let tName = getVal(rowIdx, 0);
+            let rowDom = lobbyRows[i];
+
+            rowDom.querySelector('.bk-name').textContent = tName || 'TBD';
+
+            rowDom.querySelector('.bk-start-pts').textContent = getVal(rowIdx, 1) || '-';
+            rowDom.querySelector('.bk-g1-rank').textContent = getVal(rowIdx, 2) || '-';
+            rowDom.querySelector('.bk-g2-rank').textContent = getVal(rowIdx, 3) || '-';
+            rowDom.querySelector('.bk-g3-rank').textContent = getVal(rowIdx, 4) || '-';
+            rowDom.querySelector('.bk-total-pts').textContent = getVal(rowIdx, 5) || '0';
+        }
+
+        // 4. GRAND FINAL & CHAMPION MAPPING
+        const gfLeftTeamPod = document.querySelector('.bk-left-team');
+        const gfRightTeamPod = document.querySelector('.bk-right-team');
+        const gfScores = document.querySelectorAll('.bk-centerpiece .bk-score-large');
+        const tournamentWinnerSection = document.querySelector('.bk-champ');
+
+        let gfT1Name = getVal(30, 7);
+        let gfT1Score = getVal(30, 8);
+        let gfT2Name = getVal(32, 7);
+        let gfT2Score = getVal(32, 8);
+        let champ = getVal(31, 9);
+
+        gfLeftTeamPod.querySelector('.bk-pod-name').textContent = gfT1Name || 'TBD';
+        gfRightTeamPod.querySelector('.bk-pod-name').textContent = gfT2Name || 'TBD';
+        gfScores[0].textContent = gfT1Score || '0';
+        gfScores[1].textContent = gfT2Score || '0';
+
+        gfLeftTeamPod.classList.remove('bk-winner');
+        gfRightTeamPod.classList.remove('bk-winner');
+
+        if (gfT1Score === "2") gfLeftTeamPod.classList.add('bk-winner');
+        if (gfT2Score === "2") gfRightTeamPod.classList.add('bk-winner');
+
+        if (champ && champ !== "") {
+            tournamentWinnerSection.querySelector('.bk-champ-name').textContent = champ;
+        } else {
+            tournamentWinnerSection.querySelector('.bk-champ-name').textContent = "TBD";
+        }
+
+        adjustFontSizes();
+        requestAnimationFrame(drawAllBrackets);
+    } catch (error) {
+        console.error("Error fetching or updating bracket data:", error);
+    }
+}
+
+// ========================================================
+// SCRIPT 4: INTRO ANIMATION & INITIALIZATION
+// ========================================================
+
+function createParticleSystem() {
+    const particleCount = 50;
+    const container = document.getElementById('bracket-scroll-area');
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'bk-particle';
+        particle.style.left = Math.random() * 2000 + 'px';
+        particle.style.top = Math.random() * window.innerHeight + 'px';
+        const duration = 3 + Math.random() * 4;
+        const delay = Math.random() * 2;
+        particle.style.animation = `particleFloat ${duration}s ${delay}s ease-in-out infinite`;
+        container.appendChild(particle);
+        setTimeout(() => { if (particle.parentNode) particle.parentNode.removeChild(particle); }, (duration + delay) * 1000);
+    }
+}
+const particleCSS = `@keyframes particleFloat { 0% { transform: translateY(0) scale(0); opacity: 0; } 10% { opacity: 1; transform: scale(1); } 90% { opacity: 1; } 100% { transform: translateY(-200px) scale(0); opacity: 0; } }`;
+const style = document.createElement('style'); style.textContent = particleCSS; document.head.appendChild(style);
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Draw empty bracket lines immediately so they are there for the fade in
+    drawAllBrackets();
+
+    setTimeout(() => {
+        updateBracketData();
+        setInterval(updateBracketData, 5000);
+    }, 500);
+    
+    createParticleSystem();
+
+    document.fonts.ready.then(() => {
+        setTimeout(() => {
+            document.getElementById('bracket-scroll-area').classList.add('animate-in'); 
+        }, 100); 
+
+        setTimeout(() => {
+            requestAnimationFrame(() => {
+                drawAllBrackets();
+                document.querySelectorAll('.bk-svg').forEach(svg => { svg.style.opacity = '1'; });
+            });
+        }, 1500); // Wait for CSS transforms to finish before fading lines in
+    });
+});
+
+// Re-draw lines continuously during window resize to keep them attached perfectly
+window.addEventListener('resize', debounce(() => { 
+    requestAnimationFrame(drawAllBrackets); 
+}, 10));
+
+</script>
+</body>
+</html>

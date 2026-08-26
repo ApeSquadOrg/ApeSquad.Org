@@ -1,47 +1,62 @@
 <!-- The content of header.html -->
 <div class="container">
-    <div class="logo">
-        <!-- The logo is a link to the homepage -->
-        <a href="https://apesquad.org">
-            <img src="/images/logo.png" alt="Ape Squad Logo" style="height: 50px;">
-        </a>
-    </div>
+    <a href="https://apesquad.org" class="logo">
+        <img src="/images/logo.png" alt="Ape Squad Logo">
+    </a>
 
-    <!-- === ADD THIS BUTTON === -->
     <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
-        <span class="sr-only">Menu</span>
+        <!-- This can be styled with CSS to look like a hamburger -->
     </button>
-    <!-- === END OF ADDITION === -->
 
     <nav>
-        <ul id="primary-navigation">
-            <li><a href="https://apesquad.org">Home</a></li>
-            <li><a href="/merch">Merch</a></li>
-            <li><a href="/donate">Donate</a></li>
+        <ul id="primary-navigation" class="nav-links">
+             <li class="dropdown">
+                <a href="https://apesquadshop.org/" class="dropbtn">Merch</a>
+                <div class="dropdown-content">
+                    <a href="https://apesquadshop.org/">Apparel</a>
+                    <a href="https://www.owayo.com/store/apesquadorg/6a08f1a9b2dfe056707758">Jerseys</a>
+                                    </div>
+            </li>
+            <li><a href="/support">Support</a></li>
+            <li><a href="/esports">Esports</a></li>
+            <li><a href="/esports">News</a></li>
             <li><a href="/club">Club</a></li>
-<li class="dropdown">
-                <a href="/tournaments" class="dropbtn">Tournament</a>
-                 <div class="dropdown-content">
-					<a href="/World-Bracket">Worlds Bracket</a>
-					<a href="/tournaments">Signup</a>
-					<a href="/rules">Rules</a>
-                    <a href="/Teams">Teams</a>
-                    <a href="/NA-Bracket">NA Bracket</a>
-                    <a href="/EU-Bracket">EU Bracket</a>
-                    <a href="/donate">Donate</a>
-			 </div>
-                    </li>
-            <li><a href="/rankings">Rankings</a></li>
- 			<li><a href="/coaching">Coaching</a></li>
-            <!-- Dropdown for Resources -->
+            <a href="/partnered-creators">Partnered Creators</a>
             <li class="dropdown">
-                <a href="#" class="dropbtn">WIKI</a> <!-- Make the link clickable -->
+                <a href="/tournaments" class="dropbtn">Events</a>
+                <div class="dropdown-content">
+                    <a href="/tournaments">Event Page</a>
+                    <a href="/rules">Rules</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Game Data</a>
                 <div class="dropdown-content">
                     <a href="/gundata">Gun Data</a>
                     <a href="/maps">Maps</a>
-					<a href="/TheFinalsHistory">History</a>
+                    <a href="/spawns">Spawn Manipulation</a>
+                    <a href="/thefinalshistory">The Finals History</a>
                 </div>
             </li>
+            <li><a href="/about">About</a></li>
         </ul>
     </nav>
+
+    <!-- START: Social Media Icons (Font Awesome Version) -->
+    <div class="social-links">
+        <a href="https://x.com/apesquadorg" target="_blank" rel="noopener noreferrer" aria-label="Follow us on X">
+            <i class="fa-brands fa-x-twitter"></i>
+        </a>
+        <a href="https://twitch.tv/apesquadorg" target="_blank" rel="noopener noreferrer" aria-label="Watch us on Twitch">
+            <i class="fa-brands fa-twitch"></i>
+        </a>
+        <a href="https://www.youtube.com/@ApeSquadOrg" target="_blank" rel="noopener noreferrer" aria-label="Subscribe on YouTube">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+        <a href="https://www.linkedin.com/company/ape-squad-org" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Linkedin">
+            <i class="fa-brands fa-linkedin"></i>
+        </a>
+    </div>
+    <!-- END: Social Media Icons -->
+
 </div>

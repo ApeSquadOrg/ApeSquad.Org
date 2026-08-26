@@ -21,115 +21,417 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
     <!-- Link to your main stylesheet -->
-    <link rel="stylesheet" href="/style.css"> <!-- Use root-relative path for consistency -->
+    <link rel="stylesheet" href="/style.css"> 
 
     <!-- Page-specific styles for the 404 page -->
     <style>
-        /* Make the 404 section fill the screen like the hero section */
+        /* Body alarm mode overrides */
+        body.alarm-active {
+            background: radial-gradient(circle at 50% 50%, #4a0000 0%, #000000 100%) !important;
+            animation: flashRed 1s infinite alternate !important;
+            overflow: hidden; /* Stop scrolling during the event */
+        }
+
+        body.alarm-active #not-found {
+            background: transparent !important; /* Hide original background so body shows through */
+        }
+
+        /* Base 404 Section */
         #not-found {
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
             min-height: 100vh;
             padding: 100px 20px;
-            /* Using a background similar to your hero/rankings pages */
             background: 
                 linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
                 radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
                 radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
+            overflow: hidden;
+            position: relative;
+            transition: background 0.5s ease;
         }
 
-        #not-found h2 {
-            font-size: 12rem; /* Make the 404 number massive */
+        /* Ensure content is perfectly centered and stacked */
+        .not-found-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            z-index: 2;
+        }
+
+        /* Glitchy 404 Text */
+        #not-found .glitch {
+            font-size: 12rem; 
             line-height: 1;
-            margin-bottom: 0;
-            /* Override the text-gradient to use a solid color for better glitch effect visibility */
-            background: none;
-            -webkit-text-fill-color: var(--primary-purple);
+            margin-bottom: 20px;
+            color: var(--primary-purple, #9c46c8);
+            position: relative;
+            display: inline-block;
+            font-family: 'Bebas Neue', sans-serif;
+            user-select: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            transform-origin: top left; 
         }
 
-        /* Use the hero paragraph style for the thematic message */
+        /* Subheading and "Keep Going" text */
         #not-found .subheading {
             font-size: 2.2rem;
-            margin-bottom: 25px;
-            font-family: var(--font-tech);
+            margin-bottom: 20px;
+            font-family: var(--font-tech, 'Orbitron', sans-serif);
             opacity: 0.95;
             text-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
+            transition: color 0.3s ease;
+            max-width: 700px;
+        }
+
+        /* The hidden trigger */
+        #keep-going-trigger {
+            color: var(--font-tech, #ff9900);
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-style: dashed;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        #keep-going-trigger:hover {
+            color: red;
+            text-shadow: 0 0 10px red;
+            transform: scale(1.05);
         }
 
         #not-found .explanation {
             max-width: 600px;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 30px auto;
             font-size: 1.1rem;
             opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Base UI Elements */
+        .ui-element {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            transition: transform 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53), opacity 1s ease;
+        }
+
+        #action-btn-container {
+            margin-bottom: 30px;
         }
 
         #not-found .btn {
-            margin-bottom: 50px;
+            display: inline-block;
+            margin: 0;
         }
         
+        #links-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 30px;
+        }
+
         #not-found .quick-links a {
-            color: var(--standout-blue);
+            color: var(--standout-blue, #01a3eb);
             text-decoration: none;
-            margin: 0 15px;
-            font-family: var(--font-headings);
+            font-family: var(--font-headings, 'Bebas Neue', sans-serif);
             letter-spacing: 1px;
+            font-size: 1.2rem;
             transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
         #not-found .quick-links a:hover {
-            color: var(--accent-orange);
-            text-shadow: 0 0 8px var(--accent-orange);
+            color: var(--accent-orange, #ff9900);
+            text-shadow: 0 0 8px var(--accent-orange, #ff9900);
         }
 
-        /* Responsive font size for the 404 */
+        /* =========================================
+           EASTER EGG "BREAKING" ANIMATIONS
+           ========================================= */
+        
+        /* Brief screen shake for 404 -> APE click */
+        .quick-shake {
+            animation: shakeScreen 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shakeScreen {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+            40%, 60% { transform: translate3d(8px, 0, 0); }
+        }
+
+        /* The physical falling off the screen */
+        .gravity-fall {
+            transform: translateY(150vh) rotate(45deg) !important;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* The 404 unhinging and swinging */
+        .unhinged {
+            animation: swing 2s ease-in-out forwards;
+        }
+
+        @keyframes swing {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(70deg); }
+            40% { transform: rotate(40deg); }
+            60% { transform: rotate(60deg); }
+            80% { transform: rotate(45deg); }
+            100% { transform: translateY(150vh) rotate(90deg); opacity: 0; }
+        }
+
+        /* Violent screen shaking */
+        .severe-shake {
+            animation: severeShake 0.5s infinite;
+        }
+
+        @keyframes severeShake {
+            0% { transform: translate(2px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* Emergency Alarm Background Keyframes */
+        @keyframes flashRed {
+            from { box-shadow: inset 0 0 0vw rgba(255, 0, 0, 0); }
+            to { box-shadow: inset 0 0 10vw rgba(255, 0, 0, 0.8); }
+        }
+
+        /* ELIMINATED SCREEN OVERLAY */
+        #eliminated-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            color: #ffcc00;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        #eliminated-screen h1 {
+            font-size: 8rem;
+            font-family: 'Bebas Neue', sans-serif;
+            margin: 0;
+            letter-spacing: 5px;
+            text-shadow: 4px 4px 0px #ff0000;
+            transform: scale(2);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        #eliminated-screen p {
+            font-family: var(--font-tech, 'Orbitron', sans-serif);
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: -10px;
+            text-align: center;
+        }
+
+        .show-eliminated {
+            opacity: 1 !important;
+            pointer-events: all !important;
+        }
+
+        .show-eliminated h1 {
+            transform: scale(1) !important;
+        }
+
+        #respawn-btn {
+            margin-top: 40px;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            font-family: 'Bebas Neue', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #respawn-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            #not-found h2 {
-                font-size: 8rem;
-            }
-            #not-found .subheading {
-                font-size: 1.5rem;
-            }
+            #not-found h2 { font-size: 8rem; }
+            #not-found .subheading { font-size: 1.5rem; }
+            #eliminated-screen h1 { font-size: 4rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- This header is left empty. Your js/main.js file will populate it. -->
+    <!-- Header injected via main.js (Reverted to pure HTML so it doesn't break) -->
     <header></header>
 
     <main>
         <section id="not-found">
             <div class="not-found-content">
                 
-                <!-- The big, glitchy 404 number -->
-                <h2 class="glitch" data-text="404">404</h2>
+                <!-- The big 404 number (Clickable) -->
+                <h2 class="glitch" id="glitch-text" data-text="404" title="Click me!">404</h2>
 
-                <p class="subheading">Looks like you've clipped out of the map.</p>
+                <!-- The Interactive Subheading -->
+                <p class="subheading" id="dynamic-text">
+                    Looks like you clipped out of the map.<br>We hope you don't <span id="keep-going-trigger">keep going</span>...
+                </p>
                 
-                <p class="explanation">
-                    The page you're looking for might have been moved, deleted, or perhaps it never existed in this dimension. Don't worry, we can get you back to safety.
+                <p class="explanation ui-element" id="exp-text">
+                    The page you're looking for might have been moved, deleted, or perhaps it never existed in this dimension.
                 </p>
 
-                <!-- A clear, themed call-to-action button -->
-                <a href="https://apesquad.org/" class="btn">Return to the Jungle</a>
+                <!-- Call-to-action button -->
+                <div class="ui-element" id="action-btn-container">
+                    <a href="https://apesquad.org/" class="btn">Return to the Jungle</a>
+                </div>
 
-                <div class="quick-links">
+                <div class="quick-links ui-element" id="links-container">
                     <a href="/tournaments.html">Tournaments</a>
-
-                    <a href="/donate.html">Donate</a>
+                    <a href="https://apesquadshop.org">Merch</a>
                 </div>
 
             </div>
         </section>
     </main>
 
-    <!-- This footer is left empty. Your js/main.js file will populate it. -->
+    <!-- Footer injected via main.js (Reverted to pure HTML so it doesn't break) -->
     <footer></footer>
-    
-    <!-- This script handles global functionality like loading the header/footer -->
-    <script src="/js/main.js"></script>
 
+    <!-- THE ELIMINATED DEATH SCREEN (Hidden by default) -->
+    <div id="eliminated-screen">
+        <h1>ELIMINATED</h1>
+        <p>REASON: OUT OF BOUNDS</p>
+        <button id="respawn-btn" onclick="window.location.href='https://apesquad.org/'">RESPAWN (HOME)</button>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    <script src="js/features.js"></script>
+
+    <!-- EASTER EGG SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Console Log Secret
+            console.log("%c    🦍 APE SQUAD 🦍    ", "background: #ff9900; color: #000; font-size: 24px; font-weight: bold; border-radius: 5px;");
+            console.log("%cLooks like you found the developer console! You clip out of maps in-game AND in real life, huh? Respect. 🍌", "color: #01a3eb; font-size: 14px;");
+
+            // Global flag to prevent interactions from overlapping
+            let sequenceRunning = false;
+
+            // --- EASTER EGG 1: Click 404 to turn it into APE ---
+            const glitchText = document.getElementById('glitch-text');
+            let clickCount = 0;
+
+            glitchText.addEventListener('click', () => {
+                // If the world is ending, don't allow clicking the 404
+                if(sequenceRunning) return; 
+
+                clickCount++;
+                // Slight nudge and rotate on every click
+                glitchText.style.transform = `scale(${1 + (clickCount * 0.1)}) rotate(${clickCount * 2}deg)`;
+                
+                if(clickCount === 3) {
+                    // Change text to APE
+                    glitchText.textContent = "APE";
+                    glitchText.setAttribute('data-text', 'APE');
+                    
+                    // Quick screen shake
+                    document.body.classList.add('quick-shake');
+                    
+                    // Reset scale and rotation back to normal
+                    glitchText.style.transform = `scale(1) rotate(0deg)`;
+                    
+                    setTimeout(() => {
+                        document.body.classList.remove('quick-shake');
+                    }, 500);
+                }
+            });
+
+            // --- EASTER EGG 2: THE "KEEP GOING" CHAIN REACTION ---
+            const trigger = document.getElementById('keep-going-trigger');
+            const dynamicText = document.getElementById('dynamic-text');
+            
+            // UI Elements that will fall away
+            const btnContainer = document.getElementById('action-btn-container');
+            const linksContainer = document.getElementById('links-container');
+            const expText = document.getElementById('exp-text');
+            
+            // The Death Screen
+            const deathScreen = document.getElementById('eliminated-screen');
+
+            trigger.addEventListener('click', () => {
+                if(sequenceRunning) return; // Prevent double clicking
+                sequenceRunning = true;     // Lock the sequence
+
+                // Dynamically grab header and footer so we don't interfere with main.js loading them
+                const header = document.querySelector('header');
+                const footer = document.querySelector('footer');
+
+                // Step 1: Immediate reaction. Change text and shake screen violently.
+                dynamicText.innerHTML = "<span style='color: red;'>WAIT, WHAT ARE YOU DOING?! STOP!</span>";
+                document.body.classList.add('severe-shake');
+
+                // Step 2: Elements start losing gravity (1 second in)
+                setTimeout(() => {
+                    dynamicText.innerHTML = "<span style='color: red;'>YOU'RE BREAKING THE CODE!</span>";
+                    btnContainer.classList.add('gravity-fall');
+                    linksContainer.classList.add('gravity-fall');
+                    expText.classList.add('gravity-fall');
+
+                    // Make the header and footer fall dynamically
+                    if(header) {
+                        header.style.transition = "transform 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53), opacity 1s ease";
+                        header.classList.add('gravity-fall');
+                    }
+                    if(footer) {
+                        footer.style.transition = "transform 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53), opacity 1s ease";
+                        footer.classList.add('gravity-fall');
+                    }
+                }, 1000);
+
+                // Step 3: Alarm goes off on the whole BODY, 404 unhinges (2.5 seconds in)
+                setTimeout(() => {
+                    document.body.classList.add('alarm-active');
+                    glitchText.classList.add('unhinged');
+                    dynamicText.innerHTML = "SYSTEM CRITICAL. OUT OF BOUNDS.";
+                    dynamicText.style.fontFamily = "'Bebas Neue', sans-serif";
+                    dynamicText.style.fontSize = "4rem";
+                }, 2500);
+
+                // Step 4: The Death Screen slams down (4.5 seconds in)
+                setTimeout(() => {
+                    document.body.classList.remove('severe-shake'); // stop shaking
+                    deathScreen.classList.add('show-eliminated');
+                }, 4500);
+            });
+        });
+    </script>
 </body>
 </html>

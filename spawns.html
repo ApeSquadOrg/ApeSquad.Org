@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ========================================= -->
+    <!-- 1. GOOGLE TAG MANAGER (From Source)       -->
+    <!-- ========================================= -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ========================================= -->
+    <!-- 2. TITLE & SEO                            -->
+    <!-- ========================================= -->
+    <title>Strat Planner | Ape Squad Esports</title>
+    
+    <meta name="description" content="Join the Ape Squad community. Meet our players, view their highlights, and see our live club leaderboard rankings in The Finals.">
+    <meta name="keywords" content="Ape Squad, esports, The Finals, gaming community, pro players, live stream, discord, twitch">
+
+    <!-- ========================================= -->
+    <!-- 3. FAVICONS                               -->
+    <!-- ========================================= -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --midnight-black: #0a0a0a;
+            --near-black: #111;
+            --electric-blue: #01a3eb;
+            --neon-pink: #ff4494;
+            --font-headline: 'Anton', sans-serif;
+            --font-body: 'Ayuthaya', monospace;
+        }
+
+        body { 
+            margin: 0; padding: 0; background: black; color: white; 
+            font-family: var(--font-body); overflow: hidden; 
+        }
+
+        main { display: flex; height: 100vh; width: 100vw; }
+
+        /* --- SIDEBAR --- */
+        #planner-sidebar {
+            width: 320px; /* Slightly wider to accommodate side-by-side buttons */
+            background: var(--near-black);
+            border-right: 1px solid #333; z-index: 100;
+            display: flex; flex-direction: column; flex-shrink: 0;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.5);
+            height: 100vh;
+        }
+        
+        /* Navigation - 2x2 Grid for space efficiency */
+        .sidebar-nav {
+            background: #000;
+            padding: 10px;
+            border-bottom: 1px solid #222;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .nav-link {
+            color: #888; text-decoration: none; font-size: 0.75rem;
+            text-align: center; padding: 6px; border: 1px solid #333;
+            border-radius: 4px; transition: 0.2s;
+        }
+        .nav-link:hover {
+            color: var(--electric-blue); border-color: var(--electric-blue);
+            background: rgba(1, 163, 235, 0.1);
+        }
+
+        .sidebar-header { 
+            padding: 15px 20px; 
+            background: var(--midnight-black); 
+            border-bottom: 1px solid #333; 
+            flex-shrink: 0;
+        }
+        .sidebar-header h2 { margin: 0; color: var(--electric-blue); font-family: var(--font-headline); letter-spacing: 1px; font-size: 1.4rem; }
+        
+        /* --- CONTENT AREA (NO SCROLL) --- */
+        .sidebar-content { 
+            padding: 15px; 
+            flex: 1; 
+            overflow: hidden; /* No scrollbar */
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Space between groups */
+        }
+        
+        .control-group { flex-shrink: 0; }
+        .control-label { display: block; color: var(--neon-pink); font-family: var(--font-headline); margin-bottom: 5px; font-size: 0.9rem; }
+        
+        /* Map Select */
+        .planner-select {
+            width: 100%; padding: 8px; background: #222; color: white;
+            border: 1px solid #444; border-radius: 4px; cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Map Key (Legend) - 2 Columns to save height */
+        .legend-list {
+            list-style: none; padding: 0; margin: 0;
+            font-size: 0.75rem; color: #ccc;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Split into 2 cols */
+            gap: 6px 10px;
+        }
+        .legend-list li {
+            display: flex; align-items: center; gap: 8px;
+            line-height: 1.1;
+        }
+        .legend-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Tools - 1 Row to save vertical space */
+        .tool-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+        .tool-btn {
+            background: #222; border: 1px solid #444; color: #888;
+            padding: 10px 5px; /* Decent click height */
+            border-radius: 6px; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            transition: 0.2s; user-select: none; font-size: 0.7rem;
+        }
+        .tool-btn i { font-size: 1.1rem; }
+        .tool-btn:hover { background: #333; color: white; }
+        .tool-btn.active {
+            background: rgba(1, 163, 235, 0.15); border-color: var(--electric-blue);
+            color: var(--electric-blue);
+        }
+
+        /* Action Buttons - 1 Row */
+        .btn-group { display: flex; flex-direction: row; gap: 8px; }
+        .action-btn {
+            flex: 1; padding: 10px 5px; background: #333; border: none;
+            color: white; cursor: pointer; font-weight: bold; border-radius: 4px;
+            transition: 0.2s; font-size: 0.75rem;
+        }
+        .action-btn:hover { background: #444; }
+        .action-btn.danger { background: rgba(255, 68, 148, 0.1); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
+        .action-btn.danger:hover { background: rgba(255, 68, 148, 0.3); }
+
+        /* --- FLEXIBLE BOTTOM SECTION --- */
+        /* This pushes the logo to fill remaining space */
+        .spacer-div { flex-grow: 1; min-height: 10px; }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center; justify-content: center;
+            flex-grow: 1; /* Grow to fill space */
+            min-height: 50px; /* Minimum size */
+            max-height: 150px; /* Cap size so it doesn't get absurd */
+            padding: 10px 0;
+            overflow: hidden;
+        }
+
+        .sidebar-logo img {
+            max-width: 100%;
+            max-height: 100%; /* Fit within container */
+            width: auto;
+            object-fit: contain;
+            opacity: 0.85;
+            transition: 0.2s ease;
+        }
+        .sidebar-logo:hover img { opacity: 1; transform: scale(1.03); }
+
+        .bottom-actions { flex-shrink: 0; padding-bottom: 5px; }
+
+        /* YouTube CTA */
+        .youtube-cta {
+            width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 10px;
+            background: #ff0000; color: white; text-decoration: none;
+            font-family: var(--font-headline); letter-spacing: 1px;
+            font-size: 0.8rem; border-radius: 6px;
+            transition: 0.2s ease; box-shadow: 0 0 14px rgba(255, 0, 0, 0.45);
+            box-sizing: border-box;
+        }
+        .youtube-cta i { font-size: 1.1rem; }
+        .youtube-cta:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 0 18px rgba(255, 0, 0, 0.65); }
+        
+        /* Socials */
+        .sidebar-socials {
+            margin-top: 10px;
+            display: flex; justify-content: center; gap: 15px;
+        }
+        .sidebar-socials a { color: #888; font-size: 1.2rem; transition: 0.2s ease; }
+        .sidebar-socials a:hover { color: var(--electric-blue); transform: translateY(-2px); }
+
+        /* --- MAP VIEWPORT --- */
+        #planner-viewport {
+            flex: 1; position: relative; background: #050505;
+            background-image: radial-gradient(#222 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow: hidden; cursor: default; touch-action: none;
+        }
+
+        #mapWrapper {
+            position: absolute; top: 0; left: 0;
+            transform-origin: 0 0;
+            display: inline-block;
+            width: auto; height: auto;
+        }
+
+        #mapImage { pointer-events: none; display: block; user-select: none; }
+        
+        #drawing-canvas {
+            position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10;
+        }
+        #drawing-canvas.active { pointer-events: auto; }
+
+        #token-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: 20; pointer-events: none;
+        }
+
+        /* Token Styles */
+        .token-wrapper {
+            position: absolute; 
+            width: 40px; height: 40px; 
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: grab; z-index: 100;
+            pointer-events: auto; touch-action: none; user-select: none;
+        }
+        .token-wrapper:hover {
+            background: rgba(1, 163, 235, 0.4); 
+            border-color: var(--electric-blue);
+        }
+        .token-wrapper img {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); 
+            width: auto; height: auto; 
+            pointer-events: none;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
+            -webkit-user-drag: none; user-drag: none;
+        }
+        .token-wrapper.dragging { cursor: grabbing; z-index: 999; }
+        
+        #ghost-token {
+            position: fixed; pointer-events: none; opacity: 0.6; z-index: 9999;
+            transform: translate(-50%, -50%); display: none;
+            width: auto; height: auto;
+        }
+
+        .map-loader {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: var(--electric-blue); font-family: var(--font-headline); font-size: 2rem;
+            display: none; pointer-events: none;
+        }
+
+        #context-menu {
+            position: fixed; background: #111; border: 1px solid var(--electric-blue);
+            z-index: 10000; display: none; padding: 5px;
+        }
+        #context-menu button {
+            background: none; border: none; color: white; padding: 8px 15px;
+            width: 100%; text-align: left; cursor: pointer;
+        }
+        #context-menu button:hover { background: var(--electric-blue); }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div id="planner-sidebar">
+            <!-- Navigation -->
+            <div class="sidebar-nav">
+                <a href="/" class="nav-link">HOME</a>
+                <a href="/tournaments" class="nav-link">TOURNAMENTS</a>
+                <a href="/merch" class="nav-link">MERCH</a>
+                <a href="/donate" class="nav-link">DONATE</a>
+            </div>
+
+            <div class="sidebar-header">
+                <h2>Spawn Manipulation</h2>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="control-group">
+                    <label class="control-label">MAP</label>
+                    <select id="mapSelect" class="planner-select">
+                        <option value="Bernal">Bernal</option>
+                        <option value="Citadel">Citadel</option>
+                        <option value="Fortune">Fortune</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Seoul">Seoul</option>
+                        <option value="Skyway">Skyway</option>
+                        <option value="SysHorizon">SysHorizon</option>
+                        <option value="Vegas">Vegas</option>
+                        <option value="Fangwai">Fangwai</option>
+                    </select>
+                </div>
+
+                <!-- NEW LEGEND SECTION -->
+                <div class="control-group">
+                    <label class="control-label">MAP KEY</label>
+                    <ul class="legend-list">
+                        <li>
+                            <div class="legend-dot" style="background: white;"></div>
+                            <span>Dot: Spawn Points</span>
+                        </li>
+                        <li>
+                            <div class="legend-dot" style="background: #122eff;"></div>
+                            <span>Player Block Radius</span>
+                        </li>
+                        <li>
+                            <div class="legend-dot" style="background: #d60000;"></div>
+                            <span>Objective Block Radius</span>
+                        </li>
+                        <li>
+                            <div class="legend-dot" style="background: #036d06;"></div>
+                            <span>Objective Max Range</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">TOOLS</label>
+                    <div class="tool-grid">
+                        <div class="tool-btn active" data-tool="cursor">
+                            <i class="fa-solid fa-arrow-pointer"></i> Cursor
+                        </div>
+                        <div class="tool-btn" data-tool="draw">
+                            <i class="fa-solid fa-paintbrush"></i> Draw
+                        </div>
+                        <div class="tool-btn" data-tool="player">
+                            <i class="fa-solid fa-user"></i> Player
+                        </div>
+                        <div class="tool-btn" data-tool="cashbox">
+                            <i class="fa-solid fa-box"></i> Box
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group" id="brush-controls" style="display:none;">
+                    <label class="control-label">BRUSH</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="color" id="brush-color" value="#01a3eb" style="border:none; background:none; cursor:pointer;">
+                        <input type="range" id="brush-size" min="2" max="30" value="5" style="flex:1;">
+                    </div>
+                </div>
+
+                <div class="control-group btn-group">
+                    <button id="reset-view" class="action-btn">Reset Camera</button>
+                    <!-- NEW CLEAR DRAWINGS BUTTON -->
+                    <button id="clear-drawings" class="action-btn">Clear Drawings</button>
+                    <button id="clear-all" class="action-btn danger">Clear Everything</button>
+                </div>
+<a href="/" class="sidebar-logo">
+    <img src="images/logo.png" alt="Ape Squad Home">
+</a>
+
+<!-- VIDEO -->
+<!-- YOUTUBE CTA BUTTON -->
+<a 
+    href="https://www.youtube.com/watch?v=o1xsuZBKz-g" 
+    target="_blank" 
+    class="youtube-cta">
+    <i class="fa-brands fa-youtube"></i>
+    WATCH TUTORIAL ON YOUTUBE
+</a>
+
+
+<!-- SOCIAL LINKS -->
+<div class="sidebar-socials">
+    <a href="https://x.com/apesquadorg" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+    <a href="https://twitch.tv/apesquadorg" target="_blank"><i class="fa-brands fa-twitch"></i></a>
+    <a href="https://www.youtube.com/@ApeSquadOrg" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    <a href="https://www.linkedin.com/company/ape-squad-org" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+</div>
+
+            </div>
+        </div>
+
+        <div id="planner-viewport">
+            <div class="map-loader" id="loader">LOADING...</div>
+            <div id="mapWrapper">
+                <img id="mapImage" src="" alt="">
+                <canvas id="drawing-canvas"></canvas>
+                <div id="token-layer"></div>
+            </div>
+        </div>
+    </main>
+
+    <img id="ghost-token" src="">
+    
+    <div id="context-menu">
+        <button id="ctx-delete">Delete</button>
+    </div>
+
+    <script>
+        class TacticalMap {
+            constructor() {
+                // Elements
+                this.viewport = document.getElementById('planner-viewport');
+                this.wrapper = document.getElementById('mapWrapper');
+                this.mapImage = document.getElementById('mapImage');
+                this.canvas = document.getElementById('drawing-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.tokenLayer = document.getElementById('token-layer');
+                this.ghost = document.getElementById('ghost-token');
+                
+                // State
+                this.scale = 1;
+                this.panX = 0;
+                this.panY = 0;
+                this.isPanning = false;
+                this.lastMouseX = 0;
+                this.lastMouseY = 0;
+                this.currentTool = 'cursor';
+                
+                // Assets
+                this.assets = {
+                    player: 'images/mapsmanip/Player.png',
+                    cashbox: 'images/mapsmanip/Cashbox.png'
+                };
+
+                // Brush
+                this.isDrawing = false;
+                this.brushColor = '#01a3eb';
+                this.brushSize = 5;
+
+                this.init();
+            }
+
+            init() {
+                this.loadMap('Bernal');
+                this.setupControls();
+                this.setupMapInteractions();
+            }
+
+            loadMap(name) {
+                document.getElementById('loader').style.display = 'block';
+                this.mapImage.style.opacity = '0';
+                
+                const img = new Image();
+                img.onload = () => {
+                    this.mapImage.src = img.src;
+                    this.mapImage.style.opacity = '1';
+                    document.getElementById('loader').style.display = 'none';
+                    
+                    this.canvas.width = img.naturalWidth;
+                    this.canvas.height = img.naturalHeight;
+                    
+                    this.fitToScreen();
+                };
+                img.onerror = () => { document.getElementById('loader').innerText = "IMG NOT FOUND"; };
+                img.src = `images/mapsmanip/${name}.png`;
+            }
+
+            fitToScreen() {
+                const margin = 50;
+                const w = this.viewport.clientWidth - margin;
+                const h = this.viewport.clientHeight - margin;
+                const mapW = this.canvas.width || 1000;
+                const mapH = this.canvas.height || 1000;
+                
+                this.scale = Math.min(w / mapW, h / mapH);
+                this.panX = (this.viewport.clientWidth - (mapW * this.scale)) / 2;
+                this.panY = (this.viewport.clientHeight - (mapH * this.scale)) / 2;
+                this.updateTransform();
+            }
+
+            updateTransform() {
+                this.wrapper.style.transform = `translate(${this.panX}px, ${this.panY}px) scale(${this.scale})`;
+            }
+
+            setupControls() {
+                document.getElementById('mapSelect').onchange = (e) => {
+                    this.tokenLayer.innerHTML = ''; 
+                    this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height); 
+                    this.loadMap(e.target.value);
+                };
+
+                document.querySelectorAll('.tool-btn').forEach(btn => {
+                    btn.onclick = () => {
+                        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.currentTool = btn.dataset.tool;
+                        
+                        this.canvas.classList.remove('active');
+                        this.ghost.style.display = 'none';
+                        document.getElementById('brush-controls').style.display = 'none';
+
+                        if(this.currentTool === 'draw') {
+                            this.canvas.classList.add('active');
+                            document.getElementById('brush-controls').style.display = 'block';
+                        }
+                        else if(['player', 'cashbox'].includes(this.currentTool)) {
+                            this.ghost.src = this.assets[this.currentTool];
+                            this.ghost.style.display = 'block';
+                        }
+                    }
+                });
+
+                // Clear Everything (Drawings + Tokens)
+                document.getElementById('clear-all').onclick = () => {
+                    if(confirm("Clear everything (Tokens and Drawings)?")) {
+                        this.tokenLayer.innerHTML = '';
+                        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+                    }
+                };
+
+                // Clear Drawings Only
+                document.getElementById('clear-drawings').onclick = () => {
+                    this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+                };
+                
+                document.getElementById('reset-view').onclick = () => this.fitToScreen();
+
+                document.getElementById('brush-color').oninput = (e) => this.brushColor = e.target.value;
+                document.getElementById('brush-size').oninput = (e) => this.brushSize = e.target.value;
+                
+                document.addEventListener('click', (e) => {
+                     document.getElementById('context-menu').style.display = 'none';
+                });
+                document.getElementById('ctx-delete').onclick = () => {
+                    if(this.ctxTarget) this.ctxTarget.remove();
+                };
+            }
+
+            setupMapInteractions() {
+                this.viewport.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const oldScale = this.scale;
+                    const delta = -Math.sign(e.deltaY) * 0.1;
+                    this.scale = Math.max(0.05, Math.min(4, this.scale + delta));
+                    
+                    const rect = this.viewport.getBoundingClientRect();
+                    const mouseX = e.clientX - rect.left;
+                    const mouseY = e.clientY - rect.top;
+                    
+                    const scaleChange = this.scale - oldScale;
+                    this.panX -= (mouseX - this.panX) / oldScale * scaleChange;
+                    this.panY -= (mouseY - this.panY) / oldScale * scaleChange;
+                    
+                    this.updateTransform();
+                    this.updateGhost(e); 
+                });
+
+                this.viewport.addEventListener('mousedown', (e) => {
+                    if(e.button === 1 || (e.button === 0 && this.currentTool === 'cursor')) {
+                        if(e.target === this.viewport || e.target === this.mapImage || e.target.id === 'token-layer') {
+                            this.isPanning = true;
+                            this.lastMouseX = e.clientX;
+                            this.lastMouseY = e.clientY;
+                            this.viewport.style.cursor = 'grabbing';
+                        }
+                    }
+                    else if(e.button === 0 && ['player', 'cashbox'].includes(this.currentTool)) {
+                        this.addToken(e);
+                    }
+                });
+
+                window.addEventListener('mousemove', (e) => {
+                    if(this.isPanning) {
+                        this.panX += e.clientX - this.lastMouseX;
+                        this.panY += e.clientY - this.lastMouseY;
+                        this.lastMouseX = e.clientX;
+                        this.lastMouseY = e.clientY;
+                        this.updateTransform();
+                    }
+                    this.updateGhost(e);
+                });
+
+                window.addEventListener('mouseup', () => {
+                    this.isPanning = false;
+                    if(this.currentTool === 'cursor') this.viewport.style.cursor = 'default';
+                });
+
+                // DRAWING
+                const getCanvasPos = (e) => {
+                    const rect = this.wrapper.getBoundingClientRect();
+                    return {
+                        x: (e.clientX - rect.left) / this.scale,
+                        y: (e.clientY - rect.top) / this.scale
+                    };
+                };
+
+                this.canvas.addEventListener('mousedown', (e) => {
+                    if(this.currentTool !== 'draw') return;
+                    this.isDrawing = true;
+                    this.ctx.beginPath();
+                    const pos = getCanvasPos(e);
+                    this.ctx.moveTo(pos.x, pos.y);
+                });
+
+                window.addEventListener('mousemove', (e) => {
+                    if(!this.isDrawing) return;
+                    const pos = getCanvasPos(e);
+                    this.ctx.lineTo(pos.x, pos.y);
+                    this.ctx.strokeStyle = this.brushColor;
+                    this.ctx.lineWidth = this.brushSize;
+                    this.ctx.lineCap = 'round';
+                    this.ctx.stroke();
+                });
+
+                window.addEventListener('mouseup', () => this.isDrawing = false);
+            }
+
+            updateGhost(e) {
+                if(this.ghost.style.display === 'block') {
+                    this.ghost.style.left = e.clientX + 'px';
+                    this.ghost.style.top = e.clientY + 'px';
+                    this.ghost.style.transform = `translate(-50%, -50%) scale(${this.scale})`;
+                }
+            }
+
+            addToken(e) {
+                const rect = this.wrapper.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / this.scale;
+                const y = (e.clientY - rect.top) / this.scale;
+
+                const el = document.createElement('div');
+                el.className = 'token-wrapper ' + this.currentTool;
+                // Position centered on mouse
+                el.style.left = x + 'px';
+                el.style.top = y + 'px';
+                
+                const img = document.createElement('img');
+                img.src = this.assets[this.currentTool];
+                
+                el.appendChild(img);
+                this.setupTokenDrag(el);
+                
+                el.oncontextmenu = (ev) => {
+                    ev.preventDefault();
+                    ev.stopPropagation(); 
+                    this.ctxTarget = el;
+                    const menu = document.getElementById('context-menu');
+                    menu.style.display = 'block';
+                    menu.style.left = ev.clientX + 'px';
+                    menu.style.top = ev.clientY + 'px';
+                }
+
+                this.tokenLayer.appendChild(el);
+            }
+
+            setupTokenDrag(el) {
+                el.onpointerdown = (e) => {
+                    if(e.button !== 0 || this.currentTool !== 'cursor') return;
+                    e.preventDefault(); 
+                    e.stopPropagation(); 
+                    el.setPointerCapture(e.pointerId);
+                    el.classList.add('dragging');
+                    el.isDragging = true;
+                };
+
+                el.onpointermove = (e) => {
+                    if(!el.isDragging) return;
+                    const rect = this.wrapper.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / this.scale;
+                    const y = (e.clientY - rect.top) / this.scale;
+                    el.style.left = x + 'px';
+                    el.style.top = y + 'px';
+                };
+
+                el.onpointerup = (e) => {
+                    el.isDragging = false;
+                    el.classList.remove('dragging');
+                    el.releasePointerCapture(e.pointerId);
+                };
+            }
+        }
+
+        window.onload = () => new TacticalMap();
+    </script>
+</body>
+</html>
+

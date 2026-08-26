@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-8868N4WQZJ');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Official rules and format for the Ape Squad Tournament. Find information on prize pool, schedule, map pool, points, and how to enter.">
-<title>Ape Squad: Rules | Ape Squad</title>
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
 
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official rules and format for the Ape Squad RFI Tournament. Find information on prize pool, schedule, map pool, RFI points, and how to enter.">
+    <title>Ape Squad: Rules | Ape Squad</title>
 
-<!-- Link to global stylesheet -->
-<link rel="stylesheet" href="/style.css">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a">
 
+    <!-- No-JS Fallback -->
+    <noscript><style>body { opacity: 1; }</style></noscript>
+
+    <!-- Google Fonts (Updated for new design) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Link to global stylesheet -->
+    <link rel="stylesheet" href="style.css">
 <!-- Page-specific styles -->
 <style>
     #rules-page {
@@ -31,6 +43,7 @@
             linear-gradient(rgba(10, 10, 10, 0.7), var(--darker-bg)),
             radial-gradient(circle at 10% 20%, rgba(3, 183, 250, 0.05) 0%, transparent 40%),
             radial-gradient(circle at 90% 80%, rgba(156, 70, 200, 0.05) 0%, transparent 40%);
+        min-height: 80vh;
     }
 
     .rules-container {
@@ -56,14 +69,62 @@
         text-shadow: none;
     }
 
-    #rules-page .subtitle {
-        text-align: center;
-        font-family: var(--font-tech);
-        color: var(--light-text);
-        opacity: 0.8;
-        margin-bottom: 50px;
+    /* --- TAB NAVIGATION STYLES --- */
+    .rules-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
     }
 
+    .tab-btn {
+        background: var(--dark-grey);
+        border: 2px solid var(--primary-purple);
+        color: var(--light-text);
+        padding: 12px 25px;
+        font-family: var(--font-headings);
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 5px;
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tab-btn:hover {
+        border-color: var(--accent-orange);
+        color: var(--accent-orange);
+        box-shadow: 0 0 15px rgba(242, 144, 69, 0.3);
+        transform: translateY(-2px);
+    }
+
+    .tab-btn.active {
+        background: var(--primary-purple);
+        border-color: var(--primary-purple);
+        color: #fff;
+        box-shadow: 0 0 20px rgba(156, 70, 200, 0.4);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* --- TAB CONTENT STYLES --- */
+    .tab-content {
+        display: none; /* Hidden by default */
+        animation: fadeEffect 0.5s;
+    }
+
+    .tab-content.active {
+        display: block; /* Show when active */
+    }
+
+    @keyframes fadeEffect {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* --- EXISTING CONTENT STYLES --- */
     .rules-section {
         margin-bottom: 40px;
         padding-bottom: 25px;
@@ -87,6 +148,7 @@
         background: none;
         -webkit-text-fill-color: unset;
         animation: none;
+        font-family: var(--font-headings);
     }
 
     .rules-section h3 {
@@ -160,12 +222,21 @@
         color: var(--light-text);
         border-radius: 5px;
     }
+    
+    /* Responsive adjustment for tabs */
+    @media (max-width: 600px) {
+        .tab-btn {
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            flex: 1 1 45%; /* Buttons take up half width */
+        }
+    }
 </style>
 </head>
 <body>
 
 <!-- This header is populated by js/main.js -->
-<header></header>
+<header class="navbar"></header> <!-- Populated by main.js -->
 
 <main>
     <!-- Start of unique page content -->
@@ -175,10 +246,23 @@
             <div class="rules-container">
     
                 <h1>Ape Squad: Rules</h1>
+                
+                <!-- TAB BUTTONS -->
+                <div class="rules-tabs">
+                    <button class="tab-btn active" onclick="openRules(event, 'rules-3v3')">3v3</button>
+                    <button class="tab-btn" onclick="openRules(event, 'rules-cashout')">Cashout</button>
+                    <button class="tab-btn" onclick="openRules(event, 'rules-pointbreak')">Point Break</button>
+                    <button class="tab-btn" onclick="openRules(event, 'rules-powershift')">Powershift</button>
+                </div>
     
-                <div class="rules-section">
+                <!-- ========================================== -->
+                <!-- CONTENT TAB 1: 3v3 (Default Content)       -->
+                <!-- ========================================== -->
+                <div id="rules-3v3" class="tab-content active">
+                                    <div class="rules-section">
                     <h2>Tournament Information</h2>
                     <p><strong>Note:</strong> Tournament Rules are subject to change. Please join the official Discord server and check this page regularly to stay up to date.</p>
+                    <p><strong>Note:</strong> This event is operated independently. Embark Studios is not responsible for tournament operations or prize distribution.</p>
                     
                     <h3>Organization & Links</h3>
                     <ul>
@@ -188,7 +272,7 @@
                         <li><strong>Official Discord (Required):</strong> <a href="https://discord.gg/apesquad" target="_blank" rel="noopener noreferrer">https://discord.gg/apesquad</a></li>
                         <li><strong>Tournament Bracket:</strong> View Bracket (Link TBA)</li>
                     </ul>
-    
+
                     <h3>Prize Pool</h3>
                     <ul>
                         <li><strong>1st Place Team:</strong> 60%</li>
@@ -196,7 +280,7 @@
                         <li><strong>3rd Place Team:</strong> 10%</li>
                     </ul>
                 </div>
-    
+
                 <div class="rules-section">
                     <h2>Tournament Entry</h2>
                     <ul>
@@ -208,8 +292,25 @@
                     </ul>
                 </div>
                 
-                  
-    
+                <div class="rules-section">
+                    <h2>Tournament Format</h2>
+                    
+                    <h3>Day 1</h3>
+                    <ul>
+                        <li><strong>Format:</strong> Standard 3v3, double-elimination bracket.</li>
+                        <li><strong>Winners / Losers Bracket:</strong> Best of 3 (Bo3).</li>
+                        <li><strong>Played until 16 teams remain</li>
+                    </ul>
+
+                    <h3>Top 16</h3>
+                    <ul>
+                        <li><strong>Format:</strong>Top 16 restarts back in Winners Bracket, Standard 3v3, double-elimination bracket.</li>
+                        <li><strong>Winners / Losers Bracket:</strong> Best of 3 (Bo3).</li>
+                        <li><strong>Winners Grand Finals:</strong> Best of 3 (Bo3).</li>
+                        <li><strong>Bracket Reset:</strong> If required, a Best of 3 (Bo3) series will be played.</li>
+                    </ul>
+                </div>
+
                 <div class="rules-section">
                     <h2>Map and Server Selection</h2>
                     <h3>Map Selection Process</h3>
@@ -229,8 +330,8 @@
 
                     <h3>Server Selection</h3>
                     <ul>
-                        <li><strong>EU Mainstage:</strong> Played on EU servers.</li>
-                        <li><strong>NA Mainstage:</strong> Played on NA servers.</li>
+                        <li><strong>EMEA Main Stage:</strong> Played on EU servers.</li>
+                        <li><strong>Americas Main Stage:</strong> Played on NA servers.</li>
                     </ul>
 
                     <h3>Score Reporting</h3>
@@ -244,13 +345,13 @@
                     
                     <h3>Seeding</h3>
                     <ul>
-                        <li><strong>Procedure:</strong> RFI Rankings are used to seed the bracket (e.g., #1 plays #16). Random seeding will only be used for unranked teams at the bottom of the seeding bracket.</li>
+                        <li><strong>Procedure:</strong> RFI Rankings are used to seed the bracket when applicable. Random seeding is only to be used for unranked teams at the bottom of the seeding.</li>
                     </ul>
                 </div>
 
                 <div class="rules-section">
                     <h2>Gameplay Rules</h2>
-                    <p class="rule-highlight">ALL PLAYERS MUST RECORD OR STREAM THEIR GAMEPLAY. Failure to provide footage upon request may result in disqualification.</p>
+                    <p class="rule-highlight">ALL PLAYERS MUST RECORD OR STREAM THEIR GAMEPLAY. Failure to provide footage upon request may result in disqualification. (Record or Not at your own risk)</p>
                     <ul>
                         <li><strong>Banned Items:</strong> There are currently no banned classes or items.</li>
                         <li><strong>Substitutions:</strong> Subs are allowed before the tournament begins. Inform a Tournament Organizer (TO) immediately.</li>
@@ -262,7 +363,21 @@
                         </li>
                     </ul>
                 </div>
-    
+                    
+                <div class="rules-section">
+                    <h2>Coaching</h2>
+
+                    <h3>No Mid-Round Coaching</h3>
+                    <p>To maintain competitive integrity, coaches are strictly prohibited from communicating with players during active gameplay.</p>
+                    <ul>
+                        <li><strong>Voice Chat Restrictions:</strong> Coaches <strong>must be deafened</strong> or completely leave the team's voice channel (VC) while a match is in progress.</li>
+                        <li><strong>Allowed Communication:</strong> Coaches may only speak to, message, or strategize with their team <strong>between matches</strong></li>
+                        <li><strong>Screen Sharing:</strong> Coaches may watch their team's screen shares, provided they remain entirely muted and deafened in the voice channel.</li>
+                    </ul>
+                    <p>Failure to comply with these rules will be treated as unauthorized competitive assistance and may result in immediate forfeiture of the map or series.</p>
+                </div>
+
+                    
                 <div class="rules-section">
                     <h2>Technical & Procedural Rules</h2>
 
@@ -277,11 +392,219 @@
                     <ul>
                         <li>Captains must check in via the private <span class="discord-channel">#✅check-in</span> channel at least <strong>60 minutes prior</strong> to the tournament.</li>
                         <li>Teams not checked in <strong>30 minutes prior</strong> will be replaced by a reserve team.</li>
-                      <li><strong>Failure to show up may result in a temporary ban from future events. Tournament admins reserve the right to enforce this penalty and make final decisions at their sole discretion.</strong></li>
                     </ul>
                 </div>
 
+<div class="rules-section">
+    <h2>Content Creation & Media Policy</h2>
+    <p>We want to see your clips! Ape Squad maintains an open media policy to encourage players, streamers, and community members to share the action. You are encouraged to watch-party, record, and edit footage from the tournament, provided you adhere to the guidelines below.</p>
+    
+    <h3>Permitted Usage</h3>
+    <ul>
+        <li><strong>Transformative Content:</strong> You are free to create and publish highlights, montages, news recaps, and short-form clips (TikTok/Shorts) using footage from the <strong>Official Ape Squad Broadcast</strong>.</li>
+        <li><strong>Stream POV:</strong> Players are fully permitted to stream, record, and upload their own Point of View (POV) without restriction.</li>
+        <li><strong>Monetization:</strong> You are allowed to monetize any content you create based on the tournament (e.g., YouTube ad revenue, Twitch bits), provided it follows the restrictions below.</li>
+    </ul>
 
+    <h3>Restrictions & Attribution</h3>
+    <ul>
+        <li><strong>No Full Broadcast Uploads:</strong> You may <strong>not</strong> re-upload the official broadcast in its entirety or upload unedited full-match VODs to YouTube or other platforms. Content must be edited or transformative (e.g., highlights or commentary).</li>
+        <li><strong>Credit Required:</strong> When using official broadcast footage, you must credit <strong>Ape Squad</strong> in the description, tag, or caption.</li>
+        <li><strong>No Misrepresentation:</strong> You may not present content in a way that suggests you own the event or represent the Ape Squad brand officially.</li>
+    </ul>
+</div>
+            </div>
+
+
+<!-- ========================================== -->
+<!-- CONTENT TAB 2: CASHOUT                     -->
+<!-- ========================================== -->
+<div id="rules-cashout" class="tab-content">
+    <div class="rules-section">
+        <h2>Tournament Information</h2>
+        <p><strong>Note:</strong> Tournament Rules are subject to change. Please join the official Discord server and check this page regularly to stay up to date.</p>
+
+        <h3>Organization & Links</h3>
+        <ul>
+            <li><strong>Hosted by:</strong> Ape Squad</li>
+            <li><strong>Servers:</strong> NA/EU Depending on Region of Tournament</li>
+            <li><strong>Official Stream:</strong> <a href="https://www.twitch.tv/ApeSquadOrg" target="_blank" rel="noopener noreferrer">ApeSquadOrg on Twitch</a></li>
+            <li><strong>Official Discord (Required):</strong> <a href="https://discord.gg/apesquad" target="_blank" rel="noopener noreferrer">https://discord.gg/apesquad</a></li>
+        </ul>
+
+        <h3>Prize Pool Split between regions</h3>
+        <ul>
+            <li><strong>1st Place Team:</strong> 60%</li>
+            <li><strong>2nd Place Team:</strong> 30%</li>
+            <li><strong>3rd Place Team:</strong> 10%</li>
+        </ul>
+    </div>
+
+    <div class="rules-section">
+        <h2>Team Management & Substitutions</h2>
+        <ul>
+            <li><strong>Captain Control:</strong> Team captains will have full control over their team's roster, logo, and team name.</li>
+            <li><strong>Approval:</strong> All decisions regarding roster adjustments, team logos, and team names must be finalized by official Tournament Organizers (TOs) before going into effect.</li>
+        </ul>
+
+        <h3>Substitution Rules</h3>
+        <ul>
+            <li><strong>Valid Reasons:</strong> Teams may replace a player or add a sub <em>only</em> in the event of a confirmed absence or inability to continue.</li>
+            <li><strong>Player Eligibility:</strong> Replacement players must not have competed for any other team in the current tournament.</li>
+            <li><strong>Admin Approval:</strong> All substitutions require admin (TO) approval before the new player is allowed to participate.</li>
+        </ul>
+    </div>
+
+    <div class="rules-section">
+        <h2>Map & Match Settings</h2>
+        <ul>
+            <li><strong>Game Mode:</strong> Ranked Cashout.</li>
+            <li><strong>Map Conditions:</strong> All maps must be played on <strong>Sunny</strong> weather and <strong>Day</strong> time variations.</li>
+        </ul>
+    </div>
+    
+   <div class="rules-section">
+        <h2>Gameplay Rules & Conduct</h2> <!-- Recommended: update this heading -->
+        <p class="rule-highlight">ALL PLAYERS MUST RECORD OR STREAM THEIR GAMEPLAY. Failure to provide footage upon request may result in disqualification. (Record or Not at your own risk)</p>
+        <ul>
+            <li><strong>Banned Items:</strong> There are currently no banned classes or items.</li>
+            <li><strong>Cheating & Exploits:</strong> Strictly prohibited. Teams found cheating will be disqualified. This includes third-party software, scripts, and in-game exploits.
+                <ul>
+                    <li>See <a href="https://id.embark.games/support/faq/76-the-finals-fair-play-guidelines" target="_blank" rel="noopener noreferrer">THE FINALS Fair Play Guidelines</a>.</li>
+                    <li>All players must adhere to <strong>THE FINALS Esports Global Rulebook</strong>, which governs player eligibility, team composition, and code of conduct.</li>
+                </ul>
+            </li>
+        </ul>
+        
+        <h3>Community Conduct & Eligibility</h3>
+        <ul>
+            <li><strong>Community Space Eligibility:</strong> To compete, all players must maintain good standing within Ape Squad community spaces (e.g., the official Discord). Harassment, extreme toxicity, or being suspended/banned in the community server will result in immediate loss of tournament eligibility and possible team disqualification.</li>
+        </ul>
+    </div>
+
+    <div class="rules-section">
+        <h2>Coaching</h2>
+
+        <h3>No Mid-Round Coaching</h3>
+        <p>To maintain competitive integrity, coaches are strictly prohibited from communicating with players during active gameplay.</p>
+        <ul>
+            <li><strong>Voice Chat Restrictions:</strong> Coaches <strong>must be deafened</strong> or completely leave the team's voice channel (VC) while a match is in progress.</li>
+            <li><strong>Allowed Communication:</strong> Coaches may only speak to, message, or strategize with their team <strong>between matches</strong>.</li>
+            <li><strong>Screen Sharing:</strong> Coaches may watch their team's screen shares, provided they remain entirely muted and deafened in the voice channel.</li>
+        </ul>
+        <p>Failure to comply with these rules will be treated as unauthorized competitive assistance and may result in immediate forfeiture of the map or series.</p>
+    </div>
+    
+    <div class="rules-section">
+        <h2>Technical & Procedural Rules</h2>
+
+        <h3>Disconnects & Remakes</h3>
+        <p>Each team is allotted <strong>one (1) technical remake per series</strong>. A remake can be requested if a player disconnects or crashes under the following condition:</p>
+        <ul>
+            <li>The issue occurs <strong>before the first vault has been 50% opened</strong>.</li>
+        </ul>
+        <p>After that point, the game must continue. Intentional disconnects are a serious offense and may result in forfeiture.</p>
+
+        <h3>Check-in & Voice Channels</h3>
+        <ul>
+            <li>Captains must check in via the private <span class="discord-channel">#✅check-in</span> channel at least <strong>60 minutes prior</strong> to the tournament.</li>
+            <li>Teams not checked in <strong>30 minutes prior</strong> will be replaced by a reserve team.</li>
+            <li><strong>Voice Channels:</strong> All participating players must be in an official Ape Squad Discord voice channel during the event.</li>
+        </ul>
+    </div>
+
+    <div class="rules-section">
+        <h2>Content Creation & Media Policy</h2>
+        <p>We want to see your clips! Ape Squad maintains an open media policy to encourage players, streamers, and community members to share the action. You are encouraged to watch-party, record, and edit footage from the tournament, provided you adhere to the guidelines below.</p>
+        
+        <h3>Permitted Usage</h3>
+        <ul>
+            <li><strong>Transformative Content:</strong> You are free to create and publish highlights, montages, news recaps, and short-form clips (TikTok/Shorts) using footage from the <strong>Official Ape Squad Broadcast</strong>.</li>
+            <li><strong>Stream POV:</strong> Players are fully permitted to stream, record, and upload their own Point of View (POV) without restriction.</li>
+            <li><strong>Monetization:</strong> You are allowed to monetize any content you create based on the tournament (e.g., YouTube ad revenue, Twitch bits), provided it follows the restrictions below.</li>
+        </ul>
+
+        <h3>Restrictions & Attribution</h3>
+        <ul>
+            <li><strong>No Full Broadcast Uploads:</strong> You may <strong>not</strong> re-upload the official broadcast in its entirety or upload unedited full-match VODs to YouTube or other platforms. Content must be edited or transformative (e.g., highlights or commentary).</li>
+            <li><strong>Credit Required:</strong> When using official broadcast footage, you must credit <strong>Ape Squad</strong> in the description, tag, or caption.</li>
+            <li><strong>No Misrepresentation:</strong> You may not present content in a way that suggests you own the event or represent the Ape Squad brand officially.</li>
+        </ul>
+    </div>
+</div>
+                <!-- ========================================== -->
+                <!-- CONTENT TAB 3: POINT BREAK                 -->
+                <!-- ========================================== -->
+                <div id="rules-pointbreak" class="tab-content">
+                    <div class="rules-section">
+                        <h2>Point Break Rules</h2>
+                       <p class="rules-subtitle">Please read the specific Attack/Defend rules carefully.</p>
+
+                <!-- Match Structure -->
+                <div class="rules-section">
+                    <h3>Match Flow & Scoring</h3>
+                    <ul>
+                        <li><strong>Bracket:</strong> 16 Teams, Single Elimination.</li>
+                        <li><strong>Series Structure:</strong> Two games per match. Teams will take turns Attacking and Defending in Point Break.</li>
+                        <li><strong>Timer:</strong> Attackers have exactly <strong>15 minutes</strong> to destroy objectives.</li>
+                        <li><strong>Hard Stop:</strong> After 15 minutes, the match ends immediately, regardless of remaining lives or objective health.</li>
+                        <li><strong>Scoring:</strong> 1 Point is awarded for each objective destroyed.</li>
+                        <li><strong>Map Selection:</strong> Each Team picks one map to veto and the games are played on the remaining map.</li>
+                    </ul>
+                </div>
+
+                <!-- THE BREAKING POINT (TIE BREAKER) -->
+                <div class="rules-section">
+                    <div class="breaking-point-box">
+                        <div class="breaking-point-title"><i class="fa-solid fa-gavel"></i> The Breaking Point (Tie-Breaker)</div>
+                        <p style="margin-top: 1rem;">If both sides earn the same score after two games, the <strong>Breaking Point</strong> is reached.</p>
+                        <ul style="margin-top: 1rem;">
+                            <li><strong>Format:</strong> Each team selects <strong>ONE Champion</strong> to represent their squad.</li>
+                            <li><strong>Mode:</strong> 1v1 Team Deathmatch (Single Round).</li>
+                            <li><strong>Loadout:</strong> Any class and any gear is allowed.</li>
+                            <li><strong>Stakes:</strong> The winner of the 1v1 moves their team to the next stage. The loser is eliminated.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Restrictions -->
+                <div class="rules-section">
+                    <h3>Restrictions & Fair Play</h3>
+                    <p>During a Point Break match, "anything goes" with one major exception regarding objective interaction.</p>
+                    <ul>
+                        <li><strong>Forbidden Exploits:</strong> Do not use exploits to prevent the objective from being armed or defused.</li>
+                        <li><strong>Specific Examples:</strong> 
+                            <ul>
+                                <li>Moving objectives entirely out of the Attacker zone.</li>
+                                <li>Utilizing equipment (like Barricades/Goo) in a glitched manner that removes the "Interact" prompt.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Penalty:</strong> Violating these rules will result in punishment at the admin team's discretion (Point deduction or Disqualification).</li>
+                    </ul>
+                </div>
+
+                <!-- Technical -->
+                <div class="rules-section">
+                    <h3>Technical</h3>
+                    <ul>
+                        <li><strong>Check-In:</strong> Captains must check in 60 minutes prior to bracket start.</li>
+                        <li><strong>Disconnects:</strong> If a player disconnects, the game continues. No restarts unless the server itself crashes.</li>
+                        <li><strong>Recording:</strong> At least one member per team must record or stream their gameplay for dispute resolution.</li>
+                    </ul>
+                </div>
+
+                </div>
+                </div>
+
+                <!-- ========================================== -->
+                <!-- CONTENT TAB 4: POWERSHIFT                  -->
+                <!-- ========================================== -->
+                <div id="rules-powershift" class="tab-content">
+                    <div class="rules-section">
+                        <h2>Powershift Format Rules</h2>
+                        <p class="rule-highlight">COMING SOON</p>
+                    </div>
+                </div>
     
             </div>
         </div>
@@ -291,12 +614,43 @@
 </main>
 
 <!-- This footer is populated by js/main.js -->
-<footer></footer>
+<footer class="site-footer"></footer>
 
 <!-- Global script for header/footer loading -->
 <script src="/js/main.js"></script>
+    <script src="js/features.js"></script>
+
+<!-- TAB SWITCHING SCRIPT -->
+<script>
+    function openRules(evt, ruleName) {
+        var i, tabcontent, tablinks;
+
+        // 1. Hide all elements with class="tab-content"
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
+        }
+
+        // 2. Remove the class "active" from all elements with class="tab-btn"
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // 3. Show the specific tab content
+        var selectedTab = document.getElementById(ruleName);
+        selectedTab.style.display = "block";
+        
+        // Small timeout to allow the display:block to apply before adding opacity class for animation
+        setTimeout(() => {
+            selectedTab.classList.add("active");
+        }, 10);
+
+        // 4. Add the class "active" to the button that opened the tab
+        evt.currentTarget.className += " active";
+    }
+</script>
+
 </body>
 </html>
-
-
-

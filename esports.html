@@ -1,193 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) - Kept for site-wide analytics -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-8868N4WQZJ');
     </script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Updated Meta Description for SEO -->
-    <meta name="description" content="Meet Ape Aura, the premier esports team under the Ape Squad banner. Discover our roster, achievements, and join our journey to the top.">
-    <!-- Updated Title -->
-    <title>Ape Aura | Our Esports Team</title>
+    <meta name="description" content="The history and active rosters of Ape Squad Esports. From the origins of Emerald Apes to the Road to The Grand Major 2026.">
+    <meta name="keywords" content="Ape Squad, Hiboo, Emerald Apes, esports history, The Finals, competitive gaming">
+    <title>Team & History | Ape Squad Esports</title>
 
-    <!-- Google Fonts (Kept for consistency) -->
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Link to your main stylesheet (Kept for consistency) -->
-    <link rel="stylesheet" href="/style.css">
-
-    <!-- Optional: Add some basic styling for the new elements in case your CSS doesn't cover them -->
+    <!-- Your Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile-card.css">
+    
+    <!-- STYLES SPECIFIC TO HERO, HISTORY & PERFORMANCE -->
     <style>
-        .team-intro {
-            text-align: center;
-            max-width: 800px;
-            margin: 1rem auto 3rem;
-            font-size: 1.2rem;
-            line-height: 1.6;
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
-        /* START: Added styles for the logo */
-        .team-logo-container {
-            text-align: center;
-            margin: 2rem auto 4rem; /* Adds space above and below the logo */
+
+        /* Optimizes rendering lag for below-the-fold content */
+        #major-photos {
+            content-visibility: auto;
+            contain-intrinsic-size: 1px 500px;
         }
-        .team-logo {
-            max-width: 200px; /* Adjust size as needed */
+
+        .clickable-photo {
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            width: 100%;
             height: auto;
-            border-radius: 15px; /* Slightly rounded corners */
-            border: 3px solid #00ffdd; /* Use theme color for consistency */
-            box-shadow: 0 0 20px rgba(0, 255, 221, 0.2); /* Add a subtle glow */
+            display: block;
         }
-        /* END: Added styles for the logo */
-        .section-title {
+
+        .clickable-photo:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
+
+        .legacy-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 2rem 1rem;
             text-align: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
+            height: 100%;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .legacy-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--main-blue, #01a3eb);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .legacy-card h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 1.5px;
+            margin: 0 0 0.5rem 0;
+            color: #fff;
             text-transform: uppercase;
         }
-        .roster-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-        .player-card {
-            background-color: #1a1a1a; /* A dark background for the card */
-            border: 1px solid #333;
-            text-align: center;
-            padding: 1.5rem;
-            border-radius: 8px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .player-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 255, 221, 0.1);
-        }
-        .player-card img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #00ffdd; /* A thematic color */
-            margin-bottom: 1rem;
-        }
-        .player-card h4 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            margin: 0.5rem 0;
-            color: #00ffdd;
-        }
-        .player-role {
-            font-style: italic;
-            color: #aaa;
-            margin-bottom: 1rem;
-        }
-        .achievements-list {
-            list-style: none;
-            padding: 0;
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .achievements-list li {
-            background-color: #1a1a1a;
-            border-left: 4px solid #00ffdd;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
+
+        .legacy-card p {
+            font-family: 'Ayuthaya', monospace;
+            color: #01a3eb;
+            margin: 0;
+            font-size: 1rem;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <!-- This header is left empty. Your js/main.js file will populate it. -->
-    <header></header>
+    <header class="navbar"></header> <!-- Populated by main.js -->
 
     <main>
-        <!-- The ID is changed to be more descriptive of the page content -->
-        <section id="team-page-aura">
-            <div class="container">
 
-                <!-- Main heading using the existing glitch effect -->
-                <h2 class="glitch" data-text="APE AURA">APE AURA</h2>
-                <p class="team-intro">
-                    Forged in the virtual arenas of THE FINALS, Ape Aura is the elite team of contestants under the Ape Squad banner. We're here for the cash, the fame, and the total destruction. Welcome to the show.
+        <!-- ====================================================== -->
+        <!-- HERO BANNER SECTION                                    -->
+        <!-- ====================================================== -->
+        <section id="club-hero">
+            <div class="hero-background-image">
+                <img src="/images/backgrounds/esports.jpg" alt="Ape Squad in the arena" loading="eager" decoding="async">
+            </div>
+            <div class="hero-content container">
+                <h2 class="glitch" data-text="APE SQUAD ESPORTS">APE SQUAD ESPORTS</h2>
+                <p class="club-intro">
+                    Meet the rosters competing in THE FINALS.
                 </p>
-
-                <!-- START: Added Team Logo Section -->
-                <div class="team-logo-container">
-                    <!-- Replace the src with the path to your actual logo file -->
-                    <img src="images/Ape_Aura_LOGO.png" alt="Ape Aura Team Logo" class="team-logo">
-                </div>
-                <!-- END: Added Team Logo Section -->
-
-
-                <!-- Roster Section -->
-                <div id="roster">
-                    <h3 class="section-title">MEET THE TEAM</h3>
-                    <div class="roster-grid">
-                        <!-- Player 1 -->
-                        <div class="player-card">
-                            <img src="https://via.placeholder.com/150" alt="BeamO">
-                            <h4>BeamO</h4>
-                            <p class="player-role">Captain / Light</p>
-                            <p>The Captain. BeamO sees the arena not for what it is, but what it can become. BeamO leads the team with great macro and straight beams.</p>
-                        </div>
-                        <!-- Player 2 -->
-                        <div class="player-card">
-                            <img src="https://via.placeholder.com/150" alt="Udrakoni">
-                            <h4>Udrakoni</h4>
-                            <p class="player-role">Heavy</p>
-                            <p>The heavy hitter. Udrakoni uses his undeniable precense to create space, cause distractions, and deal massive damage so his team can easily follow up.</p>
-                        </div>
-                        <!-- Player 3 -->
-                        <div class="player-card">
-                            <img src="https://via.placeholder.com/150" alt="notBubba">
-                            <h4>notBubba</h4>
-                            <p class="player-role">Medium</p>
-                            <p>The squad's lifeline. Known for clutch shots and perfectly timed support, notBubba keeps the team in the fight and ensures the money keeps flowing to the cashout.</p>
-                        </div>
-                        <!-- Player 4 -->
-                        <div class="player-card">
-                            <img src="https://via.placeholder.com/150" alt="Sonsoyo">
-                            <h4>Sonsoyo</h4>
-                            <p class="player-role">Coach</p>
-                            <p>Sonsoyo analyzes every dynamic arena, crafting strategies, techniques, and ideas that help support the team from the sidelines.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Achievements Section -->
-                <div id="achievements">
-                    <h3 class="section-title">OUR HISTORY</h3>
-                    <ul class="achievements-list">
-                        <li><strong>Embark 100k Open Qualifiers</strong> - Qualified (2025)</li>
-                        <li><strong>PHL Season 1</strong> - 6th Place (2025)</li>
-                    </ul>
-                </div>
-
             </div>
         </section>
+
+
+
+        <!-- ====================================================== -->
+        <!-- CURRENT ROSTER: APE SQUAD 2026 (Road to TGM)           -->
+        <!-- ====================================================== -->
+        <section id="ape-squad-2026" style="padding-bottom: 3rem;">
+            <div class="container">
+                <div class="team-header">
+                    <img src="images/thefinals.png" alt="The Finals Logo" class="team-logo" loading="lazy" decoding="async">
+                </div>
+                <div class="team-header">
+                    <img src="images/apesquad.png" alt="Ape Squad Logo" class="team-logo" loading="lazy" decoding="async">
+                    <h2 class="glitch" data-text="APE SQUAD 2026">APE SQUAD 2026</h2>
+                </div>
+                <p class="squad-intro">
+                    The Road to The Grand Major 2026 roster.
+                </p>
+                <div class="team-grid">
+                    
+                    <!-- Player 1: MyungTan -->
+                    <div class="squad-member-container">
+                        <div class="pc-card-wrapper">
+                            <section class="pc-card">
+                                <div class="pc-inside">
+                                    <div class="pc-shine"></div><div class="pc-glare"></div>
+                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/myungtan.jpg" alt="MyungTan avatar" loading="lazy" decoding="async"></div>
+                                    <div class="pc-content"><div class="pc-details"><h3>MyungTan</h3><p>Medium / Captain</p></div></div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="social-links">
+
+                        </div>
+                    </div>
+
+                    <!-- Player 2: Latte -->
+                    <div class="squad-member-container">
+                        <div class="pc-card-wrapper">
+                            <section class="pc-card">
+                                <div class="pc-inside">
+                                    <div class="pc-shine"></div><div class="pc-glare"></div>
+                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/latte.jpg" alt="Latte avatar" loading="lazy" decoding="async"></div>
+                                    <div class="pc-content"><div class="pc-details"><h3>Latte</h3><p>Flex</p></div></div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="social-links">
+
+                        </div>
+                    </div>
+                    
+                    <!-- Player 3: Byusl -->
+                    <div class="squad-member-container">
+                        <div class="pc-card-wrapper">
+                            <section class="pc-card">
+                                <div class="pc-inside">
+                                    <div class="pc-shine"></div><div class="pc-glare"></div>
+                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/byusl.jpg" alt="Byusl avatar" loading="lazy" decoding="async"></div>
+                                    <div class="pc-content"><div class="pc-details"><h3>Byusl</h3><p>Heavy</p></div></div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="social-links">
+
+                        </div>
+                    </div>
+                    
+                    <!-- Player 4: OOO -->
+                    <div class="squad-member-container">
+                        <div class="pc-card-wrapper">
+                            <section class="pc-card">
+                                <div class="pc-inside">
+                                    <div class="pc-shine"></div><div class="pc-glare"></div>
+                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/ooo.jpg" alt="OOO avatar" loading="lazy" decoding="async"></div>
+                                    <div class="pc-content"><div class="pc-details"><h3>OOO</h3><p>Light</p></div></div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="social-links">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- ERA 1: APE SQUAD 2025 (The Peak)                       -->
+        <!-- ====================================================== -->
+        <section id="ape-squad-2025" style="padding-bottom: 2rem;">
+            <div class="container">
+                <div class="team-header">
+                    <img src="images/thefinals.png" alt="The Finals Logo" class="team-logo" loading="lazy" decoding="async">
+                </div>
+                <div class="team-header">
+                    <img src="images/apesquad.png" alt="Ape Squad Logo" class="team-logo" loading="lazy" decoding="async">
+                    <h2 class="glitch" data-text="APE SQUAD 2025">APE SQUAD 2025</h2>
+                </div>
+                <p class="squad-intro">The TGM25 100k Major team. The roster that defined 2025.</p>
+                <div class="team-grid">
+                    
+                    <!-- Player 1: Mr.RedFox -->
+                    <div class="squad-member-container">
+                        <div class="pc-card-wrapper">
+                            <section class="pc-card">
+                                <div class="pc-inside">
+                                    <div class="pc-shine"></div><div class="pc-glare"></div>
+                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/mrredfox.png" alt="Player avatar" loading="lazy" decoding="async"></div>
+                                    <div class="pc-content"><div class="pc-details"><h3>Mr.RedFox</h3><p>Light</p></div></div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="social-links">
+                            <a href="https://x.com/MrRedFox77" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Player 2: Manda -->
+                    <div class="squad-member-container">
+                        <div class="pc-card-wrapper">
+                            <section class="pc-card">
+                                <div class="pc-inside">
+                                    <div class="pc-shine"></div><div class="pc-glare"></div>
+                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/manda.png" alt="Player avatar" loading="lazy" decoding="async"></div>
+                                    <div class="pc-content"><div class="pc-details"><h3>Manda</h3><p>Heavy</p></div></div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="social-links">
+                             <a href="https://x.com/Manda_YEAH" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Player 3: KriegerBlue -->
+                    <div class="squad-member-container">
+                        <div class="pc-card-wrapper">
+                            <section class="pc-card">
+                                <div class="pc-inside">
+                                    <div class="pc-shine"></div><div class="pc-glare"></div>
+                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/kriegerblue.png" alt="Player avatar" loading="lazy" decoding="async"></div>
+                                    <div class="pc-content"><div class="pc-details"><h3>KriegerBlue</h3><p>Medium</p></div></div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="social-links">
+                             <a href="https://www.twitch.tv/kriegerblue" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                             <a href="https://x.com/KriegerBlue" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                             <a href="https://www.tiktok.com/@kriegerblue?lang=de-DE" target="_blank" title="Tiktok"><i class="fab fa-tiktok"></i></a>
+                             <a href="https://www.instagram.com/krieger.blue/?hl=de" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Coach -->
+                    <div class="squad-member-container">
+                        <div class="pc-card-wrapper">
+                            <section class="pc-card">
+                                <div class="pc-inside">
+                                    <div class="pc-shine"></div><div class="pc-glare"></div>
+                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/tonyquartz.png" alt="Coach avatar" loading="lazy" decoding="async"></div>
+                                    <div class="pc-content"><div class="pc-details"><h3>TonyQuartz</h3><p>Head Coach</p></div></div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="social-links">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    
+        <!-- ====================================================== -->
+        <!-- 100K MAJOR PHOTOS SECTION                              -->
+        <!-- ====================================================== -->
+        <section id="major-photos">
+            <div class="container">
+                <div class="team-header">
+                    <h2 class="glitch" data-text="HISTORICAL GALLERY">HISTORICAL GALLERY</h2>
+                </div>
+                <p class="squad-intro">Highlights from the Ape Squad era. Click to expand.</p>
+                
+                <div class="photo-grid">
+                    <div class="photo-item"><img src="images/major/photo1.jpg" alt="Krieger, Manda, Redfox @ Embark Studios" class="clickable-photo" loading="lazy" decoding="async"></div>
+                    <div class="photo-item"><img src="images/major/photo2.jpg" alt="Redfox, Manda, Krieger Team Photo" class="clickable-photo" loading="lazy" decoding="async"></div>
+                    <div class="photo-item"><img src="images/major/photo3.jpg" alt="Redfox, Krieger, Manda w/ Coach TonyQuartz" class="clickable-photo" loading="lazy" decoding="async"></div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- This footer is left empty. Your js/main.js file will populate it. -->
-    <footer></footer>
-    
-    <!-- This script handles global functionality like loading the header/footer -->
-    <script src="/js/main.js"></script>
+    <!-- THE LIGHTBOX MODAL (Hidden by default) -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg" alt="Expanded view">
+        <div id="caption"></div>
+    </div>
 
-    <!-- The calendar.js script is no longer needed for this page -->
-    <!-- <script src="/js/calendar.js"></script> -->
+    <footer class="site-footer"></footer> <!-- Populated by main.js -->
 
+    <script src="js/profile-card.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/features.js"></script>
+
+    <!-- LIGHTBOX SCRIPT -->
+    <script>
+        var modal = document.getElementById("imageModal");
+        var modalImg = document.getElementById("modalImg");
+        var captionText = document.getElementById("caption");
+        var body = document.body;
+
+        var images = document.querySelectorAll('.clickable-photo');
+
+        images.forEach(function(img) {
+            img.onclick = function(){
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+                body.style.overflow = "hidden";
+                setTimeout(() => { modal.style.opacity = "1"; }, 10);
+            }
+        });
+
+        var span = document.getElementsByClassName("close-modal")[0];
+
+        function closeModal() {
+            modal.style.opacity = "0";
+            setTimeout(() => { 
+                modal.style.display = "none"; 
+                body.style.overflow = "auto";
+            }, 300);
+        }
+
+        if (span) {
+            span.onclick = function() { closeModal(); }
+        }
+
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
