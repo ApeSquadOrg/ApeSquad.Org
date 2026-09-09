@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Partner with Ape Squad Esports for premier broadcast production, arena events, tournament operations, and brand sponsorships.">
+    <meta name="keywords" content="Ape Squad, esports production, tournament broadcast, Kansas City Pioneers, Embark Studios, THE FINALS drop, brand sponsorships">
+    <title>Work With Us | Production & Partnerships | Ape Squad Esports</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Your Master Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Page-Specific Theme Extensions (Matches style.css variables) -->
+    <style>
+        /* --- Hero Section --- */
+        #work-hero {
+            position: relative;
+            text-align: center;
+            padding: 6rem 2rem 5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 20%, rgba(1, 163, 235, 0.15) 0%, transparent 60%);
+        }
+
+        .work-badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--sunset-orange);
+            background: rgba(255, 133, 59, 0.1);
+            border: 1px solid var(--sunset-orange);
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #work-hero h1 {
+            font-family: var(--font-headline);
+            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--off-white);
+            text-shadow: 0 0 20px rgba(1, 163, 235, 0.6);
+        }
+
+        .hero-glow-text {
+            background: linear-gradient(90deg, var(--electric-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .work-intro {
+            font-size: 1.2rem;
+            max-width: 65ch;
+            margin: 0 auto 2.5rem auto;
+            color: #ccc;
+        }
+
+        .hero-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* --- Partner Trust Bar --- */
+        #partner-strip {
+            background-color: var(--near-black);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+
+        .partner-title {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            color: var(--light-grey);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .partner-logo-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2.5rem 4rem;
+        }
+
+        .partner-logo-item {
+            font-family: var(--font-headline);
+            font-size: 1.6rem;
+            color: #777;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .partner-logo-item:hover {
+            color: var(--off-white);
+            text-shadow: 0 0 10px var(--electric-blue);
+            transform: scale(1.05);
+        }
+
+        /* --- 365-Day Verified Metrics Grid --- */
+        #performance-metrics {
+            background-color: var(--midnight-black);
+            padding: 5rem 0;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .metric-card {
+            background: var(--near-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--electric-blue);
+            box-shadow: 0 0 25px rgba(1, 163, 235, 0.25);
+        }
+
+        .metric-number {
+            font-family: var(--font-headline);
+            font-size: 3.2rem;
+            color: var(--off-white);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(1, 163, 235, 0.4);
+        }
+
+        .metric-number span {
+            color: var(--electric-blue);
+        }
+
+        .metric-label {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--light-grey);
+            text-transform: uppercase;
+        }
+
+        .metric-sub {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--sunset-orange);
+            font-weight: bold;
+        }
+
+        /* --- Capabilities / Services --- */
+        #services {
+            background-color: var(--near-black);
+            padding: 5rem 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-box {
+            background: var(--midnight-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-box:hover {
+            transform: translateY(-8px);
+            border-color: var(--laser-purple);
+            box-shadow: 0 0 25px rgba(99, 63, 220, 0.35);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--electric-blue);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 12px var(--electric-blue);
+        }
+
+        .service-box h3 {
+            color: var(--off-white);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-box p {
+            color: #bbb;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1rem;
+        }
+
+        .service-features li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 0.6rem;
+            color: var(--off-white);
+            font-size: 0.95rem;
+        }
+
+        .service-features li::before {
+            content: '»';
+            position: absolute;
+            left: 0;
+            top: -2px;
+            color: var(--sunset-orange);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* --- Featured Production Case Studies --- */
+        #case-studies {
+            background-color: var(--midnight-black);
+            padding: 5rem 0;
+        }
+
+        .case-studies-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .case-study-card {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            background: var(--near-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .case-study-card:hover {
+            border-color: var(--electric-blue);
+            box-shadow: 0 10px 35px rgba(1, 163, 235, 0.2);
+        }
+
+        @media (max-width: 900px) {
+            .case-study-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .case-img-wrap {
+            position: relative;
+            min-height: 320px;
+            background: #000;
+        }
+
+        .case-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .case-content {
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .case-tag {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--electric-blue);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-content h3 {
+            font-size: 2.2rem;
+            color: var(--off-white);
+            margin-bottom: 1rem;
+        }
+
+        .case-content p {
+            color: #bbb;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .case-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--light-grey);
+            font-weight: bold;
+        }
+
+        /* --- Sponsor Real Estate Strip --- */
+        #sponsorship-opportunities {
+            background-color: var(--near-black);
+            padding: 5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sponsor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .sponsor-card {
+            background: var(--midnight-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .sponsor-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 68, 148, 0.3);
+        }
+
+        .sponsor-card h4 {
+            font-size: 1.5rem;
+            color: var(--off-white);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sponsor-card h4 i {
+            color: var(--neon-pink);
+            font-size: 1.3rem;
+        }
+
+        /* --- Direct Action Cards (Inquiry) --- */
+        #inquiry {
+            background-color: var(--midnight-black);
+            padding: 6rem 0;
+        }
+
+        .inquiry-wrapper {
+            background: var(--near-black);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 4rem 3rem;
+            max-width: 950px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .inquiry-wrapper {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar"></header> <!-- Populated by main.js -->
+
+<main>
+
+    <!-- HERO SECTION -->
+    <section id="work-hero">
+        <div class="container">
+            <span class="work-badge">Production & Strategic Partnerships</span>
+            <h1>Live Production. Big Arenas. <br><span class="hero-glow-text">Unrivaled Entertainment.</span></h1>
+            <p class="work-intro">From stadium Jumbotron broadcasts in Kansas City to AAA developer integrations and 80+ team multi-region leagues—Ape Squad engineers high-impact esports entertainment.</p>
+            <div class="hero-btn-group">
+                <a href="#inquiry" class="btn btn-primary"><i class="fas fa-paper-plane" style="margin-right: 0.5rem;"></i> Request Production Quote</a>
+                <a href="#case-studies" class="btn btn-secondary"><i class="fas fa-play" style="margin-right: 0.5rem;"></i> View Past Case Studies</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- VERIFIED PARTNERS STRIP -->
+    <section id="partner-strip">
+        <div class="container">
+            <div class="partner-title">Trusted By Leading Studios, Organizations & Brands</div>
+            <div class="partner-logo-grid">
+                <div class="partner-logo-item">EMBARK STUDIOS</div>
+                <div class="partner-logo-item">KANSAS CITY PIONEERS</div>
+                <div class="partner-logo-item">CONEQT</div>
+                <div class="partner-logo-item">ENKLO VACATION HOMES</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 365-DAY AUDIENCE & REACH METRICS -->
+    <section id="performance-metrics">
+        <div class="container">
+            <h2>Verified 365-Day Metrics</h2>
+            <p class="section-subtitle">Real numbers. Dedicated audience. High-retention live viewership.</p>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">307<span>K</span></div>
+                    <div class="metric-label">Content & Media Views</div>
+                    <span class="metric-sub">YouTube Content Network</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">10.9<span>K+</span></div>
+                    <div class="metric-label">Hours Watched</div>
+                    <span class="metric-sub">>999% YoY Watch Time Growth</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">87.7<span>K</span></div>
+                    <div class="metric-label">Unique Viewers</div>
+                    <span class="metric-sub">Annual Audience Reach</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">145</div>
+                    <div class="metric-label">Avg Live Viewers (CCV)</div>
+                    <span class="metric-sub">Top 0.18% Global Twitch Rank</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">245<span>h</span></div>
+                    <div class="metric-label">Broadcast Airtime</div>
+                    <span class="metric-sub">Official Live Streams Executed</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">4,155</div>
+                    <div class="metric-label">Twitch Followers</div>
+                    <span class="metric-sub">High-Engagement Community</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT WE EXECUTE (SERVICES) -->
+    <section id="services">
+        <div class="container">
+            <h2>Our Capabilities</h2>
+            <p class="section-subtitle">Turnkey media and esports broadcast solutions tailored for game studios, venues, and tournament organizers.</p>
+            
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-box">
+                    <div class="service-icon"><i class="fas fa-satellite-dish"></i></div>
+                    <h3>Broadcast & Arena Production</h3>
+                    <p>Live switching, multi-feed integration, custom spectator feeds, and stadium big-screen execution.</p>
+                    <ul class="service-features">
+                        <li>Arena Jumbotron & Stadium Feed Integration</li>
+                        <li>Cloud & On-Site vMix / OBS Engineering</li>
+                        <li>Dynamic In-Game HUDs & Instant Replay Systems</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-box">
+                    <div class="service-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>Tournament Administration</h3>
+                    <p>End-to-end tournament ops, rulebook drafting, match adjudication, and bracket management.</p>
+                    <ul class="service-features">
+                        <li>Multi-Region Brackets (80+ Teams NA/EU)</li>
+                        <li>Match Dispute Resolution & Live War Room Ops</li>
+                        <li>Prize Pool Management & Verification</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-box">
+                    <div class="service-icon"><i class="fas fa-headset"></i></div>
+                    <h3>On-Air Talent & Commentary</h3>
+                    <p>High-energy narrative casting, expert tactical breakdown, and live audience hosting.</p>
+                    <ul class="service-features">
+                        <li>Play-by-Play & Strategic Analysis Casters</li>
+                        <li>Live Player & Winner Desk Interviews</li>
+                        <li>Creator Co-Stream & Watch Party Activations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDIES & EVENT SHOWCASE -->
+    <section id="case-studies">
+        <div class="container">
+            <h2>Featured Productions</h2>
+            <p class="section-subtitle">Real stages. Monumental partnerships.</p>
+
+            <div class="case-studies-list">
+                
+                <!-- Case Study 1: KC Soccer Capital -->
+                <div class="case-study-card">
+                    <div class="case-img-wrap">
+                        <img src="/images/esports/esports2.png" alt="Soccer Capital Gaming Experience Arena">
+                    </div>
+                    <div class="case-content">
+                        <span class="case-tag">Arena Production // Kansas City</span>
+                        <h3>Soccer Capital Gaming Experience</h3>
+                        <p>Partnered with the <strong>Kansas City Pioneers (KCP)</strong> to power the live esports broadcast inside the professional soccer arena in Kansas City. Ape Squad executed multi-feed live production projected directly onto the stadium Jumbotron and arena screens for live audiences.</p>
+                        <div class="case-pills">
+                            <span class="case-pill">Stadium Jumbotron Broadcast</span>
+                            <span class="case-pill">KCP Partnership</span>
+                            <span class="case-pill">Live Crowd Integration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 2: THE FINALS & Embark Studios -->
+                <div class="case-study-card">
+                    <div class="case-img-wrap">
+                        <img src="/images/esports/esports1.png" alt="Immortalized in THE FINALS">
+                    </div>
+                    <div class="case-content">
+                        <span class="case-tag">Official AAA Developer Partnership</span>
+                        <h3>Immortalized in THE FINALS</h3>
+                        <p>Through our elite partnership with <strong>Embark Studios</strong>, Ape Squad became one of the few organizations in the world to receive a permanent, official in-game cosmetic keychain drop. We paired this release with exclusive Twitch Drop campaigns driving thousands of viewer hours.</p>
+                        <div class="case-pills">
+                            <span class="case-pill">Embark Studios</span>
+                            <span class="case-pill">In-Game Cosmetic Drop</span>
+                            <span class="case-pill">Global Twitch Drops</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 3: Ape Squad Classics -->
+                <div class="case-study-card">
+                    <div class="case-img-wrap">
+                        <img src="/images/esports/esports3.png" alt="Ape Squad Major Tournaments">
+                    </div>
+                    <div class="case-content">
+                        <span class="case-tag">Major Tournament Circuit</span>
+                        <h3>Ape Squad Classics League</h3>
+                        <p>Our premier international league featuring <em>Jungle Rumble</em>, <em>Volcanic Panic</em>, and <em>Tidal Survival</em>. Managed over 80+ international squads competing across NA and EU divisions with dedicated multi-stream casting and custom narrative broadcasts.</p>
+                        <div class="case-pills">
+                            <span class="case-pill">80+ Teams NA/EU</span>
+                            <span class="case-pill">Multi-Week Circuit</span>
+                            <span class="case-pill">Narrative Storylines</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SPONSORSHIP REAL ESTATE -->
+    <section id="sponsorship-opportunities">
+        <div class="container">
+            <h2>Brand Real Estate</h2>
+            <p class="section-subtitle">Seamlessly integrate your brand into our digital and physical ecosystem.</p>
+
+            <div class="sponsor-grid">
+                <div class="sponsor-card">
+                    <h4><i class="fas fa-tshirt"></i> Jersey Real Estate</h4>
+                    <p>High-visibility chest and sleeve placements worn on-stage by our signed pro rosters and casters. Previous partners include <strong>Coneqt</strong> and <strong>Enklo Vacation Homes</strong>.</p>
+                </div>
+                <div class="sponsor-card">
+                    <h4><i class="fas fa-desktop"></i> Broadcast Segments</h4>
+                    <p>Dedicated branded instant replays ("Presented by [Brand]"), custom animated lower thirds, and customized countdown timer takeovers.</p>
+                </div>
+                <div class="sponsor-card">
+                    <h4><i class="fas fa-music"></i> Custom Audio & OST</h4>
+                    <p>Integrate directly with our in-house original IP soundtrack (<em>Abandon Human</em>), providing DMCA-free anthems and walk-out themes for your events.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INQUIRY & CONTACT SECTION (NO BACKEND NEEDED) -->
+    <section id="inquiry">
+        <div class="container">
+            <div class="inquiry-wrapper">
+                
+                <span class="work-badge">Direct Executive Contact</span>
+                <h2 style="font-size: 2.8rem; margin-bottom: 1rem;">Let's Build Your Next Event.</h2>
+                <p style="max-width: 65ch; margin: 0 auto 2.5rem auto; color: #bbb; font-size: 1.1rem;">
+                    Whether you need stadium Jumbotron broadcast switching, online league administration, commentator talent, or brand sponsorship integration—reach out directly to our founders.
+                </p>
+                
+                <!-- Action Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; text-align: left;">
+                    
+                    <!-- Email Card -->
+                    <div style="background: var(--midnight-black); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 2rem;">
+                        <i class="fas fa-envelope" style="font-size: 2.2rem; color: var(--electric-blue); margin-bottom: 1rem; display: block;"></i>
+                        <h4 style="font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--off-white);">Direct Email</h4>
+                        <p style="font-size: 0.95rem; color: #888; margin-bottom: 1.5rem;">Send your event dates, game title, and production requirements directly to our executive inbox.</p>
+                        
+                        <a href="mailto:apesquadorg@gmail.com?subject=[Production%20Inquiry]%20Ape%20Squad%20Esports" class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 0.8rem;">
+                            <i class="fas fa-paper-plane" style="margin-right: 0.5rem;"></i> Open Email App
+                        </a>
+                        
+                        <button id="copyEmailBtn" onclick="copyEmail()" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 0.85rem; padding: 0.6rem;">
+                            <i class="fas fa-copy" style="margin-right: 0.5rem;"></i> Copy Email Address
+                        </button>
+                    </div>
+
+                    <!-- Discord / Founder Card -->
+                    <div style="background: var(--midnight-black); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 2rem;">
+                        <i class="fab fa-discord" style="font-size: 2.2rem; color: var(--laser-purple); margin-bottom: 1rem; display: block;"></i>
+                        <h4 style="font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--off-white);">Founders & Discord</h4>
+                        <p style="font-size: 0.95rem; color: #888; margin-bottom: 1.5rem;">Connect with Austin Crail (Sonsoyo) & Justin Crail directly in our community server.</p>
+                        
+                        <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn btn-secondary" style="width: 100%; justify-content: center; border-color: var(--laser-purple); color: var(--off-white); margin-bottom: 0.8rem;">
+                            <i class="fab fa-discord" style="margin-right: 0.5rem;"></i> Join Discord Server
+                        </a>
+
+                        <div style="text-align: center; font-size: 0.85rem; color: #777; margin-top: 0.5rem;">
+                            Executive Lead: <strong style="color: #aaa;">apesquadorg@gmail.com</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- What to Include Box -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.15); border-radius: 8px; padding: 1.5rem; display: inline-block; text-align: left; max-width: 650px;">
+                    <span style="font-size: 0.85rem; font-weight: bold; color: var(--sunset-orange); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.5rem;">
+                        <i class="fas fa-clipboard-list" style="margin-right: 0.4rem;"></i> What to include in your inquiry:
+                    </span>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: #aaa; line-height: 1.6;">
+                        <li>• <strong>Event Scope:</strong> Online tournament, live arena broadcast, or caster booking.</li>
+                        <li>• <strong>Game Title & Timeline:</strong> e.g., THE FINALS, Apex, Delta Force / Target dates.</li>
+                        <li>• <strong>Production Needs:</strong> Custom overlays, referee administration, audio/graphics.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+    <footer class="site-footer"></footer> <!-- Populated by main.js -->
+
+    <!-- Copy Email Script -->
+    <script>
+        function copyEmail() {
+            navigator.clipboard.writeText('apesquadorg@gmail.com');
+            const btn = document.getElementById('copyEmailBtn');
+            btn.innerHTML = '<i class="fas fa-check" style="color:#22c55e; margin-right:0.5rem;"></i> Copied: apesquadorg@gmail.com';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-copy" style="margin-right:0.5rem;"></i> Copy Email Address';
+            }, 3000);
+        }
+    </script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
