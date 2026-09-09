@@ -11,8 +11,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Partner with Ape Squad Esports for premier broadcast production, arena events, tournament operations, and brand sponsorships.">
-    <meta name="keywords" content="Ape Squad, esports production, tournament broadcast, Kansas City Pioneers, Embark Studios, THE FINALS drop, brand sponsorships">
+    <meta name="description" content="Partner with Ape Squad Esports for premier broadcast production, arena events, tournament operations, and creator partnerships.">
+    <meta name="keywords" content="Ape Squad, esports production, tournament broadcast, Kansas City Pioneers, Embark Studios, THE FINALS drop, brand sponsorships, creators">
     <title>Work With Us | Production & Partnerships | Ape Squad Esports</title>
 
     <!-- Favicon -->
@@ -32,46 +32,51 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Your Master Stylesheet -->
+    <!-- Master Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Page-Specific Theme Extensions (Matches style.css variables) -->
+    <!-- Page-Specific Styles -->
     <style>
+        /* --- General Spacing & Atmospheric Layout --- */
+        section {
+            position: relative;
+        }
+
         /* --- Hero Section --- */
         #work-hero {
             position: relative;
             text-align: center;
-            padding: 6rem 2rem 5rem 2rem;
+            padding: 4.5rem 1.5rem 3rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 70vh;
+            min-height: 55vh;
             overflow: hidden;
-            background: radial-gradient(circle at 50% 20%, rgba(1, 163, 235, 0.15) 0%, transparent 60%);
+            background: radial-gradient(circle at 50% 30%, rgba(1, 163, 235, 0.16) 0%, rgba(10, 10, 10, 0) 70%);
         }
 
         .work-badge {
             display: inline-block;
-            padding: 0.4rem 1.2rem;
+            padding: 0.35rem 1.1rem;
             font-family: var(--font-body);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             color: var(--sunset-orange);
             background: rgba(255, 133, 59, 0.1);
-            border: 1px solid var(--sunset-orange);
+            border: 1px solid rgba(255, 133, 59, 0.4);
             border-radius: 50px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         #work-hero h1 {
             font-family: var(--font-headline);
-            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            font-size: clamp(2.6rem, 5.5vw, 4.4rem);
             line-height: 1.1;
             margin-bottom: 1rem;
             color: var(--off-white);
-            text-shadow: 0 0 20px rgba(1, 163, 235, 0.6);
+            text-shadow: 0 0 25px rgba(1, 163, 235, 0.5);
         }
 
         .hero-glow-text {
@@ -81,35 +86,36 @@
         }
 
         .work-intro {
-            font-size: 1.2rem;
-            max-width: 65ch;
-            margin: 0 auto 2.5rem auto;
-            color: #ccc;
+            font-size: 1.15rem;
+            max-width: 62ch;
+            margin: 0 auto 2rem auto;
+            color: #bbb;
+            line-height: 1.6;
         }
 
         .hero-btn-group {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1.2rem;
             flex-wrap: wrap;
         }
 
         /* --- Partner Trust Bar --- */
         #partner-strip {
             background-color: var(--near-black);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2rem 0;
             text-align: center;
         }
 
         .partner-title {
             font-family: var(--font-body);
-            font-size: 0.85rem;
-            color: var(--light-grey);
+            font-size: 0.8rem;
+            color: #888;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .partner-logo-grid {
@@ -117,125 +123,255 @@
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            gap: 2.5rem 4rem;
+            gap: 2rem 3.5rem;
         }
 
         .partner-logo-item {
             font-family: var(--font-headline);
-            font-size: 1.6rem;
-            color: #777;
+            font-size: 1.5rem;
+            color: #666;
             letter-spacing: 2px;
             transition: all 0.3s ease;
         }
 
         .partner-logo-item:hover {
             color: var(--off-white);
-            text-shadow: 0 0 10px var(--electric-blue);
+            text-shadow: 0 0 12px var(--electric-blue);
             transform: scale(1.05);
         }
 
-        /* --- 365-Day Verified Metrics Grid --- */
-        #performance-metrics {
-            background-color: var(--midnight-black);
-            padding: 5rem 0;
+        /* --- Ecosystem Reach & Creator Network --- */
+        #creator-network-section {
+            padding: 3.5rem 0;
+            background: radial-gradient(circle at 50% 25%, rgba(99, 63, 220, 0.12) 0%, rgba(10, 10, 10, 0) 70%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .metrics-grid {
+        .section-header-compact {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .section-header-compact h2 {
+            font-size: clamp(2rem, 3.5vw, 2.6rem);
+            color: var(--off-white);
+            margin-bottom: 0.6rem;
+        }
+
+        .section-header-compact p {
+            color: #aaa;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* High-Impact 4-Column Stat Ribbon */
+        .stat-ribbon {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            background: rgba(18, 18, 20, 0.65);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.8rem 1rem;
+            max-width: 1000px;
+            margin: 0 auto 3rem auto;
         }
 
-        .metric-card {
-            background: var(--near-black);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem 1.5rem;
+        @media (max-width: 768px) {
+            .stat-ribbon {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem 1rem;
+            }
+        }
+
+        .stat-item {
             text-align: center;
             position: relative;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .metric-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--electric-blue);
-            box-shadow: 0 0 25px rgba(1, 163, 235, 0.25);
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .metric-number {
+        @media (max-width: 768px) {
+            .stat-item:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        .stat-number {
             font-family: var(--font-headline);
-            font-size: 3.2rem;
+            font-size: 2.6rem;
             color: var(--off-white);
             line-height: 1;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(1, 163, 235, 0.4);
+            margin-bottom: 0.25rem;
         }
 
-        .metric-number span {
+        .stat-number span {
             color: var(--electric-blue);
         }
 
-        .metric-label {
+        .stat-label {
             font-family: var(--font-body);
-            font-size: 0.95rem;
-            color: var(--light-grey);
+            font-size: 0.75rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
         }
 
-        .metric-sub {
-            display: block;
-            margin-top: 0.5rem;
+        /* Partnered Creator Cards */
+        .creator-b2b-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .creator-b2b-card {
+            background: rgba(16, 16, 18, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.75rem 1.25rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .creator-b2b-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--electric-blue);
+            box-shadow: 0 8px 25px rgba(1, 163, 235, 0.2);
+        }
+
+        .creator-b2b-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--electric-blue);
+            margin-bottom: 1rem;
+            box-shadow: 0 0 15px rgba(1, 163, 235, 0.3);
+        }
+
+        .creator-b2b-name {
+            font-family: var(--font-headline);
+            font-size: 1.5rem;
+            color: var(--off-white);
+            margin-bottom: 0.25rem;
+            letter-spacing: 1px;
+        }
+
+        .creator-b2b-role {
             font-size: 0.75rem;
             color: var(--sunset-orange);
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .creator-b2b-desc {
+            font-size: 0.85rem;
+            color: #888;
+            line-height: 1.4;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .creator-b2b-socials {
+            display: flex;
+            gap: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .creator-b2b-socials a {
+            color: #777;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .creator-b2b-socials a:hover {
+            color: var(--off-white);
+            transform: scale(1.15);
+        }
+
+        .creator-hub-cta {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .creator-hub-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--electric-blue);
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: gap 0.2s ease, color 0.2s ease;
+        }
+
+        .creator-hub-link:hover {
+            color: var(--off-white);
+            gap: 12px;
         }
 
         /* --- Capabilities / Services --- */
         #services {
-            background-color: var(--near-black);
-            padding: 5rem 0;
+            padding: 3.5rem 0;
+            background: radial-gradient(circle at 80% 50%, rgba(99, 63, 220, 0.08) 0%, transparent 50%);
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .service-box {
-            background: var(--midnight-black);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(18, 18, 20, 0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.75rem;
             transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .service-box:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             border-color: var(--laser-purple);
-            box-shadow: 0 0 25px rgba(99, 63, 220, 0.35);
+            box-shadow: 0 0 25px rgba(99, 63, 220, 0.25);
         }
 
         .service-icon {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: var(--electric-blue);
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 12px var(--electric-blue);
+            margin-bottom: 1.2rem;
         }
 
         .service-box h3 {
             color: var(--off-white);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            margin-bottom: 0.8rem;
         }
 
         .service-box p {
-            color: #bbb;
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
+            color: #aaa;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.2rem;
         }
 
         .service-features {
@@ -248,40 +384,38 @@
 
         .service-features li {
             position: relative;
-            padding-left: 25px;
-            margin-bottom: 0.6rem;
-            color: var(--off-white);
-            font-size: 0.95rem;
+            padding-left: 20px;
+            margin-bottom: 0.5rem;
+            color: #ddd;
+            font-size: 0.85rem;
         }
 
         .service-features li::before {
             content: '»';
             position: absolute;
             left: 0;
-            top: -2px;
             color: var(--sunset-orange);
             font-weight: bold;
-            font-size: 1.2rem;
         }
 
         /* --- Featured Production Case Studies --- */
         #case-studies {
-            background-color: var(--midnight-black);
-            padding: 5rem 0;
+            padding: 3.5rem 0;
+            background: radial-gradient(circle at 20% 50%, rgba(1, 163, 235, 0.08) 0%, transparent 50%);
         }
 
         .case-studies-list {
             display: flex;
             flex-direction: column;
-            gap: 3rem;
-            margin-top: 3rem;
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .case-study-card {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            background: var(--near-black);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: 1.1fr 1fr;
+            background: rgba(18, 18, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             overflow: hidden;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -289,7 +423,7 @@
 
         .case-study-card:hover {
             border-color: var(--electric-blue);
-            box-shadow: 0 10px 35px rgba(1, 163, 235, 0.2);
+            box-shadow: 0 8px 30px rgba(1, 163, 235, 0.18);
         }
 
         @media (max-width: 900px) {
@@ -300,7 +434,7 @@
 
         .case-img-wrap {
             position: relative;
-            min-height: 320px;
+            min-height: 280px;
             background: #000;
         }
 
@@ -312,7 +446,7 @@
         }
 
         .case-content {
-            padding: 3rem 2.5rem;
+            padding: 2.2rem 2rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -321,104 +455,108 @@
         .case-tag {
             display: inline-block;
             font-family: var(--font-body);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--electric-blue);
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         .case-content h3 {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: var(--off-white);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .case-content p {
-            color: #bbb;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
+            color: #aaa;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.2rem;
         }
 
         .case-pills {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         .case-pill {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 3px 10px;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--light-grey);
-            font-weight: bold;
         }
 
         /* --- Sponsor Real Estate Strip --- */
         #sponsorship-opportunities {
-            background-color: var(--near-black);
-            padding: 5rem 0;
+            padding: 3.5rem 0;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: var(--near-black);
         }
 
         .sponsor-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .sponsor-card {
-            background: var(--midnight-black);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(18, 18, 20, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.8rem;
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
         .sponsor-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             border-color: var(--neon-pink);
-            box-shadow: 0 0 20px rgba(255, 68, 148, 0.3);
         }
 
         .sponsor-card h4 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--off-white);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .sponsor-card h4 i {
             color: var(--neon-pink);
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+        }
+
+        .sponsor-card p {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         /* --- Direct Action Cards (Inquiry) --- */
         #inquiry {
-            background-color: var(--midnight-black);
-            padding: 6rem 0;
+            padding: 4rem 0;
+            background: radial-gradient(circle at 50% 100%, rgba(1, 163, 235, 0.12) 0%, transparent 60%);
         }
 
         .inquiry-wrapper {
-            background: var(--near-black);
+            background: rgba(18, 18, 20, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 4rem 3rem;
-            max-width: 950px;
+            border-radius: 14px;
+            padding: 3rem 2.5rem;
+            max-width: 900px;
             margin: 0 auto;
             text-align: center;
         }
 
         @media (max-width: 768px) {
             .inquiry-wrapper {
-                padding: 2.5rem 1.5rem;
+                padding: 2rem 1.2rem;
             }
         }
     </style>
@@ -434,7 +572,7 @@
         <div class="container">
             <span class="work-badge">Production & Strategic Partnerships</span>
             <h1>Live Production. Big Arenas. <br><span class="hero-glow-text">Unrivaled Entertainment.</span></h1>
-            <p class="work-intro">From stadium Jumbotron broadcasts in Kansas City to AAA developer integrations and 80+ team multi-region leagues—Ape Squad engineers high-impact esports entertainment.</p>
+            <p class="work-intro">From stadium Jumbotron broadcasts in Kansas City to AAA developer integrations and 80+ team multi-region circuits—Ape Squad engineers broadcast-grade esports entertainment.</p>
             <div class="hero-btn-group">
                 <a href="#inquiry" class="btn btn-primary"><i class="fas fa-paper-plane" style="margin-right: 0.5rem;"></i> Request Production Quote</a>
                 <a href="#case-studies" class="btn btn-secondary"><i class="fas fa-play" style="margin-right: 0.5rem;"></i> View Past Case Studies</a>
@@ -455,44 +593,98 @@
         </div>
     </section>
 
-    <!-- 365-DAY AUDIENCE & REACH METRICS -->
-    <section id="performance-metrics">
+    <!-- AUDIENCE IMPACT & SIGNED TALENT NETWORK -->
+    <section id="creator-network-section">
         <div class="container">
-            <h2>Verified 365-Day Metrics</h2>
-            <p class="section-subtitle">Real numbers. Dedicated audience. High-retention live viewership.</p>
             
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-number">307<span>K</span></div>
-                    <div class="metric-label">Content & Media Views</div>
-                    <span class="metric-sub">YouTube Content Network</span>
+            <div class="section-header-compact">
+                <span class="work-badge" style="margin-bottom: 0.6rem;">Ecosystem Reach & Talent</span>
+                <h2>Audience Impact & Creator Network</h2>
+                <p>Our tournament broadcasts and brand activations are amplified across our signed roster of official casters, Embark-partnered creators, and top-ranked competitors.</p>
+            </div>
+
+            <!-- Sleek 4-Column Stat Ribbon -->
+            <div class="stat-ribbon">
+                <div class="stat-item">
+                    <div class="stat-number">300<span>K+</span></div>
+                    <div class="stat-label">Network Views & Reach</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-number">10.9<span>K+</span></div>
-                    <div class="metric-label">Hours Watched</div>
-                    <span class="metric-sub">>999% YoY Watch Time Growth</span>
+                <div class="stat-item">
+                    <div class="stat-number">10.9<span>K</span></div>
+                    <div class="stat-label">Hours Broadcast Watched</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-number">87.7<span>K</span></div>
-                    <div class="metric-label">Unique Viewers</div>
-                    <span class="metric-sub">Annual Audience Reach</span>
+                <div class="stat-item">
+                    <div class="stat-number">80<span>+</span></div>
+                    <div class="stat-label">Competitive Teams (NA/EU)</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-number">145</div>
-                    <div class="metric-label">Avg Live Viewers (CCV)</div>
-                    <span class="metric-sub">Top 0.18% Global Twitch Rank</span>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-number">245<span>h</span></div>
-                    <div class="metric-label">Broadcast Airtime</div>
-                    <span class="metric-sub">Official Live Streams Executed</span>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-number">4,155</div>
-                    <div class="metric-label">Twitch Followers</div>
-                    <span class="metric-sub">High-Engagement Community</span>
+                <div class="stat-item">
+                    <div class="stat-number">100<span>%</span></div>
+                    <div class="stat-label">Live Broadcast Uptime</div>
                 </div>
             </div>
+
+            <!-- Partnered Talent Roster -->
+            <div class="creator-b2b-grid">
+                
+                <!-- DREAD -->
+                <div class="creator-b2b-card">
+                    <img src="/images/staff/dread.png" alt="Dread" class="creator-b2b-avatar">
+                    <div class="creator-b2b-name">DREAD</div>
+                    <div class="creator-b2b-role">Lead Caster // Host</div>
+                    <p class="creator-b2b-desc">Official Esports Caster for THE FINALS and host of Sunday Pugday. High-energy desk and match play-by-play host.</p>
+                    <div class="creator-b2b-socials">
+                        <a href="https://www.twitch.tv/dreadalicious" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                        <a href="https://www.youtube.com/@dreadalicious" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://x.com/Dreadalicious_" target="_blank" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- MERCH -->
+                <div class="creator-b2b-card">
+                    <img src="/images/staff/merch.png" alt="Merch" class="creator-b2b-avatar" style="border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(255, 68, 148, 0.3);">
+                    <div class="creator-b2b-name">MERCH</div>
+                    <div class="creator-b2b-role" style="color: var(--neon-pink);">Embark Partner // Analyst</div>
+                    <p class="creator-b2b-desc">#1 Worldwide TDM THE FINALS S7. Official Embark Creator pairing high-level tactical analysis with pro tournament play.</p>
+                    <div class="creator-b2b-socials">
+                        <a href="https://www.twitch.tv/onlymerch" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                        <a href="https://www.youtube.com/@OnlyMerchTV" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- EKAZO -->
+                <div class="creator-b2b-card">
+                    <img src="/images/staff/ekazo.png" alt="Ekazo" class="creator-b2b-avatar">
+                    <div class="creator-b2b-name">EKAZO</div>
+                    <div class="creator-b2b-role">Pro Competitor // Creator</div>
+                    <p class="creator-b2b-desc">THE FINALS Top-300 ranked competitor every season. High-skill tournament play and YouTube creator reach.</p>
+                    <div class="creator-b2b-socials">
+                        <a href="https://www.twitch.tv/ekazoko" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                        <a href="https://www.youtube.com/@EkaZo" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://x.com/eka_zo" target="_blank" title="X (Twitter)"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- LUIBOOLIN -->
+                <div class="creator-b2b-card">
+                    <img src="/images/staff/luiboolin.jpg" alt="LuiBoolin" class="creator-b2b-avatar">
+                    <div class="creator-b2b-name">LUIBOOLIN</div>
+                    <div class="creator-b2b-role">Tournament Host // Player</div>
+                    <p class="creator-b2b-desc">Host of the community Boolin League and active competitor, driving grassroots engagement and watch parties.</p>
+                    <div class="creator-b2b-socials">
+                        <a href="https://www.twitch.tv/luiboolin" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                        <a href="https://www.youtube.com/@LuiBoolin" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Link to Live Watch Page -->
+            <div class="creator-hub-cta">
+                <a href="creators.html" class="creator-hub-link">
+                    Watch our creators live on the Creator Hub <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
         </div>
     </section>
 
@@ -575,7 +767,7 @@
                     <div class="case-content">
                         <span class="case-tag">Official AAA Developer Partnership</span>
                         <h3>Immortalized in THE FINALS</h3>
-                        <p>Through our elite partnership with <strong>Embark Studios</strong>, Ape Squad became one of the few organizations in the world to receive a permanent, official in-game cosmetic keychain drop. We paired this release with exclusive Twitch Drop campaigns driving thousands of viewer hours.</p>
+                        <p>Through our partnership with <strong>Embark Studios</strong>, Ape Squad became one of the few organizations in the world to receive a permanent, official in-game cosmetic keychain drop. We paired this release with exclusive Twitch Drop campaigns driving thousands of viewer hours.</p>
                         <div class="case-pills">
                             <span class="case-pill">Embark Studios</span>
                             <span class="case-pill">In-Game Cosmetic Drop</span>
@@ -628,25 +820,25 @@
         </div>
     </section>
 
-    <!-- INQUIRY & CONTACT SECTION (NO BACKEND NEEDED) -->
+    <!-- INQUIRY & CONTACT SECTION -->
     <section id="inquiry">
         <div class="container">
             <div class="inquiry-wrapper">
                 
                 <span class="work-badge">Direct Executive Contact</span>
-                <h2 style="font-size: 2.8rem; margin-bottom: 1rem;">Let's Build Your Next Event.</h2>
-                <p style="max-width: 65ch; margin: 0 auto 2.5rem auto; color: #bbb; font-size: 1.1rem;">
+                <h2 style="font-size: 2.6rem; margin-bottom: 0.8rem; color: var(--off-white);">Let's Build Your Next Event.</h2>
+                <p style="max-width: 62ch; margin: 0 auto 2.2rem auto; color: #aaa; font-size: 1.05rem;">
                     Whether you need stadium Jumbotron broadcast switching, online league administration, commentator talent, or brand sponsorship integration—reach out directly to our founders.
                 </p>
                 
                 <!-- Action Cards -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; text-align: left;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.2rem; text-align: left;">
                     
                     <!-- Email Card -->
-                    <div style="background: var(--midnight-black); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 2rem;">
-                        <i class="fas fa-envelope" style="font-size: 2.2rem; color: var(--electric-blue); margin-bottom: 1rem; display: block;"></i>
-                        <h4 style="font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--off-white);">Direct Email</h4>
-                        <p style="font-size: 0.95rem; color: #888; margin-bottom: 1.5rem;">Send your event dates, game title, and production requirements directly to our executive inbox.</p>
+                    <div style="background: var(--midnight-black); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.8rem;">
+                        <i class="fas fa-envelope" style="font-size: 2rem; color: var(--electric-blue); margin-bottom: 1rem; display: block;"></i>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--off-white);">Direct Email</h4>
+                        <p style="font-size: 0.9rem; color: #888; margin-bottom: 1.5rem;">Send your event dates, game title, and production requirements directly to our executive inbox.</p>
                         
                         <a href="mailto:apesquadorg@gmail.com?subject=[Production%20Inquiry]%20Ape%20Squad%20Esports" class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 0.8rem;">
                             <i class="fas fa-paper-plane" style="margin-right: 0.5rem;"></i> Open Email App
@@ -658,10 +850,10 @@
                     </div>
 
                     <!-- Discord / Founder Card -->
-                    <div style="background: var(--midnight-black); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 2rem;">
-                        <i class="fab fa-discord" style="font-size: 2.2rem; color: var(--laser-purple); margin-bottom: 1rem; display: block;"></i>
-                        <h4 style="font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--off-white);">Founders & Discord</h4>
-                        <p style="font-size: 0.95rem; color: #888; margin-bottom: 1.5rem;">Connect with Austin Crail (Sonsoyo) & Justin Crail directly in our community server.</p>
+                    <div style="background: var(--midnight-black); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.8rem;">
+                        <i class="fab fa-discord" style="font-size: 2rem; color: var(--laser-purple); margin-bottom: 1rem; display: block;"></i>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--off-white);">Founders & Discord</h4>
+                        <p style="font-size: 0.9rem; color: #888; margin-bottom: 1.5rem;">Connect with Austin Crail (Sonsoyo) & Justin Crail directly in our community server.</p>
                         
                         <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn btn-secondary" style="width: 100%; justify-content: center; border-color: var(--laser-purple); color: var(--off-white); margin-bottom: 0.8rem;">
                             <i class="fab fa-discord" style="margin-right: 0.5rem;"></i> Join Discord Server
@@ -675,13 +867,13 @@
                 </div>
 
                 <!-- What to Include Box -->
-                <div style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.15); border-radius: 8px; padding: 1.5rem; display: inline-block; text-align: left; max-width: 650px;">
-                    <span style="font-size: 0.85rem; font-weight: bold; color: var(--sunset-orange); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.5rem;">
+                <div style="background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.12); border-radius: 8px; padding: 1.25rem 1.5rem; display: inline-block; text-align: left; max-width: 650px;">
+                    <span style="font-size: 0.8rem; font-weight: bold; color: var(--sunset-orange); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.4rem;">
                         <i class="fas fa-clipboard-list" style="margin-right: 0.4rem;"></i> What to include in your inquiry:
                     </span>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: #aaa; line-height: 1.6;">
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: #aaa; line-height: 1.6;">
                         <li>• <strong>Event Scope:</strong> Online tournament, live arena broadcast, or caster booking.</li>
-                        <li>• <strong>Game Title & Timeline:</strong> e.g., THE FINALS, Apex, Delta Force / Target dates.</li>
+                        <li>• <strong>Game Title & Timeline:</strong> e.g., THE FINALS, Apex Legends, Delta Force / Target dates.</li>
                         <li>• <strong>Production Needs:</strong> Custom overlays, referee administration, audio/graphics.</li>
                     </ul>
                 </div>
