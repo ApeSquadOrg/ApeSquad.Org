@@ -14,12 +14,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weapon Data Visualizer | Ape Squad Esports</title>
     
-    <!-- PapaParse: Required to read Google Sheets -->
+    <!-- PapaParse: Required to read CSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
     <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -43,15 +43,22 @@
       
       .graph-container { position: relative; height: 400px; width: 100%; background-color: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; flex-grow: 1; }
       .plot-area { position: absolute; top: 40px; bottom: 40px; left: 40px; right: 15px; }
-      .legend, .info-panel { background: var(--near-black); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; max-height: 400px; }
-      .legend { width: 100%; overflow-y: auto; }
-      @media (min-width: 992px) { .legend, .info-panel { width: 250px; flex-shrink: 0; } }
       
-      .legend-item { display: flex; align-items: center; margin-bottom: 4px; cursor: pointer; padding: 4px; border-radius: 4px; }
+      /* Legend Area with Search */
+      .legend-container { display: flex; flex-direction: column; max-height: 400px; width: 100%; }
+      @media (min-width: 992px) { .legend-container, .info-panel { width: 250px; flex-shrink: 0; } }
+      
+      .search-box { width: 100%; padding: 0.5rem; background: var(--near-black); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-size: 0.85rem; margin-bottom: 0.5rem; outline: none; }
+      .search-box:focus { border-color: var(--electric-blue); }
+
+      .legend, .info-panel { background: var(--near-black); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; }
+      .legend { overflow-y: auto; flex-grow: 1; }
+      
+      .legend-item { display: flex; align-items: center; margin-bottom: 4px; cursor: pointer; padding: 4px; border-radius: 4px; transition: background 0.15s; }
       .legend-item:hover, .legend-item.highlighted { background-color: rgba(255,255,255,0.1); }
       .legend-item.selected { background-color: rgba(1, 163, 235, 0.2); border: 1px solid rgba(1, 163, 235, 0.5); }
-      .legend-color { width: 12px; height: 12px; margin-right: 8px; border-radius: 50%; }
-      .legend-text { font-size: 0.85rem; color: #ddd; }
+      .legend-color { width: 12px; height: 12px; margin-right: 8px; border-radius: 50%; flex-shrink: 0; }
+      .legend-text { font-size: 0.85rem; color: #ddd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       
       /* Info Panel */
       .info-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 2px; }
@@ -70,25 +77,21 @@
       .weapon-card strong { color: #fff; }
 
       /* SVG Graph */
-      .weapon-line { fill: none; transition: all 0.2s; cursor: pointer; }
-      .weapon-hitbox { fill: none; stroke: transparent; stroke-width: 15px; cursor: pointer; }
-      .weapon-line.dimmed { opacity: 0.1; }
-      .weapon-line.highlighted { stroke-width: 4px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); opacity: 1; }
-      .grid-line { stroke: rgba(255,255,255,0.1); stroke-width: 1px; }
-      .axis-labels { position: absolute; color: #666; font-size: 0.75rem; }
+      .weapon-line { fill: none; transition: stroke-width 0.15s, opacity 0.15s; cursor: pointer; }
+      .weapon-line.dimmed { opacity: 0.12; }
+      .weapon-line.highlighted { stroke-width: 4px; filter: drop-shadow(0 0 6px rgba(255,255,255,0.6)); opacity: 1; }
+      .grid-line { stroke: rgba(255,255,255,0.08); stroke-width: 1px; }
+      .axis-labels { position: absolute; color: #777; font-size: 0.75rem; user-select: none; }
 
-/* Add this inside your <style> block */
-.cursor-line {
-  stroke: rgba(255, 255, 255, 0.6);
-  stroke-width: 1px;
-  stroke-dasharray: 5, 5; /* Dashed line */
-  pointer-events: none;    /* Let clicks pass through it */
-  opacity: 0;              /* Hidden by default */
-  transition: opacity 0.1s;
-}
-.cursor-line.visible {
-  opacity: 1;
-}
+      .cursor-line {
+        stroke: rgba(255, 255, 255, 0.4);
+        stroke-width: 1px;
+        stroke-dasharray: 4, 4;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.1s;
+      }
+      .cursor-line.visible { opacity: 1; }
     </style>
 </head>
 <body>
@@ -99,15 +102,15 @@
       <section id="gun-data-page">
           <div class="container">
               <div class="data-module">
-                <h2>Weapon Visualizer 9.0</h2>
+                <h2>Weapon Visualizer</h2>
                 
                 <!-- LOADING SCREEN -->
                 <div id="loading-state">
                     <i class="fas fa-circle-notch fa-spin"></i><br>
-                    Loading Live Data...
+                    Loading Weapon Data...
                 </div>
 
-                <!-- MAIN CONTENT (Hidden until loaded) -->
+                <!-- MAIN CONTENT -->
                 <div id="content-area">
                     <div class="controls">
                       <div class="control-group">
@@ -151,13 +154,16 @@
                       </div>
                       <div class="control-group">
                         <label>Tools</label>
-                        <button type="button" class="toggle-btn" id="randomize-colors-btn" style="border-color: var(--sunset-orange); color: var(--sunset-orange);">Random Colors</button>
+                        <button type="button" class="toggle-btn" id="randomize-colors-btn" style="border-color: var(--sunset-orange); color: var(--sunset-orange);">Shuffle Colors</button>
                         <button type="button" class="toggle-btn" id="clear-selection-btn" style="display:none; border-color: var(--electric-blue); color: var(--electric-blue);">Clear Pins</button>
                       </div>
                     </div>
                     
                     <div class="graph-section">
-                      <div class="legend" id="legend"></div>
+                      <div class="legend-container">
+                        <input type="text" id="weapon-search" class="search-box" placeholder="Filter weapons..." autocomplete="off">
+                        <div class="legend" id="legend"></div>
+                      </div>
                       
                       <div class="graph-container">
                         <div class="graph-title" id="graph-title" style="text-align:center; padding-top:10px; color:#aaa; font-size:0.9rem;"></div>
@@ -192,10 +198,7 @@
 
    <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- CONFIGURATION ---
-        const SHEET_ID = "12aWohgro45Mp-8bwGpL09jDmCcAwvYEAr0sm3fYDxFY";
-        const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-        
+        const CSV_FILE = `gundata.csv?v=${Date.now()}`;
         const HEALTH_VALUES = { Light: 150, Medium: 250, Heavy: 350 };
         const MAX_RANGE = 100;
         
@@ -206,7 +209,6 @@
         let elements = {}; 
         let currentMaxY = 0; 
 
-        // --- INIT ---
         function init() {
             cacheElements();
             setupListeners();
@@ -224,8 +226,8 @@
                 infoContent: document.getElementById('info-content-details'),
                 cards: document.getElementById('weapon-cards-container'),
                 clearBtn: document.getElementById('clear-selection-btn'),
+                search: document.getElementById('weapon-search'),
                 
-                // Inputs
                 classGroup: document.getElementById('class-toggle-group'),
                 targetGroup: document.getElementById('target-toggle-group'),
                 hitlocGroup: document.getElementById('hitloc-toggle-group'),
@@ -238,10 +240,11 @@
         }
 
         function fetchData() {
-            Papa.parse(CSV_URL, {
+            Papa.parse(CSV_FILE, {
                 download: true,
                 header: true,
                 dynamicTyping: true,
+                skipEmptyLines: true,
                 complete: (results) => {
                     processData(results.data);
                     elements.loading.style.display = 'none';
@@ -249,26 +252,32 @@
                     updateGraph();
                 },
                 error: (err) => {
-                    elements.loading.innerHTML = `<span style="color:red">Error loading data.</span><br>${err.message}`;
+                    elements.loading.innerHTML = `<span style="color:#ff4444">Error loading <code>gundata.csv</code>.</span><br><span style="font-size:0.9rem; color:#aaa;">Please verify the file exists in the main folder.</span><br><br><small>${err.message}</small>`;
                 }
             });
         }
 
         function processData(rawData) {
             weaponData = rawData
-                .filter(row => row.Name && row.Class) 
+                .filter(row => row && row.Name && row.Class) 
                 .map(row => {
                     let magSize = row['Magazine Size'];
                     if (typeof magSize === 'string') {
                          if (magSize.includes('(')) magSize = parseFloat(magSize.split('(')[0]);
-                         else if (magSize === "N/A") magSize = Infinity;
+                         else if (magSize.toUpperCase() === "N/A" || magSize.toUpperCase() === "INF") magSize = Infinity;
+                    }
+
+                    const bodyDmg = Number(row['Body Damage']) || 0;
+                    let headDmg = Number(row['Head Damage']);
+                    if (isNaN(headDmg) || headDmg <= 0) {
+                        headDmg = bodyDmg;
                     }
 
                     return {
-                        name: row.Name,
-                        class: row.Class.toUpperCase(),
-                        body: Number(row['Body Damage']) || 0,
-                        head: Number(row['Head Damage']) || 0,
+                        name: String(row.Name).trim(),
+                        class: String(row.Class).trim().toUpperCase(),
+                        body: bodyDmg,
+                        head: headDmg,
                         rpm: Number(row.RPM) || 0,
                         burstCount: Number(row['Burst Count']) || 1,
                         burstDelay: Number(row['Burst Delay']) || 0,
@@ -278,10 +287,19 @@
                         mag: magSize || 0,
                         reloadEmpty: Number(row['Empty Reload']) || 0,
                         reloadTac: Number(row['Tactical Reload']) || 0,
-                        notes: row.Notes,
-                        color: getRandomColor()
+                        notes: row.Notes || '',
+                        color: getStableColor(String(row.Name).trim())
                     };
                 });
+        }
+
+        function getStableColor(name) {
+            let hash = 0;
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const hue = Math.abs(hash) % 360;
+            return `hsl(${hue}, 85%, 65%)`; 
         }
 
         function getRandomColor() {
@@ -290,14 +308,13 @@
         }
 
         // --- MATH LOGIC ---
-
         function getDamage(w, range, hitLoc, hsp) {
             let baseDmg = hitLoc === 'Head' ? w.head : w.body;
             if (hitLoc === 'Mixed') baseDmg = (w.head * hsp) + (w.body * (1 - hsp));
 
             if (w.maxDrop <= 0 || w.dropMod >= 1) return baseDmg;
-            
             if (range <= w.minDrop) return baseDmg;
+            if (w.maxDrop <= w.minDrop) return baseDmg * w.dropMod; // Prevent divide by zero
             if (range >= w.maxDrop) return baseDmg * w.dropMod;
 
             const ratio = (range - w.minDrop) / (w.maxDrop - w.minDrop);
@@ -345,8 +362,6 @@
             return dmg * (w.rpm / 60);
         }
 
-        // --- SHARED "FIND CLOSEST WEAPON" LOGIC ---
-        // Used by both Hover and Click
         function findClosestWeapon(mouseY, rangeInMeters, rectHeight) {
             const target = elements.targetGroup.querySelector('.active').dataset.target;
             const targetHP = HEALTH_VALUES[target];
@@ -354,11 +369,9 @@
             const metric = elements.metricGroup.querySelector('.active').dataset.metric;
             const hsp = parseFloat(elements.hspSlider.value) / 100;
 
-            // Separate selected vs unselected
             const selectedWeapons = currentlyPlotted.filter(w => selectedWeaponNames.has(w.name));
             const unselectedWeapons = currentlyPlotted.filter(w => !selectedWeaponNames.has(w.name));
 
-            // Helper function to find best match in a list
             const scanList = (list, threshold) => {
                 let found = null;
                 let minDiff = Infinity;
@@ -370,9 +383,7 @@
                     
                     if (!isFinite(val)) val = (metric === 'TTK') ? currentMaxY * 1.5 : 0;
 
-                    // Convert Value to Pixel Y (Inverted because SVG 0 is top)
                     const pixelY = rectHeight - ((Math.min(val, currentMaxY) / currentMaxY) * rectHeight);
-                    
                     const diff = Math.abs(mouseY - pixelY);
                     if (diff < minDiff && diff < threshold) {
                         minDiff = diff;
@@ -382,60 +393,42 @@
                 return found;
             };
 
-            // 1. Priority: Check pinned weapons with huge hitbox (150px)
-            let result = scanList(selectedWeapons, 150);
-            
-            // 2. Fallback: Check unselected weapons with small hitbox (30px)
-            if (!result) {
-                result = scanList(unselectedWeapons, 30);
+            let match = scanList(selectedWeapons, 120);
+            if (!match) {
+                match = scanList(unselectedWeapons, 35);
             }
-
-            return result;
+            return match;
         }
 
         // --- EVENT HANDLERS ---
-
         function handlePlotInteraction(e) {
             const rect = elements.plotArea.getBoundingClientRect();
-            
-            // Normalize Mouse X/Y
             let clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
             let clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
             
             const x = clientX - rect.left;
             const y = clientY - rect.top;
 
-            // Bounds check
             if (x < 0 || x > rect.width || y < 0 || y > rect.height) {
                 hideCursor();
                 clearHighlights();
                 return;
             }
 
-            // Calculations
             const range = (x / rect.width) * MAX_RANGE;
-            
-            // Update Vertical Cursor Line
             updateCursorLine(x);
 
-            // Find closest weapon
             const weapon = findClosestWeapon(y, range, rect.height);
 
-            // ACTION: If Clicked
             if (e.type === 'click') {
                 if (weapon) toggleSelect(weapon.name);
-                return; // Stop processing hover if clicked
+                return;
             }
 
-            // ACTION: If Hovering
             if (weapon) {
                 highlight(weapon.name, true);
-                
-                // Pop line to front for visibility
-                const line = document.getElementById(`line-${weapon.name.replace(/\s/g, '-')}`);
+                const line = document.getElementById(`line-${weapon.name.replace(/[^a-zA-Z0-9]/g, '-')}`);
                 if (line) line.parentElement.appendChild(line);
-
-                // Update Info Panel
                 updateInfoPanelDynamic(weapon, range);
             } else {
                 clearHighlights();
@@ -463,7 +456,7 @@
         }
 
         function resetInfoPanel() {
-            elements.infoContent.innerHTML = `<div style="color:#888; text-align:center; margin-top:2rem;">Hover over a line.<br>Click graph to pin.</div>`;
+            elements.infoContent.innerHTML = `<div style="color:#888; text-align:center; margin-top:2rem;">Hover over a line.<br>Click to pin.</div>`;
         }
 
         function updateInfoPanelDynamic(w, range) {
@@ -473,18 +466,19 @@
             const metric = elements.metricGroup.querySelector('.active').dataset.metric;
             const hsp = parseFloat(elements.hspSlider.value) / 100;
 
+            const rawTTK = calculateTTK(w, range, targetHP, hitLoc, hsp);
             const val = metric === 'TTK' 
-                ? calculateTTK(w, range, targetHP, hitLoc, hsp).toFixed(3) + 's'
+                ? (isFinite(rawTTK) ? rawTTK.toFixed(3) + 's' : '∞')
                 : calculateDPS(w, range, hitLoc, hsp).toFixed(0);
 
             const dmg = getDamage(w, range, hitLoc, hsp).toFixed(1);
-            const stk = Math.ceil(targetHP / getDamage(w, range, hitLoc, hsp));
+            const stk = dmg > 0 ? Math.ceil(targetHP / dmg) : '∞';
             const rangeDisplay = range.toFixed(1);
 
             elements.infoContent.innerHTML = `
-                <div class="info-row"><span class="info-label">Weapon</span> <span class="info-value" style="color:${w.color}; font-size:1.1rem;">${w.name}</span></div>
+                <div class="info-row"><span class="info-label">Weapon</span> <span class="info-value" style="color:${w.color}; font-size:1.05rem;">${w.name}</span></div>
                 <div class="info-row"><span class="info-label">Range</span> <span class="info-value">${rangeDisplay}m</span></div>
-                <div class="info-row"><span class="info-label">${metric}</span> <span class="info-value" style="color:var(--electric-blue);">${val}</span></div>
+                <div class="info-row"><span class="info-label">${metric}</span> <span class="info-value" style="color:var(--electric-blue); font-size:1.1rem;">${val}</span></div>
                 <div class="info-row"><span class="info-label">Damage</span> <span class="info-value">${dmg}</span></div>
                 ${metric === 'TTK' ? `<div class="info-row"><span class="info-label">Shots to Kill</span> <span class="info-value">${stk}</span></div>` : ''}
                 <div class="info-row"><span class="info-label">Dropoff</span> <span class="info-value">${w.minDrop}m - ${w.maxDrop}m</span></div>
@@ -492,7 +486,6 @@
         }
 
         // --- RENDERING ---
-
         function updateGraph() {
             const activeClasses = Array.from(elements.classGroup.querySelectorAll('.active')).map(b => b.dataset.class);
             const target = elements.targetGroup.querySelector('.active').dataset.target;
@@ -500,22 +493,28 @@
             const hitLoc = elements.hitlocGroup.querySelector('.active').dataset.hitloc;
             const metric = elements.metricGroup.querySelector('.active').dataset.metric;
             const hsp = parseFloat(elements.hspSlider.value) / 100;
+            const searchQuery = (elements.search.value || '').trim().toLowerCase();
 
             elements.mixedBtn.innerText = `Mixed (${(hsp*100).toFixed(0)}%)`;
             elements.hspContainer.style.display = hitLoc === 'Mixed' ? '' : 'none';
             elements.targetGroup.parentElement.style.display = metric === 'TTK' ? '' : 'none';
             elements.clearBtn.style.display = selectedWeaponNames.size > 0 ? 'inline-block' : 'none';
 
-            currentlyPlotted = weaponData.filter(w => activeClasses.includes('ALL') || activeClasses.includes(w.class));
+            currentlyPlotted = weaponData.filter(w => {
+                const classMatch = activeClasses.includes('ALL') || activeClasses.includes(w.class);
+                const searchMatch = !searchQuery || w.name.toLowerCase().includes(searchQuery);
+                return classMatch && searchMatch;
+            });
             currentlyPlotted.sort((a,b) => a.name.localeCompare(b.name));
 
-            elements.graphTitle.innerText = `${metric} vs Range (${hitLoc} Hits)`;
-            if (metric === 'TTK') elements.graphTitle.innerText += ` on ${target} (${targetHP} HP)`;
+            const metricHint = metric === 'TTK' ? '(Lower is Better)' : '(Higher is Better)';
+            elements.graphTitle.innerHTML = `<strong>${metric} vs Range</strong> (${hitLoc} Hits) <span style="font-size:0.75rem; color:#888;">${metricHint}</span>`;
+            if (metric === 'TTK') elements.graphTitle.innerHTML += ` on ${target} (${targetHP} HP)`;
 
             // CALC MAX Y
             let maxY = 0;
             currentlyPlotted.forEach(w => {
-                [0, w.maxDrop, 100].forEach(r => {
+                [0, w.minDrop, w.maxDrop, 100].forEach(r => {
                     const val = metric === 'TTK' 
                         ? calculateTTK(w, r, targetHP, hitLoc, hsp) 
                         : calculateDPS(w, r, hitLoc, hsp);
@@ -523,8 +522,11 @@
                 });
             });
             
-            if (metric === 'TTK') maxY = Math.min(5, Math.ceil(maxY * 1.2 * 2) / 2); 
-            else maxY = Math.ceil(maxY * 1.1 / 100) * 100;
+            if (metric === 'TTK') {
+                maxY = Math.min(6, Math.max(1.5, Math.ceil(maxY * 1.15 * 2) / 2)); 
+            } else {
+                maxY = Math.max(200, Math.ceil((maxY * 1.1) / 50) * 50);
+            }
             
             currentMaxY = maxY; 
 
@@ -556,6 +558,7 @@
                 hLine.setAttribute('y1', y); hLine.setAttribute('y2', y);
                 hLine.setAttribute('class', 'grid-line');
                 svg.appendChild(hLine);
+
                 const x = (i/5)*width;
                 const vLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
                 vLine.setAttribute('x1', x); vLine.setAttribute('x2', x);
@@ -564,7 +567,7 @@
                 svg.appendChild(vLine);
             }
 
-            // NEW: Cursor Line Element
+            // Cursor Line Only (No Ball)
             const cursorLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             cursorLine.setAttribute('y1', 0);
             cursorLine.setAttribute('y2', height);
@@ -576,31 +579,44 @@
             elements.legend.innerHTML = '';
             const anySelected = selectedWeaponNames.size > 0;
 
+            if (currentlyPlotted.length === 0) {
+                elements.legend.innerHTML = `<div style="color:#666; font-size:0.85rem; padding:1rem; text-align:center;">No weapons found matching filter.</div>`;
+            }
+
             currentlyPlotted.forEach(w => {
                 const isSel = selectedWeaponNames.has(w.name);
+                const safeId = w.name.replace(/[^a-zA-Z0-9]/g, '-');
                 
-                // Legend
+                // Legend Item with Hover Support
                 const legItem = document.createElement('div');
                 legItem.className = 'legend-item';
                 legItem.dataset.weaponId = w.name;
                 if (isSel) legItem.classList.add('selected');
-                else if (anySelected) legItem.style.opacity = '0.3';
+                else if (anySelected) legItem.style.opacity = '0.35';
                 
-                legItem.innerHTML = `<div class="legend-color" style="background:${w.color}"></div><span class="legend-text">${w.name}</span>`;
+                legItem.innerHTML = `<div class="legend-color" style="background:${w.color}"></div><span class="legend-text" title="${w.name}">${w.name}</span>`;
                 legItem.onclick = () => toggleSelect(w.name);
+                legItem.onmouseenter = () => {
+                    highlight(w.name, true);
+                    updateInfoPanelDynamic(w, 0);
+                };
+                legItem.onmouseleave = () => {
+                    clearHighlights();
+                    resetInfoPanel();
+                };
                 elements.legend.appendChild(legItem);
 
                 // Line Points
                 const points = [];
-                const ranges = [0, w.minDrop, w.maxDrop, 100].filter(r => r <= 100);
+                const ranges = [0, w.minDrop, w.maxDrop, 100].filter(r => r <= 100 && r >= 0);
                 const steps = [...new Set(ranges)].sort((a,b)=>a-b);
                 
                 steps.forEach(r => {
                     let val = metric === 'TTK' 
                         ? calculateTTK(w, r, targetHP, hitLoc, hsp) 
                         : calculateDPS(w, r, hitLoc, hsp);
-                    if (!isFinite(val)) val = metric === 'TTK' ? maxY*1.5 : 0; 
-                    const x = (r/100) * width;
+                    if (!isFinite(val)) val = metric === 'TTK' ? maxY * 1.5 : 0; 
+                    const x = (r / 100) * width;
                     const y = height - ((Math.min(val, maxY) / maxY) * height);
                     points.push(`${x},${y}`);
                 });
@@ -610,7 +626,7 @@
                 line.setAttribute('stroke', w.color);
                 line.setAttribute('stroke-width', '2');
                 line.setAttribute('class', 'weapon-line');
-                line.id = `line-${w.name.replace(/\s/g, '-')}`;
+                line.id = `line-${safeId}`;
                 
                 if (isSel) line.classList.add('selected');
                 else if (anySelected) line.classList.add('dimmed');
@@ -618,11 +634,12 @@
                 svg.appendChild(line);
             });
 
-            // Re-order SVG to put selected items on top
+            // Bring pinned lines to top
             currentlyPlotted.forEach(w => {
-                if(selectedWeaponNames.has(w.name)) {
-                    const line = svg.querySelector(`#line-${w.name.replace(/\s/g, '-')}`);
-                    if(line) svg.appendChild(line);
+                if (selectedWeaponNames.has(w.name)) {
+                    const safeId = w.name.replace(/[^a-zA-Z0-9]/g, '-');
+                    const line = svg.querySelector(`#line-${safeId}`);
+                    if (line) svg.appendChild(line);
                 }
             });
 
@@ -634,12 +651,14 @@
             clearHighlights();
             if (!active) return;
 
-            const id = `line-${name.replace(/\s/g, '-')}`;
-            const line = document.getElementById(id);
+            const safeId = name.replace(/[^a-zA-Z0-9]/g, '-');
+            const line = document.getElementById(`line-${safeId}`);
             const legItem = document.querySelector(`.legend-item[data-weapon-id="${name}"]`);
             
             if (line) line.classList.add('highlighted');
-            if (legItem) legItem.classList.add('highlighted');
+            if (legItem) {
+                legItem.classList.add('highlighted');
+            }
         }
 
         function toggleSelect(name) {
@@ -659,15 +678,15 @@
                 card.style.borderTopColor = w.color;
                 card.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-                        <h3 style="color:${w.color}; margin:0;">${w.name}</h3>
-                        <button onclick="document.dispatchEvent(new CustomEvent('unpin', {detail:'${w.name}'}))" style="background:none; border:none; color:#fff; cursor:pointer; font-size:1.2rem;">&times;</button>
+                        <h3 style="color:${w.color}; margin:0; font-size:1.2rem;">${w.name}</h3>
+                        <button onclick="document.dispatchEvent(new CustomEvent('unpin', {detail:'${w.name.replace(/'/g, "\\'")}'}))" style="background:none; border:none; color:#aaa; cursor:pointer; font-size:1.3rem;">&times;</button>
                     </div>
                     <ul>
                         <li><span>Class</span> <strong>${w.class}</strong></li>
                         <li><span>Dmg (Body/Head)</span> <strong>${w.body} / ${w.head}</strong></li>
                         <li><span>RPM</span> <strong>${w.rpm}</strong></li>
                         <li><span>Mag Size</span> <strong>${w.mag === Infinity ? '∞' : w.mag}</strong></li>
-                        <li><span>Reload (Empty)</span> <strong>${w.reloadEmpty}s</strong></li>
+                        <li><span>Reload (Empty)</span> <strong>${w.reloadEmpty ? w.reloadEmpty + 's' : 'N/A'}</strong></li>
                     </ul>
                     ${w.notes ? `<div style="margin-top:10px; font-size:0.8rem; color:#888; border-top:1px solid #333; padding-top:5px;">${w.notes}</div>` : ''}
                 `;
@@ -675,7 +694,6 @@
             });
         }
 
-        // --- LISTENERS ---
         function setupListeners() {
             document.addEventListener('click', (e) => {
                 const btn = e.target.closest('.toggle-btn');
@@ -684,7 +702,7 @@
                 
                 if (group.id === 'class-toggle-group') {
                     if (btn.dataset.class === 'ALL') {
-                        group.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+                        group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
                     } else {
                         btn.classList.toggle('active');
@@ -704,16 +722,17 @@
                 updateGraph();
             });
 
+            elements.search.addEventListener('input', () => {
+                updateGraph();
+            });
+
             elements.hspSlider.addEventListener('input', () => {
                 elements.hspValue.innerText = elements.hspSlider.value + '%';
                 updateGraph();
             });
 
-            // GLOBAL HOVER & CLICK HANDLER
             elements.plotArea.addEventListener('mousemove', handlePlotInteraction);
             elements.plotArea.addEventListener('touchmove', handlePlotInteraction, {passive: true});
-            
-            // SMART CLICK
             elements.plotArea.addEventListener('click', handlePlotInteraction);
             
             elements.plotArea.addEventListener('mouseleave', () => {
@@ -722,7 +741,6 @@
                 resetInfoPanel();
             });
 
-            // Card Close
             document.addEventListener('unpin', (e) => toggleSelect(e.detail));
             
             let resizeTimer;
