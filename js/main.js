@@ -177,61 +177,11 @@ const App = {
         return tournaments;
     },
 
-    /**
-     * Parses standard raw CSV text into a structured News Articles array.
-     */
-    parseNewsCSV(csvText) {
-        const rows = this.csvToArray(csvText);
-        if (rows.length === 0) return [];
+  
 
-        const headers = rows[0].map(h => h.trim());
-        const articles = [];
-
-        for (let i = 1; i < rows.length; i++) {
-            const values = rows[i];
-            if (values.length === 1 && values[0] === '') continue; // Skip empty trailing rows
-
-            const item = {};
-            headers.forEach((header, index) => {
-                let val = values[index] !== undefined ? values[index].trim() : '';
-                if (header === 'featured') {
-                    item[header] = val.toLowerCase() === 'true';
-                } else {
-                    item[header] = val;
-                }
-            });
-
-            // Convert flat narrative columns into standard body element array [1]
-            const content = [];
-
-            // 1. Process body1 text blocks (Separating double newlines into separate paragraphs)
-            if (item.body1) {
-                const paragraphs = item.body1.split(/\r?\n/).filter(p => p.trim() !== '');
-                paragraphs.forEach(p => content.push(p));
-            }
-
-            // 2. Insert inline image directly in the middle flow
-            if (item.inlineImage1) {
-                content.push({
-                    image: item.inlineImage1,
-                    caption: item.inlineCaption1 || ''
-                });
-            }
-
-            // 3. Process body2 text blocks (Separating double newlines into separate paragraphs)
-            if (item.body2) {
-                const paragraphs = item.body2.split(/\r?\n/).filter(p => p.trim() !== '');
-                paragraphs.forEach(p => content.push(p));
-            }
-
-            item.content = content;
-            articles.push(item);
-        }
-        return articles;
-    },
-
-    /**
-     * Fetches tournaments.csv and builds the tournament & home pages dynamically.
+   /**
+     * Fetches tournaments.csv and renders cards.
+     * Links are ON if pageUrl has a link; OFF (unclickable) if pageUrl is blank.
      */
     initTournaments() {
         const showcaseContainer = document.querySelector('.showcase-container');
@@ -240,14 +190,12 @@ const App = {
 
         if (!showcaseContainer && !gridContainer && !homeRecentContainer) return;
 
-        // --- FETCH CSV FILE ---
         fetch('./tournaments.csv')
             .then(response => {
                 if (!response.ok) throw new Error("HTTP error fetching tournaments.csv");
                 return response.text();
             })
             .then(csvText => {
-                // Parse flat CSV into structured tournament objects [2]
                 const tournaments = this.parseTournamentsCSV(csvText);
 
                 let showcaseHTML = '';
@@ -255,8 +203,15 @@ const App = {
                 let homeRecentHTML = '';
 
                 tournaments.forEach(t => {
-                    
-                    // 1. ACTION BUTTONS 
+                    // Check if you wrote a custom page link in the CSV
+                    const hasCustomPage = Boolean(t.links && t.links.pageUrl && t.links.pageUrl.trim() !== '');
+
+                    // Only generate the clickable overlay if there is a real link
+                    const coverLinkHTML = hasCustomPage 
+                        ? `<a href="${t.links.pageUrl}" class="card-link-cover" aria-label="View details for ${t.title}"></a>` 
+                        : '';
+
+                    // 1. BUTTONS (VOD / Live / or your Custom Page link)
                     let buttonsHTML = '';
                     if (t.media.vods && t.media.vods.length > 0) {
                         t.media.vods.forEach(v => {
@@ -266,19 +221,23 @@ const App = {
                         buttonsHTML = `<a href="${t.media.watchLiveUrl}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-play icon-twitch"></i> Watch Live</a>`;
                     } else if (t.media.watchVodUrl) {
                         buttonsHTML = `<a href="${t.media.watchVodUrl}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube icon-youtube"></i> Watch VOD</a>`;
-                    } else {
-                        buttonsHTML = `<a href="${t.links.pageUrl}" class="btn btn-secondary"><i class="fa-solid fa-scroll icon-info"></i> View Stats</a>`;
+                    } else if (hasCustomPage) {
+                        // Only show "View Details" button if you provided a custom page URL
+                        buttonsHTML = `<a href="${t.links.pageUrl}" class="btn btn-secondary"><i class="fa-solid fa-scroll icon-info"></i> View Details</a>`;
                     }
 
-                    // 2. TOURNAMENTS PAGE (PREMIUM GRID)
+                    // 2. FEATURED SHOWCASE
                     if (showcaseContainer && t.featured) {
                         let badgeText = t.tags && t.tags.length > 0 ? t.tags[0] : 'Featured Event';
-                        
+                        let showcaseActionBtn = hasCustomPage 
+                            ? `<div class="card-actions"><a href="${t.links.pageUrl}" class="btn btn-primary">ENTER ARENA <i class="fa-solid fa-arrow-right"></i></a></div>`
+                            : (buttonsHTML ? `<div class="card-actions">${buttonsHTML}</div>` : '');
+
                         showcaseHTML += `
                             <div class="tournament-showcase">
                                 <img src="${t.media.thumbnail}" alt="${t.title}" class="showcase-bg">
                                 <div class="showcase-badge"><i class="fa-solid fa-star"></i> ${badgeText}</div>
-                                <a href="${t.links.pageUrl}" class="card-link-cover" aria-label="View details for ${t.title}"></a>
+                                ${coverLinkHTML}
                                 <div class="showcase-overlay">
                                     <div class="hc-content-wrapper" style="max-width: 800px; width: 100%;">
                                         <h3 class="showcase-content">${t.title}</h3>
@@ -289,9 +248,7 @@ const App = {
                                                     <span><i class="fa-solid fa-calendar-days"></i> ${t.dates.display}</span>
                                                 </div>
                                                 <p class="showcase-desc">${t.media.description}</p>
-                                                <div class="card-actions">
-                                                    <a href="${t.links.pageUrl}" class="btn btn-primary">ENTER ARENA <i class="fa-solid fa-arrow-right"></i></a>
-                                                </div>
+                                                ${showcaseActionBtn}
                                             </div>
                                         </div>
                                     </div>
@@ -299,6 +256,7 @@ const App = {
                             </div>`;
                     } 
                     
+                    // 3. ARCHIVE GRID CARDS
                     if (gridContainer && !t.featured) {
                         let winnersBoxHTML = '';
                         if (t.status === 'completed') {
@@ -326,7 +284,7 @@ const App = {
                             <div class="stats-card">
                                 <div class="sc-image">
                                     <img src="${t.media.thumbnail}" alt="${t.title}">
-                                    <a href="${t.links.pageUrl}" class="card-link-cover" aria-label="View details"></a>
+                                    ${coverLinkHTML}
                                 </div>
                                 <div class="sc-content">
                                     <h4 class="sc-title">${t.title}</h4>
@@ -336,14 +294,12 @@ const App = {
                                     </div>
                                     ${winnersBoxHTML}
                                     <p class="hc-desc" style="margin-bottom: 1rem; flex-grow: 1;">${t.media.description}</p>
-                                    <div class="sc-actions">
-                                        ${buttonsHTML}
-                                    </div>
+                                    ${buttonsHTML ? `<div class="sc-actions">${buttonsHTML}</div>` : ''}
                                 </div>
                             </div>`;
                     }
 
-                    // 3. HOME PAGE (RECENT RESULTS - HOVER CARDS)
+                    // 4. HOME PAGE RECENT CARDS
                     if (homeRecentContainer && t.status === 'completed') {
                         let winnersTextHover = '';
                         if (t.winners && t.winners.length > 0) {
@@ -354,7 +310,7 @@ const App = {
                         homeRecentHTML += `
                             <div class="hover-card">
                                 <img src="${t.media.thumbnail}" alt="${t.title}">
-                                <a href="${t.links.pageUrl}" class="card-link-cover" aria-label="View details"></a>
+                                ${coverLinkHTML}
                                 <div class="hc-overlay">
                                     <div class="hc-content-wrapper">
                                         <h3 class="hc-title">${t.title}</h3>
@@ -365,9 +321,7 @@ const App = {
                                                     <span><i class="fa-regular fa-calendar"></i> ${t.dates.display}</span>
                                                 </div>
                                                 <p class="hc-desc">${t.media.description}</p>
-                                                <div class="hc-actions">
-                                                    ${buttonsHTML}
-                                                </div>
+                                                ${buttonsHTML ? `<div class="hc-actions">${buttonsHTML}</div>` : ''}
                                             </div>
                                         </div>
                                     </div>

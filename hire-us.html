@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hire Ape Squad for turnkey live esports broadcasts, tournament administration, in-game observing, and brand activations.">
+    <meta name="keywords" content="Ape Squad, esports production, tournament operations, live broadcast, The Finals production, gaming agency">
+    <title>Hire Us | Live Esports Production & Tournament Operations</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ff6f24">
+    <meta name="msapplication-TileColor" content="#080808">
+    <meta name="theme-color" content="#080808">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PAGE-SPECIFIC B2B PRODUCTION STYLES -->
+    <style>
+        /* Hero Banner */
+        #work-hero {
+            position: relative;
+            min-height: 58vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 7rem 2rem 4rem 2rem;
+            overflow: hidden;
+            background: var(--midnight-black);
+            margin-top: -85px;
+        }
+
+        .hero-background-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.3) contrast(1.15);
+        }
+
+        .hero-background-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.96) 100%),
+                        linear-gradient(180deg, transparent 60%, var(--midnight-black) 100%);
+        }
+
+        #work-hero .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            padding-top: 50px;
+        }
+
+        #work-hero h1 {
+            font-size: clamp(3rem, 7vw, 5.8rem);
+            margin-bottom: 0.25rem;
+            line-height: 0.88;
+            color: #ffffff;
+        }
+
+        .work-intro {
+            font-size: 1.15rem;
+            color: #d1d1dc;
+            max-width: 65ch;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .hero-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        /* Partner Trust Strip */
+        #partner-strip {
+            background-color: #0b0b0f;
+            border-top: 1px solid var(--surface-border-subtle);
+            border-bottom: 1px solid var(--surface-border-subtle);
+            padding: 2.25rem 0;
+            text-align: center;
+        }
+
+        .partner-title {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            color: #8a8a98;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 1.25rem;
+            font-weight: 800;
+        }
+
+        .partner-logo-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem 4rem;
+        }
+
+        .partner-logo-item {
+            font-family: var(--font-headline);
+            font-size: 1.6rem;
+            color: #888896;
+            letter-spacing: 2px;
+            transition: all 0.25s ease;
+        }
+
+        .partner-logo-item:hover {
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 111, 36, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .service-card {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.75);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--pure-white);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 111, 36, 0.25);
+        }
+
+        .service-card.featured {
+            border-top: 4px solid var(--jersey-orange);
+        }
+
+        .service-card.secondary-accent {
+            border-top: 4px solid var(--jersey-magenta);
+        }
+
+        .service-card.third-accent {
+            border-top: 4px solid #ffffff;
+        }
+
+        .service-icon {
+            font-size: 2.2rem;
+            color: var(--jersey-orange);
+            margin-bottom: 1.25rem;
+        }
+
+        .service-card h3 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            line-height: 1;
+        }
+
+        .service-card p {
+            color: #b0b0be;
+            font-size: 0.98rem;
+            line-height: 1.55;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+            border-top: 1px solid var(--surface-border-subtle);
+            padding-top: 1.25rem;
+            flex-grow: 1;
+        }
+
+        .service-features li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 0.75rem;
+            color: #e2e2ec;
+            font-size: 0.9rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--jersey-orange);
+            font-weight: 900;
+        }
+
+        .service-price-pill {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--surface-border);
+            padding: 6px 14px;
+            border-radius: 50px;
+            align-self: flex-start;
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+        }
+
+        /* 16:9 Case Studies */
+        .case-studies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .case-studies-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .case-study-card {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .case-study-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--pure-white);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(217, 39, 127, 0.25);
+        }
+
+        .case-img-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #000000;
+            border-bottom: 1px solid var(--surface-border-subtle);
+        }
+
+        .case-img-wrap img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+        .case-study-card:hover .case-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .case-content {
+            padding: 1.75rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+            background: linear-gradient(180deg, #15151c 0%, #101015 100%);
+        }
+
+        .case-tag {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            color: var(--jersey-orange);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        .case-content h3 {
+            font-size: 1.65rem;
+            color: #ffffff;
+            margin-bottom: 0.65rem;
+            line-height: 1.05;
+        }
+
+        .case-content p {
+            color: #b0b0be;
+            font-size: 0.92rem;
+            line-height: 1.55;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .case-pill {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--surface-border);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            color: #d1d1dc;
+            font-family: var(--font-body);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Inquiry Section */
+        .inquiry-card {
+            background: linear-gradient(135deg, rgba(97, 33, 158, 0.18) 0%, rgba(217, 39, 127, 0.12) 50%, rgba(255, 111, 36, 0.18) 100%), var(--surface-card);
+            border: 1.5px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 3.5rem 2.5rem;
+            text-align: center;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85);
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .inquiry-card h2 {
+            font-size: clamp(2.6rem, 5vw, 4rem);
+            margin: 0;
+            line-height: 0.95;
+        }
+
+        .inquiry-card p {
+            max-width: 60ch;
+            color: #d1d1dc;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .inquiry-action-box {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .brief-hints {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--surface-border-subtle);
+            border-radius: 8px;
+            padding: 1.25rem 2rem;
+            text-align: left;
+            width: 100%;
+            max-width: 650px;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            color: #b0b0be;
+            line-height: 1.7;
+        }
+
+        .brief-hints strong {
+            color: var(--jersey-orange);
+            display: block;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar"></header> <!-- Populated by main.js -->
+
+    <main>
+
+        <!-- ====================================================== -->
+        <!-- 1. HERO BANNER                                         -->
+        <!-- ====================================================== -->
+        <section id="work-hero">
+            <div class="hero-background-image">
+                <img src="/images/backgrounds/esports.jpg" alt="Ape Squad Production Arena" loading="eager" decoding="async">
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-tagline-badge">
+                    <span>BROADCAST SERVICES</span>
+                    <span class="tagline-dot">•</span>
+                    <span>EVENT OPERATIONS</span>
+                </div>
+
+                <h1 class="glitch" data-text="WHAT WE BUILD">WHAT WE BUILD</h1>
+
+                <p class="work-intro">
+                    We engineer turnkey live broadcasts, dynamic custom overlays, in-game observing, and competitive tournament logistics for leagues, studios, and brands.
+                </p>
+
+                <div class="hero-btn-group">
+                    <a href="#inquiry" class="btn btn-hero-primary btn-sm">
+                        <i class="fa-solid fa-paper-plane"></i> Book Broadcast Team
+                    </a>
+                    <a href="#case-studies" class="btn btn-secondary btn-sm">
+                        View Portfolio <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- 2. PARTNER TRUST STRIP                                 -->
+        <!-- ====================================================== -->
+        <section id="partner-strip">
+            <div class="container" style="padding: 0 2rem;">
+                <div class="partner-title">Trusted By Publishers, Teams & Venues</div>
+                <div class="partner-logo-grid">
+                    <div class="partner-logo-item">EMBARK STUDIOS</div>
+                    <div class="partner-logo-item">KANSAS CITY PIONEERS</div>
+                    <div class="partner-logo-item">THE MOON THEORY</div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- 3. SERVICES ENGINE                                     -->
+        <!-- ====================================================== -->
+        <section id="services" class="content-curtain">
+            <div class="container" style="max-width: 1400px; padding-top: 0;">
+                <div class="compact-header">
+                    <span class="eyebrow">PRODUCTION CAPABILITIES</span>
+                    <h2 class="glitch" data-text="CORE SERVICES">CORE SERVICES</h2>
+                    <p>Modular or end-to-end execution. Every project is scoped with clear deliverables and flat project pricing.</p>
+                </div>
+
+                <div class="services-grid">
+                    <!-- Service 1: Live Broadcast -->
+                    <div class="service-card featured">
+                        <div class="service-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+                        <span class="service-price-pill">From $1,500</span>
+                        <h3>Live Broadcast & Production</h3>
+                        <p>Turnkey live production engineering that elevates competitive gaming into a stadium-grade broadcast spectacle.</p>
+                        <ul class="service-features">
+                            <li>OBS / vMix master control workflows</li>
+                            <li>Custom 1080p60 branded broadcast overlays</li>
+                            <li>Tier-1 in-game observers & replay operators</li>
+                            <li>Professional talent casting & host coordination</li>
+                        </ul>
+                        <a href="#inquiry" class="btn btn-primary btn-sm" style="width: 100%;">
+                            Scope Broadcast <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Service 2: Tournament Administration -->
+                    <div class="service-card secondary-accent">
+                        <div class="service-icon"><i class="fa-solid fa-trophy"></i></div>
+                        <span class="service-price-pill">From $500</span>
+                        <h3>Tournament Administration</h3>
+                        <p>Complete competitive integrity and logistics management from bracket design to match reporting.</p>
+                        <ul class="service-features">
+                            <li>Custom rulebook & tournament format design</li>
+                            <li>Platform administration (Challonge / Battlefy)</li>
+                            <li>Match scheduling & dispute arbitration</li>
+                            <li>Real-time player communications & check-ins</li>
+                        </ul>
+                        <a href="#inquiry" class="btn btn-secondary btn-sm" style="width: 100%;">
+                            Scope Operations <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Service 3: Creative & Activations -->
+                    <div class="service-card third-accent">
+                        <div class="service-icon"><i class="fa-solid fa-palette"></i></div>
+                        <span class="service-price-pill">From $500</span>
+                        <h3>Creative & Brand Activations</h3>
+                        <p>Native partner integrations, motion design, and community marketing campaigns that capture authentic hype.</p>
+                        <ul class="service-features">
+                            <li>Sponsored replay bumpers & segment takeovers</li>
+                            <li>Social media assets & tournament trailers</li>
+                            <li>Partner creator & co-stream activations</li>
+                            <li>Broadcast analytics & post-event reporting</li>
+                        </ul>
+                        <a href="#inquiry" class="btn btn-secondary btn-sm" style="width: 100%;">
+                            Scope Creative <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- 4. SELECTED PORTFOLIO (16:9 CASE STUDIES)              -->
+        <!-- ====================================================== -->
+        <section id="case-studies" class="content-curtain section-alt">
+            <div class="container" style="max-width: 1400px; padding-top: 0;">
+                <div class="compact-header">
+                    <span class="eyebrow">SELECTED PORTFOLIO</span>
+                    <h2 class="glitch" data-text="PROVEN EXECUTION">PROVEN EXECUTION</h2>
+                    <p>A track record of engineering live experiences for stadiums, international circuits, and gaming studios.</p>
+                </div>
+
+                <div class="case-studies-grid">
+                    <!-- Case 1: KC Pioneers / Soccer Capital -->
+                    <div class="case-study-card">
+                        <div class="case-img-wrap">
+                            <img src="/images/tournament/kcpnationscup.png" alt="Soccer Capital Gaming Experience" loading="lazy">
+                        </div>
+                        <div class="case-content">
+                            <div>
+                                <span class="case-tag">LAN Arena Production</span>
+                                <h3>Soccer Capital Gaming</h3>
+                                <p>Partnered with the Kansas City Pioneers to produce a live esports stadium experience, driving live broadcasts directly to stadium Jumbotron screens.</p>
+                            </div>
+                            <div class="case-pills">
+                                <span class="case-pill">Jumbotron Feeds</span>
+                                <span class="case-pill">LAN Ops</span>
+                                <span class="case-pill">Live Directing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Case 2: THE FINALS TGM26 Open Qualifiers -->
+                    <div class="case-study-card">
+                        <div class="case-img-wrap">
+                            <img src="/images/tournament/apexphl.jpg" alt="THE FINALS TGM26 Top 16 Qualifiers" loading="lazy">
+                        </div>
+                        <div class="case-content">
+                            <div>
+                                <span class="case-tag">Championship Qualifier</span>
+                                <h3>THE FINALS TGM26 Top 16 Qualifiers</h3>
+                                <p>High-stakes official qualifier tournament leading into The Grand Major 2026, hundreds of pro contenders across regional brackets.</p>
+                            </div>
+                            <div class="case-pills">
+                                <span class="case-pill">TGM26 Circuit</span>
+                                <span class="case-pill">Broadcast Operations</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Case 3: The Moon Theory Pumpkin Smash Games -->
+                    <div class="case-study-card">
+                        <div class="case-img-wrap">
+                            <img src="/images/tournament/moontheorypumpkin.jpg" alt="The Moon Theory Pumpkin Smash Team Games" loading="lazy">
+                        </div>
+                        <div class="case-content">
+                            <div>
+                                <span class="case-tag">Partner Production</span>
+                                <h3>The Moon Theory Pumpkin Smash Team Games</h3>
+                                <p>Turnkey tournament broadcast and operations produced for The Moon Theory, featuring custom overlays, graphic design services, and tournament operations.</p>
+                            </div>
+                            <div class="case-pills">
+                                <span class="case-pill">Live Broadcast</span>
+                                <span class="case-pill">The Moon Theory</span>
+                                <span class="case-pill">Full Service</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- 5. INQUIRY & CONTACT SECTION                           -->
+        <!-- ====================================================== -->
+        <section id="inquiry" class="content-curtain">
+            <div class="container" style="max-width: 1400px; padding-top: 0;">
+                <div class="inquiry-card">
+                    <span class="eyebrow">HAVE A PROJECT IN MIND?</span>
+                    <h2 class="glitch" data-text="LET'S BUILD TOGETHER">LET'S BUILD TOGETHER</h2>
+                    <p>
+                        Tell us about your event, tournament, or broadcast concept. We’ll review your goals and provide a scoped proposal with flat project pricing.
+                    </p>
+
+                    <div class="inquiry-action-box">
+                        <a href="mailto:contact@apesquad.org?subject=Production%20Inquiry%20-%20Ape%20Squad&body=Project%20or%20Event%20Name%3A%0A%0ATarget%20Dates%3A%0A%0AServices%20Needed%20(Broadcast%2C%20Admin%2C%20Creative)%3A%0A%0AEstimated%20Budget%20Range%3A%0A%0AOverview%2FGoals%3A" class="btn btn-hero-primary">
+                            <i class="fa-solid fa-envelope"></i> Send Project Brief
+                        </a>
+                        <a href="mailto:contact@apesquad.org?subject=General%20Business%20Inquiry" class="btn btn-secondary">
+                            General Inquiry <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="brief-hints">
+                        <strong>Helpful details to include:</strong>
+                        <span>• Target event dates and purpose</span><br>
+                        <span>• Required services (live stream production, bracket operations, casters)</span><br>
+                        <span>• Anticipated scale and budget range</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer"></footer> <!-- Populated by main.js -->
+
+    <!-- Global Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/features.js"></script>
+</body>
+</html>

@@ -20,78 +20,626 @@
     <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 
-    <!-- Tool Styles -->
+    <!-- Visualizer Tactical Styles -->
     <style>
-      #gun-data-page { background-color: var(--near-black); padding-bottom: 4rem; }
-      .data-module { background-color: var(--midnight-black); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 2.5rem 2rem; min-height: 600px; }
-      .controls { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2rem; }
-      .control-group { flex-grow: 1; min-width: 150px; }
-      .control-group label { display: block; margin-bottom: 0.75rem; color: var(--off-white); font-family: var(--font-headline); letter-spacing: 1px; text-transform: uppercase; }
-      .toggle-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-      .toggle-btn { padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background-color: transparent; color: var(--light-grey); cursor: pointer; transition: all 0.2s ease; font-family: var(--font-body); }
-      .toggle-btn:hover { background-color: rgba(1, 163, 235, 0.1); color: var(--off-white); }
-      .toggle-btn.active { background-color: var(--electric-blue); color: var(--off-white); border-color: var(--electric-blue); font-weight: bold; }
-      .hsp-slider-container { display: flex; align-items: center; gap: 1rem; }
-      .hsp-slider-container input[type="range"] { flex-grow: 1; accent-color: var(--electric-blue); }
-      
-      .graph-section { display: flex; flex-direction: column; gap: 1.5rem; }
-      @media (min-width: 992px) { .graph-section { flex-direction: row; align-items: flex-start; } }
-      
-      .graph-container { position: relative; height: 400px; width: 100%; background-color: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; flex-grow: 1; }
-      .plot-area { position: absolute; top: 40px; bottom: 40px; left: 40px; right: 15px; }
-      
-      /* Legend Area with Search */
-      .legend-container { display: flex; flex-direction: column; max-height: 400px; width: 100%; }
-      @media (min-width: 992px) { .legend-container, .info-panel { width: 250px; flex-shrink: 0; } }
-      
-      .search-box { width: 100%; padding: 0.5rem; background: var(--near-black); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; font-size: 0.85rem; margin-bottom: 0.5rem; outline: none; }
-      .search-box:focus { border-color: var(--electric-blue); }
+      #gun-data-page {
+          padding-bottom: 5rem;
+      }
 
-      .legend, .info-panel { background: var(--near-black); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; }
-      .legend { overflow-y: auto; flex-grow: 1; }
-      
-      .legend-item { display: flex; align-items: center; margin-bottom: 4px; cursor: pointer; padding: 4px; border-radius: 4px; transition: background 0.15s; }
-      .legend-item:hover, .legend-item.highlighted { background-color: rgba(255,255,255,0.1); }
-      .legend-item.selected { background-color: rgba(1, 163, 235, 0.2); border: 1px solid rgba(1, 163, 235, 0.5); }
-      .legend-color { width: 12px; height: 12px; margin-right: 8px; border-radius: 50%; flex-shrink: 0; }
-      .legend-text { font-size: 0.85rem; color: #ddd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      
-      /* Info Panel */
-      .info-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 2px; }
-      .info-label { color: #888; } .info-value { color: #fff; font-weight: bold; }
-      
+      /* Main Tactical Enclosure */
+      .data-module {
+          background-color: var(--surface-card);
+          border: 1px solid var(--surface-border);
+          border-top: 4px solid var(--jersey-orange);
+          border-radius: 6px;
+          padding: 2.5rem;
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+      }
+
+      .module-top-bar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid var(--surface-border);
+      }
+
+      .module-top-bar h3 {
+          margin: 0;
+          font-size: clamp(1.8rem, 3vw, 2.4rem);
+          color: var(--pure-white);
+          letter-spacing: 1px;
+      }
+
+      .version-pill {
+          font-family: var(--font-headline);
+          font-size: 1.15rem;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          background: var(--jersey-gradient-h);
+          color: var(--pure-white);
+          padding: 0.4rem 1.1rem;
+          border-radius: 4px;
+          box-shadow: 0 4px 15px rgba(217, 39, 127, 0.4);
+      }
+
+      /* Controls Dashboard */
+      .controls {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 1.5rem;
+          margin-bottom: 2.25rem;
+          background: var(--near-black);
+          border: 1px solid var(--surface-border);
+          border-radius: 6px;
+          padding: 1.5rem;
+      }
+
+      .control-group {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+      }
+
+      .control-group label {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 0.75rem;
+          color: var(--jersey-orange);
+          font-family: var(--font-body);
+          font-size: 0.75rem;
+          font-weight: 900;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+      }
+
+      .toggle-group {
+          display: flex;
+          gap: 0.45rem;
+          flex-wrap: wrap;
+      }
+
+      .toggle-btn {
+          padding: 0.55rem 0.95rem;
+          border-radius: 4px;
+          border: 1px solid var(--surface-border);
+          background-color: rgba(255, 255, 255, 0.03);
+          color: #b8b8c4;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          font-family: var(--font-headline);
+          font-size: 1rem;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+      }
+
+      .toggle-btn:hover {
+          border-color: var(--pure-white);
+          color: var(--pure-white);
+          transform: translateY(-1px);
+      }
+
+      /* Stark White Active State */
+      .toggle-btn.active {
+          background-color: var(--pure-white);
+          color: var(--text-dark);
+          border-color: var(--pure-white);
+          box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
+      }
+
+      /* Action Tool Buttons */
+      .tool-btn-fire {
+          border-color: var(--jersey-orange) !important;
+          color: var(--jersey-orange) !important;
+      }
+      .tool-btn-fire:hover, .tool-btn-fire.active {
+          background: var(--jersey-gradient-h) !important;
+          color: var(--pure-white) !important;
+          border-color: transparent !important;
+      }
+
+      .tool-btn-magenta {
+          border-color: var(--jersey-magenta) !important;
+          color: var(--jersey-pink) !important;
+      }
+      .tool-btn-magenta:hover {
+          background: var(--jersey-magenta) !important;
+          color: var(--pure-white) !important;
+      }
+
+      /* Headshot Slider */
+      .hsp-slider-container {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+          height: 100%;
+      }
+      .hsp-slider-container input[type="range"] {
+          flex-grow: 1;
+          accent-color: var(--jersey-orange);
+          cursor: pointer;
+      }
+      .hsp-value {
+          font-family: var(--font-headline);
+          font-size: 1.4rem;
+          color: var(--pure-white);
+          min-width: 44px;
+      }
+
+      /* Graph Layout Grid - Strictly Fixed Height on Desktop */
+      .graph-section {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+      }
+      @media (min-width: 1024px) {
+          .graph-section {
+              flex-direction: row;
+              align-items: flex-start;
+              height: 460px;
+          }
+      }
+
+      /* Left Sidebar: Weapon Legend & Filter */
+      .legend-container {
+          display: flex;
+          flex-direction: column;
+          height: 460px;
+          width: 100%;
+      }
+      @media (min-width: 1024px) {
+          .legend-container {
+              width: 260px;
+              flex-shrink: 0;
+          }
+      }
+
+      .search-box {
+          width: 100%;
+          padding: 0.7rem 0.9rem;
+          background: var(--midnight-black);
+          border: 1px solid var(--surface-border);
+          border-radius: 4px;
+          color: var(--pure-white);
+          font-family: var(--font-body);
+          font-size: 0.85rem;
+          margin-bottom: 0.65rem;
+          outline: none;
+          transition: border-color 0.2s ease;
+      }
+      .search-box:focus {
+          border-color: var(--jersey-orange);
+      }
+
+      .legend {
+          background: var(--near-black);
+          border: 1px solid var(--surface-border);
+          border-radius: 4px;
+          padding: 0.6rem;
+          overflow-y: auto;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+      }
+
+      /* Custom Scrollbar for Legend */
+      .legend::-webkit-scrollbar { width: 6px; }
+      .legend::-webkit-scrollbar-track { background: var(--midnight-black); }
+      .legend::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+      .legend::-webkit-scrollbar-thumb:hover { background: var(--jersey-orange); }
+
+      .legend-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          cursor: pointer;
+          padding: 6px 8px;
+          border-radius: 3px;
+          border: 1px solid transparent;
+          transition: all 0.12s ease;
+      }
+      .legend-item-left {
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+      }
+      .legend-item:hover, .legend-item.highlighted {
+          background-color: rgba(255, 255, 255, 0.08);
+      }
+      .legend-item.selected {
+          background-color: rgba(255, 111, 36, 0.16);
+          border-color: var(--jersey-orange);
+      }
+      .legend-color {
+          width: 10px;
+          height: 10px;
+          margin-right: 10px;
+          border-radius: 2px;
+          flex-shrink: 0;
+      }
+      .legend-text {
+          font-size: 0.85rem;
+          color: var(--pure-white);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-weight: 700;
+      }
+      .legend-class-tag {
+          font-size: 0.65rem;
+          font-weight: 900;
+          padding: 1px 5px;
+          border-radius: 2px;
+          background: rgba(255, 255, 255, 0.08);
+          color: #aaa;
+          margin-left: 6px;
+          flex-shrink: 0;
+      }
+
+      /* Center: SVG Plot Canvas */
+      .graph-container {
+          position: relative;
+          height: 460px;
+          width: 100%;
+          background-color: var(--midnight-black);
+          border: 1px solid var(--surface-border);
+          border-radius: 6px;
+          flex-grow: 1;
+          user-select: none;
+      }
+
+      .graph-header-bar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.75rem 1.25rem;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .graph-title {
+          font-family: var(--font-headline);
+          font-size: 1.25rem;
+          letter-spacing: 1px;
+          color: var(--pure-white);
+          text-transform: uppercase;
+      }
+
+      .graph-hint {
+          font-size: 0.75rem;
+          color: var(--jersey-orange);
+          font-weight: 800;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+      }
+
+      .plot-area {
+          position: absolute;
+          top: 56px;
+          bottom: 38px;
+          left: 52px;
+          right: 24px;
+          cursor: crosshair;
+      }
+
+      /* Right Sidebar: FIXED-HEIGHT STARK WHITE SCOREBOARD TELEMETRY PANEL */
+      .info-panel {
+          background: var(--pure-white);
+          color: var(--text-dark);
+          border: 2px solid var(--pure-white);
+          border-radius: 6px;
+          padding: 1.25rem 1.4rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 460px; /* Strictly locked to prevent any vertical bounce */
+          overflow: hidden;
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+      }
+      @media (min-width: 1024px) {
+          .info-panel {
+              width: 270px;
+              flex-shrink: 0;
+          }
+      }
+
+      .info-panel-header {
+          font-family: var(--font-headline);
+          font-size: 1.55rem;
+          color: var(--text-dark);
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+          padding-bottom: 0.45rem;
+          margin-bottom: 0.75rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-shrink: 0;
+      }
+      .info-panel-header i {
+          color: var(--jersey-magenta);
+          font-size: 1.15rem;
+      }
+
+      #info-content-details {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          flex-grow: 1;
+          overflow: hidden;
+      }
+
+      .info-big-metric {
+          background: var(--midnight-black);
+          color: var(--pure-white);
+          padding: 0.85rem 0.75rem;
+          border-radius: 4px;
+          text-align: center;
+          margin-bottom: 0.75rem;
+          border-left: 4px solid var(--jersey-orange);
+          height: 112px; /* Fixed height so it never shifts */
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          flex-shrink: 0;
+      }
+      .info-big-metric .metric-sub {
+          font-size: 0.7rem;
+          letter-spacing: 2px;
+          color: var(--jersey-orange);
+          text-transform: uppercase;
+          font-weight: 900;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+      .info-big-metric .metric-num {
+          font-family: var(--font-headline);
+          font-size: 2.5rem;
+          line-height: 1;
+          margin: 0.2rem 0;
+          display: block;
+          color: var(--pure-white);
+          white-space: nowrap;
+      }
+      .info-big-metric .metric-weapon-name {
+          font-size: 0.78rem;
+          color: #bbb;
+          font-weight: 700;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: block;
+      }
+
+      .info-rows-group {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          flex-grow: 1;
+      }
+
+      .info-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 36px; /* Fixed row height */
+          font-size: 0.85rem;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .info-row:last-child {
+          border-bottom: none;
+      }
+      .info-label {
+          color: var(--text-muted-dark);
+          font-weight: 800;
+          text-transform: uppercase;
+          font-size: 0.72rem;
+          letter-spacing: 1px;
+          white-space: nowrap;
+      }
+      .info-value {
+          color: var(--text-dark);
+          font-weight: 900;
+          font-size: 0.9rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 130px;
+          text-align: right;
+      }
+
+      .info-footer-hint {
+          margin-top: 0.65rem;
+          padding-top: 0.5rem;
+          border-top: 1px dashed rgba(0, 0, 0, 0.15);
+          font-size: 0.7rem;
+          color: var(--text-muted-dark);
+          text-align: center;
+          font-weight: 800;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          white-space: nowrap;
+          flex-shrink: 0;
+      }
+
       /* Loading State */
-      #loading-state { text-align: center; padding: 4rem; color: var(--electric-blue); font-family: var(--font-headline); font-size: 1.5rem; }
-      #content-area { display: none; opacity: 0; transition: opacity 0.5s ease; }
+      #loading-state {
+          text-align: center;
+          padding: 5rem 2rem;
+          color: var(--pure-white);
+          font-family: var(--font-headline);
+          font-size: 2rem;
+          letter-spacing: 2px;
+      }
+      #loading-state i {
+          color: var(--jersey-orange);
+          margin-bottom: 1rem;
+          font-size: 2.5rem;
+      }
+
+      #content-area { display: none; opacity: 0; transition: opacity 0.4s ease; }
       #content-area.visible { display: block; opacity: 1; }
 
-      /* Cards */
-      #weapon-cards-container { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 2rem; }
-      .weapon-card { background: var(--near-black); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1.5rem; border-top: 3px solid transparent; }
-      .weapon-card h3 { margin-top: 0; }
-      .weapon-card li { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 5px 0; color: #ccc; font-size: 0.9rem; }
-      .weapon-card strong { color: #fff; }
+      /* Pinned Comparison Cards Grid */
+      .pinned-section-header {
+          margin-top: 3rem;
+          margin-bottom: 1.25rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 1px solid var(--surface-border);
+          padding-bottom: 0.75rem;
+      }
+      .pinned-section-header h3 {
+          margin: 0;
+          font-size: 1.8rem;
+      }
 
-      /* SVG Graph */
-      .weapon-line { fill: none; transition: stroke-width 0.15s, opacity 0.15s; cursor: pointer; }
-      .weapon-line.dimmed { opacity: 0.12; }
-      .weapon-line.highlighted { stroke-width: 4px; filter: drop-shadow(0 0 6px rgba(255,255,255,0.6)); opacity: 1; }
-      .grid-line { stroke: rgba(255,255,255,0.08); stroke-width: 1px; }
-      .axis-labels { position: absolute; color: #777; font-size: 0.75rem; user-select: none; }
+      #weapon-cards-container {
+          display: grid;
+          gap: 1.5rem;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+
+      .weapon-card {
+          background: var(--near-black);
+          border: 1px solid var(--surface-border);
+          border-top: 4px solid var(--pure-white);
+          border-radius: 6px;
+          padding: 1.5rem;
+          transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+      .weapon-card:hover {
+          transform: translateY(-3px);
+      }
+      .weapon-card-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 1rem;
+      }
+      .weapon-card h3 {
+          margin: 0;
+          font-size: 1.85rem;
+          line-height: 0.95;
+      }
+      .unpin-btn {
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid var(--surface-border);
+          color: var(--pure-white);
+          width: 28px;
+          height: 28px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.15s ease;
+      }
+      .unpin-btn:hover {
+          background: var(--jersey-magenta);
+          border-color: var(--jersey-magenta);
+      }
+
+      .card-ttk-strip {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.5rem;
+          background: var(--midnight-black);
+          border: 1px solid rgba(255, 255, 255, 0.07);
+          border-radius: 4px;
+          padding: 0.65rem;
+          margin-bottom: 1rem;
+          text-align: center;
+      }
+      .card-ttk-box span {
+          display: block;
+          font-size: 0.65rem;
+          color: #888;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+      }
+      .card-ttk-box strong {
+          font-family: var(--font-headline);
+          font-size: 1.45rem;
+          color: var(--pure-white);
+          letter-spacing: 0.5px;
+      }
+
+      .weapon-card ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+      }
+      .weapon-card li {
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          padding: 6px 0;
+          color: #a8a8b6;
+          font-size: 0.85rem;
+      }
+      .weapon-card li strong {
+          color: var(--pure-white);
+      }
+
+      /* SVG Graph Elements */
+      .weapon-line {
+          fill: none;
+          transition: stroke-width 0.12s, opacity 0.12s;
+          cursor: pointer;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+      }
+      .weapon-line.dimmed { opacity: 0.1; }
+      .weapon-line.selected { stroke-width: 3px; opacity: 0.95; }
+      .weapon-line.highlighted {
+          stroke-width: 4.5px !important;
+          filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.75));
+          opacity: 1 !important;
+      }
+      .grid-line { stroke: rgba(255, 255, 255, 0.07); stroke-width: 1px; }
+      .axis-labels {
+          position: absolute;
+          color: #888;
+          font-size: 0.75rem;
+          font-weight: 700;
+          user-select: none;
+      }
 
       .cursor-line {
-        stroke: rgba(255, 255, 255, 0.4);
-        stroke-width: 1px;
-        stroke-dasharray: 4, 4;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.1s;
+          stroke: rgba(255, 255, 255, 0.5);
+          stroke-width: 1.5px;
+          stroke-dasharray: 4, 4;
+          pointer-events: none;
+          opacity: 0;
       }
       .cursor-line.visible { opacity: 1; }
+
+      .cursor-dot {
+          pointer-events: none;
+          opacity: 0;
+          stroke: #000;
+          stroke-width: 2px;
+          filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
+      }
+      .cursor-dot.visible { opacity: 1; }
+
+      @media (max-width: 768px) {
+          .data-module { padding: 1.5rem 1rem; }
+          .graph-header-bar { flex-direction: column; align-items: flex-start; gap: 4px; }
+      }
     </style>
 </head>
 <body>
@@ -101,20 +649,32 @@
     <main>
       <section id="gun-data-page">
           <div class="container">
+              
+              <!-- STADIUM HEADER (DYNAMICALLY POPULATED WITH CSV VERSION) -->
+              <div class="compact-header">
+                  <span class="eyebrow" id="version-eyebrow">TACTICAL TELEMETRY // THE FINALS</span>
+                  <h2 class="glitch" id="version-main-header" data-text="WEAPON LAB">WEAPON LAB</h2>
+                  <p>Interactive Time-To-Kill (TTK) and damage dropoff simulator across all contestant health pools.</p>
+              </div>
+
               <div class="data-module">
-                <h2>Weapon Visualizer</h2>
                 
                 <!-- LOADING SCREEN -->
                 <div id="loading-state">
                     <i class="fas fa-circle-notch fa-spin"></i><br>
-                    Loading Weapon Data...
+                    INITIALIZING WEAPON TELEMETRY...
                 </div>
 
                 <!-- MAIN CONTENT -->
                 <div id="content-area">
+                    <div class="module-top-bar">
+                        <h3>COMBAT SIMULATOR</h3>
+                        <span class="version-pill" id="version-badge">PATCH DATA</span>
+                    </div>
+
                     <div class="controls">
                       <div class="control-group">
-                        <label>Class</label>
+                        <label><i class="fa-solid fa-user-shield"></i> Contestant Build</label>
                         <div class="toggle-group" id="class-toggle-group">
                           <button type="button" class="toggle-btn active" data-class="ALL">All</button>
                           <button type="button" class="toggle-btn" data-class="LIGHT">Light</button>
@@ -122,70 +682,93 @@
                           <button type="button" class="toggle-btn" data-class="HEAVY">Heavy</button>
                         </div>
                       </div>
-                      <div class="control-group">
-                        <label>Target HP</label>
+
+                      <div class="control-group" id="target-control-wrapper">
+                        <label><i class="fa-solid fa-heart-pulse"></i> Target Dummy HP</label>
                         <div class="toggle-group" id="target-toggle-group">
                           <button type="button" class="toggle-btn active" data-target="Light">Light (175)</button>
                           <button type="button" class="toggle-btn" data-target="Medium">Med (250)</button>
                           <button type="button" class="toggle-btn" data-target="Heavy">Hvy (325)</button>
                         </div>
                       </div>
+
                       <div class="control-group">
-                        <label>Hit Location</label>
+                        <label><i class="fa-solid fa-crosshairs"></i> Accuracy Profile</label>
                         <div class="toggle-group" id="hitloc-toggle-group">
                           <button type="button" class="toggle-btn active" data-hitloc="Body">Body</button>
                           <button type="button" class="toggle-btn" data-hitloc="Head">Head</button>
-                          <button type="button" class="toggle-btn" data-hitloc="Mixed" id="mixed-hit-btn">Mixed</button>
+                          <button type="button" class="toggle-btn" data-hitloc="Mixed" id="mixed-hit-btn">Mixed (25%)</button>
                         </div>
                       </div>
+
                       <div class="control-group">
-                        <label>Metric</label>
+                        <label><i class="fa-solid fa-chart-line"></i> Telemetry Metric</label>
                         <div class="toggle-group" id="metric-toggle-group">
-                          <button type="button" class="toggle-btn active" data-metric="TTK">TTK</button>
-                          <button type="button" class="toggle-btn" data-metric="DPS">DPS</button>
+                          <button type="button" class="toggle-btn active" data-metric="TTK">TTK (Sec)</button>
+                          <button type="button" class="toggle-btn" data-metric="DPS">Burst DPS</button>
                         </div>
                       </div>
+
                       <div class="control-group hsp-slider-group" id="hsp-control-group" style="display: none;">
-                        <label>Headshot %</label>
+                        <label><i class="fa-solid fa-percent"></i> Headshot Ratio</label>
                         <div class="hsp-slider-container">
                             <input type="range" id="hsp-slider" min="0" max="100" value="25" step="5">
                             <span class="hsp-value" id="hsp-value-display">25%</span>
                         </div>
                       </div>
+
                       <div class="control-group">
-                        <label>Tools</label>
-                        <button type="button" class="toggle-btn" id="randomize-colors-btn" style="border-color: var(--sunset-orange); color: var(--sunset-orange);">Shuffle Colors</button>
-                        <button type="button" class="toggle-btn" id="clear-selection-btn" style="display:none; border-color: var(--electric-blue); color: var(--electric-blue);">Clear Pins</button>
+                        <label><i class="fa-solid fa-sliders"></i> Graph Actions</label>
+                        <div class="toggle-group">
+                            <button type="button" class="toggle-btn tool-btn-fire" id="isolate-pins-btn" style="display:none;" title="Hide unpinned weapons">Isolate Pinned</button>
+                            <button type="button" class="toggle-btn tool-btn-magenta" id="clear-selection-btn" style="display:none;">Clear Pins</button>
+                            <button type="button" class="toggle-btn" id="randomize-colors-btn">Recolor</button>
+                        </div>
                       </div>
                     </div>
                     
                     <div class="graph-section">
+                      <!-- Left Weapon List -->
                       <div class="legend-container">
-                        <input type="text" id="weapon-search" class="search-box" placeholder="Filter weapons..." autocomplete="off">
+                        <input type="text" id="weapon-search" class="search-box" placeholder="Search weapon (e.g. AKM, FCAR)..." autocomplete="off">
                         <div class="legend" id="legend"></div>
                       </div>
                       
+                      <!-- Center SVG Graph -->
                       <div class="graph-container">
-                        <div class="graph-title" id="graph-title" style="text-align:center; padding-top:10px; color:#aaa; font-size:0.9rem;"></div>
+                        <div class="graph-header-bar">
+                            <div class="graph-title" id="graph-title">TTK VS RANGE</div>
+                            <div class="graph-hint" id="graph-hint">LOWER IS FASTER // CLICK LINE TO PIN</div>
+                        </div>
                         <div class="plot-area" id="plot-area"></div>
-                        <div class="axis-labels" style="bottom: 5px; left: 40px; right: 15px; display:flex; justify-content:space-between;">
+                        <div class="axis-labels" style="bottom: 8px; left: 52px; right: 24px; display:flex; justify-content:space-between;">
                             <span>0m</span><span>25m</span><span>50m</span><span>75m</span><span>100m</span>
                         </div>
-                        <div class="axis-labels" id="y-labels" style="left: 5px; top: 40px; bottom: 40px; display:flex; flex-direction:column; justify-content:space-between; align-items:flex-end;"></div>
+                        <div class="axis-labels" id="y-labels" style="left: 8px; top: 56px; bottom: 38px; width: 38px; display:flex; flex-direction:column; justify-content:space-between; align-items:flex-end;"></div>
                       </div>
 
+                      <!-- Right Stark White Scoreboard Readout (FIXED HEIGHT & SKELETON) -->
                       <div class="info-panel" id="info-panel">
-                        <div style="color:var(--electric-blue); font-family:var(--font-headline); margin-bottom:1rem; border-bottom:1px solid #333; padding-bottom:0.5rem;">Live Stats</div>
-                        <div id="info-content-details" style="color:#888; text-align:center; margin-top:2rem;">
-                            Hover over a line.<br>Click to pin.
+                        <div class="info-panel-header">
+                            <span>LIVE READOUT</span>
+                            <i class="fa-solid fa-satellite-dish"></i>
                         </div>
+                        <div id="info-content-details"></div>
+                        <div class="info-footer-hint">HOVER CURVE // CLICK TO PIN</div>
                       </div>
                     </div>
 
-                    <div id="weapon-cards-container"></div>
+                    <!-- Pinned Weapon Comparison Cards -->
+                    <div id="pinned-wrapper" style="display: none;">
+                        <div class="pinned-section-header">
+                            <h3>PINNED LOADOUT COMPARISON</h3>
+                            <span style="font-size: 0.8rem; color: var(--jersey-orange); font-weight: 800; letter-spacing: 1px;">CLICK &times; TO UNPIN</span>
+                        </div>
+                        <div id="weapon-cards-container"></div>
+                    </div>
                     
-                    <div style="margin-top:2rem; color:#666; font-size:0.8rem; text-align:center; font-style:italic;">
-                        Note: TTK calculations include reload time if shots required exceed magazine size. Burst weapons account for burst delay cycles.
+                    <div style="margin-top:2.5rem; color:#777; font-size:0.8rem; text-align:center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.25rem;">
+                        TELEMETRY NOTE: TTK calculations automatically factor in empty reload durations if shots-to-kill exceed magazine capacity. Burst weapons model full burst-delay cycles.
                     </div>
                 </div>
 
@@ -199,18 +782,28 @@
    <script>
     document.addEventListener('DOMContentLoaded', () => {
         const CSV_FILE = `gundata.csv?v=${Date.now()}`;
+        
+        // UPDATED HEALTH VALUES: Light 175 | Medium 250 | Heavy 325
         const HEALTH_VALUES = { Light: 175, Medium: 250, Heavy: 325 };
         const MAX_RANGE = 100;
         
+        const PALETTE = [
+            '#ff6f24', '#d9277f', '#00e5ff', '#a855f7', '#22c55e', 
+            '#facc15', '#fb7185', '#38bdf8', '#f97316', '#e879f9',
+            '#4ade80', '#f43f5e', '#60a5fa', '#c084fc', '#f59e0b'
+        ];
+
         // --- STATE ---
         let weaponData = [];
         let selectedWeaponNames = new Set();
+        let isolatePinned = false;
         let currentlyPlotted = [];
         let elements = {}; 
         let currentMaxY = 0; 
 
         function init() {
             cacheElements();
+            resetInfoPanel();
             setupListeners();
             fetchData();
         }
@@ -223,13 +816,21 @@
                 legend: document.getElementById('legend'),
                 yLabels: document.getElementById('y-labels'),
                 graphTitle: document.getElementById('graph-title'),
+                graphHint: document.getElementById('graph-hint'),
                 infoContent: document.getElementById('info-content-details'),
                 cards: document.getElementById('weapon-cards-container'),
+                pinnedWrapper: document.getElementById('pinned-wrapper'),
                 clearBtn: document.getElementById('clear-selection-btn'),
+                isolateBtn: document.getElementById('isolate-pins-btn'),
                 search: document.getElementById('weapon-search'),
+                
+                versionEyebrow: document.getElementById('version-eyebrow'),
+                versionMainHeader: document.getElementById('version-main-header'),
+                versionBadge: document.getElementById('version-badge'),
                 
                 classGroup: document.getElementById('class-toggle-group'),
                 targetGroup: document.getElementById('target-toggle-group'),
+                targetWrapper: document.getElementById('target-control-wrapper'),
                 hitlocGroup: document.getElementById('hitloc-toggle-group'),
                 metricGroup: document.getElementById('metric-toggle-group'),
                 hspSlider: document.getElementById('hsp-slider'),
@@ -246,22 +847,52 @@
                 dynamicTyping: true,
                 skipEmptyLines: true,
                 complete: (results) => {
+                    extractVersion(results);
                     processData(results.data);
                     elements.loading.style.display = 'none';
                     elements.content.classList.add('visible');
                     updateGraph();
                 },
-                error: (err) => {
-                    elements.loading.innerHTML = `<span style="color:#ff4444">Error loading <code>gundata.csv</code>.</span><br><span style="font-size:0.9rem; color:#aaa;">Please verify the file exists in the main folder.</span><br><br><small>${err.message}</small>`;
+                error: () => {
+                    elements.loading.innerHTML = `<span style="color:var(--jersey-magenta)">ERROR LOADING <code>gundata.csv</code></span><br><span style="font-size:1rem; color:#aaa; font-family:var(--font-body);">Verify that gundata.csv is in the root directory.</span>`;
                 }
             });
+        }
+
+        function extractVersion(results) {
+            let detectedVersion = '';
+
+            if (results.meta && Array.isArray(results.meta.fields)) {
+                const versionCol = results.meta.fields.find(f => f && f.trim().toLowerCase().startsWith('version'));
+                if (versionCol) {
+                    const cleanedHeader = versionCol.trim();
+                    if (cleanedHeader.toLowerCase() !== 'version') {
+                        detectedVersion = cleanedHeader;
+                    } else if (results.data && results.data.length > 0) {
+                        const rowWithVer = results.data.find(r => r[versionCol] !== undefined && r[versionCol] !== null && String(r[versionCol]).trim() !== '');
+                        if (rowWithVer) {
+                            const cellVal = String(rowWithVer[versionCol]).trim();
+                            detectedVersion = cellVal.toLowerCase().startsWith('version') ? cellVal : `Version ${cellVal}`;
+                        }
+                    }
+                }
+            }
+
+            if (detectedVersion) {
+                const upperVer = detectedVersion.toUpperCase();
+                elements.versionEyebrow.innerText = `TACTICAL TELEMETRY // ${upperVer}`;
+                elements.versionMainHeader.innerText = upperVer;
+                elements.versionMainHeader.setAttribute('data-text', upperVer);
+                elements.versionBadge.innerText = upperVer;
+            }
         }
 
         function processData(rawData) {
             weaponData = rawData
                 .filter(row => row && row.Name && row.Class) 
-                .map(row => {
-                    let magSize = row['Magazine Size'];
+                .map((row, idx) => {
+                    const rawMag = row['Magazine Size'];
+                    let magSize = rawMag;
                     if (typeof magSize === 'string') {
                          if (magSize.includes('(')) magSize = parseFloat(magSize.split('(')[0]);
                          else if (magSize.toUpperCase() === "N/A" || magSize.toUpperCase() === "INF") magSize = Infinity;
@@ -273,8 +904,9 @@
                         headDmg = bodyDmg;
                     }
 
+                    const nameStr = String(row.Name).trim();
                     return {
-                        name: String(row.Name).trim(),
+                        name: nameStr,
                         class: String(row.Class).trim().toUpperCase(),
                         body: bodyDmg,
                         head: headDmg,
@@ -285,26 +917,19 @@
                         maxDrop: Number(row['Max Dropoff']) || 0,
                         dropMod: Number(row['Dropoff Modifier']) || 1,
                         mag: magSize || 0,
+                        rawMagDisplay: rawMag !== undefined && rawMag !== null ? String(rawMag) : 'N/A',
                         reloadEmpty: Number(row['Empty Reload']) || 0,
                         reloadTac: Number(row['Tactical Reload']) || 0,
+                        rawReloadTacDisplay: row['Tactical Reload'] || 'N/A',
                         notes: row.Notes || '',
-                        color: getStableColor(String(row.Name).trim())
+                        color: PALETTE[idx % PALETTE.length]
                     };
                 });
         }
 
-        function getStableColor(name) {
-            let hash = 0;
-            for (let i = 0; i < name.length; i++) {
-                hash = name.charCodeAt(i) + ((hash << 5) - hash);
-            }
-            const hue = Math.abs(hash) % 360;
-            return `hsl(${hue}, 85%, 65%)`; 
-        }
-
         function getRandomColor() {
             const h = Math.floor(Math.random() * 360);
-            return `hsl(${h}, 90%, 65%)`; 
+            return `hsl(${h}, 92%, 64%)`; 
         }
 
         // --- MATH LOGIC ---
@@ -314,7 +939,7 @@
 
             if (w.maxDrop <= 0 || w.dropMod >= 1) return baseDmg;
             if (range <= w.minDrop) return baseDmg;
-            if (w.maxDrop <= w.minDrop) return baseDmg * w.dropMod; // Prevent divide by zero
+            if (w.maxDrop <= w.minDrop) return baseDmg * w.dropMod;
             if (range >= w.maxDrop) return baseDmg * w.dropMod;
 
             const ratio = (range - w.minDrop) / (w.maxDrop - w.minDrop);
@@ -343,7 +968,7 @@
                 firingTime = (shotsToKill - 1) * timePerShot;
             }
 
-            if (w.mag !== Infinity && shotsToKill > w.mag) {
+            if (w.mag !== Infinity && w.mag > 0 && shotsToKill > w.mag) {
                 const reloads = Math.floor((shotsToKill - 1) / w.mag);
                 const reloadTime = w.reloadEmpty || w.reloadTac || 2.5; 
                 firingTime += (reloads * reloadTime);
@@ -362,6 +987,12 @@
             return dmg * (w.rpm / 60);
         }
 
+        function getMetricVal(w, range, targetHP, hitLoc, metric, hsp) {
+            return metric === 'TTK'
+                ? calculateTTK(w, range, targetHP, hitLoc, hsp)
+                : calculateDPS(w, range, hitLoc, hsp);
+        }
+
         function findClosestWeapon(mouseY, rangeInMeters, rectHeight) {
             const target = elements.targetGroup.querySelector('.active').dataset.target;
             const targetHP = HEALTH_VALUES[target];
@@ -377,23 +1008,20 @@
                 let minDiff = Infinity;
 
                 list.forEach(w => {
-                    let val = metric === 'TTK' 
-                        ? calculateTTK(w, rangeInMeters, targetHP, hitLoc, hsp)
-                        : calculateDPS(w, rangeInMeters, hitLoc, hsp);
-                    
+                    let val = getMetricVal(w, rangeInMeters, targetHP, hitLoc, metric, hsp);
                     if (!isFinite(val)) val = (metric === 'TTK') ? currentMaxY * 1.5 : 0;
 
                     const pixelY = rectHeight - ((Math.min(val, currentMaxY) / currentMaxY) * rectHeight);
                     const diff = Math.abs(mouseY - pixelY);
                     if (diff < minDiff && diff < threshold) {
                         minDiff = diff;
-                        found = w;
+                        found = { weapon: w, pixelY, val };
                     }
                 });
                 return found;
             };
 
-            let match = scanList(selectedWeapons, 120);
+            let match = scanList(selectedWeapons, 90);
             if (!match) {
                 match = scanList(unselectedWeapons, 35);
             }
@@ -415,22 +1043,29 @@
                 return;
             }
 
-            const range = (x / rect.width) * MAX_RANGE;
+            const range = Math.max(0, Math.min(MAX_RANGE, (x / rect.width) * MAX_RANGE));
             updateCursorLine(x);
 
-            const weapon = findClosestWeapon(y, range, rect.height);
+            const match = findClosestWeapon(y, range, rect.height);
 
             if (e.type === 'click') {
-                if (weapon) toggleSelect(weapon.name);
+                if (match && match.weapon) toggleSelect(match.weapon.name);
                 return;
             }
 
-            if (weapon) {
-                highlight(weapon.name, true);
-                const line = document.getElementById(`line-${weapon.name.replace(/[^a-zA-Z0-9]/g, '-')}`);
-                if (line) line.parentElement.appendChild(line);
-                updateInfoPanelDynamic(weapon, range);
+            if (match && match.weapon) {
+                const w = match.weapon;
+                highlight(w.name, true);
+                updateCursorDot(x, match.pixelY, w.color);
+                const line = document.getElementById(`line-${w.name.replace(/[^a-zA-Z0-9]/g, '-')}`);
+                if (line && line.parentElement) line.parentElement.appendChild(line);
+                
+                const dot = document.getElementById('cursor-dot');
+                if (dot && dot.parentElement) dot.parentElement.appendChild(dot);
+
+                updateInfoPanelDynamic(w, range);
             } else {
+                hideCursorDot();
                 clearHighlights();
                 resetInfoPanel();
             }
@@ -445,9 +1080,25 @@
             }
         }
 
+        function updateCursorDot(x, y, color) {
+            const dot = document.getElementById('cursor-dot');
+            if (dot) {
+                dot.setAttribute('cx', x);
+                dot.setAttribute('cy', y);
+                dot.setAttribute('fill', color);
+                dot.classList.add('visible');
+            }
+        }
+
+        function hideCursorDot() {
+            const dot = document.getElementById('cursor-dot');
+            if (dot) dot.classList.remove('visible');
+        }
+
         function hideCursor() {
             const line = document.getElementById('cursor-line');
             if (line) line.classList.remove('visible');
+            hideCursorDot();
         }
 
         function clearHighlights() {
@@ -455,10 +1106,25 @@
             document.querySelectorAll('.legend-item.highlighted').forEach(el => el.classList.remove('highlighted'));
         }
 
+        // Fixed-structure idle state: identical DOM height to active state
         function resetInfoPanel() {
-            elements.infoContent.innerHTML = `<div style="color:#888; text-align:center; margin-top:2rem;">Hover over a line.<br>Click to pin.</div>`;
+            elements.infoContent.innerHTML = `
+                <div class="info-big-metric" style="border-left-color:var(--jersey-orange)">
+                    <span class="metric-sub">STANDBY // 0.0M</span>
+                    <span class="metric-num">—</span>
+                    <span class="metric-weapon-name">SCAN GRAPH OR LIST</span>
+                </div>
+                <div class="info-rows-group">
+                    <div class="info-row"><span class="info-label">Damage / Hit</span> <span class="info-value">—</span></div>
+                    <div class="info-row"><span class="info-label">Shots To Kill</span> <span class="info-value">—</span></div>
+                    <div class="info-row"><span class="info-label">Fire Rate</span> <span class="info-value">—</span></div>
+                    <div class="info-row"><span class="info-label">Falloff Range</span> <span class="info-value">—</span></div>
+                    <div class="info-row"><span class="info-label">Max Falloff</span> <span class="info-value">—</span></div>
+                </div>
+            `;
         }
 
+        // Fixed-structure active state: identical DOM height to idle state
         function updateInfoPanelDynamic(w, range) {
             const target = elements.targetGroup.querySelector('.active').dataset.target;
             const targetHP = HEALTH_VALUES[target];
@@ -468,7 +1134,7 @@
 
             const rawTTK = calculateTTK(w, range, targetHP, hitLoc, hsp);
             const val = metric === 'TTK' 
-                ? (isFinite(rawTTK) ? rawTTK.toFixed(3) + 's' : '∞')
+                ? (isFinite(rawTTK) ? rawTTK.toFixed(2) + 's' : '∞')
                 : calculateDPS(w, range, hitLoc, hsp).toFixed(0);
 
             const dmg = getDamage(w, range, hitLoc, hsp).toFixed(1);
@@ -476,12 +1142,18 @@
             const rangeDisplay = range.toFixed(1);
 
             elements.infoContent.innerHTML = `
-                <div class="info-row"><span class="info-label">Weapon</span> <span class="info-value" style="color:${w.color}; font-size:1.05rem;">${w.name}</span></div>
-                <div class="info-row"><span class="info-label">Range</span> <span class="info-value">${rangeDisplay}m</span></div>
-                <div class="info-row"><span class="info-label">${metric}</span> <span class="info-value" style="color:var(--electric-blue); font-size:1.1rem;">${val}</span></div>
-                <div class="info-row"><span class="info-label">Damage</span> <span class="info-value">${dmg}</span></div>
-                ${metric === 'TTK' ? `<div class="info-row"><span class="info-label">Shots to Kill</span> <span class="info-value">${stk}</span></div>` : ''}
-                <div class="info-row"><span class="info-label">Dropoff</span> <span class="info-value">${w.minDrop}m - ${w.maxDrop}m</span></div>
+                <div class="info-big-metric" style="border-left-color:${w.color}">
+                    <span class="metric-sub">${w.class} // ${rangeDisplay}M</span>
+                    <span class="metric-num">${val}</span>
+                    <span class="metric-weapon-name" title="${w.name}">${w.name} (${metric})</span>
+                </div>
+                <div class="info-rows-group">
+                    <div class="info-row"><span class="info-label">Damage / Hit</span> <span class="info-value">${dmg}</span></div>
+                    <div class="info-row"><span class="info-label">Shots To Kill</span> <span class="info-value">${stk} (${targetHP} HP)</span></div>
+                    <div class="info-row"><span class="info-label">Fire Rate</span> <span class="info-value">${w.rpm} RPM</span></div>
+                    <div class="info-row"><span class="info-label">Falloff Range</span> <span class="info-value">${w.minDrop}m – ${w.maxDrop}m</span></div>
+                    <div class="info-row"><span class="info-label">Max Falloff</span> <span class="info-value">${Math.round(w.dropMod * 100)}% Dmg</span></div>
+                </div>
             `;
         }
 
@@ -497,40 +1169,48 @@
 
             elements.mixedBtn.innerText = `Mixed (${(hsp*100).toFixed(0)}%)`;
             elements.hspContainer.style.display = hitLoc === 'Mixed' ? '' : 'none';
-            elements.targetGroup.parentElement.style.display = metric === 'TTK' ? '' : 'none';
-            elements.clearBtn.style.display = selectedWeaponNames.size > 0 ? 'inline-block' : 'none';
+            elements.targetWrapper.style.display = metric === 'TTK' ? '' : 'none';
+            
+            const hasPins = selectedWeaponNames.size > 0;
+            elements.clearBtn.style.display = hasPins ? 'inline-block' : 'none';
+            elements.isolateBtn.style.display = hasPins ? 'inline-block' : 'none';
+            if (!hasPins) isolatePinned = false;
+            elements.isolateBtn.classList.toggle('active', isolatePinned);
 
             currentlyPlotted = weaponData.filter(w => {
+                if (isolatePinned && !selectedWeaponNames.has(w.name)) return false;
                 const classMatch = activeClasses.includes('ALL') || activeClasses.includes(w.class);
                 const searchMatch = !searchQuery || w.name.toLowerCase().includes(searchQuery);
                 return classMatch && searchMatch;
             });
             currentlyPlotted.sort((a,b) => a.name.localeCompare(b.name));
 
-            const metricHint = metric === 'TTK' ? '(Lower is Better)' : '(Higher is Better)';
-            elements.graphTitle.innerHTML = `<strong>${metric} vs Range</strong> (${hitLoc} Hits) <span style="font-size:0.75rem; color:#888;">${metricHint}</span>`;
-            if (metric === 'TTK') elements.graphTitle.innerHTML += ` on ${target} (${targetHP} HP)`;
+            if (metric === 'TTK') {
+                elements.graphTitle.innerHTML = `TIME TO KILL VS. ${target.toUpperCase()} (${targetHP} HP) — ${hitLoc.toUpperCase()}`;
+                elements.graphHint.innerText = `LOWER IS FASTER // CLICK LINE TO PIN`;
+            } else {
+                elements.graphTitle.innerHTML = `SUSTAINED BURST DPS — ${hitLoc.toUpperCase()}`;
+                elements.graphHint.innerText = `HIGHER IS STRONGER // CLICK LINE TO PIN`;
+            }
 
             // CALC MAX Y
             let maxY = 0;
             currentlyPlotted.forEach(w => {
                 [0, w.minDrop, w.maxDrop, 100].forEach(r => {
-                    const val = metric === 'TTK' 
-                        ? calculateTTK(w, r, targetHP, hitLoc, hsp) 
-                        : calculateDPS(w, r, hitLoc, hsp);
+                    const val = getMetricVal(w, r, targetHP, hitLoc, metric, hsp);
                     if (isFinite(val) && val > maxY) maxY = val;
                 });
             });
             
             if (metric === 'TTK') {
-                maxY = Math.min(6, Math.max(1.5, Math.ceil(maxY * 1.15 * 2) / 2)); 
+                maxY = Math.min(6, Math.max(1.2, Math.ceil(maxY * 1.15 * 2) / 2)); 
             } else {
                 maxY = Math.max(200, Math.ceil((maxY * 1.1) / 50) * 50);
             }
             
             currentMaxY = maxY; 
 
-            // Y Axis
+            // Y Axis Labels
             elements.yLabels.innerHTML = '';
             for(let i=0; i<=5; i++) {
                 const val = maxY - (maxY * (i/5));
@@ -540,8 +1220,8 @@
             }
 
             // SVG Setup
-            const width = elements.plotArea.clientWidth;
-            const height = elements.plotArea.clientHeight;
+            const width = elements.plotArea.clientWidth || 600;
+            const height = elements.plotArea.clientHeight || 360;
             elements.plotArea.innerHTML = '';
             
             const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -559,15 +1239,17 @@
                 hLine.setAttribute('class', 'grid-line');
                 svg.appendChild(hLine);
 
-                const x = (i/5)*width;
-                const vLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                vLine.setAttribute('x1', x); vLine.setAttribute('x2', x);
-                vLine.setAttribute('y1', 0); vLine.setAttribute('y2', height);
-                vLine.setAttribute('class', 'grid-line');
-                svg.appendChild(vLine);
+                const x = (i/4)*width;
+                if (i <= 4) {
+                    const vLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    vLine.setAttribute('x1', x); vLine.setAttribute('x2', x);
+                    vLine.setAttribute('y1', 0); vLine.setAttribute('y2', height);
+                    vLine.setAttribute('class', 'grid-line');
+                    svg.appendChild(vLine);
+                }
             }
 
-            // Cursor Line Only (No Ball)
+            // Cursor Line
             const cursorLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             cursorLine.setAttribute('y1', 0);
             cursorLine.setAttribute('y2', height);
@@ -580,21 +1262,28 @@
             const anySelected = selectedWeaponNames.size > 0;
 
             if (currentlyPlotted.length === 0) {
-                elements.legend.innerHTML = `<div style="color:#666; font-size:0.85rem; padding:1rem; text-align:center;">No weapons found matching filter.</div>`;
+                elements.legend.innerHTML = `<div style="color:#777; font-size:0.85rem; padding:1.5rem 1rem; text-align:center;">No weapons match filter.</div>`;
             }
 
             currentlyPlotted.forEach(w => {
                 const isSel = selectedWeaponNames.has(w.name);
                 const safeId = w.name.replace(/[^a-zA-Z0-9]/g, '-');
+                const classInitial = w.class.charAt(0);
                 
-                // Legend Item with Hover Support
+                // Legend Item
                 const legItem = document.createElement('div');
                 legItem.className = 'legend-item';
                 legItem.dataset.weaponId = w.name;
                 if (isSel) legItem.classList.add('selected');
-                else if (anySelected) legItem.style.opacity = '0.35';
+                else if (anySelected && !isolatePinned) legItem.style.opacity = '0.4';
                 
-                legItem.innerHTML = `<div class="legend-color" style="background:${w.color}"></div><span class="legend-text" title="${w.name}">${w.name}</span>`;
+                legItem.innerHTML = `
+                    <div class="legend-item-left">
+                        <div class="legend-color" style="background:${w.color}"></div>
+                        <span class="legend-text" title="${w.name}">${w.name}</span>
+                    </div>
+                    <span class="legend-class-tag">${classInitial}</span>
+                `;
                 legItem.onclick = () => toggleSelect(w.name);
                 legItem.onmouseenter = () => {
                     highlight(w.name, true);
@@ -606,35 +1295,41 @@
                 };
                 elements.legend.appendChild(legItem);
 
-                // Line Points
+                // Polyline Points
                 const points = [];
-                const ranges = [0, w.minDrop, w.maxDrop, 100].filter(r => r <= 100 && r >= 0);
-                const steps = [...new Set(ranges)].sort((a,b)=>a-b);
+                const sampleRanges = [0, w.minDrop];
+                if (w.maxDrop > w.minDrop) {
+                    for (let r = Math.ceil(w.minDrop); r <= Math.floor(w.maxDrop); r += 1) {
+                        sampleRanges.push(r);
+                    }
+                    sampleRanges.push(w.maxDrop);
+                }
+                sampleRanges.push(100);
+
+                const steps = [...new Set(sampleRanges.filter(r => r <= 100 && r >= 0))].sort((a,b)=>a-b);
                 
                 steps.forEach(r => {
-                    let val = metric === 'TTK' 
-                        ? calculateTTK(w, r, targetHP, hitLoc, hsp) 
-                        : calculateDPS(w, r, hitLoc, hsp);
+                    let val = getMetricVal(w, r, targetHP, hitLoc, metric, hsp);
                     if (!isFinite(val)) val = metric === 'TTK' ? maxY * 1.5 : 0; 
                     const x = (r / 100) * width;
                     const y = height - ((Math.min(val, maxY) / maxY) * height);
-                    points.push(`${x},${y}`);
+                    points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
                 });
 
                 const line = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
                 line.setAttribute('points', points.join(' '));
                 line.setAttribute('stroke', w.color);
-                line.setAttribute('stroke-width', '2');
+                line.setAttribute('stroke-width', '2.2');
                 line.setAttribute('class', 'weapon-line');
                 line.id = `line-${safeId}`;
                 
                 if (isSel) line.classList.add('selected');
-                else if (anySelected) line.classList.add('dimmed');
+                else if (anySelected && !isolatePinned) line.classList.add('dimmed');
 
                 svg.appendChild(line);
             });
 
-            // Bring pinned lines to top
+            // Bring pinned lines to front
             currentlyPlotted.forEach(w => {
                 if (selectedWeaponNames.has(w.name)) {
                     const safeId = w.name.replace(/[^a-zA-Z0-9]/g, '-');
@@ -642,6 +1337,13 @@
                     if (line) svg.appendChild(line);
                 }
             });
+
+            // Target Reticle Dot
+            const cursorDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            cursorDot.setAttribute('r', '5.5');
+            cursorDot.setAttribute('class', 'cursor-dot');
+            cursorDot.id = 'cursor-dot';
+            svg.appendChild(cursorDot);
 
             elements.plotArea.appendChild(svg);
             renderCards();
@@ -653,12 +1355,10 @@
 
             const safeId = name.replace(/[^a-zA-Z0-9]/g, '-');
             const line = document.getElementById(`line-${safeId}`);
-            const legItem = document.querySelector(`.legend-item[data-weapon-id="${name}"]`);
+            const legItem = document.querySelector(`.legend-item[data-weapon-id="${CSS.escape(name)}"]`);
             
             if (line) line.classList.add('highlighted');
-            if (legItem) {
-                legItem.classList.add('highlighted');
-            }
+            if (legItem) legItem.classList.add('highlighted');
         }
 
         function toggleSelect(name) {
@@ -669,26 +1369,49 @@
 
         function renderCards() {
             elements.cards.innerHTML = '';
+            elements.pinnedWrapper.style.display = selectedWeaponNames.size > 0 ? 'block' : 'none';
+
+            const target = elements.targetGroup.querySelector('.active').dataset.target;
+            const targetHP = HEALTH_VALUES[target];
+            const hitLoc = elements.hitlocGroup.querySelector('.active').dataset.hitloc;
+            const hsp = parseFloat(elements.hspSlider.value) / 100;
+
             selectedWeaponNames.forEach(name => {
                 const w = weaponData.find(x => x.name === name);
                 if (!w) return;
                 
+                const ttk0 = calculateTTK(w, 0, targetHP, hitLoc, hsp);
+                const ttk100 = calculateTTK(w, 100, targetHP, hitLoc, hsp);
+
                 const card = document.createElement('div');
                 card.className = 'weapon-card';
                 card.style.borderTopColor = w.color;
                 card.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-                        <h3 style="color:${w.color}; margin:0; font-size:1.2rem;">${w.name}</h3>
-                        <button onclick="document.dispatchEvent(new CustomEvent('unpin', {detail:'${w.name.replace(/'/g, "\\'")}'}))" style="background:none; border:none; color:#aaa; cursor:pointer; font-size:1.3rem;">&times;</button>
+                    <div class="weapon-card-top">
+                        <div>
+                            <span style="font-size:0.7rem; color:${w.color}; font-weight:900; letter-spacing:1.5px;">${w.class} BUILD</span>
+                            <h3 style="color:var(--pure-white);">${w.name}</h3>
+                        </div>
+                        <button type="button" class="unpin-btn" data-unpin="${w.name}" title="Unpin Weapon">&times;</button>
+                    </div>
+                    <div class="card-ttk-strip">
+                        <div class="card-ttk-box">
+                            <span>0m TTK (${target} ${targetHP})</span>
+                            <strong style="color:${w.color}">${isFinite(ttk0) ? ttk0.toFixed(2) + 's' : '∞'}</strong>
+                        </div>
+                        <div class="card-ttk-box">
+                            <span>Max Range TTK</span>
+                            <strong>${isFinite(ttk100) ? ttk100.toFixed(2) + 's' : '∞'}</strong>
+                        </div>
                     </div>
                     <ul>
-                        <li><span>Class</span> <strong>${w.class}</strong></li>
-                        <li><span>Dmg (Body/Head)</span> <strong>${w.body} / ${w.head}</strong></li>
-                        <li><span>RPM</span> <strong>${w.rpm}</strong></li>
-                        <li><span>Mag Size</span> <strong>${w.mag === Infinity ? '∞' : w.mag}</strong></li>
-                        <li><span>Reload (Empty)</span> <strong>${w.reloadEmpty ? w.reloadEmpty + 's' : 'N/A'}</strong></li>
+                        <li><span>Damage (Body / Head)</span> <strong>${w.body} / ${w.head}</strong></li>
+                        <li><span>Fire Rate</span> <strong>${w.rpm} RPM</strong></li>
+                        <li><span>Falloff Start / End</span> <strong>${w.minDrop}m – ${w.maxDrop}m (${Math.round(w.dropMod*100)}%)</strong></li>
+                        <li><span>Magazine Size</span> <strong>${w.rawMagDisplay}</strong></li>
+                        <li><span>Reload (Empty / Tac)</span> <strong>${w.reloadEmpty ? w.reloadEmpty + 's' : 'N/A'} / ${w.rawReloadTacDisplay}</strong></li>
                     </ul>
-                    ${w.notes ? `<div style="margin-top:10px; font-size:0.8rem; color:#888; border-top:1px solid #333; padding-top:5px;">${w.notes}</div>` : ''}
+                    ${w.notes ? `<div style="margin-top:10px; font-size:0.78rem; color:var(--jersey-orange); border-top:1px solid rgba(255,255,255,0.08); padding-top:8px;"><i class="fa-solid fa-circle-info"></i> ${w.notes}</div>` : ''}
                 `;
                 elements.cards.appendChild(card);
             });
@@ -696,6 +1419,12 @@
 
         function setupListeners() {
             document.addEventListener('click', (e) => {
+                const unpinBtn = e.target.closest('.unpin-btn');
+                if (unpinBtn) {
+                    toggleSelect(unpinBtn.dataset.unpin);
+                    return;
+                }
+
                 const btn = e.target.closest('.toggle-btn');
                 if (!btn) return;
                 const group = btn.parentElement;
@@ -709,7 +1438,7 @@
                         group.querySelector('[data-class="ALL"]').classList.remove('active');
                         if (!group.querySelector('.active')) group.querySelector('[data-class="ALL"]').classList.add('active');
                     }
-                } else if (group.classList.contains('toggle-group')) {
+                } else if (group.id && group.classList.contains('toggle-group')) {
                     group.querySelectorAll('.active').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                 }
@@ -718,13 +1447,14 @@
                     weaponData.forEach(w => w.color = getRandomColor());
                 } else if (btn.id === 'clear-selection-btn') {
                     selectedWeaponNames.clear();
+                    isolatePinned = false;
+                } else if (btn.id === 'isolate-pins-btn') {
+                    isolatePinned = !isolatePinned;
                 }
                 updateGraph();
             });
 
-            elements.search.addEventListener('input', () => {
-                updateGraph();
-            });
+            elements.search.addEventListener('input', updateGraph);
 
             elements.hspSlider.addEventListener('input', () => {
                 elements.hspValue.innerText = elements.hspSlider.value + '%';
@@ -740,8 +1470,6 @@
                 clearHighlights();
                 resetInfoPanel();
             });
-
-            document.addEventListener('unpin', (e) => toggleSelect(e.detail));
             
             let resizeTimer;
             window.addEventListener('resize', () => {

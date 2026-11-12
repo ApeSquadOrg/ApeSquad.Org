@@ -1,119 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-8868N4WQZJ');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8868N4WQZJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8868N4WQZJ');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ape Squad Esports - The dominant team in The Finals. Follow our journey to the top.">
-    <meta name="keywords" content="Ape Squad, esports, The Finals, gaming, pro team, competitive gaming">
-    <title>Ape Squad Esports | Dominating The Finals</title>
+    <meta name="description" content="Ape Squad - Championship Esports Teams & Premier Live Broadcast Production.">
+    <meta name="keywords" content="Ape Squad, esports production, The Finals esports, broadcast production, gaming agency">
+    <title>Ape Squad | Esports Dominance & Live Production</title>
 
-<!-- Favicon -->
-<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
-<link rel="manifest" href="/favicons/site.webmanifest">
-<link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
-<meta name="msapplication-TileColor" content="#0a0a0a">
-<meta name="theme-color" content="#0a0a0a">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ff6f24">
+    <meta name="theme-color" content="#080808">
 
-    <!-- NEW Google Fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Your Stylesheets -->
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="navbar"></header> <!-- Populated by main.js -->
 
-             <main>
-<section id="hero">
-            <video autoplay loop muted playsinline id="hero-video" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
-                <source src="images/LOOP.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <!-- Added padding-top: 100px below to clear the navbar -->
-            <div class="hero-content" style="display: flex; flex-direction: column; align-items: center; gap: 2.5rem; padding-top: 100px;">
-                <img src="images/welcome.png" alt="Welcome to the Jungle">
-                <a href="https://www.owayo.com/store/apesquadorg/6ae5eb9493b23957753749" class="btn btn-primary btn-hero-special" target="_blank" rel="noopener noreferrer">
-                   Check Out the Jersey
-                </a>
-            </div>
-        </section> <!-- End of Hero Section -->
-<!-- ========================================= -->
-        <!-- PREMIUM SCROLLING NEWS CAROUSEL           -->
+    <!-- ========================================= -->
+    <!-- STATIONARY BACKGROUND VIDEO (DOES NOT MOVE) -->
+    <!-- ========================================= -->
+    <video autoplay loop muted playsinline id="hero-video">
+        <source src="images/LOOP.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <main>
         <!-- ========================================= -->
-        <div class="news-carousel-wrapper">
-            <!-- Left Arrow -->
-            <button class="news-arrow prev"><i class="fa-solid fa-chevron-left"></i></button>
-            
-            <div id="news-carousel-track" class="news-carousel-track">
-                <!-- JS will inject news slides here -->
-            </div>
-            
-            <!-- Right Arrow -->
-            <button class="news-arrow next"><i class="fa-solid fa-chevron-right"></i></button>
-        </div>
-
-        <section id="events-hub">
-            <div class="container">
-                <!-- RECENT RESULTS HEADER -->
-                <div class="past-events-header" style="text-align: center; margin: 0rem 0;">
-                    <h2 class="glitch" data-text="RECENT RESULTS" style="font-size: 4rem; margin: 0rem 0rem;">RECENT RESULTS</h2>
-                    <p style="margin: 1rem auto;">History made in the jungle.</p>
+        <!-- 1. HERO SECTION                           -->
+        <!-- ========================================= -->
+        <section id="hero">
+            <div class="hero-content">
+                <img src="images/welcome.png" alt="Welcome to the Jungle" class="hero-logo-glowing">
+                
+                <div class="hero-tagline-badge">
+                    <span>ESPORTS</span>
+                    <span class="tagline-dot">•</span>
+                    <span>LIVE PRODUCTION</span>
                 </div>
 
-                <!-- JS will inject the .match-card elements here -->
-                <div id="home-recent-container"></div>
-
-            </div>
-        </section>
-
-       
-
-        <section id="mentality">
-            <div class="container">
-                <h2 class="glitch" data-text="OUR THREE PILLARS">OUR THREE PILLARS</h2>
-                <div class="mentality-grid">
-                    <div class="mentality-card">
-                        <i class="fas fa-trophy"></i>
-                        <h3>Forged in Competition</h3>
-                        <p>From community tournaments to the professional stage, our core is built on the drive to win. We support our esports teams and thrive under pressure.</p>
-                    </div>
-                    <div class="mentality-card">
-                        <i class="fas fa-users"></i>
-                        <h3>Community Driven</h3>
-                        <p>We are more than an org, we're a jungle. We believe in creating a welcoming space for everyone to connect, share their passion, and be a part of the Squad.</p>
-                    </div>
-                    <div class="mentality-card">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>Commitment to Growth</h3>
-                        <p>We are dedicated to helping our players, creators, and community members level up. We are always striving to improve and reach new heights.</p>
-                    </div>
+                <div class="hero-cta-group">
+                    <a href="https://store.steampowered.com/app/5397380/THE_FINALS_Ape_Squad_TGM26/" class="btn btn-hero-primary" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-steam"></i> Check Out the Bundle
+                    </a>
+                    <a href="#production" class="btn btn-hero-secondary">
+                        Explore Production <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section id="support">
+        <!-- ========================================= -->
+        <!-- 2. MERCH SHOWCASE                         -->
+        <!-- ========================================= -->
+        <section id="merch-showcase" class="content-curtain">
             <div class="container">
-                <h2>Support the Squad</h2>
-                <p>Love what we're building? Help fuel Ape Squad by subbing, tipping, or grabbing some gear. Every contribution keeps the arena alive and helps us stay on top.</p>
-                <a href="https://twitch.tv/apesquadorg" target="_blank" class="btn">Subscribe on Twitch</a>
-                <a href="https://youtube.com/@apesquadorg" target="_blank" class="btn">Check out our Youtube</a>
-                <a href="/merch" target="_blank" class="btn">Shop Our Merch</a>
+                <div class="compact-header">
+                    <span class="eyebrow">OFFICIAL GEAR & IN-GAME DROPS</span>
+                    <p>Official competition teamwear, streetwear, and in-game cosmetics.</p>
+                    
+                    <!-- Store Button Moved Up Here -->
+                    <div class="armory-header-cta">
+                        <a href="https://apesquadshop.org/" class="btn btn-secondary armory-top-btn">
+                            <i class="fa-solid fa-bag-shopping"></i> Visit Store Hub <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="merch-editorial-grid">
+                    <!-- HERO ITEM 1: Official Pro Jersey -->
+                    <div class="merch-hero-card">
+                        <span class="merch-badge badge-sunset">OFFICIAL KIT</span>
+                        <div class="merch-hero-img">
+                            <img src="merch/images/jersey-tgm26.png" alt="Ape Squad Official Jersey">
+                        </div>
+                        <div class="merch-hero-info">
+                            <span class="merch-sub">Sunset Jersey</span>
+                            <h3>OFFICIAL PRO JERSEY</h3>
+                            <p>Signature sunset gradient and moisture-wicking fabric</p>
+                            <div class="merch-action-row">
+                                <span class="merch-price">$73.99</span>
+                                <a href="https://www.owayo.com/store/apesquadorg/6ae5eb9493b23957753749" class="btn btn-primary">Order Kit <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HERO ITEM 2: In-Game Bundle + 2 BIG Product Cards -->
+                    <div class="merch-side-col">
+                        <div class="merch-bundle-card">
+                            <span class="merch-badge badge-steam"><i class="fa-brands fa-steam"></i> IN-GAME BUNDLE</span>
+                            
+                            <div class="bundle-layout">
+                                <div class="bundle-stage">
+                                    <img src="images/esports/bundle26.png" alt="Ape Squad In-Game Bundle" class="bundle-img" onerror="this.style.display='none'">
+                                    <div class="pedestal-line"></div>
+                                </div>
+
+                                <div class="bundle-content">
+                                    <span class="merch-sub">THE FINALS // EMBARK VERIFIED</span>
+                                    <h3>APE SQUAD OFFICIAL BUNDLE</h3>
+                                    <p>Equip signature outfit, weapon skins, and flair directly in-game.</p>
+                                    <a href="https://store.steampowered.com/app/5397380/THE_FINALS_Ape_Squad_TGM26/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                                        <i class="fa-brands fa-steam"></i> Get On Steam
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ONLY 2 CARDS (HOODIE & HAT GET 50% / 50% WIDTH) -->
+                        <div class="merch-mini-row">
+                            <!-- Product 1: Hoodie -->
+                            <a href="https://apesquadshop.org/products/tagged-up-hoodie" class="mini-merch-card">
+                                <div class="mini-img-wrap">
+                                    <img src="merch/images/hoodie.png" alt="Arena Hoodie" class="mini-photo" onerror="this.src='https://placehold.co/300x300/18181c/ff6f24?text=Hoodie'">
+                                </div>
+                                <div class="mini-info">
+                                    <div class="mini-info-text">
+                                        <h4>TAGGED UP HOODIE</h4>
+                                        <span class="mini-price">$59.99</span>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-right mini-arrow"></i>
+                                </div>
+                            </a>
+
+                            <!-- Product 2: Snapback -->
+                            <a href="https://apesquadshop.org/products/banana-dad-cap" class="mini-merch-card">
+                                <div class="mini-img-wrap">
+                                    <img src="merch/images/hat.png" alt="Sunset Snapback" class="mini-photo" onerror="this.src='https://placehold.co/300x300/18181c/d9277f?text=Cap'">
+                                </div>
+                                <div class="mini-info">
+                                    <div class="mini-info-text">
+                                        <h4>BANANA DAD CAP</h4>
+                                        <span class="mini-price">$22.00</span>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-right mini-arrow"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- 3. PRODUCTION & ESPORTS (SOLID OVERLAY)   -->
+        <!-- ========================================= -->
+        <section id="production" class="content-curtain section-alt">
+            <div class="container">
+                <div class="compact-header">
+                    <span class="eyebrow">BROADCAST & ESPORTS</span>
+                    <p>We compete at the highest professional tier while engineering broadcast-grade tournaments for leagues and publishers.</p>
+                </div>
+
+                <div class="dual-engine-grid">
+                    <div class="engine-box engine-left">
+                        <div class="engine-badge"><i class="fa-solid fa-satellite-dish"></i> BROADCAST SERVICES</div>
+                        <h3>STUDIO</h3>
+                        <p>Turnkey live broadcast engineering for competitive gaming. In-game observing, dynamic replay systems, custom HUD overlays, talent casting, and full tournament logistics.</p>
+                        <ul class="engine-list">
+                            <li><i class="fa-solid fa-check"></i> Turnkey, Bracket, Admin & Operations</li>
+                            <li><i class="fa-solid fa-check"></i> Custom Live Overlays</li>
+                            <li><i class="fa-solid fa-check"></i> Tier 1 In-Game Observers & Casters</li>
+                        </ul>
+                        <a href="mailto:apesquadorg@gmail.com?subject=Production%20Inquiry" class="btn btn-secondary">
+                            Book Broadcast Team <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="engine-box engine-right">
+                        <div class="engine-badge"><i class="fa-solid fa-trophy"></i> COMPETITIVE ROSTERS</div>
+                        <h3>PRO SQUAD</h3>
+                        <p>Dominating the arena across North America and Europe. Built on relentless competitive discipline, aggressive teamwork, and championship results in The Finals.</p>
+                        <ul class="engine-list">
+                            <li><i class="fa-solid fa-check"></i> Contenders in The Finals Circuit</li>
+                            <li><i class="fa-solid fa-check"></i> Historical APAC & EU Pro Lineups</li>
+                            <li><i class="fa-solid fa-check"></i> Partnered Creator Network</li>
+                        </ul>
+                        <a href="/esports" class="btn btn-secondary">
+                            View Active Rosters <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="compact-stats-row">
+                    <div class="c-stat">
+                        <span class="c-num">150+</span>
+                        <span class="c-lbl">Broadcasts Produced</span>
+                    </div>
+                    <div class="c-stat">
+                        <span class="c-num">100k+</span>
+                        <span class="c-lbl">Watch Hours</span>
+                    </div>
+                    <div class="c-stat">
+                        <span class="c-num">100%</span>
+                        <span class="c-lbl">Turnkey Execution</span>
+                    </div>
+                    <div class="c-stat">
+                        <span class="c-num">2</span>
+                        <span class="c-lbl">Studio Albums</span>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -122,12 +229,4 @@
 
     <script src="js/main.js"></script>
 </body>
-
 </html>
-
-
-
-
-
-
-

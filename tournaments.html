@@ -11,108 +11,487 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore the Ape Squad Esports tournament archives. Find brackets, results, and official rules for all our competitive events.">
-    <meta name="keywords" content="Ape Squad, esports tournaments, tournament results, tournament rules, competitive gaming">
-    <title>Tournaments/Events | Ape Squad Esports</title>
+    <meta name="description" content="Explore the Ape Squad Esports tournament archives. Find brackets, results, and official rules for all our competitive events in The Finals.">
+    <meta name="keywords" content="Ape Squad, esports tournaments, tournament results, tournament rules, competitive gaming, The Finals tournaments">
+    <title>Tournaments & Events | Ape Squad Esports</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
-    <meta name="msapplication-TileColor" content="#0a0a0a">
-    <meta name="theme-color" content="#0a0a0a">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ff6f24">
+    <meta name="msapplication-TileColor" content="#080808">
+    <meta name="theme-color" content="#080808">
 
-    <!-- Google Fonts -->
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Your Stylesheets -->
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Internal Style Patch for Layout Issues -->
+    <!-- PAGE-SPECIFIC TOURNAMENT & MAIN.JS ENGINE STYLES -->
     <style>
-        /* 1. Fix Title Sizing */
-        .tournament-card-overlay h3 {
-            font-size: 1.4rem !important; 
-            line-height: 1.1;
-            margin-bottom: 0.5rem;
-            white-space: normal;
-        }
-
-        /* 2. Prevent Description Overflow */
-        .tournament-card-overlay p {
-            font-size: 0.9rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3; /* Limit description to 3 lines */
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            margin-bottom: 1rem; /* Space between text and buttons */
-        }
-
-        /* 3. Button Layout */
-        .tournament-card-overlay .card-actions {
+        /* Hero Banner */
+        #tournaments-hero {
+            position: relative;
+            min-height: 52vh;
             display: flex;
             align-items: center;
-            justify-content: flex-start; 
+            justify-content: center;
+            text-align: center;
+            padding: 7rem 2rem 3.5rem 2rem;
+            overflow: hidden;
+            background: var(--midnight-black);
+            margin-top: -85px;
+        }
+
+        .hero-background-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.35) contrast(1.15);
+        }
+
+        .hero-background-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(7, 7, 9, 0.35) 0%, rgba(7, 7, 9, 0.95) 100%),
+                        linear-gradient(180deg, transparent 60%, var(--midnight-black) 100%);
+        }
+
+        #tournaments-hero .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 860px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            padding-top: 50px;
+        }
+
+        #tournaments-hero h2 {
+            font-size: clamp(3.4rem, 7.5vw, 6.2rem);
+            margin-bottom: 0.25rem;
+            line-height: 0.88;
+        }
+
+        .tournaments-intro-text {
+            font-size: 1.15rem;
+            color: #d1d1dc;
+            max-width: 62ch;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        /* ====================================================== */
+        /* 1. FEATURED TOURNAMENT SHOWCASE (from main.js)         */
+        /* ====================================================== */
+        .showcase-container {
+            width: 100%;
+            margin-bottom: 3rem;
+        }
+
+        .showcase-container:empty {
+            display: none;
+        }
+
+        .tournament-showcase {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            max-height: 520px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1.5px solid var(--surface-border);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.9);
+            background: var(--surface-card);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .tournament-showcase:hover {
+            transform: translateY(-4px);
+            border-color: var(--pure-white);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 111, 36, 0.3);
+        }
+
+        .showcase-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            filter: brightness(0.42) contrast(1.15);
+            transition: transform 0.4s ease;
+        }
+
+        .tournament-showcase:hover .showcase-bg {
+            transform: scale(1.03);
+        }
+
+        .showcase-badge {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 3;
+            background: var(--jersey-gradient-h);
+            color: #ffffff;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-link-cover {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+        }
+
+        .showcase-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2.5rem;
+            background: linear-gradient(180deg, transparent 20%, rgba(7, 7, 9, 0.65) 60%, rgba(7, 7, 9, 0.98) 100%);
+        }
+
+        .showcase-content {
+            font-family: var(--font-headline);
+            font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 0.9;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .showcase-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #e2e2ec;
+            margin-bottom: 0.75rem;
+        }
+
+        .showcase-meta i {
+            color: var(--jersey-orange);
+        }
+
+        .showcase-desc {
+            font-size: 1.05rem;
+            color: #c4c4d4;
+            max-width: 70ch;
+            line-height: 1.55;
+            margin-bottom: 1.25rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .showcase-overlay .card-actions {
+            position: relative;
+            z-index: 4;
+        }
+
+        /* ====================================================== */
+        /* 2. STATS CARDS GRID (from main.js)                     */
+        /* ====================================================== */
+        .tournaments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
             width: 100%;
         }
 
-        /* Shrink the button inside cards slightly so it fits nicely */
-        .tournament-card-overlay .btn {
-            font-size: 0.75rem !important;
-            padding: 5px 15px !important;
+        .stats-card {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--pure-white);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 111, 36, 0.25);
+        }
+
+        /* 16x9 Image Wrapper */
+        .sc-image {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #000000;
+            border-bottom: 1px solid var(--surface-border-subtle);
+        }
+
+        .sc-image img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+        .stats-card:hover .sc-image img {
+            transform: scale(1.05);
+        }
+
+        /* Card Content Body */
+        .sc-content {
+            padding: 1.75rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            background: linear-gradient(180deg, #15151c 0%, #101015 100%);
+        }
+
+        .sc-title {
+            font-family: var(--font-headline);
+            font-size: 1.65rem;
+            line-height: 1.05;
+            color: var(--pure-white);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .sc-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            color: #a8a8b6;
+            margin-bottom: 1.15rem;
+        }
+
+        .sc-meta i {
+            color: var(--jersey-orange);
+        }
+
+        /* Winners Box */
+        .sc-winners-box {
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .sc-winners-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ffd700;
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+        }
+
+        .sc-winner-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: #ffffff;
+        }
+
+        .sc-winner-row.justify-center {
+            justify-content: center;
+        }
+
+        .sc-region {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 800;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 2px 7px;
+            border-radius: 3px;
+            color: #e2e2ec;
+        }
+
+        .sc-team {
+            font-family: var(--font-headline);
+            font-size: 1.25rem;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sc-team i {
+            color: #ffd700;
+            font-size: 0.85rem;
+        }
+
+        .hc-desc {
+            font-size: 0.92rem;
+            color: #b0b0be;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Action Buttons Area */
+        .sc-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: auto;
+            position: relative;
+            z-index: 3; /* Allows clicks to register above .card-link-cover */
+        }
+
+        .sc-actions .btn {
+            flex: 1;
+            min-width: 120px;
+            font-size: 0.85rem;
+            padding: 0.65rem 1rem;
             line-height: 1.2;
-            height: auto;
-            min-height: unset;
+            border-radius: 4px;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .sc-actions .icon-youtube {
+            color: #ff0000;
+        }
+
+        .sc-actions .icon-twitch {
+            color: #bf94ff;
+        }
+
+        .sc-actions .icon-info {
+            color: var(--jersey-orange);
+        }
+
+        .sc-actions .btn:hover i {
+            color: #ffffff !important;
+        }
+
+        @media (max-width: 768px) {
+            .tournaments-grid {
+                grid-template-columns: 1fr;
+            }
+            .tournament-showcase {
+                aspect-ratio: auto;
+                min-height: 380px;
+            }
+            .showcase-overlay {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
-<header class="navbar"></header> <!-- Populated by main.js -->
+    <header class="navbar"></header> <!-- Populated by main.js -->
 
-<main>
-    <section id="tournaments-hub">
-        <div class="container">
-            <div class="tournaments-intro">
-                <h2>Event Archives</h2>
-                <p>
-                    Relive the hype and explore the results from our past and ongoing competitions.
-                    Click on any tournament to view the detailed bracket and final standings.
-                </p>
-                <a href="/rules" class="btn btn-primary">
-                    <i class="fa-solid fa-scroll"></i> View Tournament Rules
-                </a>
+    <main>
+        <!-- ====================================================== -->
+        <!-- HERO BANNER                                            -->
+        <!-- ====================================================== -->
+        <section id="tournaments-hero">
+            <div class="hero-background-image">
+                <img src="/images/backgrounds/club.jpg" alt="Ape Squad Tournaments Arena" loading="eager" decoding="async">
             </div>
+            
+            <div class="hero-content">
+                <div class="hero-tagline-badge">
+                    <span>TOURNAMENT ARCHIVES</span>
+                    <span class="tagline-dot">•</span>
+                    <span>THE FINALS CIRCUIT</span>
+                </div>
 
-        <!-- Showcase Section - HORIZONS (NEW) -->
-       <!-- Showcase Section - HORIZONS / CLASSICS (Populated by JS) -->
-        <div class="showcase-container">
-            <!-- JS will inject .tournament-showcase here -->
-        </div>
+                <h2 class="glitch" data-text="EVENT ARCHIVES">EVENT ARCHIVES</h2>
+                
+                <p class="tournaments-intro-text">
+                    Relive the hype and explore the brackets, results, and tournament rules from our past and ongoing competitive circuits.
+                </p>
 
-        <!-- Tournaments Grid - PREVIOUS EVENTS (Populated by JS) -->
-        <div class="tournaments-grid">
-            <!-- JS will inject .tournament-card elements here -->
-        </div>
+                <div class="hero-actions">
+                    <a href="/rules" class="btn btn-hero-primary btn-sm">
+                        <i class="fa-solid fa-scroll"></i> Tournament Rulebook
+                    </a>
+                    <a href="mailto:apesquadorg@gmail.com?subject=Tournament%20Broadcast%20Inquiry" class="btn btn-secondary btn-sm">
+                        Host An Event <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-        </div>
-    </div>
-</section>
-</main>
+        <!-- ====================================================== -->
+        <!-- CONTENT: FEATURED & ARCHIVE GRID (NO REDUNDANT HEADER) -->
+        <!-- ====================================================== -->
+        <section id="tournaments-hub" class="content-curtain" style="padding-top: 3.5rem;">
+            <div class="container" style="max-width: 1400px; padding-top: 0;">
 
-<footer class="site-footer"></footer> <!-- Populated by main.js -->
+                <!-- Featured Event (Injected by main.js) -->
+                <div class="showcase-container"></div>
 
-<script src="js/main.js"></script>
+                <!-- Tournament Cards Grid (Injected by main.js) -->
+                <div class="tournaments-grid"></div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer"></footer> <!-- Populated by main.js -->
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
     <script src="js/features.js"></script>
 </body>
 </html>
-
-
-

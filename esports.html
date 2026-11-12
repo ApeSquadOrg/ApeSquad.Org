@@ -11,8 +11,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The history and active rosters of Ape Squad Esports. From the origins of Emerald Apes to the Road to The Grand Major 2026.">
-    <meta name="keywords" content="Ape Squad, Hiboo, Emerald Apes, esports history, The Finals, competitive gaming">
+    <meta name="description" content="The active rosters and competitive history of Ape Squad Esports in The Finals.">
+    <meta name="keywords" content="Ape Squad, esports history, The Finals, competitive gaming, July, BLAD3R, YangDoun, XinWu">
     <title>Team & History | Ape Squad Esports</title>
 
     <!-- Favicon -->
@@ -20,87 +20,184 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
-    <meta name="msapplication-TileColor" content="#0a0a0a">
-    <meta name="theme-color" content="#0a0a0a">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ff6f24">
+    <meta name="msapplication-TileColor" content="#080808">
+    <meta name="theme-color" content="#080808">
 
-    <!-- Google Fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome -->
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Your Stylesheets -->
+    <!-- Global Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile-card.css">
     
-    <!-- STYLES SPECIFIC TO HERO, HISTORY & PERFORMANCE -->
+    <!-- PAGE-SPECIFIC STYLES (ESPORTS ONLY) -->
     <style>
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Optimizes rendering lag for below-the-fold content */
-        #major-photos {
-            content-visibility: auto;
-            contain-intrinsic-size: 1px 500px;
-        }
-
-        .clickable-photo {
-            cursor: pointer;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .clickable-photo:hover {
-            transform: scale(1.02);
-            opacity: 0.9;
-        }
-
-        .legacy-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 2rem 1rem;
+        /* Hero Banner */
+        #club-hero {
+            position: relative;
+            min-height: 72vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            padding: 7rem 2rem 5rem 2rem;
+            overflow: hidden;
+            background: var(--midnight-black);
+            margin-top: -85px;
+        }
+
+        .hero-background-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
             height: 100%;
-            min-height: 180px;
+            z-index: 1;
+        }
+
+        .hero-background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.38) contrast(1.15);
+        }
+
+        .hero-background-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(7, 7, 9, 0.4) 0%, rgba(7, 7, 9, 0.95) 100%),
+                        linear-gradient(180deg, transparent 65%, var(--midnight-black) 100%);
+        }
+
+        #club-hero .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            gap: 1.25rem;
+            padding-top: 60px;
         }
 
-        .legacy-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--main-blue, #01a3eb);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        #club-hero h2 {
+            font-size: clamp(3.6rem, 8vw, 6.5rem);
+            margin-bottom: 0.5rem;
+            line-height: 0.88;
         }
 
-        .legacy-card h3 {
-            font-family: 'Anton', sans-serif;
+        .club-intro {
+            font-size: 1.2rem;
+            color: #d1d1dc;
+            max-width: 60ch;
+            margin: 0 auto;
+        }
+
+        .hero-quick-nav {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        /* Dual Brand Logo Header */
+        .roster-header-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .brand-pill-logo {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
+        }
+
+        .brand-divider {
+            color: rgba(255, 255, 255, 0.25);
+            font-family: var(--font-headline);
             font-size: 1.8rem;
-            letter-spacing: 1.5px;
-            margin: 0 0 0.5rem 0;
-            color: #fff;
-            text-transform: uppercase;
         }
 
-        .legacy-card p {
-            font-family: 'Ayuthaya', monospace;
-            color: #01a3eb;
-            margin: 0;
+        /* Team Roster Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2.25rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .squad-member-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.25s ease;
+        }
+
+        .squad-member-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .pc-card-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .squad-member-container .social-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.25rem;
+            min-height: 38px;
+        }
+
+        .squad-member-container .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            color: #d1d1dc;
             font-size: 1rem;
-            font-weight: bold;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .squad-member-container .social-links a:hover {
+            background: var(--jersey-gradient-h);
+            border-color: transparent;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 111, 36, 0.4);
+        }
+
+        #major-photos {
+            content-visibility: auto;
+            contain-intrinsic-size: 1px 600px;
+        }
+
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 1.75rem;
+            }
         }
     </style>
 </head>
@@ -117,94 +214,140 @@
             <div class="hero-background-image">
                 <img src="/images/backgrounds/esports.jpg" alt="Ape Squad in the arena" loading="eager" decoding="async">
             </div>
-            <div class="hero-content container">
-                <h2 class="glitch" data-text="APE SQUAD ESPORTS">APE SQUAD ESPORTS</h2>
+            
+            <div class="hero-content">
+                <div class="hero-tagline-badge">
+                    <span>ROSTERS</span>
+                    <span class="tagline-dot">•</span>
+                    <span>TEAMS</span>
+                </div>
+
+                <h2 class="glitch" data-text="ESPORTS LEGACY">ESPORTS LEGACY</h2>
+                
                 <p class="club-intro">
-                    Meet the rosters competing in THE FINALS.
+                    Dominating the arena across Asia and Europe. From the pioneering days of Emerald Apes and Ape Aura to the championship stages of The Grand Major.
                 </p>
+
+                <div class="hero-quick-nav">
+                    <a href="#ape-squad-2026" class="btn btn-hero-primary btn-sm">
+                        2026 Roster <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                    <a href="#ape-squad-2025" class="btn btn-secondary btn-sm">
+                        2025 Roster <i class="fa-solid fa-trophy"></i>
+                    </a>
+                    <a href="#major-photos" class="btn btn-secondary btn-sm">
+                        Archive Gallery <i class="fa-solid fa-camera"></i>
+                    </a>
+                </div>
             </div>
         </section>
-
 
 
         <!-- ====================================================== -->
         <!-- CURRENT ROSTER: APE SQUAD 2026 (Road to TGM)           -->
         <!-- ====================================================== -->
-        <section id="ape-squad-2026" style="padding-bottom: 3rem;">
+        <section id="ape-squad-2026" class="content-curtain">
             <div class="container">
-                <div class="team-header">
-                    <img src="images/thefinals.png" alt="The Finals Logo" class="team-logo" loading="lazy" decoding="async">
-                </div>
-                <div class="team-header">
-                    <img src="images/apesquad.png" alt="Ape Squad Logo" class="team-logo" loading="lazy" decoding="async">
+                <div class="compact-header">
+                    <div class="roster-header-brand">
+                        <img src="images/thefinals.png" alt="The Finals Logo" class="brand-pill-logo" loading="lazy" decoding="async">
+                        <span class="brand-divider">/</span>
+                        <img src="images/apesquad.png" alt="Ape Squad Logo" class="brand-pill-logo" loading="lazy" decoding="async">
+                    </div>
+
+                    <span class="eyebrow">THE GRAND MAJOR 2026</span>
                     <h2 class="glitch" data-text="APE SQUAD 2026">APE SQUAD 2026</h2>
+                    <p>The active tournament roster competing at the highest tier in The Finals Pro League.</p>
                 </div>
-                <p class="squad-intro">
-                    The Road to The Grand Major 2026 roster.
-                </p>
+
                 <div class="team-grid">
                     
-                    <!-- Player 1: MyungTan -->
+                    <!-- Player 1: July -->
                     <div class="squad-member-container">
                         <div class="pc-card-wrapper">
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/myungtan.jpg" alt="MyungTan avatar" loading="lazy" decoding="async"></div>
-                                    <div class="pc-content"><div class="pc-details"><h3>MyungTan</h3><p>Medium / Captain</p></div></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/july.png" alt="July avatar" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/400x400/121217/ff6f24?text=July'">
+                                    </div>
+                                    <div class="pc-content">
+                                        <div class="pc-details">
+                                            <h3>July</h3>
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                         </div>
                         <div class="social-links">
-
+                            <!-- Populated when available -->
                         </div>
                     </div>
 
-                    <!-- Player 2: Latte -->
+                    <!-- Player 2: BLAD3R -->
                     <div class="squad-member-container">
                         <div class="pc-card-wrapper">
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/latte.jpg" alt="Latte avatar" loading="lazy" decoding="async"></div>
-                                    <div class="pc-content"><div class="pc-details"><h3>Latte</h3><p>Flex</p></div></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/blad3r.png" alt="BLAD3R avatar" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/400x400/121217/ff6f24?text=BLAD3R'">
+                                    </div>
+                                    <div class="pc-content">
+                                        <div class="pc-details">
+                                            <h3>BLAD3R</h3>
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                         </div>
                         <div class="social-links">
-
-                        </div>
-                    </div>
-                    
-                    <!-- Player 3: Byusl -->
-                    <div class="squad-member-container">
-                        <div class="pc-card-wrapper">
-                            <section class="pc-card">
-                                <div class="pc-inside">
-                                    <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/byusl.jpg" alt="Byusl avatar" loading="lazy" decoding="async"></div>
-                                    <div class="pc-content"><div class="pc-details"><h3>Byusl</h3><p>Heavy</p></div></div>
-                                </div>
-                            </section>
-                        </div>
-                        <div class="social-links">
-
+                            <!-- Populated when available -->
                         </div>
                     </div>
                     
-                    <!-- Player 4: OOO -->
+                    <!-- Player 3: YangDoun -->
                     <div class="squad-member-container">
                         <div class="pc-card-wrapper">
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/ooo.jpg" alt="OOO avatar" loading="lazy" decoding="async"></div>
-                                    <div class="pc-content"><div class="pc-details"><h3>OOO</h3><p>Light</p></div></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/yangdoun.png" alt="YangDoun avatar" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/400x400/121217/ff6f24?text=YangDoun'">
+                                    </div>
+                                    <div class="pc-content">
+                                        <div class="pc-details">
+                                            <h3>YangDoun</h3>
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                         </div>
                         <div class="social-links">
-
+                            <a href="https://www.youtube.com/@YangDoun" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                            <a href="https://www.twitch.tv/yangdoun" target="_blank" rel="noopener noreferrer" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Player 4: XinWu -->
+                    <div class="squad-member-container">
+                        <div class="pc-card-wrapper">
+                            <section class="pc-card">
+                                <div class="pc-inside">
+                                    <div class="pc-shine"></div><div class="pc-glare"></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/xinwu.png" alt="XinWu avatar" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/400x400/121217/ff6f24?text=XinWu'">
+                                    </div>
+                                    <div class="pc-content">
+                                        <div class="pc-details">
+                                            <h3>XinWu</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="social-links">
+                            <!-- Populated when available -->
                         </div>
                     </div>
 
@@ -216,16 +359,20 @@
         <!-- ====================================================== -->
         <!-- ERA 1: APE SQUAD 2025 (The Peak)                       -->
         <!-- ====================================================== -->
-        <section id="ape-squad-2025" style="padding-bottom: 2rem;">
+        <section id="ape-squad-2025" class="content-curtain section-alt">
             <div class="container">
-                <div class="team-header">
-                    <img src="images/thefinals.png" alt="The Finals Logo" class="team-logo" loading="lazy" decoding="async">
-                </div>
-                <div class="team-header">
-                    <img src="images/apesquad.png" alt="Ape Squad Logo" class="team-logo" loading="lazy" decoding="async">
+                <div class="compact-header">
+                    <div class="roster-header-brand">
+                        <img src="images/thefinals.png" alt="The Finals Logo" class="brand-pill-logo" loading="lazy" decoding="async">
+                        <span class="brand-divider">/</span>
+                        <img src="images/apesquad.png" alt="Ape Squad Logo" class="brand-pill-logo" loading="lazy" decoding="async">
+                    </div>
+
+                    <span class="eyebrow">THE GRAND MAJOR 2025</span>
                     <h2 class="glitch" data-text="APE SQUAD 2025">APE SQUAD 2025</h2>
+                    <p>The TGM25 $100K Major lineup. The historic roster that cemented our legacy in the arena.</p>
                 </div>
-                <p class="squad-intro">The TGM25 100k Major team. The roster that defined 2025.</p>
+
                 <div class="team-grid">
                     
                     <!-- Player 1: Mr.RedFox -->
@@ -234,13 +381,20 @@
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/mrredfox.png" alt="Player avatar" loading="lazy" decoding="async"></div>
-                                    <div class="pc-content"><div class="pc-details"><h3>Mr.RedFox</h3><p>Light</p></div></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/mrredfox.png" alt="Mr.RedFox avatar" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/400x400/121217/ff6f24?text=Mr.RedFox'">
+                                    </div>
+                                    <div class="pc-content">
+                                        <div class="pc-details">
+                                            <h3>Mr.RedFox</h3>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                         </div>
                         <div class="social-links">
-                            <a href="https://x.com/MrRedFox77" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                            <a href="https://x.com/MrRedFox77" target="_blank" rel="noopener noreferrer" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
                         </div>
                     </div>
                     
@@ -250,13 +404,20 @@
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/manda.png" alt="Player avatar" loading="lazy" decoding="async"></div>
-                                    <div class="pc-content"><div class="pc-details"><h3>Manda</h3><p>Heavy</p></div></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/manda.png" alt="Manda avatar" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/400x400/121217/ff6f24?text=Manda'">
+                                    </div>
+                                    <div class="pc-content">
+                                        <div class="pc-details">
+                                            <h3>Manda</h3>
+                                      
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                         </div>
                         <div class="social-links">
-                             <a href="https://x.com/Manda_YEAH" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                            <a href="https://x.com/Manda_YEAH" target="_blank" rel="noopener noreferrer" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
                         </div>
                     </div>
                     
@@ -266,31 +427,46 @@
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/kriegerblue.png" alt="Player avatar" loading="lazy" decoding="async"></div>
-                                    <div class="pc-content"><div class="pc-details"><h3>KriegerBlue</h3><p>Medium</p></div></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/kriegerblue.png" alt="KriegerBlue avatar" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/400x400/121217/ff6f24?text=KriegerBlue'">
+                                    </div>
+                                    <div class="pc-content">
+                                        <div class="pc-details">
+                                            <h3>KriegerBlue</h3>
+                                 
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                         </div>
                         <div class="social-links">
-                             <a href="https://www.twitch.tv/kriegerblue" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
-                             <a href="https://x.com/KriegerBlue" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
-                             <a href="https://www.tiktok.com/@kriegerblue?lang=de-DE" target="_blank" title="Tiktok"><i class="fab fa-tiktok"></i></a>
-                             <a href="https://www.instagram.com/krieger.blue/?hl=de" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                             <a href="https://www.twitch.tv/kriegerblue" target="_blank" rel="noopener noreferrer" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                             <a href="https://x.com/KriegerBlue" target="_blank" rel="noopener noreferrer" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+                             <a href="https://www.tiktok.com/@kriegerblue?lang=de-DE" target="_blank" rel="noopener noreferrer" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                             <a href="https://www.instagram.com/krieger.blue/?hl=de" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
                         </div>
                     </div>
                     
-                    <!-- Coach -->
+                    <!-- Coach: TonyQuartz -->
                     <div class="squad-member-container">
                         <div class="pc-card-wrapper">
                             <section class="pc-card">
                                 <div class="pc-inside">
                                     <div class="pc-shine"></div><div class="pc-glare"></div>
-                                    <div class="pc-content pc-avatar-content"><img class="avatar" src="images/team/tonyquartz.png" alt="Coach avatar" loading="lazy" decoding="async"></div>
-                                    <div class="pc-content"><div class="pc-details"><h3>TonyQuartz</h3><p>Head Coach</p></div></div>
+                                    <div class="pc-content pc-avatar-content">
+                                        <img class="avatar" src="images/team/tonyquartz.png" alt="TonyQuartz avatar" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='https://placehold.co/400x400/121217/ff6f24?text=TonyQuartz'">
+                                    </div>
+                                    <div class="pc-content">
+                                        <div class="pc-details">
+                                            <h3>TonyQuartz</h3>
+                                            <p>Head Coach</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </section>
                         </div>
                         <div class="social-links">
+                            <!-- Populated when available -->
                         </div>
                     </div>
 
@@ -302,28 +478,48 @@
         <!-- ====================================================== -->
         <!-- 100K MAJOR PHOTOS SECTION                              -->
         <!-- ====================================================== -->
-        <section id="major-photos">
+        <section id="major-photos" class="content-curtain">
             <div class="container">
-                <div class="team-header">
-                    <h2 class="glitch" data-text="HISTORICAL GALLERY">HISTORICAL GALLERY</h2>
+                <div class="compact-header">
+                    <span class="eyebrow">STUDIO ARCHIVES & STAGE HIGHLIGHTS</span>
+                    <h2 class="glitch" data-text="GALLERY">GALLERY</h2>
+                    <p>Relive the championship run at Embark Studios. Click any image to view in full resolution.</p>
                 </div>
-                <p class="squad-intro">Highlights from the Ape Squad era. Click to expand.</p>
                 
                 <div class="photo-grid">
-                    <div class="photo-item"><img src="images/major/photo1.jpg" alt="Krieger, Manda, Redfox @ Embark Studios" class="clickable-photo" loading="lazy" decoding="async"></div>
-                    <div class="photo-item"><img src="images/major/photo2.jpg" alt="Redfox, Manda, Krieger Team Photo" class="clickable-photo" loading="lazy" decoding="async"></div>
-                    <div class="photo-item"><img src="images/major/photo3.jpg" alt="Redfox, Krieger, Manda w/ Coach TonyQuartz" class="clickable-photo" loading="lazy" decoding="async"></div>
+                    <div class="photo-card" onclick="openLightbox('images/major/photo1.jpg', 'Krieger, Manda, Redfox @ Embark Studios')">
+                        <img src="images/major/photo1.jpg" alt="Krieger, Manda, Redfox @ Embark Studios" class="clickable-photo" loading="lazy" decoding="async">
+                        <div class="photo-overlay">
+                            <span class="photo-caption"><i class="fa-solid fa-expand"></i> Krieger, Manda, Redfox @ Embark</span>
+                        </div>
+                    </div>
+
+                    <div class="photo-card" onclick="openLightbox('images/major/photo2.jpg', 'Redfox, Manda, Krieger Team Photo')">
+                        <img src="images/major/photo2.jpg" alt="Redfox, Manda, Krieger Team Photo" class="clickable-photo" loading="lazy" decoding="async">
+                        <div class="photo-overlay">
+                            <span class="photo-caption"><i class="fa-solid fa-expand"></i> Team Photo</span>
+                        </div>
+                    </div>
+
+                    <div class="photo-card" onclick="openLightbox('images/major/photo3.jpg', 'Redfox, Krieger, Manda w/ Coach TonyQuartz')">
+                        <img src="images/major/photo3.jpg" alt="Redfox, Krieger, Manda w/ Coach TonyQuartz" class="clickable-photo" loading="lazy" decoding="async">
+                        <div class="photo-overlay">
+                            <span class="photo-caption"><i class="fa-solid fa-expand"></i> Squad w/ Coach TonyQuartz</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- THE LIGHTBOX MODAL (Hidden by default) -->
+    <!-- THE LIGHTBOX MODAL (STADIUM DARK THEME) -->
     <div id="imageModal" class="modal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImg" alt="Expanded view">
-        <div id="caption"></div>
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div class="modal-content-container">
+            <img class="modal-content" id="modalImg" alt="Expanded view">
+            <div id="caption"></div>
+        </div>
     </div>
 
     <footer class="site-footer"></footer> <!-- Populated by main.js -->
@@ -332,47 +528,37 @@
     <script src="js/main.js"></script>
     <script src="js/features.js"></script>
 
-    <!-- LIGHTBOX SCRIPT -->
+    <!-- LIGHTBOX TRIGGER SCRIPT -->
     <script>
-        var modal = document.getElementById("imageModal");
-        var modalImg = document.getElementById("modalImg");
-        var captionText = document.getElementById("caption");
-        var body = document.body;
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImg");
+        const captionText = document.getElementById("caption");
+        const body = document.body;
 
-        var images = document.querySelectorAll('.clickable-photo');
-
-        images.forEach(function(img) {
-            img.onclick = function(){
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                captionText.innerHTML = this.alt;
-                body.style.overflow = "hidden";
-                setTimeout(() => { modal.style.opacity = "1"; }, 10);
-            }
-        });
-
-        var span = document.getElementsByClassName("close-modal")[0];
+        function openLightbox(src, caption) {
+            modal.style.display = "block";
+            modalImg.src = src;
+            captionText.innerText = caption;
+            body.style.overflow = "hidden";
+            setTimeout(() => { modal.style.opacity = "1"; }, 10);
+        }
 
         function closeModal() {
             modal.style.opacity = "0";
             setTimeout(() => { 
                 modal.style.display = "none"; 
                 body.style.overflow = "auto";
-            }, 300);
+            }, 250);
         }
 
-        if (span) {
-            span.onclick = function() { closeModal(); }
-        }
-
-        modal.onclick = function(event) {
-            if (event.target === modal) {
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal || event.target.classList.contains('modal-content-container')) {
                 closeModal();
             }
-        }
+        });
         
         document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") {
+            if (event.key === "Escape" && modal.style.display === "block") {
                 closeModal();
             }
         });

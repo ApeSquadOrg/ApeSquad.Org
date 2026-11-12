@@ -11,7 +11,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Watch the official Ape Squad partnered creators live.">
+    <meta name="description" content="Watch the official Ape Squad partnered creators live. Top-tier gameplay, broadcast talent, and competitive community tournaments in The Finals.">
+    <meta name="keywords" content="Ape Squad creators, The Finals streamers, Dreadalicious, OnlyMerch, Ekazo, LuiBoolin, ConsumeTheBurger, Truce">
     <title>Creator Hub | Ape Squad Esports</title>
 
     <!-- Favicon -->
@@ -19,388 +20,536 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
-    <meta name="theme-color" content="#0a0a0a">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ff6f24">
+    <meta name="msapplication-TileColor" content="#080808">
+    <meta name="theme-color" content="#080808">
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Your Stylesheets -->
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="profile-card.css">
 
-    <!-- PAGE SPECIFIC STYLES -->
+    <!-- PAGE-SPECIFIC 3-COLUMN CREATOR STYLES -->
     <style>
-        /* --- 1. HERO FIXES (BRIGHTNESS & Z-INDEX) --- */
+        /* Hero Section */
         #creators-hero {
             position: relative;
+            min-height: 56vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 8rem 0 4rem 0;
-            min-height: 50vh;
-            /* Ensure the hero container handles layering correctly */
-            isolation: isolate; 
+            padding: 7rem 2rem 4rem 2rem;
+            overflow: hidden;
+            background: var(--midnight-black);
+            margin-top: -85px;
         }
 
-        /* The Background Image Container */
-        #creators-hero .hero-background-image {
+        .hero-background-image {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; /* Lowest layer */
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
-        /* The Actual Image - Make it brighter (0.8 opacity) */
-        #creators-hero .hero-background-image img {
-            opacity: 0.8 !important; 
-            width: 100%; height: 100%; object-fit: cover;
+        .hero-background-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.35) contrast(1.15);
         }
 
-        /* The Dark Overlay - Make it lighter (0.4 opacity) */
-        #creators-hero .hero-background-image::after {
+        .hero-background-image::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.4) 100%) !important;
-            z-index: 2; /* Sits on top of image, below text */
+            background: radial-gradient(circle at center, rgba(7, 7, 9, 0.35) 0%, rgba(7, 7, 9, 0.95) 100%),
+                        linear-gradient(180deg, transparent 60%, var(--midnight-black) 100%);
         }
 
-        /* The Text Content - Force it to the top */
         #creators-hero .hero-content {
             position: relative;
-            z-index: 10 !important; /* Highest layer */
-        }
-
-        /* Add shadow to text so it pops against the brighter background */
-        #creators-hero h2, 
-        #creators-hero p {
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0,0,0,0.5);
-        }
-
-        /* --- 2. SIDE-BY-SIDE LAYOUT --- */
-        .showcase-wrapper {
-            display: grid;
-            grid-template-columns: 1fr; /* Default: Stacked (Mobile) */
-            gap: 2rem;
-            margin-top: 2rem;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Desktop: Side by Side (2 Columns) */
-        @media (min-width: 992px) {
-            .showcase-wrapper {
-                grid-template-columns: 1fr 1fr; 
-                align-items: start; /* Aligns top of cards */
-            }
-        }
-
-        .creator-card {
-            display: flex;
-            flex-direction: column; /* Info Top, Video Bottom */
-            background: var(--midnight-black);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-
-        .creator-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* --- INFO SECTION --- */
-        .creator-info {
-            padding: 2rem;
-            background: #0f0f0f;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            position: relative;
             z-index: 2;
-            text-align: center; /* Center align for side-by-side look */
-        }
-
-        .creator-header {
+            max-width: 860px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.25rem;
+            padding-top: 50px;
+        }
+
+        #creators-hero h2 {
+            font-size: clamp(3.4rem, 7.5vw, 6.2rem);
+            margin-bottom: 0.25rem;
+            line-height: 0.88;
+        }
+
+        .creators-intro {
+            font-size: 1.15rem;
+            color: #d1d1dc;
+            max-width: 62ch;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* 3-Column Grid */
+        .showcase-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+            margin-top: 2.5rem;
+            width: 100%;
+        }
+
+        @media (max-width: 1100px) {
+            .showcase-grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 720px) {
+            .showcase-grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Creator Card */
+        .creator-card {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .creator-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--pure-white);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 111, 36, 0.25);
+        }
+
+        /* Compact Info Header */
+        .creator-info {
+            padding: 1.75rem 1.5rem 1.25rem 1.5rem;
+            background: linear-gradient(180deg, #15151c 0%, #101015 100%);
+            border-bottom: 1px solid var(--surface-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .creator-avatar-wrap {
+            position: relative;
+            margin-bottom: 0.85rem;
         }
 
         .creator-avatar {
-            width: 100px;
-            height: 100px;
+            width: 86px;
+            height: 86px;
             border-radius: 50%;
-            border: 3px solid var(--electric-blue);
             object-fit: cover;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            border: 2.5px solid #ffffff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 16px rgba(217, 39, 127, 0.35);
+            display: block;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .creator-card:hover .creator-avatar {
+            transform: scale(1.05);
+            border-color: var(--jersey-orange);
+        }
+
+        .creator-role-badge {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: var(--jersey-orange);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
         }
 
         .creator-name h3 {
-            font-family: var(--font-headline);
-            font-size: 2.2rem;
-            margin: 0;
-            line-height: 1;
-            color: var(--off-white);
-            text-transform: uppercase;
+            font-size: 2rem;
+            margin: 0.1rem 0 0.5rem 0;
+            color: var(--pure-white);
+            line-height: 0.95;
         }
 
-        .live-tag {
+        /* Platform Badges */
+        .platform-tag {
             font-family: var(--font-body);
-            font-size: 0.8rem;
-            color: #ff0000;
-            font-weight: bold;
+            font-size: 0.72rem;
+            font-weight: 800;
             letter-spacing: 1px;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            margin-top: 5px;
-            background: rgba(255, 0, 0, 0.1);
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-        
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #ff0000;
-            border-radius: 50%;
-            animation: pulse-red 1.5s infinite;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            margin-bottom: 1.15rem;
         }
 
-        .creator-bio {
-            color: #bbbbbb;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
+        .tag-twitch {
+            color: #ffffff;
+            background: rgba(145, 70, 255, 0.18);
+            border: 1px solid rgba(145, 70, 255, 0.5);
         }
 
+        .tag-twitch i {
+            color: #bf94ff;
+        }
+
+        .tag-youtube {
+            color: #ffffff;
+            background: rgba(255, 0, 0, 0.16);
+            border: 1px solid rgba(255, 0, 0, 0.45);
+        }
+
+        .tag-youtube i {
+            color: #ff4e4e;
+        }
+
+        /* Compact Socials */
         .creator-socials {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            gap: 0.85rem;
+            margin-bottom: 1.25rem;
         }
 
         .creator-socials a {
-            font-size: 1.4rem;
-            color: var(--light-grey);
-            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #191922;
+            border: 1px solid var(--surface-border);
+            color: #d8d8e5;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
         }
 
         .creator-socials a:hover {
-            color: var(--electric-blue);
-            transform: scale(1.1);
+            background: var(--jersey-gradient-h);
+            border-color: transparent;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(255, 111, 36, 0.5);
         }
 
-        /* --- STREAM SECTION --- */
+        /* 16:9 Stream Frame */
         .stream-wrapper {
             width: 100%;
-            /* Force 16:9 Aspect Ratio */
-            aspect-ratio: 16 / 9; 
-            background: #000;
+            aspect-ratio: 16 / 9;
+            background: #000000;
             position: relative;
         }
-        
+
         .stream-wrapper iframe {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
             border: none;
         }
 
-        /* Animations */
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
-            70% { box-shadow: 0 0 0 6px rgba(255, 0, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        /* Recruitment Banner */
+        .partner-cta-card {
+            background: linear-gradient(135deg, rgba(97, 33, 158, 0.18) 0%, rgba(217, 39, 127, 0.12) 50%, rgba(255, 111, 36, 0.18) 100%), var(--surface-card);
+            border: 1.5px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            margin-top: 3.5rem;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
         }
 
-        /* --- Custom Branding --- */
-        /* Dread (Electric Blue) */
-        .creator-dread .creator-avatar { border-color: var(--electric-blue); }
-        .creator-dread:hover { box-shadow: 0 0 30px rgba(1, 163, 235, 0.2); border-color: var(--electric-blue); }
-        
-        /* Merch (Neon Pink) */
-        .creator-merch .creator-avatar { border-color: var(--neon-pink); }
-        .creator-merch:hover { box-shadow: 0 0 30px rgba(255, 68, 148, 0.2); border-color: var(--neon-pink); }
-        .creator-merch .creator-socials a:hover { color: var(--neon-pink); }
-        .creator-merch .btn-primary { background: linear-gradient(90deg, var(--neon-pink), var(--laser-purple)); }
+        .partner-cta-card h3 {
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
 
+        .partner-cta-card p {
+            max-width: 64ch;
+            color: #c4c4d2;
+            font-size: 1.1rem;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
 
-    <header class="navbar"></header> 
+    <header class="navbar"></header> <!-- Populated by main.js -->
 
-<main>
+    <main>
 
-    <!-- HERO SECTION -->
-    <section id="creators-hero">
-        <div class="hero-background-image">
-            <!-- Ensure this image path is correct -->
-            <img src="/images/backgrounds/tidal-survival.png" alt="Ape Squad Content">
-        </div>
-        <div class="container hero-content">
-            <h2>Partnered Creators</h2>
-            <p class="staff-intro">Watch the official voices of Ape Squad, live. Top-tier gameplay, community events, and pure entertainment.</p>
-        </div>
-    </section>
+        <!-- ====================================================== -->
+        <!-- 1. HERO BANNER                                         -->
+        <!-- ====================================================== -->
+        <section id="creators-hero">
+            <div class="hero-background-image">
+                <img src="/images/backgrounds/tidal-survival.png" alt="Ape Squad Content" loading="eager" decoding="async">
+            </div>
+            
+            <div class="hero-content">
+                <div class="hero-tagline-badge">
+                    <span>PARTNERED</span>
+                    <span class="tagline-dot">•</span>
+                    <span>CREATORS</span>
+                </div>
 
-    <!-- CREATORS SHOWCASE -->
-    <section id="stream-showcase" style="background-color: var(--near-black); padding-bottom: 6rem;">
-        <div class="container">
-            <div class="showcase-wrapper">
+                <h2 class="glitch" data-text="PARTNER CREATORS">PARTNER CREATORS</h2>
+                
+                <p class="creators-intro">
+                    The official tournament broadcasters, movement specialists, and content creators of Ape Squad.
+                </p>
+            </div>
+        </section>
 
-                <!-- === CREATOR 1: DREAD === -->
-                <div class="creator-card creator-dread">
-                    <!-- Info Side -->
-                    <div class="creator-info">
-                        <div class="creator-header">
-                            <img src="/images/staff/dread.png" alt="Dread Avatar" class="creator-avatar">
+
+        <!-- ====================================================== -->
+        <!-- 2. CREATORS GRID (ROWS OF 3)                           -->
+        <!-- ====================================================== -->
+        <section id="stream-showcase" class="content-curtain">
+            <div class="container" style="max-width: 1400px;">
+                <div class="compact-header">
+
+                </div>
+
+                <div class="showcase-grid-3">
+
+                    <!-- === 1. DREAD === -->
+                    <div class="creator-card">
+                        <div class="creator-info">
+                            <div class="creator-avatar-wrap">
+                                <img src="/images/staff/dread.png" alt="Dread Avatar" class="creator-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/d9277f?text=Dread'">
+                            </div>
+
+                            <span class="creator-role-badge">Content Creator // Caster</span>
                             <div class="creator-name">
                                 <h3>DREAD</h3>
                             </div>
+                            
+                            <span class="platform-tag tag-twitch"><i class="fa-brands fa-twitch"></i> Twitch Partner</span>
+                            
+                            <div class="creator-socials">
+                                <a href="https://www.twitch.tv/dreadalicious" target="_blank" rel="noopener noreferrer" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                                <a href="https://www.youtube.com/@dreadalicious" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                                <a href="https://x.com/Dreadalicious_" target="_blank" rel="noopener noreferrer" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+                            </div>
+                            
+                            <a href="https://www.twitch.tv/dreadalicious" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                <i class="fa-brands fa-twitch"></i> Watch Stream
+                            </a>
                         </div>
-                        
-                        <p class="creator-bio">
-                            Pro Esports Caster for The Finals. Host of Sunday Pugday on @apesquadorg. Variety streamer, caster, and Embark fanboy bringing the hype to every match.
-                        </p>
-                        
-                        <div class="creator-socials">
-                            <a href="https://www.twitch.tv/dreadalicious" target="_blank"><i class="fab fa-twitch"></i></a>
-                            <a href="https://www.youtube.com/@dreadalicious" target="_blank"><i class="fab fa-youtube"></i></a>
-                            <a href="https://x.com/Dreadalicious_" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                        <div class="stream-wrapper">
+                            <iframe
+                                src="https://player.twitch.tv/?channel=dreadalicious&parent=localhost&parent=127.0.0.1&parent=apesquad.org&parent=apesquad.gg&muted=true"
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
                         </div>
-                        
-                        <a href="https://www.twitch.tv/dreadalicious" target="_blank" class="btn btn-primary" style="width: 100%;">Watch Channel</a>
                     </div>
 
-                    <!-- Stream Side -->
-                    <div class="stream-wrapper">
-                        <!-- 
-                           IMPORTANT: To make embeds work, you must change 'YOUR_DOMAIN.com' 
-                           to your actual website address (e.g., apesquad.gg).
-                           For local testing, 'localhost' allows it to work if serving locally.
-                        -->
-                        <iframe
-                            src="https://player.twitch.tv/?channel=dreadalicious&parent=localhost&parent=127.0.0.1&parent=apesquad.org&muted=true"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
+                    <!-- === 2. MERCH === -->
+                    <div class="creator-card">
+                        <div class="creator-info">
+                            <div class="creator-avatar-wrap">
+                                <img src="/images/staff/merch.png" alt="Merch Avatar" class="creator-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/ff6f24?text=Merch'">
+                            </div>
 
-                <!-- === CREATOR 2: MERCH === -->
-                <div class="creator-card creator-merch">
-                    <!-- Info Side -->
-                    <div class="creator-info">
-                        <div class="creator-header">
-                            <img src="/images/staff/merch.png" alt="Merch Avatar" class="creator-avatar">
+                            <span class="creator-role-badge">Content Creator // Caster</span>
                             <div class="creator-name">
                                 <h3>MERCH</h3>
                             </div>
-                        </div>
-                        
-                        <p class="creator-bio">
-                            #1 Worldwide TDM The Finals S7. Embark Creator, tryhard, washed? Never. Professional Caster bringing high-level analysis and top-tier gameplay.
-                        </p>
-                        
-                        <div class="creator-socials">
-                            <a href="https://www.twitch.tv/onlymerch" target="_blank"><i class="fab fa-twitch"></i></a>
-                            <a href="https://www.youtube.com/@OnlyMerchTV" target="_blank"><i class="fab fa-youtube"></i></a>
-                        </div>
-                        
-                        <a href="https://www.twitch.tv/onlymerch" target="_blank" class="btn btn-primary" style="width: 100%;">Watch Channel</a>
-                    </div>
 
-                    <!-- Stream Side -->
-                    <div class="stream-wrapper">
-                         <!-- REMEMBER TO UPDATE PARENT DOMAIN -->
-                        <iframe
-                            src="https://player.twitch.tv/?channel=onlymerch&parent=localhost&parent=127.0.0.1&parent=apesquad.org&muted=true"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-
-                <!-- === CREATOR 3: Ekazo === -->
-                <div class="creator-card creator-dread">
-                    <!-- Info Side -->
-                    <div class="creator-info">
-                        <div class="creator-header">
-                            <img src="/images/staff/ekazo.png" alt="Ekazo Avatar" class="creator-avatar">
-                            <div class="creator-name">
-                                <h3>Ekazo</h3>
+                            <span class="platform-tag tag-twitch"><i class="fa-brands fa-twitch"></i> Twitch Partner</span>
+                            
+                            <div class="creator-socials">
+                                <a href="https://www.twitch.tv/onlymerch" target="_blank" rel="noopener noreferrer" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                                <a href="https://www.youtube.com/@OnlyMerchTV" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
                             </div>
+                            
+                            <a href="https://www.twitch.tv/onlymerch" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                <i class="fa-brands fa-twitch"></i> Watch Stream
+                            </a>
                         </div>
-                        
-                        <p class="creator-bio">
-                            Aspiring YouTuber/Streamer and THE FINALS Professional. Top 300 EVERY SEASON.
-                        </p>
-                        
-                        <div class="creator-socials">
-                            <a href="https://www.twitch.tv/ekazoko" target="_blank"><i class="fab fa-twitch"></i></a>
-                            <a href="https://www.youtube.com/@EkaZo" target="_blank"><i class="fab fa-youtube"></i></a>
-                            <a href="https://x.com/eka_zo" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                        <div class="stream-wrapper">
+                            <iframe
+                                src="https://player.twitch.tv/?channel=onlymerch&parent=localhost&parent=127.0.0.1&parent=apesquad.org&parent=apesquad.gg&muted=true"
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
                         </div>
-                        
-                        <a href="https://www.twitch.tv/ekazoko" target="_blank" class="btn btn-primary" style="width: 100%;">Watch Channel</a>
                     </div>
 
-                    <!-- Stream Side -->
-                    <div class="stream-wrapper">
-
-                        <iframe
-                            src="https://player.twitch.tv/?channel=ekazoko&parent=localhost&parent=127.0.0.1&parent=apesquad.org&muted=true"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-                
-
- <!-- === CREATOR 4: LuiBoolin === -->
-                <div class="creator-card creator-dread">
-                    <!-- Info Side -->
-                    <div class="creator-info">
-                        <div class="creator-header">
-                            <img src="/images/staff/luiboolin.jpg" alt="LuiBoolin Avatar" class="creator-avatar">
-                            <div class="creator-name">
-                                <h3>LuiBoolin</h3>
+                    <!-- === 3. EKAZO === -->
+                    <div class="creator-card">
+                        <div class="creator-info">
+                            <div class="creator-avatar-wrap">
+                                <img src="/images/staff/ekazo.png" alt="Ekazo Avatar" class="creator-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/61219e?text=Ekazo'">
                             </div>
+
+                            <span class="creator-role-badge">Content Creator</span>
+                            <div class="creator-name">
+                                <h3>EKAZO</h3>
+                            </div>
+
+                            <span class="platform-tag tag-twitch"><i class="fa-brands fa-twitch"></i> Twitch Partner</span>
+                            
+                            <div class="creator-socials">
+                                <a href="https://www.twitch.tv/ekazoko" target="_blank" rel="noopener noreferrer" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                                <a href="https://www.youtube.com/@EkaZo" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                                <a href="https://x.com/eka_zo" target="_blank" rel="noopener noreferrer" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+                            </div>
+                            
+                            <a href="https://www.twitch.tv/ekazoko" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                <i class="fa-brands fa-twitch"></i> Watch Stream
+                            </a>
                         </div>
-                        
-                        <p class="creator-bio">
-                            THE FINALS player, and host of Boolin League bringing high-energy gameplay and community tournaments.
-                        </p>
-                        
-                        <div class="creator-socials">
-                            <a href="https://www.twitch.tv/luiboolin" target="_blank"><i class="fab fa-twitch"></i></a>
-                            <a href="https://www.youtube.com/@LuiBoolin" target="_blank"><i class="fab fa-youtube"></i></a>
+
+                        <div class="stream-wrapper">
+                            <iframe
+                                src="https://player.twitch.tv/?channel=ekazoko&parent=localhost&parent=127.0.0.1&parent=apesquad.org&parent=apesquad.gg&muted=true"
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
                         </div>
-                        
-                        <a href="https://www.twitch.tv/luiboolin" target="_blank" class="btn btn-primary" style="width: 100%;">Watch Channel</a>
                     </div>
 
-                    <!-- Stream Side -->
-                    <div class="stream-wrapper">
-                        <iframe
-                            src="https://player.twitch.tv/?channel=luiboolin&parent=localhost&parent=127.0.0.1&parent=apesquad.org&muted=true"
-                            allowfullscreen>
-                        </iframe>
+                    <!-- === 4. LUIBOOLIN === -->
+                    <div class="creator-card">
+                        <div class="creator-info">
+                            <div class="creator-avatar-wrap">
+                                <img src="/images/staff/luiboolin.jpg" alt="LuiBoolin Avatar" class="creator-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/ff6f24?text=LuiBoolin'">
+                            </div>
+
+                            <span class="creator-role-badge">Content Creator</span>
+                            <div class="creator-name">
+                                <h3>LUIBOOLIN</h3>
+                            </div>
+
+                            <span class="platform-tag tag-twitch"><i class="fa-brands fa-twitch"></i> Twitch Partner</span>
+                            
+                            <div class="creator-socials">
+                                <a href="https://www.twitch.tv/luiboolin" target="_blank" rel="noopener noreferrer" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                                <a href="https://www.youtube.com/@LuiBoolin" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                            </div>
+                            
+                            <a href="https://www.twitch.tv/luiboolin" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                <i class="fa-brands fa-twitch"></i> Watch Stream
+                            </a>
+                        </div>
+
+                        <div class="stream-wrapper">
+                            <iframe
+                                src="https://player.twitch.tv/?channel=luiboolin&parent=localhost&parent=127.0.0.1&parent=apesquad.org&parent=apesquad.gg&muted=true"
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
+                        </div>
                     </div>
+
+                    <!-- === 5. CONSUMETHEBURGER === -->
+                    <div class="creator-card">
+                        <div class="creator-info">
+                            <div class="creator-avatar-wrap">
+                                <img src="/images/staff/consumetheburger.png" alt="ConsumeTheBurger Avatar" class="creator-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/ff6f24?text=Burger'">
+                            </div>
+
+                            <span class="creator-role-badge">Content Creator</span>
+                            <div class="creator-name">
+                                <h3>consumetheburger</h3>
+                            </div>
+
+                            <span class="platform-tag tag-youtube"><i class="fa-brands fa-youtube"></i> YouTube Creator</span>
+                            
+                            <div class="creator-socials">
+                                <a href="https://www.youtube.com/@consumetheburger" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                            </div>
+                            
+                            <a href="https://www.youtube.com/@consumetheburger" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                <i class="fa-brands fa-youtube"></i> Visit Channel
+                            </a>
+                        </div>
+
+                        <div class="stream-wrapper">
+                            <iframe
+                                src="https://www.youtube.com/embed/BqdgkODEJwI?si=gAiGNVz1irv8PD3K"
+                                title="ConsumeTheBurger Featured Video"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <!-- === 6. TRUCE === -->
+                    <div class="creator-card">
+                        <div class="creator-info">
+                            <div class="creator-avatar-wrap">
+                                <img src="/images/staff/truce.png" alt="Truce Avatar" class="creator-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/d9277f?text=Truce'">
+                            </div>
+
+                            <span class="creator-role-badge">Content Creator</span>
+                            <div class="creator-name">
+                                <h3>TRUCE</h3>
+                            </div>
+
+                            <span class="platform-tag tag-youtube"><i class="fa-brands fa-youtube"></i> YouTube Creator</span>
+                            
+                            <div class="creator-socials">
+                                <a href="https://www.youtube.com/@BrianTruce" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                                <a href="https://x.com/TruceBrian" target="_blank" rel="noopener noreferrer" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+                                <a href="https://www.tiktok.com/@fpstruce" target="_blank" rel="noopener noreferrer" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                            </div>
+                            
+                            <a href="https://www.youtube.com/@BrianTruce" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                                <i class="fa-brands fa-youtube"></i> Visit Channel
+                            </a>
+                        </div>
+
+                        <div class="stream-wrapper">
+                            <iframe
+                                src="https://www.youtube.com/embed/WIbeQPfrIHg?si=cywz4EYfDgs3FFw5"
+                                title="Truce Featured Movement Video"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                    
                 </div>
-                
-            </div>
-        </div>
-    </section>
+        </section>
 
-</main>
+    </main>
 
-    <footer class="site-footer"></footer> 
+    <footer class="site-footer"></footer> <!-- Populated by main.js -->
 
+    <!-- Scripts -->
     <script src="js/main.js"></script>
     <script src="js/features.js"></script>
 </body>

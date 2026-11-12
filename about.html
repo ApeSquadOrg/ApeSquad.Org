@@ -11,50 +11,261 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Meet the professional esports rosters of Ape Squad, Emerald Apes, and Ape Aura. Get to know the players dominating the competitive scene.">
-    <meta name="keywords" content="Ape Squad, Emerald Apes, Ape Aura, esports rosters, pro players, competitive gaming">
-    <title>Our Squads | Ape Squad Esports</title>
+    <meta name="description" content="Meet the leadership, creative team, and broadcast talent behind Ape Squad Esports.">
+    <meta name="keywords" content="Ape Squad, esports staff, Austin Crail, Sonsoyo, Justin Crail, esports production, The Finals community">
+    <title>About & Staff | Ape Squad Esports</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
-    <meta name="msapplication-TileColor" content="#0a0a0a">
-    <meta name="theme-color" content="#0a0a0a">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ff6f24">
+    <meta name="msapplication-TileColor" content="#080808">
+    <meta name="theme-color" content="#080808">
 
-    <!-- Google Fonts -->
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Your Stylesheets -->
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="profile-card.css">
 
-    <!-- === ADDED CSS FOR SOCIAL LINKS === -->
+    <!-- PAGE-SPECIFIC ABOUT & STAFF STYLES -->
     <style>
-        .profile-card__socials {
+        /* Mission Dual-Engine Grid */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .mission-card {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 3rem 2.5rem;
             display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .mission-card.mission-left {
+            border-top: 4px solid var(--jersey-magenta);
+        }
+
+        .mission-card.mission-right {
+            border-top: 4px solid var(--jersey-orange);
+        }
+
+        .mission-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .mission-badge {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--jersey-orange);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mission-card h3 {
+            font-size: clamp(2.2rem, 3.5vw, 2.8rem);
+            color: #ffffff;
+            margin-bottom: 1rem;
+            line-height: 0.95;
+        }
+
+        .mission-card p {
+            font-size: 1.05rem;
+            color: #b8b8c4;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        /* Founders Grid (2 Wide Side-by-Side Cards) */
+        .founders-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.25rem;
+        }
+
+        .founder-card {
+            background: var(--surface-card);
+            border: 1.5px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 2.5rem;
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 2rem;
+            align-items: center;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .founder-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--pure-white);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 111, 36, 0.25);
+        }
+
+        .founder-image-wrapper {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), 0 0 20px rgba(217, 39, 127, 0.35);
+        }
+
+        .founder-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .founder-role {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--jersey-orange);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .founder-bio h3 {
+            font-size: 2.4rem;
+            margin: 0 0 0.5rem 0;
+            color: #ffffff;
+            line-height: 0.95;
+        }
+
+        .founder-bio p {
+            font-size: 0.95rem;
+            color: #b0b0be;
+            line-height: 1.55;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Circular Social Icons */
+        .social-links-circle {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .social-links-circle a {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            gap: 15px; /* Space between icons */
-            margin-top: 15px;
-            padding-bottom: 10px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #181822;
+            border: 1px solid var(--surface-border);
+            color: #d8d8e5;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
         }
 
-        .profile-card__socials a {
-            color: #ccc; /* Light grey color for icons */
-            font-size: 1.4rem; /* Icon size */
-            transition: color 0.3s ease, transform 0.3s ease;
+        .social-links-circle a:hover {
+            background: var(--jersey-gradient-h);
+            border-color: transparent;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(255, 111, 36, 0.5);
         }
 
-        .profile-card__socials a:hover {
-            color: #01a3eb; /* Brand color on hover */
-            transform: scale(1.1); /* Slightly enlarge on hover */
+        /* Compact Staff & Talent Grid */
+        .staff-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.75rem;
+        }
+
+        .staff-card {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 2rem 1.25rem 1.5rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--pure-white);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(217, 39, 127, 0.25);
+        }
+
+        .staff-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2.5px solid #ffffff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+            margin-bottom: 1.15rem;
+            display: block;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .staff-card:hover .staff-avatar {
+            transform: scale(1.05);
+            border-color: var(--jersey-orange);
+        }
+
+        .staff-name {
+            font-size: 1.75rem;
+            margin: 0 0 0.35rem 0;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .staff-role {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            color: var(--jersey-orange);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 992px) {
+            .mission-grid,
+            .founders-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .founder-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+                justify-items: center;
+            }
+
+            .social-links-circle {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -62,190 +273,179 @@
 
     <header class="navbar"></header> <!-- Populated by main.js -->
 
-<main>
+    <main>
 
-    <!-- HERO SECTION -->
-    <section id="staff-hero">
-        <div class="hero-background-image">
-            <img src="/images/esports/esports2.png" alt="Ape Squad team working together">
-        </div>
-        <div class="container hero-content">
-            <h2>Meet the Team</h2>
-            <p class="staff-intro">The driving force behind Ape Squad. Our dedicated team of creative thinkers and passionate people work tirelessly to push the boundaries of esports and build a lasting community.</p>
-        </div>
-    </section>
+        <!-- ====================================================== -->
+        <!-- 1. MISSION & STORY (DUAL ENGINE GRID)                  -->
+        <!-- ====================================================== -->
+        <section id="our-mission" class="content-curtain" style="padding-top: 4rem;">
+            <div class="container" style="max-width: 1400px; padding-top: 0;">
+                <div class="compact-header">
+                    <span class="eyebrow">ORGANIZATION PILLARS</span>
+                    <h2 class="glitch" data-text="OUR PURPOSE">OUR PURPOSE</h2>
+                    <p>Elevating digital competition through turnkey broadcast production and world-class roster talent.</p>
+                </div>
 
-    <!-- OUR MISSION & STORY SECTION -->
-    <section id="our-mission">
-        <div class="container">
-            <h2>Our Purpose</h2>
-            <div class="about-grid">
-                <div class="about-column">
-                    <h3>Our Mission</h3>
-                    <p>To elevate the esports ecosystem through broadcast innovation and events. As a production first media organization, we focus on putting players on the world stage, hosting premier tournament events, and supporting an elite roster of global contenders. We exist to showcase the action, elevate the community, and conquer the arena.</p>
-                </div>
-                <div class="about-column">
-                    <h3>Our Story</h3>
-                    <p>Ape Squad was born in 2024 from a simple, powerful idea: competitive gaming deserved a better stage. What began as a drive to host legendary community tournaments quickly revealed a deeper passion for broadcast innovation. Over the years, we have evolved from a grassroots community group into a full-scale production and media powerhouse, setting a new standard for how digital sports are played, broadcasted, and celebrated.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                <div class="mission-grid">
+                    <!-- Left: Mission -->
+                    <div class="mission-card mission-left">
+                        <div class="mission-badge">
+                            <i class="fa-solid fa-bullseye"></i> THE OBJECTIVE
+                        </div>
+                        <h3>OUR MISSION</h3>
+                        <p>
+                            To elevate the esports ecosystem through live broadcast innovation, premier tournaments, and elite roster development. As a production-first media powerhouse, we spotlight grassroots talent, host community events, and dominate the arena at the championship level.
+                        </p>
+                    </div>
 
-    <!-- FOUNDERS SECTION -->
-    <section id="founders" class="staff-section">
-        <div class="container">
-            <h2>The Founders</h2>
-            <div class="founders-grid">
-                <!-- Sonsoyo -->
-                <div class="founder-card">
-                    <div class="founder-image-wrapper">
-                        <img src="/images/staff/sonsoyo.png" alt="Photo of Sonsoyo">
-                    </div>
-                    <div class="founder-bio">
-                        <h3>Sonsoyo</h3>
-                        <h4>Founder</h4>
-                        <p>As the foundational pillar of Ape Squad, Sonsoyo's passion for community and competition sparked the entire organization into existence. His leadership sets the tone for our team-first culture.</p>
-                    </div>
-                    <div class="social-links-founder">
-                        <a href="https://www.twitch.tv/sonsoyo" aria-label="Sonsoyo's Twitch"><i class="fab fa-twitch"></i></a>
-                        <a href="https://www.instagram.com/sonsoyotv" aria-label="Sonsoyo's Instagram"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-                <!-- Justin -->
-                <div class="founder-card">
-                    <div class="founder-image-wrapper">
-                        <img src="/images/staff/justin.png" alt="Photo of Justin">
-                    </div>
-                    <div class="founder-bio">
-                        <h3>Justin</h3>
-                        <h4>Founder</h4>
-                        <p>Justin provides the strategic direction that fuels our growth. His expertise in the esports ecosystem ensures we are always positioned for success, both in and out of the game.</p>
-                    </div>
-                    <div class="social-links-founder">
-                        <a href="https://www.instagram.com/ifelldown" aria-label="Justin's Instagram"><i class="fab fa-instagram"></i></a>
+                    <!-- Right: Story -->
+                    <div class="mission-card mission-right">
+                        <div class="mission-badge">
+                            <i class="fa-solid fa-clock-rotate-left"></i> THE ORIGIN
+                        </div>
+                        <h3>OUR STORY</h3>
+                        <p>
+                            Ape Squad was born in 2024 from a simple conviction: competitive gaming deserved a better stage. What began as an ambition to run high-energy community cups quickly evolved into a dedicated broadcast and media studio setting the benchmark for how THE FINALS is played, watched, and celebrated.
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-<style>
-    .profile-card__info {
-        text-align: center;
-    }
-</style>
-
-<!-- CORE STAFF SECTION -->
-<section id="core-team" class="staff-section">
-    <div class="container">
-        <h2>Our Core Staff</h2>
-        <p class="squad-intro">The operational backbone of Ape Squad. This is the team that manages our players, grows our community, and creates the content you love.</p>
-        <div class="team-grid">
-                        <!-- Wirt -->
-            <div class="profile-card" data-tilt>
-                <div class="profile-card__image-container"><img src="/images/staff/moon.png" alt="Photo of Moon"></div>
-                <div class="profile-card__info">
-                    <h3 class="profile-card__name">Moon</h3>
-                    <p class="profile-card__title">Community Manager & Artist</p>
+        <!-- ====================================================== -->
+        <!-- 2. THE FOUNDERS (AUSTIN & JUSTIN)                      -->
+        <!-- ====================================================== -->
+        <section id="founders" class="content-curtain section-alt">
+            <div class="container" style="max-width: 1400px; padding-top: 0;">
+                <div class="compact-header">
+                    <span class="eyebrow">ORGANIZATION LEADERSHIP</span>
+                    <h2 class="glitch" data-text="THE FOUNDERS">THE FOUNDERS</h2>
+                    <p>Guiding the operational, competitive, and broadcast vision of Ape Squad.</p>
                 </div>
-                <div class="profile-card__socials">
-                    <a href="https://x.com/_W_I_R_T_" aria-label="Wirt's Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="https://vgen.co/musicnotewirt" aria-label="Wirt's VGen"><i class="fab fa-artstation"></i></a>
+
+                <div class="founders-grid">
+                    <!-- Founder 1: Austin (Sonsoyo) -->
+                    <div class="founder-card">
+                        <div class="founder-image-wrapper">
+                            <img src="/images/staff/sonsoyo.png" alt="Austin (Sonsoyo)" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/ff6f24?text=Sonsoyo'">
+                        </div>
+                        <div class="founder-bio">
+                            <span class="founder-role">Founder & CEO</span>
+                            <h3>AUSTIN (SONSOYO)</h3>
+                            <p>
+                                The foundational pillar of Ape Squad. Austin's relentless dedication to community competition, caster talent, and production innovation sparked the organization into existence.
+                            </p>
+                            <div class="social-links-circle">
+                                <a href="https://www.twitch.tv/sonsoyo" target="_blank" rel="noopener noreferrer" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                                <a href="https://www.instagram.com/sonsoyotv" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Founder 2: Justin -->
+                    <div class="founder-card">
+                        <div class="founder-image-wrapper">
+                            <img src="/images/staff/justin.png" alt="Justin" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/d9277f?text=Justin'">
+                        </div>
+                        <div class="founder-bio">
+                            <span class="founder-role">Founder & Director</span>
+                            <h3>JUSTIN</h3>
+                            <p>
+                                Providing the strategic vision and infrastructure that fuels our rapid growth. Justin ensures Ape Squad is always positioned for success both in broadcast engineering and competitive play.
+                            </p>
+                            <div class="social-links-circle">
+                                <a href="https://www.instagram.com/ifelldown" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Rippie -->
-            <div class="profile-card" data-tilt>
-                <div class="profile-card__image-container"><img src="/images/staff/rippie.png" alt="Photo of Rippie"></div>
-                <div class="profile-card__info">
-                    <h3 class="profile-card__name">Rippie</h3>
-                    <p class="profile-card__title">Admin Team</p>
-                </div>
-                <div class="profile-card__socials">
-                    <a href="https://www.twitch.tv/rippie01" aria-label="Rippie's Twitch"><i class="fab fa-twitch"></i></a>
-                </div>
-            </div>
-        
-                        <!-- URCH -->
-            <div class="profile-card" data-tilt>
-                <div class="profile-card__image-container"><img src="/images/staff/urch.png" alt="Photo of Urch"></div>
-                <div class="profile-card__info">
-                    <h3 class="profile-card__name">URCH</h3>
-                    <p class="profile-card__title">HR Specialist</p>
-                </div>
-                <div class="profile-card__socials">
-                </div>
-            </div>
-            <!-- WHYSATANWHY -->
-            <div class="profile-card" data-tilt>
-                <div class="profile-card__image-container"><img src="/images/staff/whysatanwhy.png" alt="Photo of WHYSATANWHY"></div>
-                <div class="profile-card__info">
-                    <h3 class="profile-card__name">WHYSATANWHY</h3>
-                    <p class="profile-card__title">Music Production & Talent</p>
-                </div>
-                <div class="profile-card__socials">
-                    <a href="https://www.twitch.tv/whysatanwhy" aria-label="WHYSATANWHY's Twitch"><i class="fab fa-twitch"></i></a>
-                </div>
-            </div>
-            <!-- BALTOZ -->
-            <div class="profile-card" data-tilt>
-                <div class="profile-card__image-container"><img src="/images/staff/baltoz.png" alt="Photo of BALTOZ"></div>
-                <div class="profile-card__info">
-                    <h3 class="profile-card__name">Baltoz</h3>
-                    <p class="profile-card__title">Audio Engineer & Musician</p>
-                </div>
-                <div class="profile-card__socials">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<!-- CASTERS SECTION -->
-<section id="casters" class="staff-section">
-    <div class="container">
-        <h2>Voices of the Game</h2>
-        <p class="squad-intro">Bringing the hype to every match. Our talented casters are the storytellers of the game, delivering expert analysis and electrifying play by play commentary.</p>
-        <div class="team-grid">
-            <!-- Dread -->
-            <div class="profile-card" data-tilt>
-                <div class="profile-card__image-container">
-                    <img src="/images/staff/dread.png" alt="Dread">
+        <!-- ====================================================== -->
+        <!-- 3. OPERATIONS & PRODUCTION STAFF                       -->
+        <!-- ====================================================== -->
+        <section id="core-team" class="content-curtain">
+            <div class="container" style="max-width: 1400px; padding-top: 0;">
+                <div class="compact-header">
+                    <span class="eyebrow">CREATIVE & OPERATIONS</span>
+                    <h2 class="glitch" data-text="CORE SQUAD">CORE SQUAD</h2>
+                    <p>The operational and broadcast team managing community, artwork, audio, and tournaments.</p>
                 </div>
-                <div class="profile-card__info">
-                    <h3 class="profile-card__name">Dread</h3>
-                    <p class="profile-card__title">Caster</p>
-                </div>
-                <div class="profile-card__socials">
-                    <a href="https://x.com/Dreadalicious_" aria-label="Dread's Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.twitch.tv/dreadalicious" aria-label="Dread's Twitch"><i class="fab fa-twitch"></i></a>
-                </div>
-            </div>
-                        <!-- Merch -->
-            <div class="profile-card" data-tilt>
-                <div class="profile-card__image-container">
-                    <img src="/images/staff/merch.png" alt="Dread">
-                </div>
-                <div class="profile-card__info">
-                    <h3 class="profile-card__name">Merch</h3>
-                    <p class="profile-card__title">Caster</p>
-                </div>
-                <div class="profile-card__socials">
-                    <a href="https://www.twitch.tv/onlymerch" aria-label="Merch's Twitch"><i class="fab fa-twitch"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
+                <div class="staff-grid-compact">
+                    <!-- Staff 1: Moon -->
+                    <div class="profile-card staff-card" data-tilt>
+                        <img src="/images/staff/moon.png" alt="Moon" class="staff-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/ff6f24?text=Moon'">
+                        <div class="profile-card__info">
+                            <h3 class="profile-card__name staff-name">MOON</h3>
+                            <p class="profile-card__title staff-role">Community Manager & Artist</p>
+                        </div>
+                        <div class="social-links-circle">
+                            <a href="https://x.com/MoonDeLunie" target="_blank" rel="noopener noreferrer" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+                            <a href="https://vgen.co/musicnotewirt" target="_blank" rel="noopener noreferrer" title="VGen/ArtStation"><i class="fa-brands fa-artstation"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Staff 2: Rippie -->
+                    <div class="profile-card staff-card" data-tilt>
+                        <img src="/images/staff/rippie.png" alt="Rippie" class="staff-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/d9277f?text=Rippie'">
+                        <div class="profile-card__info">
+                            <h3 class="profile-card__name staff-name">RIPPIE</h3>
+                            <p class="profile-card__title staff-role">Admin Team</p>
+                        </div>
+                        <div class="social-links-circle">
+                            <a href="https://www.twitch.tv/rippie01" target="_blank" rel="noopener noreferrer" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                        </div>
+                    </div>
+                
+                    <!-- Staff 3: URCH -->
+                    <div class="profile-card staff-card" data-tilt>
+                        <img src="/images/staff/urch.png" alt="Urch" class="staff-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/61219e?text=Urch'">
+                        <div class="profile-card__info">
+                            <h3 class="profile-card__name staff-name">URCH</h3>
+                            <p class="profile-card__title staff-role">HR Specialist</p>
+                        </div>
+                        <div class="social-links-circle">
+                            <!-- Populated when available -->
+                        </div>
+                    </div>
+
+                    <!-- Staff 4: WHYSATANWHY -->
+                    <div class="profile-card staff-card" data-tilt>
+                        <img src="/images/staff/whysatanwhy.png" alt="WHYSATANWHY" class="staff-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/ff6f24?text=WSW'">
+                        <div class="profile-card__info">
+                            <h3 class="profile-card__name staff-name">WHYSATANWHY</h3>
+                            <p class="profile-card__title staff-role">Music Production & Musician</p>
+                        </div>
+                        <div class="social-links-circle">
+                            <a href="https://www.twitch.tv/whysatanwhy" target="_blank" rel="noopener noreferrer" title="Twitch"><i class="fa-brands fa-twitch"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Staff 5: BALTOZ -->
+                    <div class="profile-card staff-card" data-tilt>
+                        <img src="/images/staff/baltoz.png" alt="Baltoz" class="staff-avatar" loading="lazy" decoding="async" onerror="this.src='https://placehold.co/200x200/121217/d9277f?text=Baltoz'">
+                        <div class="profile-card__info">
+                            <h3 class="profile-card__name staff-name">BALTOZ</h3>
+                            <p class="profile-card__title staff-role">Audio Engineer & Musician</p>
+                        </div>
+                        <div class="social-links-circle">
+                            <!-- Populated when available -->
+                        </div>
+                    </div>
 
 
 
+                </div>
+            </div>
+        </section>
 
-
-</main>
+    </main>
 
     <footer class="site-footer"></footer> <!-- Populated by main.js -->
 
+    <!-- Scripts -->
     <script src="js/profile-card.js"></script>
     <script src="js/main.js"></script>
     <script src="js/features.js"></script>
