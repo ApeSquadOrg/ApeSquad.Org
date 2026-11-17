@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Create Right Feature (Steam/Bundle)
     const rightFeature = document.createElement('a');
-    rightFeature.href = "https://store.steampowered.com/app/4124660/THE_FINALS__APE_SQUAD_TGM25/?curator_clanid=42849803";
+    rightFeature.href = "https://store.steampowered.com/app/5397380/THE_FINALS_Ape_Squad_TGM26/";
     rightFeature.target = "_blank";
     rightFeature.rel = "noopener noreferrer";
     rightFeature.className = "side-feature right";
