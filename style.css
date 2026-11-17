@@ -1407,3 +1407,110 @@ section[id] {
         display: none !important;
     }
 }
+
+/* ==========================================================================
+   MOBILE BENTO BOX & RESPONSIVE OVERFLOW FIXES
+   ========================================================================== */
+
+/* 1. Prevent horizontal bleed without breaking fixed elements */
+html {
+    overflow-x: clip;
+}
+
+/* 2. Prevent CSS Grid blowout on bento & dual-engine tracks */
+.merch-editorial-grid > *,
+.merch-side-col > *,
+.merch-mini-row > *,
+.bundle-layout > *,
+.dual-engine-grid > * {
+    min-width: 0;
+}
+
+/* 3. Keep bento images safely inside their cards */
+.merch-hero-img img,
+.bundle-img,
+.mini-photo {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 4. Allow price + CTA row to wrap cleanly on narrow screens */
+.merch-action-row {
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 3.5rem 1.25rem;
+    }
+
+    h1, h2, h3, h4 {
+        line-height: 1;
+        overflow-wrap: break-word;
+    }
+}
+
+@media (max-width: 600px) {
+    /* Give bento cards comfortable mobile padding */
+    .merch-hero-card,
+    .merch-bundle-card,
+    .engine-box {
+        padding: 1.5rem 1.25rem;
+    }
+
+    /* Stop absolute badges from overlapping images on short mobile cards */
+    .merch-badge {
+        position: static;
+        display: inline-block;
+        align-self: flex-start;
+        margin-bottom: 1rem;
+    }
+
+    .merch-hero-img {
+        padding: 1rem 0;
+    }
+
+    .merch-hero-img img {
+        max-height: 220px;
+    }
+
+    .merch-price {
+        font-size: 2.2rem;
+    }
+
+    /* Stack the 2 mini bento cards to 1 column on phones so text/prices don't clip */
+    .merch-mini-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .mini-merch-card {
+        padding: 1.25rem;
+    }
+
+    .mini-img-wrap {
+        min-height: 140px;
+        padding: 1rem;
+    }
+
+    .mini-photo {
+        max-height: 120px;
+    }
+
+    /* Center bundle CTA & stage cleanly on mobile */
+    .bundle-layout {
+        margin-top: 0;
+    }
+
+    .bundle-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .engine-box .btn {
+        align-self: stretch;
+        text-align: center;
+    }
+}
