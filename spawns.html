@@ -15,15 +15,15 @@
     </script>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- ========================================= -->
     <!-- 2. TITLE & SEO                            -->
     <!-- ========================================= -->
     <title>Strat Planner | Ape Squad Esports</title>
     
-    <meta name="description" content="Join the Ape Squad community. Meet our players, view their highlights, and see our live club leaderboard rankings in The Finals.">
-    <meta name="keywords" content="Ape Squad, esports, The Finals, gaming community, pro players, live stream, discord, twitch">
+    <meta name="description" content="Join the Ape Squad community. Plan spawn manipulations, rotations, and cashout setups in The Finals with the Ape Squad Tactical Strat Planner.">
+    <meta name="keywords" content="Ape Squad, esports, The Finals, spawn manipulation, strat planner, gaming community, pro players, live stream, discord, twitch">
 
     <!-- ========================================= -->
     <!-- 3. FAVICONS                               -->
@@ -32,397 +32,1406 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#01a3eb">
-    <meta name="msapplication-TileColor" content="#0a0a0a">
-    <meta name="theme-color" content="#0a0a0a">
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ff6f24">
+    <meta name="msapplication-TileColor" content="#070709">
+    <meta name="theme-color" content="#070709">
     
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ayuthaya&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <!-- Master Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
     <style>
-        :root {
-            --midnight-black: #0a0a0a;
-            --near-black: #111;
-            --electric-blue: #01a3eb;
-            --neon-pink: #ff4494;
-            --font-headline: 'Anton', sans-serif;
-            --font-body: 'Ayuthaya', monospace;
+        /* ==========================================================================
+           SPAWN PLANNER SPECIFIC OVERRIDES (TGM26 SUNSET + STADIUM WHITE THEME)
+           ========================================================================== */
+        body.planner-body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--midnight-black);
+            color: var(--pure-white);
+            font-family: var(--font-body);
+            overflow: hidden;
+            opacity: 1 !important;
+            user-select: none;
         }
 
-        body { 
-            margin: 0; padding: 0; background: black; color: white; 
-            font-family: var(--font-body); overflow: hidden; 
+        main.planner-layout {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            padding-top: 0;
         }
 
-        main { display: flex; height: 100vh; width: 100vw; }
+        /* ==========================================================================
+           UNCONVENTIONAL HEADER.HTML: FLOATING TACTICAL HUD CAPSULE
+           ========================================================================== */
+        #tactical-hud-header {
+            position: fixed;
+            top: 16px;
+            left: 356px;
+            z-index: 600;
+            max-width: calc(100vw - 375px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        body.is-interacting-map #tactical-hud-header {
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        #tactical-hud-header .container {
+            padding: 7px 14px;
+            margin: 0;
+            width: auto;
+            max-width: 100%;
+            display: inline-flex;
+            align-items: center;
+            gap: 0;
+            background: rgba(12, 12, 16, 0.92);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--surface-border);
+            border-left: 3px solid var(--jersey-orange);
+            border-radius: 999px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 20px rgba(217, 39, 127, 0.2);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        #tactical-hud-header:hover .container,
+        #tactical-hud-header.is-pinned .container {
+            border-color: rgba(255, 255, 255, 0.32);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 111, 36, 0.35);
+        }
+
+        #tactical-hud-header .logo {
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+
+        #tactical-hud-header .logo img {
+            height: 28px;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 0 8px rgba(217, 39, 127, 0.4));
+            transition: transform 0.2s ease;
+        }
+
+        #tactical-hud-header .logo:hover img {
+            transform: scale(1.06);
+        }
+
+        #tactical-hud-header .mobile-nav-toggle {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            position: static;
+            width: auto;
+            height: 28px;
+            aspect-ratio: auto;
+            padding: 0 12px;
+            background: var(--surface-card);
+            background-image: none !important;
+            border: 1px solid var(--surface-border);
+            border-radius: 999px;
+            color: var(--pure-white);
+            font-family: var(--font-headline);
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        #tactical-hud-header .mobile-nav-toggle::before {
+            content: '\f0c9';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.75rem;
+            color: var(--jersey-orange);
+        }
+
+        #tactical-hud-header .mobile-nav-toggle::after {
+            content: 'SITE NAV';
+        }
+
+        #tactical-hud-header.is-pinned .mobile-nav-toggle {
+            background: var(--pure-white);
+            color: var(--text-dark);
+            border-color: var(--pure-white);
+        }
+
+        #tactical-hud-header.is-pinned .mobile-nav-toggle::before {
+            content: '\f08d';
+            color: var(--jersey-magenta);
+        }
+
+        #tactical-hud-header.is-pinned .mobile-nav-toggle::after {
+            content: 'PINNED';
+        }
+
+        #tactical-hud-header nav,
+        #tactical-hud-header .social-links {
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            pointer-events: none;
+            white-space: nowrap;
+            transition: max-width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease, margin 0.25s ease;
+        }
+
+        #tactical-hud-header:hover nav,
+        #tactical-hud-header.is-pinned nav {
+            max-width: 780px;
+            opacity: 1;
+            overflow: visible;
+            pointer-events: auto;
+            margin-left: 16px;
+        }
+
+        #tactical-hud-header:hover .social-links,
+        #tactical-hud-header.is-pinned .social-links {
+            max-width: 240px;
+            opacity: 1;
+            overflow: visible;
+            pointer-events: auto;
+            margin-left: 16px;
+            padding-left: 14px;
+            border-left: 1px solid var(--surface-border);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #tactical-hud-header .nav-links {
+            position: static !important;
+            height: auto !important;
+            flex-direction: row !important;
+            padding: 0 !important;
+            gap: 1.25rem !important;
+            background: transparent !important;
+            backdrop-filter: none !important;
+            transform: none !important;
+            border: none !important;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        #tactical-hud-header .nav-links a {
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            padding: 4px 0;
+        }
+
+        #tactical-hud-header .dropdown-content {
+            top: calc(100% + 8px);
+            background: rgba(12, 12, 16, 0.96);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--surface-border);
+            border-top: 2px solid var(--jersey-orange);
+            border-radius: 6px;
+            min-width: 185px;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.95);
+        }
+
+        #tactical-hud-header .dropdown::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -10px;
+            height: 10px;
+        }
+
+        #tactical-hud-header .dropdown-content a {
+            padding: 0.65rem 1.15rem;
+            font-size: 0.78rem;
+        }
+
+        #tactical-hud-header .social-links a i {
+            font-size: 1.05rem;
+            color: #b8b8c4;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        #tactical-hud-header .social-links a:hover i {
+            color: var(--jersey-orange);
+            transform: translateY(-2px);
+        }
 
         /* --- SIDEBAR --- */
         #planner-sidebar {
-            width: 320px; /* Slightly wider to accommodate side-by-side buttons */
+            width: 340px;
             background: var(--near-black);
-            border-right: 1px solid #333; z-index: 100;
-            display: flex; flex-direction: column; flex-shrink: 0;
-            box-shadow: 5px 0 20px rgba(0,0,0,0.5);
-            height: 100vh;
-        }
-        
-        /* Navigation - 2x2 Grid for space efficiency */
-        .sidebar-nav {
-            background: #000;
-            padding: 10px;
-            border-bottom: 1px solid #222;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-        .nav-link {
-            color: #888; text-decoration: none; font-size: 0.75rem;
-            text-align: center; padding: 6px; border: 1px solid #333;
-            border-radius: 4px; transition: 0.2s;
-        }
-        .nav-link:hover {
-            color: var(--electric-blue); border-color: var(--electric-blue);
-            background: rgba(1, 163, 235, 0.1);
-        }
-
-        .sidebar-header { 
-            padding: 15px 20px; 
-            background: var(--midnight-black); 
-            border-bottom: 1px solid #333; 
-            flex-shrink: 0;
-        }
-        .sidebar-header h2 { margin: 0; color: var(--electric-blue); font-family: var(--font-headline); letter-spacing: 1px; font-size: 1.4rem; }
-        
-        /* --- CONTENT AREA (NO SCROLL) --- */
-        .sidebar-content { 
-            padding: 15px; 
-            flex: 1; 
-            overflow: hidden; /* No scrollbar */
+            border-right: 2px solid var(--surface-border);
+            z-index: 100;
             display: flex;
             flex-direction: column;
-            gap: 12px; /* Space between groups */
+            flex-shrink: 0;
+            box-shadow: 10px 0 35px rgba(0, 0, 0, 0.85);
+            height: 100vh;
+            position: relative;
         }
-        
-        .control-group { flex-shrink: 0; }
-        .control-label { display: block; color: var(--neon-pink); font-family: var(--font-headline); margin-bottom: 5px; font-size: 0.9rem; }
-        
+
+        #planner-sidebar::before {
+            content: '';
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--jersey-gradient-h);
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 14px 18px;
+            background: var(--midnight-black);
+            border-bottom: 1px solid var(--surface-border);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .sidebar-header-top {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-header .eyebrow-mini {
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+            background: var(--pure-white);
+            padding: 2px 8px;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+
+        .autosave-badge {
+            font-size: 0.65rem;
+            color: #8a8a98;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .autosave-badge i {
+            color: var(--jersey-orange);
+            font-size: 0.55rem;
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+            font-family: var(--font-headline);
+            letter-spacing: 1.5px;
+            font-size: 1.8rem;
+            line-height: 1;
+            text-align: left;
+            background: var(--jersey-gradient-h);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* --- CONTENT AREA --- */
+        .sidebar-content {
+            padding: 14px 16px;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--jersey-magenta) var(--near-black);
+        }
+
+        .control-group {
+            flex-shrink: 0;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--pure-white);
+            font-family: var(--font-headline);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            font-size: 0.92rem;
+        }
+
+        .control-label span.label-accent {
+            color: var(--jersey-orange);
+            font-family: var(--font-body);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
         /* Map Select */
         .planner-select {
-            width: 100%; padding: 8px; background: #222; color: white;
-            border: 1px solid #444; border-radius: 4px; cursor: pointer;
-            font-size: 0.9rem;
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--surface-card);
+            color: var(--pure-white);
+            border: 1px solid var(--surface-border);
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            outline: none;
         }
 
-        /* Map Key (Legend) - 2 Columns to save height */
+        .planner-select:hover,
+        .planner-select:focus {
+            border-color: var(--jersey-orange);
+            box-shadow: 0 0 12px rgba(255, 111, 36, 0.25);
+        }
+
+        /* Map Key (Legend) */
+        .legend-card {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border-subtle);
+            border-left: 3px solid var(--jersey-magenta);
+            border-radius: 4px;
+            padding: 9px 11px;
+        }
+
         .legend-list {
-            list-style: none; padding: 0; margin: 0;
-            font-size: 0.75rem; color: #ccc;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.7rem;
+            color: #d0d0dc;
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Split into 2 cols */
-            gap: 6px 10px;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px 10px;
         }
+
         .legend-list li {
-            display: flex; align-items: center; gap: 8px;
-            line-height: 1.1;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            line-height: 1.15;
         }
+
         .legend-dot {
-            width: 10px; height: 10px; border-radius: 50%;
-            flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
         }
 
-        /* Tools - 1 Row to save vertical space */
-        .tool-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+        /* Tools - 5 Column Grid */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+        }
+
         .tool-btn {
-            background: #222; border: 1px solid #444; color: #888;
-            padding: 10px 5px; /* Decent click height */
-            border-radius: 6px; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
-            transition: 0.2s; user-select: none; font-size: 0.7rem;
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            color: #a8a8b6;
+            padding: 9px 2px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+            font-size: 0.64rem;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            position: relative;
         }
-        .tool-btn i { font-size: 1.1rem; }
-        .tool-btn:hover { background: #333; color: white; }
+
+        .tool-btn i {
+            font-size: 1.05rem;
+            transition: transform 0.2s ease;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--pure-white);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
         .tool-btn.active {
-            background: rgba(1, 163, 235, 0.15); border-color: var(--electric-blue);
-            color: var(--electric-blue);
+            background: var(--pure-white);
+            border-color: var(--pure-white);
+            color: var(--text-dark);
+            box-shadow: 0 4px 16px rgba(255, 111, 36, 0.35);
         }
 
-        /* Action Buttons - 1 Row */
-        .btn-group { display: flex; flex-direction: row; gap: 8px; }
+        .tool-btn.active i {
+            color: var(--jersey-magenta);
+            transform: scale(1.08);
+        }
+
+        /* Brush Controls */
+        #brush-controls {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            border-radius: 5px;
+            padding: 10px 12px;
+        }
+
+        .brush-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #brush-color {
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--surface-border);
+            border-radius: 4px;
+            background: none;
+            cursor: pointer;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        #brush-size {
+            flex: 1;
+            accent-color: var(--jersey-orange);
+            cursor: pointer;
+        }
+
+        .brush-options-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--surface-border-subtle);
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .color-swatch {
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }
+
+        .color-swatch:hover,
+        .color-swatch.active {
+            transform: scale(1.18);
+            border-color: var(--pure-white);
+        }
+
+        .dash-toggle-btn {
+            background: var(--near-black);
+            border: 1px solid var(--surface-border);
+            color: #b8b8c4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.15s ease;
+        }
+
+        .dash-toggle-btn.active {
+            background: var(--pure-white);
+            color: var(--text-dark);
+            border-color: var(--pure-white);
+        }
+
+        /* Action Buttons */
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
         .action-btn {
-            flex: 1; padding: 10px 5px; background: #333; border: none;
-            color: white; cursor: pointer; font-weight: bold; border-radius: 4px;
-            transition: 0.2s; font-size: 0.75rem;
+            padding: 8px 6px;
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            color: var(--pure-white);
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            font-size: 0.68rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
-        .action-btn:hover { background: #444; }
-        .action-btn.danger { background: rgba(255, 68, 148, 0.1); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
-        .action-btn.danger:hover { background: rgba(255, 68, 148, 0.3); }
 
-        /* --- FLEXIBLE BOTTOM SECTION --- */
-        /* This pushes the logo to fill remaining space */
-        .spacer-div { flex-grow: 1; min-height: 10px; }
+        .action-btn:hover:not(:disabled) {
+            background: var(--pure-white);
+            color: var(--text-dark);
+            border-color: var(--pure-white);
+            transform: translateY(-1px);
+        }
 
+        .action-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .action-btn.export-btn {
+            background: rgba(255, 111, 36, 0.14);
+            border-color: var(--jersey-orange);
+            color: var(--pure-white);
+        }
+
+        .action-btn.export-btn:hover {
+            background: var(--jersey-gradient-h);
+            color: var(--pure-white);
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(255, 111, 36, 0.45);
+        }
+
+        .action-btn.danger {
+            grid-column: span 2;
+            background: rgba(217, 39, 127, 0.12);
+            color: var(--jersey-peach);
+            border: 1px solid rgba(217, 39, 127, 0.5);
+        }
+
+        .action-btn.danger:hover {
+            background: var(--jersey-gradient-fire);
+            color: var(--pure-white);
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(217, 39, 127, 0.45);
+        }
+
+        /* Flexible Logo Area */
         .sidebar-logo {
             display: flex;
-            align-items: center; justify-content: center;
-            flex-grow: 1; /* Grow to fill space */
-            min-height: 50px; /* Minimum size */
-            max-height: 150px; /* Cap size so it doesn't get absurd */
-            padding: 10px 0;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            min-height: 44px;
+            max-height: 115px;
+            padding: 4px 0;
             overflow: hidden;
         }
 
         .sidebar-logo img {
-            max-width: 100%;
-            max-height: 100%; /* Fit within container */
+            max-width: 82%;
+            max-height: 100%;
             width: auto;
             object-fit: contain;
-            opacity: 0.85;
-            transition: 0.2s ease;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 12px rgba(217, 39, 127, 0.3));
+            transition: transform 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
         }
-        .sidebar-logo:hover img { opacity: 1; transform: scale(1.03); }
 
-        .bottom-actions { flex-shrink: 0; padding-bottom: 5px; }
+        .sidebar-logo:hover img {
+            opacity: 1;
+            transform: scale(1.04);
+            filter: drop-shadow(0 0 18px rgba(255, 111, 36, 0.55));
+        }
 
-        /* YouTube CTA */
+        /* YouTube Sunset CTA */
         .youtube-cta {
             width: 100%;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 10px;
-            background: #ff0000; color: white; text-decoration: none;
-            font-family: var(--font-headline); letter-spacing: 1px;
-            font-size: 0.8rem; border-radius: 6px;
-            transition: 0.2s ease; box-shadow: 0 0 14px rgba(255, 0, 0, 0.45);
-            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: var(--jersey-gradient-h);
+            color: var(--pure-white) !important;
+            text-decoration: none;
+            font-family: var(--font-headline);
+            letter-spacing: 1.5px;
+            font-size: 0.92rem;
+            border-radius: 4px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 18px rgba(217, 39, 127, 0.4);
+            flex-shrink: 0;
         }
-        .youtube-cta i { font-size: 1.1rem; }
-        .youtube-cta:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 0 18px rgba(255, 0, 0, 0.65); }
-        
-        /* Socials */
-        .sidebar-socials {
-            margin-top: 10px;
-            display: flex; justify-content: center; gap: 15px;
+
+        .youtube-cta i {
+            font-size: 1.1rem;
         }
-        .sidebar-socials a { color: #888; font-size: 1.2rem; transition: 0.2s ease; }
-        .sidebar-socials a:hover { color: var(--electric-blue); transform: translateY(-2px); }
+
+        .youtube-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(255, 111, 36, 0.65);
+            text-shadow: none;
+        }
 
         /* --- MAP VIEWPORT --- */
         #planner-viewport {
-            flex: 1; position: relative; background: #050505;
-            background-image: radial-gradient(#222 1px, transparent 1px);
-            background-size: 20px 20px;
-            overflow: hidden; cursor: default; touch-action: none;
+            flex: 1;
+            position: relative;
+            background-color: var(--midnight-black);
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            overflow: hidden;
+            cursor: grab;
+            touch-action: none;
+        }
+
+        #planner-viewport.tool-draw {
+            cursor: crosshair;
+        }
+
+        #planner-viewport.tool-token {
+            cursor: copy;
+        }
+
+        /* Spacebar override: forces grab cursor & lets pan clicks pass through canvas/tokens */
+        #planner-viewport.space-pan {
+            cursor: grab !important;
+        }
+
+        #planner-viewport.space-pan #drawing-canvas,
+        #planner-viewport.space-pan .token-wrapper {
+            pointer-events: none !important;
+        }
+
+        #planner-viewport.panning {
+            cursor: grabbing !important;
         }
 
         #mapWrapper {
-            position: absolute; top: 0; left: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
             transform-origin: 0 0;
             display: inline-block;
-            width: auto; height: auto;
+            will-change: transform;
         }
 
-        #mapImage { pointer-events: none; display: block; user-select: none; }
-        
-        #drawing-canvas {
-            position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10;
+        #mapImage {
+            pointer-events: none;
+            display: block;
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: opacity 0.2s ease;
         }
-        #drawing-canvas.active { pointer-events: auto; }
+
+        #drawing-canvas,
+        #preview-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        #drawing-canvas {
+            z-index: 10;
+        }
+
+        #preview-canvas {
+            z-index: 15;
+        }
+
+        #drawing-canvas.active {
+            pointer-events: auto;
+        }
 
         #token-layer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: 20; pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            pointer-events: none;
         }
 
         /* Token Styles */
         .token-wrapper {
-            position: absolute; 
-            width: 40px; height: 40px; 
+            position: absolute;
+            width: 42px;
+            height: 42px;
             transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(18, 18, 23, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
             border-radius: 50%;
-            cursor: grab; z-index: 100;
-            pointer-events: auto; touch-action: none; user-select: none;
+            cursor: grab;
+            z-index: 100;
+            pointer-events: auto;
+            touch-action: none;
+            user-select: none;
+            transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            will-change: left, top;
         }
+
         .token-wrapper:hover {
-            background: rgba(1, 163, 235, 0.4); 
-            border-color: var(--electric-blue);
+            background: rgba(217, 39, 127, 0.4);
+            border-color: var(--jersey-orange);
+            box-shadow: 0 0 14px rgba(255, 111, 36, 0.65);
         }
+
         .token-wrapper img {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); 
-            width: auto; height: auto; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: auto;
             pointer-events: none;
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
-            -webkit-user-drag: none; user-drag: none;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.9));
+            -webkit-user-drag: none;
+            transition: opacity 0.2s ease;
         }
-        .token-wrapper.dragging { cursor: grabbing; z-index: 999; }
-        
+
+        .token-wrapper.dimmed img {
+            opacity: 0.42;
+        }
+
+        .token-label-badge {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--pure-white);
+            color: var(--text-dark);
+            font-family: var(--font-headline);
+            font-size: 0.72rem;
+            letter-spacing: 0.8px;
+            padding: 1px 6px;
+            border-radius: 3px;
+            white-space: nowrap;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+            z-index: 5;
+        }
+
+        .token-wrapper.dragging {
+            cursor: grabbing;
+            z-index: 999;
+            border-color: var(--pure-white);
+            box-shadow: 0 0 20px rgba(255, 111, 36, 0.85);
+        }
+
+        /* Hardware-accelerated Ghost Token */
         #ghost-token {
-            position: fixed; pointer-events: none; opacity: 0.6; z-index: 9999;
-            transform: translate(-50%, -50%); display: none;
-            width: auto; height: auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            opacity: 0.65;
+            z-index: 9999;
+            display: none;
+            width: auto;
+            height: auto;
+            will-change: transform;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
         }
 
+        /* Loader */
         .map-loader {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: var(--electric-blue); font-family: var(--font-headline); font-size: 2rem;
-            display: none; pointer-events: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-headline);
+            font-size: 2.4rem;
+            letter-spacing: 2px;
+            background: var(--jersey-gradient-h);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: none;
+            pointer-events: none;
+            z-index: 50;
         }
 
+        /* Viewport Floating HUD (Zoom & Shortcuts) */
+        .viewport-hud {
+            position: absolute;
+            bottom: 18px;
+            right: 18px;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(12, 12, 16, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--surface-border);
+            padding: 6px 10px;
+            border-radius: 6px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        .hud-btn {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border-subtle);
+            color: var(--pure-white);
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.15s ease;
+        }
+
+        .hud-btn:hover {
+            background: var(--pure-white);
+            color: var(--text-dark);
+        }
+
+        #zoom-indicator {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 800;
+            min-width: 48px;
+            text-align: center;
+            color: var(--pure-white);
+        }
+
+        /* Shortcuts Help Popover */
+        .shortcuts-panel {
+            position: absolute;
+            bottom: 62px;
+            right: 18px;
+            z-index: 65;
+            background: rgba(12, 12, 16, 0.95);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--surface-border);
+            border-top: 2px solid var(--jersey-orange);
+            border-radius: 6px;
+            padding: 12px 14px;
+            width: 250px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
+            display: none;
+            font-size: 0.72rem;
+        }
+
+        .shortcuts-panel.visible {
+            display: block;
+        }
+
+        .shortcuts-panel h4 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--pure-white);
+            letter-spacing: 1px;
+        }
+
+        .shortcut-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            color: #b8b8c4;
+        }
+
+        .shortcut-key {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            color: var(--pure-white);
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 0.65rem;
+            font-weight: 800;
+        }
+
+        /* Toast Notification */
+        #planner-toast {
+            position: fixed;
+            bottom: 22px;
+            left: calc(340px + (100vw - 340px) / 2);
+            transform: translate(-50%, 20px);
+            background: rgba(12, 12, 16, 0.95);
+            border: 1px solid var(--surface-border);
+            border-left: 3px solid var(--jersey-orange);
+            color: var(--pure-white);
+            padding: 9px 18px;
+            border-radius: 999px;
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            z-index: 9500;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+        }
+
+        #planner-toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        /* Expanded Context Menu */
         #context-menu {
-            position: fixed; background: #111; border: 1px solid var(--electric-blue);
-            z-index: 10000; display: none; padding: 5px;
+            position: fixed;
+            background: rgba(14, 14, 19, 0.96);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--surface-border);
+            border-top: 2px solid var(--jersey-orange);
+            border-radius: 6px;
+            z-index: 10000;
+            display: none;
+            padding: 5px;
+            min-width: 175px;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.9);
         }
+
         #context-menu button {
-            background: none; border: none; color: white; padding: 8px 15px;
-            width: 100%; text-align: left; cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--pure-white);
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 8px 12px;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            transition: background 0.15s ease;
         }
-        #context-menu button:hover { background: var(--electric-blue); }
+
+        #context-menu button i {
+            width: 14px;
+            text-align: center;
+            color: var(--jersey-orange);
+        }
+
+        #context-menu button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        #context-menu button.ctx-danger:hover {
+            background: var(--jersey-gradient-fire);
+        }
+
+        #context-menu button.ctx-danger:hover i {
+            color: var(--pure-white);
+        }
+
+        .ctx-divider {
+            height: 1px;
+            background: var(--surface-border-subtle);
+            margin: 4px 0;
+        }
+
+        /* Mobile Sidebar Toggle */
+        #sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 650;
+            background: var(--jersey-gradient-h);
+            color: var(--pure-white);
+            border: none;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-family: var(--font-headline);
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        @media (max-width: 991px) {
+            #tactical-hud-header {
+                left: auto;
+                right: 16px;
+                max-width: calc(100vw - 130px);
+            }
+            #tactical-hud-header .container {
+                flex-wrap: wrap;
+                border-radius: 16px;
+            }
+            #tactical-hud-header:hover nav,
+            #tactical-hud-header.is-pinned nav {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #sidebar-toggle {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            }
+            #planner-sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                transform: translateX(0);
+                transition: transform 0.25s ease;
+            }
+            #planner-sidebar.collapsed {
+                transform: translateX(-100%);
+            }
+            #planner-toast {
+                left: 50%;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="planner-body is-loaded">
 
-    <main>
-        <div id="planner-sidebar">
-            <!-- Navigation -->
-            <div class="sidebar-nav">
-                <a href="/" class="nav-link">HOME</a>
-                <a href="/tournaments" class="nav-link">TOURNAMENTS</a>
-                <a href="/merch" class="nav-link">MERCH</a>
-                <a href="/donate" class="nav-link">DONATE</a>
+    <button id="sidebar-toggle" aria-label="Toggle Sidebar">
+        <i class="fa-solid fa-sliders"></i> TOOLS
+    </button>
+
+    <!-- ==========================================================================
+         UNCONVENTIONAL HEADER.HTML MOUNT: FLOATING TACTICAL HUD CAPSULE
+         ========================================================================== -->
+    <header id="tactical-hud-header" aria-label="Tactical Site Navigation HUD">
+        <div class="container">
+            <a href="https://apesquad.org" class="logo">
+                <img src="/images/logo.png" alt="Ape Squad Logo" onerror="this.onerror=null;this.src='images/logo.png';">
+            </a>
+
+            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false" title="Pin / Unpin Site Navigation HUD">
+            </button>
+
+            <nav>
+                <ul id="primary-navigation" class="nav-links">
+                    <li class="dropdown">
+                        <a href="https://apesquadshop.org/" class="dropbtn">Merch</a>
+                        <div class="dropdown-content">
+                            <a href="https://apesquadshop.org/">Apparel</a>
+                            <a href="https://www.owayo.com/store/apesquadorg/6a08f1a9b2dfe056707758">Jerseys</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="/esports" class="dropbtn">Teams</a>
+                        <div class="dropdown-content">
+                            <a href="/esports">Esports</a>
+                            <a href="/partnered-creators">Partnered Creators</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="/tournaments" class="dropbtn">Events</a>
+                        <div class="dropdown-content">
+                            <a href="/tournaments">Tournaments</a>
+                            <a href="/rules">Rules</a>
+                        </div>
+                    </li>
+                    <li><a href="/hire">Hire Us</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/gundata">Gundata</a></li>
+                </ul>
+            </nav>
+
+            <div class="social-links">
+                <a href="https://x.com/apesquadorg" target="_blank" rel="noopener noreferrer" aria-label="Follow us on X">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <a href="https://twitch.tv/apesquadorg" target="_blank" rel="noopener noreferrer" aria-label="Watch us on Twitch">
+                    <i class="fa-brands fa-twitch"></i>
+                </a>
+                <a href="https://www.youtube.com/@ApeSquadOrg" target="_blank" rel="noopener noreferrer" aria-label="Subscribe on YouTube">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+                <a href="https://open.spotify.com/artist/5hr7XMfbqDjrP4vnuHylmy" target="_blank" rel="noopener noreferrer" aria-label="Listen on Spotify">
+                    <i class="fa-brands fa-spotify"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/ape-squad-org" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Linkedin">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
             </div>
+        </div>
+    </header>
 
+    <main class="planner-layout">
+        <aside id="planner-sidebar">
             <div class="sidebar-header">
-                <h2>Spawn Manipulation</h2>
+                <div class="sidebar-header-top">
+                    <span class="eyebrow-mini">TACTICAL BOARD</span>
+                    <span class="autosave-badge" title="Your setup is automatically saved per arena"><i class="fa-solid fa-circle"></i> AUTO-SAVED</span>
+                </div>
+                <h2>SPAWN MANIPULATION</h2>
             </div>
             
             <div class="sidebar-content">
+                <!-- MAP SELECTOR -->
                 <div class="control-group">
-                    <label class="control-label">MAP</label>
-                    <select id="mapSelect" class="planner-select">
-                        <option value="Bernal">Bernal</option>
-                        <option value="Citadel">Citadel</option>
-                        <option value="Fortune">Fortune</option>
-                        <option value="Monaco">Monaco</option>
-                        <option value="Seoul">Seoul</option>
-                        <option value="Skyway">Skyway</option>
-                        <option value="SysHorizon">SysHorizon</option>
-                        <option value="Vegas">Vegas</option>
-                        <option value="Fangwai">Fangwai</option>
-                    </select>
+                    <label class="control-label" for="mapSelect">
+                        MAP <span class="label-accent">ARENA</span>
+                    </label>
+                    <div class="select-wrapper">
+                        <select id="mapSelect" class="planner-select">
+                            <option value="Bernal">Bernal</option>
+                            <option value="Citadel">Citadel</option>
+                            <option value="Fortune">Fortune</option>
+                            <option value="GalaxyEstate">Galaxy Estates</option>
+                            <option value="Monaco">Monaco</option>
+                            <option value="Seoul">Seoul</option>
+                            <option value="Skyway">Skyway</option>
+                            <option value="SysHorizon">SysHorizon</option>
+                            <option value="Vegas">Vegas</option>
+                            <option value="Fangwai">Fangwai</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- NEW LEGEND SECTION -->
+                <!-- MAP KEY / LEGEND -->
                 <div class="control-group">
-                    <label class="control-label">MAP KEY</label>
-                    <ul class="legend-list">
-                        <li>
-                            <div class="legend-dot" style="background: white;"></div>
-                            <span>Dot: Spawn Points</span>
-                        </li>
-                        <li>
-                            <div class="legend-dot" style="background: #122eff;"></div>
-                            <span>Player Block Radius</span>
-                        </li>
-                        <li>
-                            <div class="legend-dot" style="background: #d60000;"></div>
-                            <span>Objective Block Radius</span>
-                        </li>
-                        <li>
-                            <div class="legend-dot" style="background: #036d06;"></div>
-                            <span>Objective Max Range</span>
-                        </li>
-                    </ul>
+                    <label class="control-label">
+                        MAP KEY <span class="label-accent">RADIUS GUIDE</span>
+                    </label>
+                    <div class="legend-card">
+                        <ul class="legend-list">
+                            <li>
+                                <div class="legend-dot" style="background: #ffffff;"></div>
+                                <span>Dot: Spawn Points</span>
+                            </li>
+                            <li>
+                                <div class="legend-dot" style="background: #122eff;"></div>
+                                <span>Player Block Radius</span>
+                            </li>
+                            <li>
+                                <div class="legend-dot" style="background: #d60000;"></div>
+                                <span>Objective Block Radius</span>
+                            </li>
+                            <li>
+                                <div class="legend-dot" style="background: #036d06;"></div>
+                                <span>Objective Max Range</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
+                <!-- TOOLS -->
                 <div class="control-group">
-                    <label class="control-label">TOOLS</label>
+                    <label class="control-label">
+                        TOOLS <span class="label-accent">KEYS 1-5</span>
+                    </label>
                     <div class="tool-grid">
-                        <div class="tool-btn active" data-tool="cursor">
+                        <div class="tool-btn active" data-tool="cursor" title="Pan & Move Tokens (Key: 1)">
                             <i class="fa-solid fa-arrow-pointer"></i> Cursor
                         </div>
-                        <div class="tool-btn" data-tool="draw">
+                        <div class="tool-btn" data-tool="draw" title="Smooth Telestrator Brush (Key: 2)">
                             <i class="fa-solid fa-paintbrush"></i> Draw
                         </div>
-                        <div class="tool-btn" data-tool="player">
+                        <div class="tool-btn" data-tool="arrow" title="Tactical Rotation Arrow (Key: 3)">
+                            <i class="fa-solid fa-location-arrow"></i> Arrow
+                        </div>
+                        <div class="tool-btn" data-tool="player" title="Place Player Token (Key: 4)">
                             <i class="fa-solid fa-user"></i> Player
                         </div>
-                        <div class="tool-btn" data-tool="cashbox">
+                        <div class="tool-btn" data-tool="cashbox" title="Place Cashbox Token (Key: 5)">
                             <i class="fa-solid fa-box"></i> Box
                         </div>
                     </div>
                 </div>
 
+                <!-- BRUSH & ARROW CONTROLS -->
                 <div class="control-group" id="brush-controls" style="display:none;">
-                    <label class="control-label">BRUSH</label>
-                    <div style="display:flex; gap:10px;">
-                        <input type="color" id="brush-color" value="#01a3eb" style="border:none; background:none; cursor:pointer;">
-                        <input type="range" id="brush-size" min="2" max="30" value="5" style="flex:1;">
+                    <label class="control-label">
+                        STYLE <span class="label-accent" id="brush-size-label">5PX</span>
+                    </label>
+                    <div class="brush-row">
+                        <input type="color" id="brush-color" value="#ff6f24" title="Custom Color">
+                        <input type="range" id="brush-size" min="2" max="30" value="5">
+                    </div>
+                    <div class="brush-options-row">
+                        <div class="color-swatches">
+                            <button type="button" class="color-swatch active" data-color="#ff6f24" style="background:#ff6f24;" title="Sunset Orange"></button>
+                            <button type="button" class="color-swatch" data-color="#d9277f" style="background:#d9277f;" title="Jersey Magenta"></button>
+                            <button type="button" class="color-swatch" data-color="#ffffff" style="background:#ffffff;" title="Stadium White"></button>
+                            <button type="button" class="color-swatch" data-color="#00e5ff" style="background:#00e5ff;" title="Tactical Cyan"></button>
+                            <button type="button" class="color-swatch" data-color="#ffe600" style="background:#ffe600;" title="Highlight Yellow"></button>
+                        </div>
+                        <button type="button" id="dash-toggle" class="dash-toggle-btn" title="Toggle Solid / Dashed Line">
+                            SOLID
+                        </button>
                     </div>
                 </div>
 
+                <!-- ACTIONS -->
                 <div class="control-group btn-group">
-                    <button id="reset-view" class="action-btn">Reset Camera</button>
-                    <!-- NEW CLEAR DRAWINGS BUTTON -->
-                    <button id="clear-drawings" class="action-btn">Clear Drawings</button>
-                    <button id="clear-all" class="action-btn danger">Clear Everything</button>
+                    <button id="undo-action" class="action-btn" title="Undo Last Action (Ctrl+Z)" disabled>
+                        <i class="fa-solid fa-rotate-left"></i> Undo
+                    </button>
+                    <button id="redo-action" class="action-btn" title="Redo Last Action (Ctrl+Y)" disabled>
+                        <i class="fa-solid fa-rotate-right"></i> Redo
+                    </button>
+                    <button id="clear-drawings" class="action-btn" title="Clear All Lines & Arrows">
+                        <i class="fa-solid fa-eraser"></i> Clear Lines
+                    </button>
+                    <button id="clear-tokens" class="action-btn" title="Clear All Placed Tokens">
+                        <i class="fa-solid fa-users-slash"></i> Clear Tokens
+                    </button>
+                    <button id="reset-view" class="action-btn" title="Fit Map to Screen">
+                        <i class="fa-solid fa-expand"></i> Reset Cam
+                    </button>
+                    <button id="export-strat" class="action-btn export-btn" title="Copy Strat Image to Clipboard & Download PNG">
+                        <i class="fa-solid fa-camera"></i> Copy PNG
+                    </button>
+                    <button id="clear-all" class="action-btn danger">
+                        <i class="fa-solid fa-trash-can"></i> Clear Everything
+                    </button>
                 </div>
-<a href="/" class="sidebar-logo">
-    <img src="images/logo.png" alt="Ape Squad Home">
-</a>
 
-<!-- VIDEO -->
-<!-- YOUTUBE CTA BUTTON -->
-<a 
-    href="https://www.youtube.com/watch?v=o1xsuZBKz-g" 
-    target="_blank" 
-    class="youtube-cta">
-    <i class="fa-brands fa-youtube"></i>
-    WATCH TUTORIAL ON YOUTUBE
-</a>
+                <!-- LOGO -->
+                <a href="/" class="sidebar-logo">
+                    <img src="images/logo.png" alt="Ape Squad Home">
+                </a>
 
-
-<!-- SOCIAL LINKS -->
-<div class="sidebar-socials">
-    <a href="https://x.com/apesquadorg" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-    <a href="https://twitch.tv/apesquadorg" target="_blank"><i class="fa-brands fa-twitch"></i></a>
-    <a href="https://www.youtube.com/@ApeSquadOrg" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-    <a href="https://www.linkedin.com/company/ape-squad-org" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-</div>
-
+                <!-- YOUTUBE CTA BUTTON -->
+                <a href="https://www.youtube.com/watch?v=o1xsuZBKz-g" target="_blank" rel="noopener noreferrer" class="youtube-cta">
+                    <i class="fa-brands fa-youtube"></i>
+                    WATCH TUTORIAL ON YOUTUBE
+                </a>
             </div>
-        </div>
+        </aside>
 
+        <!-- VIEWPORT -->
         <div id="planner-viewport">
-            <div class="map-loader" id="loader">LOADING...</div>
+            <div class="map-loader" id="loader">LOADING ARENA...</div>
+            
             <div id="mapWrapper">
-                <img id="mapImage" src="" alt="">
+                <img id="mapImage" src="" alt="Tactical Map">
                 <canvas id="drawing-canvas"></canvas>
+                <canvas id="preview-canvas"></canvas>
                 <div id="token-layer"></div>
+            </div>
+
+            <!-- Shortcuts Help Popover -->
+            <div class="shortcuts-panel" id="shortcuts-panel">
+                <h4>TACTICAL SHORTCUTS</h4>
+                <div class="shortcut-row"><span>Switch Tools</span><span class="shortcut-key">1 - 5</span></div>
+                <div class="shortcut-row"><span>Pan Any Time</span><span class="shortcut-key">SPACE + DRAG</span></div>
+                <div class="shortcut-row"><span>Undo / Redo</span><span class="shortcut-key">CTRL+Z / Y</span></div>
+                <div class="shortcut-row"><span>Token Options</span><span class="shortcut-key">RIGHT-CLICK</span></div>
+                <div class="shortcut-row"><span>Quick Delete Token</span><span class="shortcut-key">ALT + CLICK</span></div>
+            </div>
+
+            <!-- Floating Zoom & Help HUD -->
+            <div class="viewport-hud">
+                <button type="button" class="hud-btn" id="shortcuts-btn" title="Keyboard Shortcuts"><i class="fa-solid fa-keyboard"></i></button>
+                <button type="button" class="hud-btn" id="zoom-out" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
+                <span id="zoom-indicator">100%</span>
+                <button type="button" class="hud-btn" id="zoom-in" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
             </div>
         </div>
     </main>
 
-    <img id="ghost-token" src="">
+    <img id="ghost-token" src="" alt="">
+    <div id="planner-toast">STRAT SAVED</div>
     
+    <!-- Expanded Token Context Menu -->
     <div id="context-menu">
-        <button id="ctx-delete">Delete</button>
+        <button id="ctx-label"><i class="fa-solid fa-tag"></i> Set Callout Label</button>
+        <button id="ctx-dim"><i class="fa-solid fa-eye-low-vision"></i> Toggle Ghost Radius</button>
+        <button id="ctx-duplicate"><i class="fa-solid fa-clone"></i> Duplicate Token</button>
+        <div class="ctx-divider"></div>
+        <button id="ctx-delete" class="ctx-danger"><i class="fa-solid fa-trash"></i> Delete Token</button>
     </div>
 
     <script>
+        /**
+         * Dynamically syncs header.html into the floating Tactical HUD capsule
+         */
+        async function initTacticalHeaderHUD() {
+            const hudHeader = document.getElementById('tactical-hud-header');
+            if (!hudHeader) return;
+
+            const wireHudToggle = () => {
+                const toggleBtn = hudHeader.querySelector('.mobile-nav-toggle');
+                const logoImg = hudHeader.querySelector('.logo img');
+
+                if (logoImg) {
+                    logoImg.onerror = () => {
+                        logoImg.onerror = null;
+                        logoImg.src = 'images/logo.png';
+                    };
+                }
+
+                if (toggleBtn) {
+                    toggleBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        toggleBtn.blur();
+                        const isPinned = hudHeader.classList.toggle('is-pinned');
+                        toggleBtn.setAttribute('aria-expanded', isPinned ? 'true' : 'false');
+                    };
+                }
+            };
+
+            wireHudToggle();
+
+            try {
+                const response = await fetch('header.html');
+                if (response.ok) {
+                    const html = await response.text();
+                    if (html.includes('primary-navigation')) {
+                        hudHeader.innerHTML = html;
+                        wireHudToggle();
+                    }
+                }
+            } catch (_) {
+                // Fallback markup is already active
+            }
+        }
+
         class TacticalMap {
             constructor() {
-                // Elements
+                // DOM Elements
                 this.viewport = document.getElementById('planner-viewport');
                 this.wrapper = document.getElementById('mapWrapper');
                 this.mapImage = document.getElementById('mapImage');
                 this.canvas = document.getElementById('drawing-canvas');
                 this.ctx = this.canvas.getContext('2d');
+                this.previewCanvas = document.getElementById('preview-canvas');
+                this.previewCtx = this.previewCanvas.getContext('2d');
                 this.tokenLayer = document.getElementById('token-layer');
                 this.ghost = document.getElementById('ghost-token');
-                
-                // State
+                this.loader = document.getElementById('loader');
+                this.zoomIndicator = document.getElementById('zoom-indicator');
+                this.contextMenu = document.getElementById('context-menu');
+                this.toast = document.getElementById('planner-toast');
+
+                // Transform State
+                this.currentMap = 'Bernal';
                 this.scale = 1;
                 this.panX = 0;
                 this.panY = 0;
@@ -430,263 +1439,1067 @@
                 this.lastMouseX = 0;
                 this.lastMouseY = 0;
                 this.currentTool = 'cursor';
-                
-                // Assets
+                this.isInsideViewport = false;
+                this.spacePressed = false;
+
+                // Multi-touch Pinch State
+                this.activePointers = new Map();
+                this.lastPinchDist = null;
+
+                // Cached Viewport Bounds
+                this.viewportRect = this.viewport.getBoundingClientRect();
+
+                // rAF Batching State
+                this.rafPending = false;
+                this.ghostX = 0;
+                this.ghostY = 0;
+
+                // Assets & Cache
                 this.assets = {
                     player: 'images/mapsmanip/Player.png',
                     cashbox: 'images/mapsmanip/Cashbox.png'
                 };
+                this.loadedTokenImages = {};
+                this.mapCache = new Map();
+                this.activeLoadId = 0;
 
-                // Brush
+                // Drawing & Unified History State
                 this.isDrawing = false;
-                this.brushColor = '#01a3eb';
+                this.brushColor = '#ff6f24';
                 this.brushSize = 5;
+                this.isDashed = false;
+                this.strokes = [];
+                this.currentStroke = null;
+
+                // Unified Undo/Redo Stacks
+                this.undoStack = [];
+                this.redoStack = [];
+                this.tokenIdCounter = 0;
 
                 this.init();
             }
 
             init() {
+                this.preloadAssets();
+                this.observeViewport();
                 this.loadMap('Bernal');
                 this.setupControls();
                 this.setupMapInteractions();
+                this.setupKeyboardShortcuts();
             }
 
-            loadMap(name) {
-                document.getElementById('loader').style.display = 'block';
+            showToast(message) {
+                this.toast.textContent = message;
+                this.toast.classList.add('show');
+                clearTimeout(this.toastTimer);
+                this.toastTimer = setTimeout(() => {
+                    this.toast.classList.remove('show');
+                }, 2200);
+            }
+
+            preloadAssets() {
+                Object.entries(this.assets).forEach(([key, src]) => {
+                    const img = new Image();
+                    img.src = src;
+                    this.loadedTokenImages[key] = img;
+                });
+            }
+
+            observeViewport() {
+                const updateBounds = () => {
+                    this.viewportRect = this.viewport.getBoundingClientRect();
+                };
+                window.addEventListener('resize', updateBounds, { passive: true });
+                if ('ResizeObserver' in window) {
+                    new ResizeObserver(updateBounds).observe(this.viewport);
+                }
+            }
+
+            screenToMap(clientX, clientY) {
+                return {
+                    x: (clientX - this.viewportRect.left - this.panX) / this.scale,
+                    y: (clientY - this.viewportRect.top - this.panY) / this.scale
+                };
+            }
+
+            async loadMap(name) {
+                this.currentMap = name;
+                const loadId = ++this.activeLoadId;
+                this.loader.innerText = 'LOADING ARENA...';
+                this.loader.style.display = 'block';
                 this.mapImage.style.opacity = '0';
-                
-                const img = new Image();
-                img.onload = () => {
+
+                try {
+                    let img = this.mapCache.get(name);
+                    if (!img) {
+                        img = new Image();
+                        img.src = `images/mapsmanip/${name}.png`;
+                        if (img.decode) {
+                            await img.decode();
+                        } else {
+                            await new Promise((res, rej) => {
+                                img.onload = res;
+                                img.onerror = rej;
+                            });
+                        }
+                        this.mapCache.set(name, img);
+                    }
+
+                    if (loadId !== this.activeLoadId) return;
+
                     this.mapImage.src = img.src;
                     this.mapImage.style.opacity = '1';
-                    document.getElementById('loader').style.display = 'none';
-                    
+                    this.loader.style.display = 'none';
+
                     this.canvas.width = img.naturalWidth;
                     this.canvas.height = img.naturalHeight;
-                    
+                    this.previewCanvas.width = img.naturalWidth;
+                    this.previewCanvas.height = img.naturalHeight;
+
+                    this.undoStack = [];
+                    this.redoStack = [];
+                    this.updateHistoryButtons();
+
+                    this.restoreMapState(name);
                     this.fitToScreen();
-                };
-                img.onerror = () => { document.getElementById('loader').innerText = "IMG NOT FOUND"; };
-                img.src = `images/mapsmanip/${name}.png`;
+                } catch (err) {
+                    if (loadId === this.activeLoadId) {
+                        this.loader.innerText = 'IMG NOT FOUND';
+                    }
+                }
+            }
+
+            /* ==========================================================================
+               AUTO-SAVE & RESTORE PER ARENA (LOCALSTORAGE)
+               ========================================================================== */
+            saveMapState() {
+                try {
+                    const tokens = Array.from(this.tokenLayer.querySelectorAll('.token-wrapper')).map(el => this.serializeToken(el));
+                    const payload = JSON.stringify({
+                        strokes: this.strokes,
+                        tokens
+                    });
+                    localStorage.setItem(`apesquad_strat_${this.currentMap}`, payload);
+                } catch (_) {}
+            }
+
+            restoreMapState(mapName) {
+                this.tokenLayer.innerHTML = '';
+                this.strokes = [];
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                try {
+                    const raw = localStorage.getItem(`apesquad_strat_${mapName}`);
+                    if (!raw) return;
+                    const data = JSON.parse(raw);
+                    if (Array.isArray(data.strokes)) {
+                        this.strokes = data.strokes;
+                        this.redrawAllStrokes();
+                    }
+                    if (Array.isArray(data.tokens)) {
+                        data.tokens.forEach(t => this.createTokenElement(t));
+                    }
+                } catch (_) {}
             }
 
             fitToScreen() {
-                const margin = 50;
-                const w = this.viewport.clientWidth - margin;
-                const h = this.viewport.clientHeight - margin;
+                this.viewportRect = this.viewport.getBoundingClientRect();
+                const margin = 60;
+                const w = Math.max(100, this.viewportRect.width - margin);
+                const h = Math.max(100, this.viewportRect.height - margin);
                 const mapW = this.canvas.width || 1000;
                 const mapH = this.canvas.height || 1000;
-                
+
                 this.scale = Math.min(w / mapW, h / mapH);
-                this.panX = (this.viewport.clientWidth - (mapW * this.scale)) / 2;
-                this.panY = (this.viewport.clientHeight - (mapH * this.scale)) / 2;
-                this.updateTransform();
+                this.panX = (this.viewportRect.width - (mapW * this.scale)) / 2;
+                this.panY = (this.viewportRect.height - (mapH * this.scale)) / 2;
+                this.requestTransformUpdate();
             }
 
-            updateTransform() {
-                this.wrapper.style.transform = `translate(${this.panX}px, ${this.panY}px) scale(${this.scale})`;
+            requestTransformUpdate() {
+                if (this.rafPending) return;
+                this.rafPending = true;
+                requestAnimationFrame(() => {
+                    this.rafPending = false;
+                    this.wrapper.style.transform = `translate3d(${this.panX}px, ${this.panY}px, 0) scale(${this.scale})`;
+                    this.zoomIndicator.textContent = `${Math.round(this.scale * 100)}%`;
+                    this.renderGhostTransform();
+                });
+            }
+
+            zoomAtPoint(factor, clientX, clientY) {
+                const oldScale = this.scale;
+                const newScale = Math.max(0.05, Math.min(5, oldScale * factor));
+                if (newScale === oldScale) return;
+
+                const mouseX = clientX - this.viewportRect.left;
+                const mouseY = clientY - this.viewportRect.top;
+                const scaleRatio = newScale / oldScale;
+
+                this.panX = mouseX - (mouseX - this.panX) * scaleRatio;
+                this.panY = mouseY - (mouseY - this.panY) * scaleRatio;
+                this.scale = newScale;
+
+                this.requestTransformUpdate();
+            }
+
+            setTool(toolName) {
+                this.currentTool = toolName;
+                document.querySelectorAll('.tool-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.tool === toolName);
+                });
+
+                const isDrawingTool = (toolName === 'draw' || toolName === 'arrow');
+                this.canvas.classList.toggle('active', isDrawingTool);
+                document.getElementById('brush-controls').style.display = isDrawingTool ? 'block' : 'none';
+
+                this.viewport.classList.remove('tool-draw', 'tool-token');
+                if (isDrawingTool) {
+                    this.viewport.classList.add('tool-draw');
+                } else if (toolName === 'player' || toolName === 'cashbox') {
+                    this.viewport.classList.add('tool-token');
+                    this.ghost.src = this.assets[toolName];
+                }
+
+                this.updateGhostVisibility();
+            }
+
+            /* ==========================================================================
+               UNIFIED UNDO & REDO ENGINE (STROKES + TOKENS)
+               ========================================================================== */
+            pushAction(action) {
+                this.undoStack.push(action);
+                if (this.undoStack.length > 60) this.undoStack.shift();
+                this.redoStack = [];
+                this.updateHistoryButtons();
+                this.saveMapState();
+            }
+
+            updateHistoryButtons() {
+                document.getElementById('undo-action').disabled = this.undoStack.length === 0;
+                document.getElementById('redo-action').disabled = this.redoStack.length === 0;
+            }
+
+            undo() {
+                if (!this.undoStack.length) return;
+                const action = this.undoStack.pop();
+                this.redoStack.push(action);
+
+                switch (action.type) {
+                    case 'add-stroke':
+                        this.strokes.pop();
+                        this.redrawAllStrokes();
+                        break;
+                    case 'add-token': {
+                        const el = this.findTokenById(action.token.id);
+                        if (el) el.remove();
+                        break;
+                    }
+                    case 'delete-token':
+                        this.createTokenElement(action.token);
+                        break;
+                    case 'move-token': {
+                        const el = this.findTokenById(action.id);
+                        if (el) {
+                            el.style.left = `${action.fromX}px`;
+                            el.style.top = `${action.fromY}px`;
+                        }
+                        break;
+                    }
+                    case 'update-token': {
+                        const el = this.findTokenById(action.id);
+                        if (el) this.applyTokenProps(el, action.prev);
+                        break;
+                    }
+                    case 'batch-clear':
+                        if (action.strokes) {
+                            this.strokes = [...action.strokes];
+                            this.redrawAllStrokes();
+                        }
+                        if (action.tokens) {
+                            this.tokenLayer.innerHTML = '';
+                            action.tokens.forEach(t => this.createTokenElement(t));
+                        }
+                        break;
+                }
+
+                this.updateHistoryButtons();
+                this.saveMapState();
+            }
+
+            redo() {
+                if (!this.redoStack.length) return;
+                const action = this.redoStack.pop();
+                this.undoStack.push(action);
+
+                switch (action.type) {
+                    case 'add-stroke':
+                        this.strokes.push(action.stroke);
+                        this.redrawAllStrokes();
+                        break;
+                    case 'add-token':
+                        this.createTokenElement(action.token);
+                        break;
+                    case 'delete-token': {
+                        const el = this.findTokenById(action.token.id);
+                        if (el) el.remove();
+                        break;
+                    }
+                    case 'move-token': {
+                        const el = this.findTokenById(action.id);
+                        if (el) {
+                            el.style.left = `${action.toX}px`;
+                            el.style.top = `${action.toY}px`;
+                        }
+                        break;
+                    }
+                    case 'update-token': {
+                        const el = this.findTokenById(action.id);
+                        if (el) this.applyTokenProps(el, action.next);
+                        break;
+                    }
+                    case 'batch-clear':
+                        if (action.clearStrokes) {
+                            this.strokes = [];
+                            this.redrawAllStrokes();
+                        }
+                        if (action.clearTokens) {
+                            this.tokenLayer.innerHTML = '';
+                        }
+                        break;
+                }
+
+                this.updateHistoryButtons();
+                this.saveMapState();
             }
 
             setupControls() {
+                const sidebar = document.getElementById('planner-sidebar');
+                document.getElementById('sidebar-toggle').onclick = (e) => {
+                    e.currentTarget.blur();
+                    sidebar.classList.toggle('collapsed');
+                };
+
                 document.getElementById('mapSelect').onchange = (e) => {
-                    this.tokenLayer.innerHTML = ''; 
-                    this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height); 
+                    e.target.blur(); // Release focus so Spacebar immediately works on the map
                     this.loadMap(e.target.value);
                 };
 
                 document.querySelectorAll('.tool-btn').forEach(btn => {
-                    btn.onclick = () => {
-                        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        this.currentTool = btn.dataset.tool;
-                        
-                        this.canvas.classList.remove('active');
-                        this.ghost.style.display = 'none';
-                        document.getElementById('brush-controls').style.display = 'none';
-
-                        if(this.currentTool === 'draw') {
-                            this.canvas.classList.add('active');
-                            document.getElementById('brush-controls').style.display = 'block';
-                        }
-                        else if(['player', 'cashbox'].includes(this.currentTool)) {
-                            this.ghost.src = this.assets[this.currentTool];
-                            this.ghost.style.display = 'block';
-                        }
-                    }
+                    btn.onclick = () => this.setTool(btn.dataset.tool);
                 });
 
-                // Clear Everything (Drawings + Tokens)
-                document.getElementById('clear-all').onclick = () => {
-                    if(confirm("Clear everything (Tokens and Drawings)?")) {
-                        this.tokenLayer.innerHTML = '';
-                        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
-                    }
+                // Blur all action buttons on click so Spacebar doesn't re-trigger them
+                document.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', () => btn.blur());
+                });
+
+                // Undo / Redo
+                document.getElementById('undo-action').onclick = () => this.undo();
+                document.getElementById('redo-action').onclick = () => this.redo();
+
+                // Dashed Line Toggle
+                const dashBtn = document.getElementById('dash-toggle');
+                dashBtn.onclick = () => {
+                    this.isDashed = !this.isDashed;
+                    dashBtn.classList.toggle('active', this.isDashed);
+                    dashBtn.textContent = this.isDashed ? 'DASHED' : 'SOLID';
                 };
 
                 // Clear Drawings Only
                 document.getElementById('clear-drawings').onclick = () => {
-                    this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
+                    if (!this.strokes.length) return;
+                    this.pushAction({
+                        type: 'batch-clear',
+                        clearStrokes: true,
+                        strokes: [...this.strokes]
+                    });
+                    this.strokes = [];
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.saveMapState();
                 };
-                
-                document.getElementById('reset-view').onclick = () => this.fitToScreen();
 
-                document.getElementById('brush-color').oninput = (e) => this.brushColor = e.target.value;
-                document.getElementById('brush-size').oninput = (e) => this.brushSize = e.target.value;
-                
-                document.addEventListener('click', (e) => {
-                     document.getElementById('context-menu').style.display = 'none';
-                });
-                document.getElementById('ctx-delete').onclick = () => {
-                    if(this.ctxTarget) this.ctxTarget.remove();
+                // Clear Tokens Only
+                document.getElementById('clear-tokens').onclick = () => {
+                    const tokens = Array.from(this.tokenLayer.querySelectorAll('.token-wrapper')).map(el => this.serializeToken(el));
+                    if (!tokens.length) return;
+                    this.pushAction({
+                        type: 'batch-clear',
+                        clearTokens: true,
+                        tokens
+                    });
+                    this.tokenLayer.innerHTML = '';
+                    this.saveMapState();
                 };
+
+                // Clear Everything
+                document.getElementById('clear-all').onclick = () => {
+                    const tokens = Array.from(this.tokenLayer.querySelectorAll('.token-wrapper')).map(el => this.serializeToken(el));
+                    if (!this.strokes.length && !tokens.length) return;
+                    if (confirm('Clear everything (Tokens and Drawings)?')) {
+                        this.pushAction({
+                            type: 'batch-clear',
+                            clearStrokes: true,
+                            clearTokens: true,
+                            strokes: [...this.strokes],
+                            tokens
+                        });
+                        this.tokenLayer.innerHTML = '';
+                        this.strokes = [];
+                        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                        this.saveMapState();
+                    }
+                };
+
+                // Export / Copy PNG
+                document.getElementById('export-strat').onclick = () => this.exportStratImage();
+
+                // Camera & Shortcuts HUD
+                document.getElementById('reset-view').onclick = () => this.fitToScreen();
+                document.getElementById('zoom-in').onclick = () => {
+                    const cx = this.viewportRect.left + this.viewportRect.width / 2;
+                    const cy = this.viewportRect.top + this.viewportRect.height / 2;
+                    this.zoomAtPoint(1.25, cx, cy);
+                };
+                document.getElementById('zoom-out').onclick = () => {
+                    const cx = this.viewportRect.left + this.viewportRect.width / 2;
+                    const cy = this.viewportRect.top + this.viewportRect.height / 2;
+                    this.zoomAtPoint(0.8, cx, cy);
+                };
+
+                const shortcutsPanel = document.getElementById('shortcuts-panel');
+                document.getElementById('shortcuts-btn').onclick = (e) => {
+                    e.stopPropagation();
+                    shortcutsPanel.classList.toggle('visible');
+                };
+
+                // Brush Color & Swatches
+                const colorInput = document.getElementById('brush-color');
+                const swatches = document.querySelectorAll('.color-swatch');
+
+                colorInput.oninput = (e) => {
+                    this.brushColor = e.target.value;
+                    swatches.forEach(s => s.classList.toggle('active', s.dataset.color === this.brushColor));
+                };
+
+                swatches.forEach(swatch => {
+                    swatch.onclick = () => {
+                        this.brushColor = swatch.dataset.color;
+                        colorInput.value = this.brushColor;
+                        swatches.forEach(s => s.classList.remove('active'));
+                        swatch.classList.add('active');
+                    };
+                });
+
+                const sizeLabel = document.getElementById('brush-size-label');
+                document.getElementById('brush-size').oninput = (e) => {
+                    this.brushSize = Number(e.target.value);
+                    sizeLabel.textContent = `${this.brushSize}PX`;
+                };
+
+                // Context Menu Actions
+                document.addEventListener('click', () => {
+                    this.contextMenu.style.display = 'none';
+                    shortcutsPanel.classList.remove('visible');
+                });
+
+                document.getElementById('ctx-label').onclick = () => {
+                    if (!this.ctxTarget) return;
+                    const prev = { label: this.ctxTarget.dataset.label || '', dimmed: this.ctxTarget.classList.contains('dimmed') };
+                    const input = prompt('Enter Callout Label (e.g. P1, ENEMY, PLUG, A):', prev.label);
+                    if (input === null) return;
+                    const next = { ...prev, label: input.trim().slice(0, 12) };
+                    this.applyTokenProps(this.ctxTarget, next);
+                    this.pushAction({ type: 'update-token', id: this.ctxTarget.dataset.id, prev, next });
+                };
+
+                document.getElementById('ctx-dim').onclick = () => {
+                    if (!this.ctxTarget) return;
+                    const prev = { label: this.ctxTarget.dataset.label || '', dimmed: this.ctxTarget.classList.contains('dimmed') };
+                    const next = { ...prev, dimmed: !prev.dimmed };
+                    this.applyTokenProps(this.ctxTarget, next);
+                    this.pushAction({ type: 'update-token', id: this.ctxTarget.dataset.id, prev, next });
+                };
+
+                document.getElementById('ctx-duplicate').onclick = () => {
+                    if (!this.ctxTarget) return;
+                    const data = this.serializeToken(this.ctxTarget);
+                    data.id = `tok_${++this.tokenIdCounter}_${Date.now()}`;
+                    data.x += 35;
+                    data.y += 35;
+                    this.createTokenElement(data);
+                    this.pushAction({ type: 'add-token', token: data });
+                };
+
+                document.getElementById('ctx-delete').onclick = () => {
+                    if (!this.ctxTarget) return;
+                    const data = this.serializeToken(this.ctxTarget);
+                    this.ctxTarget.remove();
+                    this.ctxTarget = null;
+                    this.pushAction({ type: 'delete-token', token: data });
+                };
+            }
+
+            setupKeyboardShortcuts() {
+                window.addEventListener('keydown', (e) => {
+                    // Always allow Spacebar pan unless typing inside a text field
+                    if (e.code === 'Space') {
+                        if (e.target.tagName !== 'INPUT' || e.target.type !== 'text') {
+                            e.preventDefault();
+                        }
+                        if (!this.spacePressed) {
+                            this.spacePressed = true;
+                            this.viewport.classList.add('space-pan');
+                            this.updateGhostVisibility();
+                        }
+                        return;
+                    }
+
+                    if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+
+                    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z') {
+                        e.preventDefault();
+                        this.undo();
+                    } else if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'y' || (e.shiftKey && e.key.toLowerCase() === 'z'))) {
+                        e.preventDefault();
+                        this.redo();
+                    } else if (e.key === '1') {
+                        this.setTool('cursor');
+                    } else if (e.key === '2') {
+                        this.setTool('draw');
+                    } else if (e.key === '3') {
+                        this.setTool('arrow');
+                    } else if (e.key === '4') {
+                        this.setTool('player');
+                    } else if (e.key === '5') {
+                        this.setTool('cashbox');
+                    }
+                });
+
+                window.addEventListener('keyup', (e) => {
+                    if (e.code === 'Space') {
+                        this.spacePressed = false;
+                        this.viewport.classList.remove('space-pan');
+                        this.updateGhostVisibility();
+                    }
+                });
+
+                // Reset spacePressed if user Alt+Tabs away while holding Space
+                window.addEventListener('blur', () => {
+                    this.spacePressed = false;
+                    this.viewport.classList.remove('space-pan');
+                    this.updateGhostVisibility();
+                });
             }
 
             setupMapInteractions() {
                 this.viewport.addEventListener('wheel', (e) => {
                     e.preventDefault();
-                    const oldScale = this.scale;
-                    const delta = -Math.sign(e.deltaY) * 0.1;
-                    this.scale = Math.max(0.05, Math.min(4, this.scale + delta));
-                    
-                    const rect = this.viewport.getBoundingClientRect();
-                    const mouseX = e.clientX - rect.left;
-                    const mouseY = e.clientY - rect.top;
-                    
-                    const scaleChange = this.scale - oldScale;
-                    this.panX -= (mouseX - this.panX) / oldScale * scaleChange;
-                    this.panY -= (mouseY - this.panY) / oldScale * scaleChange;
-                    
-                    this.updateTransform();
-                    this.updateGhost(e); 
+                    this.ghostX = e.clientX;
+                    this.ghostY = e.clientY;
+                    const zoomFactor = Math.exp(-e.deltaY * 0.0015);
+                    this.zoomAtPoint(zoomFactor, e.clientX, e.clientY);
+                }, { passive: false });
+
+                this.viewport.addEventListener('pointerenter', (e) => {
+                    this.isInsideViewport = true;
+                    this.ghostX = e.clientX;
+                    this.ghostY = e.clientY;
+                    this.updateGhostVisibility();
                 });
 
-                this.viewport.addEventListener('mousedown', (e) => {
-                    if(e.button === 1 || (e.button === 0 && this.currentTool === 'cursor')) {
-                        if(e.target === this.viewport || e.target === this.mapImage || e.target.id === 'token-layer') {
-                            this.isPanning = true;
-                            this.lastMouseX = e.clientX;
-                            this.lastMouseY = e.clientY;
-                            this.viewport.style.cursor = 'grabbing';
-                        }
+                this.viewport.addEventListener('pointerleave', () => {
+                    this.isInsideViewport = false;
+                    this.updateGhostVisibility();
+                });
+
+                this.viewport.addEventListener('pointerdown', (e) => {
+                    if (e.target.closest('.viewport-hud') || e.target.closest('.shortcuts-panel')) return;
+
+                    this.activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+                    // 2-Finger Pinch-to-Zoom Initiation
+                    if (this.activePointers.size === 2) {
+                        this.isPanning = false;
+                        this.isDrawing = false;
+                        this.previewCtx.clearRect(0, 0, this.previewCanvas.width, this.previewCanvas.height);
+                        const pts = Array.from(this.activePointers.values());
+                        this.lastPinchDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+                        return;
                     }
-                    else if(e.button === 0 && ['player', 'cashbox'].includes(this.currentTool)) {
+
+                    const isMiddleClick = e.button === 1;
+                    const isLeftClick = e.button === 0;
+
+                    // Pan on Middle Click, OR Left Click when in Cursor tool, OR Left Click while holding Spacebar
+                    if (isMiddleClick || (isLeftClick && (this.currentTool === 'cursor' || this.spacePressed))) {
+                        e.preventDefault();
+                        this.isPanning = true;
+                        this.lastMouseX = e.clientX;
+                        this.lastMouseY = e.clientY;
+                        this.viewport.classList.add('panning');
+                        document.body.classList.add('is-interacting-map');
+                        this.viewport.setPointerCapture(e.pointerId);
+                    } else if (isLeftClick && !this.spacePressed && (this.currentTool === 'player' || this.currentTool === 'cashbox')) {
                         this.addToken(e);
                     }
                 });
 
-                window.addEventListener('mousemove', (e) => {
-                    if(this.isPanning) {
+                window.addEventListener('pointermove', (e) => {
+                    this.ghostX = e.clientX;
+                    this.ghostY = e.clientY;
+
+                    if (this.activePointers.has(e.pointerId)) {
+                        this.activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+                    }
+
+                    // Handle 2-finger pinch zoom
+                    if (this.activePointers.size === 2) {
+                        const pts = Array.from(this.activePointers.values());
+                        const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+                        const midX = (pts[0].x + pts[1].x) / 2;
+                        const midY = (pts[0].y + pts[1].y) / 2;
+                        if (this.lastPinchDist && dist > 10) {
+                            this.zoomAtPoint(dist / this.lastPinchDist, midX, midY);
+                        }
+                        this.lastPinchDist = dist;
+                        return;
+                    }
+
+                    if (this.isPanning) {
                         this.panX += e.clientX - this.lastMouseX;
                         this.panY += e.clientY - this.lastMouseY;
                         this.lastMouseX = e.clientX;
                         this.lastMouseY = e.clientY;
-                        this.updateTransform();
+                        this.requestTransformUpdate();
+                    } else if (this.isInsideViewport && !this.spacePressed && (this.currentTool === 'player' || this.currentTool === 'cashbox')) {
+                        this.requestTransformUpdate();
                     }
-                    this.updateGhost(e);
+
+                    if (this.isDrawing) {
+                        this.continueStroke(e);
+                    }
                 });
 
-                window.addEventListener('mouseup', () => {
-                    this.isPanning = false;
-                    if(this.currentTool === 'cursor') this.viewport.style.cursor = 'default';
-                });
-
-                // DRAWING
-                const getCanvasPos = (e) => {
-                    const rect = this.wrapper.getBoundingClientRect();
-                    return {
-                        x: (e.clientX - rect.left) / this.scale,
-                        y: (e.clientY - rect.top) / this.scale
-                    };
+                const handlePointerUp = (e) => {
+                    this.activePointers.delete(e.pointerId);
+                    if (this.activePointers.size < 2) {
+                        this.lastPinchDist = null;
+                    }
+                    if (this.isPanning) {
+                        this.isPanning = false;
+                        this.viewport.classList.remove('panning');
+                        document.body.classList.remove('is-interacting-map');
+                        if (this.viewport.hasPointerCapture && this.viewport.hasPointerCapture(e.pointerId)) {
+                            this.viewport.releasePointerCapture(e.pointerId);
+                        }
+                    }
+                    if (this.isDrawing) {
+                        this.endStroke();
+                    }
                 };
 
-                this.canvas.addEventListener('mousedown', (e) => {
-                    if(this.currentTool !== 'draw') return;
-                    this.isDrawing = true;
-                    this.ctx.beginPath();
-                    const pos = getCanvasPos(e);
-                    this.ctx.moveTo(pos.x, pos.y);
-                });
+                window.addEventListener('pointerup', handlePointerUp);
+                window.addEventListener('pointercancel', handlePointerUp);
 
-                window.addEventListener('mousemove', (e) => {
-                    if(!this.isDrawing) return;
-                    const pos = getCanvasPos(e);
-                    this.ctx.lineTo(pos.x, pos.y);
-                    this.ctx.strokeStyle = this.brushColor;
-                    this.ctx.lineWidth = this.brushSize;
-                    this.ctx.lineCap = 'round';
-                    this.ctx.stroke();
+                // Canvas Drawing Start
+                this.canvas.addEventListener('pointerdown', (e) => {
+                    if ((this.currentTool !== 'draw' && this.currentTool !== 'arrow') || this.spacePressed || e.button !== 0) return;
+                    if (this.activePointers.size > 1) return;
+                    e.stopPropagation();
+                    this.startStroke(e);
                 });
-
-                window.addEventListener('mouseup', () => this.isDrawing = false);
             }
 
-            updateGhost(e) {
-                if(this.ghost.style.display === 'block') {
-                    this.ghost.style.left = e.clientX + 'px';
-                    this.ghost.style.top = e.clientY + 'px';
-                    this.ghost.style.transform = `translate(-50%, -50%) scale(${this.scale})`;
+            /* ==========================================================================
+               BÉZIER TELESTRATOR & TACTICAL ARROW ENGINE
+               ========================================================================== */
+            startStroke(e) {
+                this.isDrawing = true;
+                document.body.classList.add('is-interacting-map');
+                const pos = this.screenToMap(e.clientX, e.clientY);
+
+                this.currentStroke = {
+                    mode: this.currentTool,
+                    color: this.brushColor,
+                    size: this.brushSize,
+                    dashed: this.isDashed,
+                    points: [pos]
+                };
+
+                this.renderStrokeOnContext(this.previewCtx, this.currentStroke, true);
+            }
+
+            continueStroke(e) {
+                if (!this.isDrawing || !this.currentStroke) return;
+                const pos = this.screenToMap(e.clientX, e.clientY);
+
+                if (this.currentStroke.mode === 'arrow') {
+                    this.currentStroke.points[1] = pos;
+                } else {
+                    const pts = this.currentStroke.points;
+                    const lastPt = pts[pts.length - 1];
+                    const dx = pos.x - lastPt.x;
+                    const dy = pos.y - lastPt.y;
+                    if ((dx * dx + dy * dy) < 2.25) return;
+                    pts.push(pos);
+                }
+
+                this.renderStrokeOnContext(this.previewCtx, this.currentStroke, true);
+            }
+
+            endStroke() {
+                if (!this.isDrawing) return;
+                this.isDrawing = false;
+                document.body.classList.remove('is-interacting-map');
+                this.previewCtx.clearRect(0, 0, this.previewCanvas.width, this.previewCanvas.height);
+
+                if (this.currentStroke) {
+                    if (this.currentStroke.mode === 'arrow' && this.currentStroke.points.length < 2) {
+                        this.currentStroke = null;
+                        return;
+                    }
+                    this.strokes.push(this.currentStroke);
+                    this.renderStrokeOnContext(this.ctx, this.currentStroke, false);
+                    this.pushAction({ type: 'add-stroke', stroke: this.currentStroke });
+                    this.currentStroke = null;
+                }
+            }
+
+            renderStrokeOnContext(targetCtx, stroke, clearFirst = false) {
+                if (clearFirst) {
+                    targetCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                }
+                const pts = stroke.points;
+                if (!pts.length) return;
+
+                targetCtx.save();
+                targetCtx.strokeStyle = stroke.color;
+                targetCtx.fillStyle = stroke.color;
+                targetCtx.lineWidth = stroke.size;
+                targetCtx.lineCap = 'round';
+                targetCtx.lineJoin = 'round';
+
+                if (stroke.dashed) {
+                    targetCtx.setLineDash([stroke.size * 2.5, stroke.size * 1.8]);
+                } else {
+                    targetCtx.setLineDash([]);
+                }
+
+                if (stroke.mode === 'arrow') {
+                    if (pts.length < 2) {
+                        targetCtx.restore();
+                        return;
+                    }
+                    const start = pts[0];
+                    const end = pts[1];
+                    const angle = Math.atan2(end.y - start.y, end.x - start.x);
+                    const headLen = Math.max(16, stroke.size * 3.8);
+
+                    targetCtx.beginPath();
+                    targetCtx.moveTo(start.x, start.y);
+                    targetCtx.lineTo(end.x, end.y);
+                    targetCtx.stroke();
+
+                    targetCtx.setLineDash([]);
+                    targetCtx.beginPath();
+                    targetCtx.moveTo(end.x, end.y);
+                    targetCtx.lineTo(
+                        end.x - headLen * Math.cos(angle - Math.PI / 6),
+                        end.y - headLen * Math.sin(angle - Math.PI / 6)
+                    );
+                    targetCtx.lineTo(
+                        end.x - headLen * Math.cos(angle + Math.PI / 6),
+                        end.y - headLen * Math.sin(angle + Math.PI / 6)
+                    );
+                    targetCtx.closePath();
+                    targetCtx.fill();
+                } else {
+                    if (pts.length === 1) {
+                        targetCtx.setLineDash([]);
+                        targetCtx.beginPath();
+                        targetCtx.arc(pts[0].x, pts[0].y, stroke.size / 2, 0, Math.PI * 2);
+                        targetCtx.fill();
+                        targetCtx.restore();
+                        return;
+                    }
+
+                    targetCtx.beginPath();
+                    targetCtx.moveTo(pts[0].x, pts[0].y);
+                    for (let i = 1; i < pts.length - 1; i++) {
+                        const midX = (pts[i].x + pts[i + 1].x) / 2;
+                        const midY = (pts[i].y + pts[i + 1].y) / 2;
+                        targetCtx.quadraticCurveTo(pts[i].x, pts[i].y, midX, midY);
+                    }
+                    const last = pts[pts.length - 1];
+                    targetCtx.lineTo(last.x, last.y);
+                    targetCtx.stroke();
+                }
+
+                targetCtx.restore();
+            }
+
+            redrawAllStrokes() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                for (const stroke of this.strokes) {
+                    this.renderStrokeOnContext(this.ctx, stroke, false);
+                }
+            }
+
+            /* ==========================================================================
+               TOKEN MANAGEMENT, CALLOUT LABELS & DRAG ENGINE
+               ========================================================================== */
+            updateGhostVisibility() {
+                const shouldShow = this.isInsideViewport && !this.spacePressed && (this.currentTool === 'player' || this.currentTool === 'cashbox');
+                this.ghost.style.display = shouldShow ? 'block' : 'none';
+                if (shouldShow) {
+                    this.renderGhostTransform();
+                }
+            }
+
+            renderGhostTransform() {
+                if (this.ghost.style.display === 'block') {
+                    this.ghost.style.transform = `translate3d(${this.ghostX}px, ${this.ghostY}px, 0) translate(-50%, -50%) scale(${this.scale})`;
+                }
+            }
+
+            findTokenById(id) {
+                return this.tokenLayer.querySelector(`.token-wrapper[data-id="${id}"]`);
+            }
+
+            serializeToken(el) {
+                return {
+                    id: el.dataset.id,
+                    tool: el.dataset.tool,
+                    x: parseFloat(el.style.left),
+                    y: parseFloat(el.style.top),
+                    label: el.dataset.label || '',
+                    dimmed: el.classList.contains('dimmed')
+                };
+            }
+
+            applyTokenProps(el, props) {
+                el.dataset.label = props.label || '';
+                el.classList.toggle('dimmed', Boolean(props.dimmed));
+
+                let badge = el.querySelector('.token-label-badge');
+                if (props.label) {
+                    if (!badge) {
+                        badge = document.createElement('span');
+                        badge.className = 'token-label-badge';
+                        el.appendChild(badge);
+                    }
+                    badge.textContent = props.label;
+                } else if (badge) {
+                    badge.remove();
                 }
             }
 
             addToken(e) {
-                const rect = this.wrapper.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / this.scale;
-                const y = (e.clientY - rect.top) / this.scale;
+                const pos = this.screenToMap(e.clientX, e.clientY);
+                const tokenData = {
+                    id: `tok_${++this.tokenIdCounter}_${Date.now()}`,
+                    tool: this.currentTool,
+                    x: pos.x,
+                    y: pos.y,
+                    label: '',
+                    dimmed: false
+                };
 
+                this.createTokenElement(tokenData);
+                this.pushAction({ type: 'add-token', token: tokenData });
+            }
+
+            createTokenElement(tokenData) {
                 const el = document.createElement('div');
-                el.className = 'token-wrapper ' + this.currentTool;
-                // Position centered on mouse
-                el.style.left = x + 'px';
-                el.style.top = y + 'px';
-                
+                el.className = `token-wrapper ${tokenData.tool}`;
+                el.dataset.id = tokenData.id;
+                el.dataset.tool = tokenData.tool;
+                el.style.left = `${tokenData.x}px`;
+                el.style.top = `${tokenData.y}px`;
+
                 const img = document.createElement('img');
-                img.src = this.assets[this.currentTool];
-                
+                img.src = this.assets[tokenData.tool];
+                img.alt = tokenData.tool;
                 el.appendChild(img);
+
+                this.applyTokenProps(el, tokenData);
                 this.setupTokenDrag(el);
-                
+
                 el.oncontextmenu = (ev) => {
                     ev.preventDefault();
-                    ev.stopPropagation(); 
+                    ev.stopPropagation();
                     this.ctxTarget = el;
-                    const menu = document.getElementById('context-menu');
-                    menu.style.display = 'block';
-                    menu.style.left = ev.clientX + 'px';
-                    menu.style.top = ev.clientY + 'px';
-                }
+                    this.contextMenu.style.display = 'block';
+                    this.contextMenu.style.left = `${Math.min(window.innerWidth - 190, ev.clientX)}px`;
+                    this.contextMenu.style.top = `${Math.min(window.innerHeight - 160, ev.clientY)}px`;
+                };
 
                 this.tokenLayer.appendChild(el);
+                return el;
             }
 
             setupTokenDrag(el) {
+                let isDragging = false;
+                let startX = 0;
+                let startY = 0;
+
                 el.onpointerdown = (e) => {
-                    if(e.button !== 0 || this.currentTool !== 'cursor') return;
-                    e.preventDefault(); 
-                    e.stopPropagation(); 
+                    // Let Middle-Click or Spacebar+Click bubble up to viewport for panning
+                    if (e.button !== 0 || this.spacePressed) return;
+
+                    // Alt + Left Click for instant token deletion
+                    if (e.altKey) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const data = this.serializeToken(el);
+                        el.remove();
+                        this.pushAction({ type: 'delete-token', token: data });
+                        return;
+                    }
+
+                    if (this.currentTool !== 'cursor') return;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    startX = parseFloat(el.style.left);
+                    startY = parseFloat(el.style.top);
                     el.setPointerCapture(e.pointerId);
                     el.classList.add('dragging');
-                    el.isDragging = true;
+                    document.body.classList.add('is-interacting-map');
+                    isDragging = true;
                 };
 
                 el.onpointermove = (e) => {
-                    if(!el.isDragging) return;
-                    const rect = this.wrapper.getBoundingClientRect();
-                    const x = (e.clientX - rect.left) / this.scale;
-                    const y = (e.clientY - rect.top) / this.scale;
-                    el.style.left = x + 'px';
-                    el.style.top = y + 'px';
+                    if (!isDragging) return;
+                    const pos = this.screenToMap(e.clientX, e.clientY);
+                    el.style.left = `${pos.x}px`;
+                    el.style.top = `${pos.y}px`;
                 };
 
-                el.onpointerup = (e) => {
-                    el.isDragging = false;
+                const stopDrag = (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
                     el.classList.remove('dragging');
-                    el.releasePointerCapture(e.pointerId);
+                    document.body.classList.remove('is-interacting-map');
+                    if (el.hasPointerCapture && el.hasPointerCapture(e.pointerId)) {
+                        el.releasePointerCapture(e.pointerId);
+                    }
+
+                    const endX = parseFloat(el.style.left);
+                    const endY = parseFloat(el.style.top);
+                    if (Math.hypot(endX - startX, endY - startY) > 1) {
+                        this.pushAction({
+                            type: 'move-token',
+                            id: el.dataset.id,
+                            fromX: startX,
+                            fromY: startY,
+                            toX: endX,
+                            toY: endY
+                        });
+                    }
                 };
+
+                el.onpointerup = stopDrag;
+                el.onpointercancel = stopDrag;
+            }
+
+            /* ==========================================================================
+               COMPOSITE PNG EXPORT & CLIPBOARD ENGINE
+               ========================================================================== */
+            async exportStratImage() {
+                if (!this.canvas.width || !this.canvas.height) return;
+
+                const outCanvas = document.createElement('canvas');
+                outCanvas.width = this.canvas.width;
+                outCanvas.height = this.canvas.height;
+                const outCtx = outCanvas.getContext('2d');
+
+                // 1. Draw Base Arena Map
+                outCtx.drawImage(this.mapImage, 0, 0);
+
+                // 2. Draw Placed Tokens & Radius Rings
+                const tokens = Array.from(this.tokenLayer.querySelectorAll('.token-wrapper'));
+                for (const el of tokens) {
+                    const data = this.serializeToken(el);
+                    const tokenImg = this.loadedTokenImages[data.tool];
+                    if (tokenImg && tokenImg.complete) {
+                        outCtx.save();
+                        outCtx.globalAlpha = data.dimmed ? 0.42 : 1.0;
+                        outCtx.drawImage(
+                            tokenImg,
+                            data.x - tokenImg.naturalWidth / 2,
+                            data.y - tokenImg.naturalHeight / 2
+                        );
+                        outCtx.restore();
+                    }
+
+                    // Draw Callout Label if set
+                    if (data.label) {
+                        outCtx.save();
+                        outCtx.font = 'bold 20px Anton, Impact, sans-serif';
+                        const textMetrics = outCtx.measureText(data.label);
+                        const padX = 10;
+                        const boxW = textMetrics.width + padX * 2;
+                        const boxH = 26;
+                        const boxX = data.x - boxW / 2;
+                        const boxY = data.y + 18;
+
+                        outCtx.fillStyle = '#ffffff';
+                        outCtx.fillRect(boxX, boxY, boxW, boxH);
+                        outCtx.fillStyle = '#08080a';
+                        outCtx.textAlign = 'center';
+                        outCtx.textBaseline = 'middle';
+                        outCtx.fillText(data.label, data.x, boxY + boxH / 2 + 1);
+                        outCtx.restore();
+                    }
+                }
+
+                // 3. Draw Telestrator Lines & Arrows on top
+                outCtx.drawImage(this.canvas, 0, 0);
+
+                // 4. Add Subtle Ape Squad Watermark Tag
+                outCtx.save();
+                const badgeText = `APE SQUAD ESPORTS • ${this.currentMap.toUpperCase()} STRAT`;
+                outCtx.font = 'bold 22px Anton, Impact, sans-serif';
+                const wmWidth = outCtx.measureText(badgeText).width + 36;
+                const wmX = outCanvas.width - wmWidth - 24;
+                const wmY = outCanvas.height - 58;
+                outCtx.fillStyle = 'rgba(7, 7, 9, 0.85)';
+                outCtx.fillRect(wmX, wmY, wmWidth, 38);
+                outCtx.fillStyle = '#ff6f24';
+                outCtx.fillRect(wmX, wmY, 5, 38);
+                outCtx.fillStyle = '#ffffff';
+                outCtx.textBaseline = 'middle';
+                outCtx.fillText(badgeText, wmX + 18, wmY + 20);
+                outCtx.restore();
+
+                outCanvas.toBlob(async (blob) => {
+                    if (!blob) return;
+                    let copied = false;
+
+                    if (navigator.clipboard && window.ClipboardItem) {
+                        try {
+                            await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                            copied = true;
+                        } catch (_) {}
+                    }
+
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `ApeSquad-Strat-${this.currentMap}.png`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+
+                    this.showToast(copied ? 'COPIED TO CLIPBOARD & DOWNLOADED PNG!' : 'STRAT PNG DOWNLOADED!');
+                }, 'image/png');
             }
         }
 
-        window.onload = () => new TacticalMap();
+        window.addEventListener('DOMContentLoaded', () => {
+            initTacticalHeaderHUD();
+            new TacticalMap();
+        });
     </script>
 </body>
 </html>
-
